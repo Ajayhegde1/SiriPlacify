@@ -14,6 +14,7 @@ module.exports = {
       },
       fontFamily: {
         Heading: ["DM Sans", "sans-serif"],
+        SubHeading: ["Karla", "sans-serif"],
       }
     },
   },
