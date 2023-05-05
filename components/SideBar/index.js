@@ -42,10 +42,11 @@ const Sidebar = ({
                                 <span class="menu-link-text">Dashboard</span>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a class="menu-link" href="#">
+                        <li class={`menu-item ${activePage == 2 ? 'current' : ''}`}>
+                            <a class="menu-link" href="/jobs">
                                 <Image
                                     src={jobs}
+                                    className={sidebarOpen ? 'ml-3' : 'ml-0'}
                                 />
                                 <span class="menu-link-text">Jobs</span>
                             </a>
@@ -59,7 +60,7 @@ const Sidebar = ({
                             </a>
                         </li>
                         <li class={`menu-item ${activePage == 4 ? 'current' : ''}`}>
-                            <a class="menu-link" href="#">
+                            <a class="menu-link" href="/editPlacementPolicy">
                                 <Image
                                     src={pp}
                                     className={sidebarOpen ? 'ml-3' : 'ml-1'}

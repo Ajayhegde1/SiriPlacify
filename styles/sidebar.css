@@ -167,6 +167,10 @@
    .dashboard.active { 
       margin-left: 30%;
   } 
+
+  .navbar .menu-list {
+     margin-top: 55px;
+  }
 }
 
 /*media queries*/
@@ -177,6 +181,9 @@
 
    .dashboard.active { 
        margin-left: 30%;
+   }
+   .navbar .menu-list {
+      margin-top: 35px;
    }
 } 
 
@@ -199,6 +206,10 @@
    .navbar .menu-item {
        position: relative;
        top: 4rem;
+   }
+
+   .navbar .menu-list {
+      margin-top: 20px;
    }
 }
 

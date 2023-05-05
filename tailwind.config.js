@@ -15,6 +15,9 @@ module.exports = {
       fontFamily: {
         Heading: ["DM Sans", "sans-serif"],
         SubHeading: ["Karla", "sans-serif"],
+      },
+      colors:{
+        customGrey: '#E3F2EF'
       }
     },
   },
