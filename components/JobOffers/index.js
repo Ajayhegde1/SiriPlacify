@@ -10,6 +10,7 @@ export default function JobOffers() {
                         <JobItem
                             job={job}
                             key={index}
+                            jobSection={2}
                         />
                     )
                 }

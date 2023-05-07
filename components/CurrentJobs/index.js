@@ -11,6 +11,7 @@ export default function CurrentJobs() {
                             job={job}
                             key={index}
                             isCurrentJobs={true}
+                            jobSection={1}
                         />
                     )
                 }

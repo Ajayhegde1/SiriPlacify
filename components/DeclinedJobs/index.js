@@ -10,6 +10,7 @@ export default function DeclinedJobs() {
                         <JobItem
                             job={job}
                             key={index}
+                            jobSection={3}
                         />
                     )
                 }
