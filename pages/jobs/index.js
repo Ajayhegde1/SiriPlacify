@@ -14,7 +14,7 @@ export default function Jobs() {
     return (
         <div className="bg-gray-200 min-h-screen">
             <DocHeader
-                DocTitle="Current Jobs"
+                DocTitle="Jobs"
             />
             <Sidebar
                 sidebarOpen={sidebarOpen}
