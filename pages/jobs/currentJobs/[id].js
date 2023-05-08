@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Sidebar from "@/components/SideBar";
 import DocHeader from '@/components/DocHeader'
@@ -37,11 +38,13 @@ export default function CurrentJobs() {
             />
             <main class={`dashboard ${sidebarOpen ? 'active' : ''}`}>
                 <div className='pt-14 ml-0 md:ml-6 flex flex-col xl:flex-row'>
-                    <Image
-                        src={arrow}
-                        alt="arrow-left"
-                        className='my-auto h-12 w-12'
-                    />
+                    <Link href='/jobs'>
+                        <Image
+                            src={arrow}
+                            alt="arrow-left"
+                            className='my-auto h-12 w-12'
+                        />
+                    </Link>
                     <div className='ml-2 md:ml-6'>
                         <p
                             className='font-SubHeading text-base text-gray-400 font-bold'

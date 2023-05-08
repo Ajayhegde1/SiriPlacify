@@ -1,10 +1,11 @@
 import Student from "./Student";
-import students from '@/testingFiles/students';
 
-export default function Candidates() {
+export default function Candidates({
+    students
+}) {
     return(
         <div className='overflow-auto'>
-        <table className='table-auto overflow-scroll w-full mt-5 text-left'>
+        <table className='table-auto overflow-scroll w-full mt-3 text-left'>
             <thead>
                 <th className="px-6 py-4 text-gray-600">Candidate Name</th>
                 <th className="px-6 py-4 text-gray-600">Email</th>
