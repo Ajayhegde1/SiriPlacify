@@ -21,7 +21,7 @@ export default function Jobs() {
                 setSidebarOpen={setSidebarOpen}
                 activePage={2}
             />
-            <main class={`dashboard ${sidebarOpen ? 'active' : ''}`}>
+            <main className={`dashboard ${sidebarOpen ? 'active' : ''}`}>
                 <div className="pt-4 md:py-10 px-4 md:px-6 lg:p-10">
                     <div>
                         <h1 className='text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>Jobs</h1>
