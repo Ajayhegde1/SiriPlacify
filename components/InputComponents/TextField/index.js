@@ -3,17 +3,28 @@ import Label from "../Label"
 export default function TextField({
     label,
     placeholder,
-    type,
+    onChangeHandler,
+    value,
+    maxLength = 500,
+    type = 'text',
+    required = false,
+    disabled = false
+  
 }) {
     return (
-        <div class="mb-6">
+        <div className="mb-6">
             <Label
                 label={label}
             />
             <input
-                class="border-2 border-gray-400 rounded w-full p-4 text-black leading-tight focus:outline-none focus:shadow-outline"
+                className="border-2 border-gray-400 rounded w-full p-4 text-black leading-tight focus:outline-none focus:shadow-outline"
                 type={type}
                 placeholder={placeholder}
+                onChange={onChangeHandler}
+                value={value}
+                maxLength={maxLength}
+                required={required}
+                disabled={disabled}
             />
         </div>
     )

@@ -17,7 +17,8 @@ module.exports = {
         SubHeading: ["Karla", "sans-serif"],
       },
       colors:{
-        customGrey: '#E3F2EF'
+        customGrey: '#E3F2EF',
+        customLightBlue: '#E8EDFF'
       }
     },
   },
