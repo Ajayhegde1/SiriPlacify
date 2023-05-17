@@ -17,13 +17,11 @@ export function * handleSignIn (action) {
     try {
       const response = yield call(signInUser, action.payload)
       if (response.data.status == 200) {
-        // set username cookie with email value
         setCookie(response.data)
         openNotification(
           notificationTypes.SUCCESS,
           'Sucessfully Logged In!'
         )
-        // setRedux with current user json
         yield put(
           setUser({
             email: action.payload.email,
@@ -32,9 +30,41 @@ export function * handleSignIn (action) {
           })
         )
   
-        // redirect to XYZ
-        window.history.replaceState({}, 'Jobs', routes.JOBS)
-        window.location.reload()
+        if (response.data.accType === '0'){
+          if (response.data.signUpStatus === "0") {
+            window.history.replaceState({}, 'College Profile', routes.COLLEGEPROFILE)
+            window.location.reload()
+          }
+          else if (response.data.signUpStatus === "1") {
+            window.history.replaceState({}, 'Placement Policy', routes.PLACEMENTPROFILE)
+            window.location.reload()
+          }
+          else if (response.data.signUpStatus === "2") {
+            window.history.replaceState({}, 'Jobs', routes.JOBS)
+            window.location.reload()
+          }
+          else{
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'This email does not exist!'
+            )
+            setTimeout(() => {
+              window.location.reload()
+            }, 5000)
+          }
+        }
+        else if(response.data.accType === '1'){
+          if (response.data.signUpStatus === "0") {
+            window.history.replaceState({}, 'Student Profile', routes.STUDENTPROFILE)
+            window.location.reload()
+          }
+          else if (response.data.signUpStatus === "1"){
+            window.history.replaceState({}, 'Jobs', routes.JOBS)
+            window.location.reload()
+          }
+        }
+
       } else if (response.data.status == 401) {
         openNotification(
           notificationTypes.ERROR,

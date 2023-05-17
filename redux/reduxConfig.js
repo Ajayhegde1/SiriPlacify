@@ -8,10 +8,12 @@ import { persistStore, persistReducer } from 'redux-persist'
 
 import { watcherSaga } from './sagas/rootSaga'
 import userReducer from './ducks/userDuck'
+import jobReducer from './ducks/jobDuck'
 
 // Combining all the reducers
 const reducer = combineReducers({
-  user: userReducer
+  user: userReducer,
+  job: jobReducer
 })
 
 const persistConfig = {
