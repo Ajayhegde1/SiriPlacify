@@ -2,16 +2,22 @@ import student from '../public/students.png'
 
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
 import Button from '@/components/Buttons'
-import { signIn } from '@/redux/ducks/userDuck'
+
+import { signIn } from '@/redux/Slices/userSlice'
+import { useRouter } from 'next/router';
+import { routes } from '@/constants/routes'
 
 export default function CollegeProfile() {
     const dispatch = useDispatch()
-    
+    const router = useRouter();
+
+    const user = useSelector((state) => state.user);
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isBtnDisabled, setIsBtnDisabled] = useState(true)
@@ -19,23 +25,20 @@ export default function CollegeProfile() {
 
     useEffect(() => {
         if (email.length > 0 && password.length > 0) {
-          setIsBtnDisabled(false)
+            setIsBtnDisabled(false)
         } else {
-          setIsBtnDisabled(true)
+            setIsBtnDisabled(true)
         }
-      }, [email, password])
+        if (user) {
+            router.replace('/jobs');
+        }
+    }, [email, password])
 
     const handleLogin = (e) => {
         e.preventDefault()
-    
-        setIsBtnDisabled(true)
         setBtnText('Signing In...')
-        dispatch(
-          signIn({
-            email,
-            password
-          })
-        )
+        dispatch(signIn({ email, password }))
+        router.replace(routes.JOBS);
     }
 
     return (
@@ -67,17 +70,17 @@ export default function CollegeProfile() {
                     />
                     <div>
                         <Button
-                            onClickHandler={handleLogin}   
-                            disabled={isBtnDisabled} 
+                            onClickHandler={handleLogin}
+                            disabled={isBtnDisabled}
                             btnText={btnText}
                         />
                     </div>
                     <div className='border-2 border-gray-300 shadow-lg rounded-lg mt-6 p-8'>
                         <p className='font-bold text-center md:text-left text-sm md:text-base font-Body text-black'>
-                        New to Placify?
+                            New to Placify?
                         </p>
                         <div className='mt-5 text-center bg-customLightBlue p-5 rounded-lg'>
-                            <p className='text-blue-400 text-blue font-bold font-heading'>Register for demo </p> 
+                            <p className='text-blue-400 text-blue font-bold font-heading'>Register for demo </p>
                         </div>
                     </div>
                 </div>

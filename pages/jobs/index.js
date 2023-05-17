@@ -1,5 +1,4 @@
 import { useState,useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
 import Sidebar from "@/components/SideBar";
 import DocHeader from '@/components/DocHeader'
@@ -10,14 +9,12 @@ import JobSection from "@/components/JobSection";
 
 
 export default function Jobs() {
-    const dispatch = useDispatch()
-
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [jobSection, setJobSection] = useState(1)
 
     useEffect(() => {
         console.log('useEffect')
-    }, [dispatch])
+    }, [])
 
     return (
         <div className="bg-gray-200 min-h-screen">
