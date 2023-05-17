@@ -1,7 +1,7 @@
 import { GET, POST } from '@/config/api'
 import store from '../../reduxConfig'
 
-export const getJobs = () => {
+export const getAllJobs = () => {
     return GET('/jobs', { sessionID: store.getState().user.sessionId })
 }
 

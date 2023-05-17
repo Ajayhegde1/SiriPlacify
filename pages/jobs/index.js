@@ -8,19 +8,16 @@ import JobOffers from "@/components/JobOffers";
 import DeclinedJobs from "@/components/DeclinedJobs";
 import JobSection from "@/components/JobSection";
 
-import getJobs from '@/redux/ducks/jobDuck'
 
 export default function Jobs() {
     const dispatch = useDispatch()
-
-    const jobs = useSelector((state) => state.job)
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [jobSection, setJobSection] = useState(1)
 
     useEffect(() => {
-        dispatch(getJobs())
-      }, [dispatch])
+        console.log('useEffect')
+    }, [dispatch])
 
     return (
         <div className="bg-gray-200 min-h-screen">
