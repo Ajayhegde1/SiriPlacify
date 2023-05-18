@@ -2,7 +2,7 @@ export const routes = {
   SIGN_UP: '/signUp',
   JOBS: '/jobs',
   COLLEGEPROFILE: '/collegeProfile',
-  PLACEMENTPROFILE: '/placementProfile',
+  PLACEMENTPROFILE: '/placementPolicy',
   EDITPROFILE: '/editProfile',
-  EDITPLACEMENTPROFILE: '/editPlacementProfile'
+  EDITPLACEMENTPROFILE: '/editPlacementPolicy'
 }

@@ -3,6 +3,7 @@ import { call, put } from 'redux-saga/effects'
 import { setCookie } from '@/utils/cookies'
 import { openNotification, notificationTypes } from '@/utils/notifications'
 import { setUser } from '@/redux/Slices/userSlice'
+import { routes } from '@/constants/routes'
 
 import { signInUser } from '../requests/userRequests'
 
@@ -18,10 +19,58 @@ export function * handleSignIn (action) {
       const data = {
         email: action.payload.email,
         username: response.data.username,
-        sessionId: response.data.sessionid
+        sessionId: response.data.sessionid,
+        accType: response.data.accType
       }
 
       yield put(setUser(data))
+
+      if (response.data.accType === "0"){
+        if (response.data.signUpStatus === "0"){
+          window.history.replaceState({}, 'Profile', routes.COLLEGEPROFILE)
+          window.location.reload()
+        }
+        else if (response.data.signUpStatus === "1"){
+          window.history.replaceState({}, 'Placement Policy', routes.PLACEMENTPROFILE)
+          window.location.reload()
+        }
+        else if (response.data.signUpStatus === "2"){
+          window.history.replaceState({}, 'Jobs', routes.JOBS)
+          window.location.reload()
+        }
+        else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Something went wrong'
+          )
+        }
+      }
+      else if (response.data.accType === "1"){
+        if (response.data.signUpStatus === "0"){
+          window.history.replaceState({}, 'Profile', routes.COLLEGEPROFILE)
+          window.location.reload()
+        }
+        else if (response.data.signUpStatus === "1"){
+          window.history.replaceState({}, 'Jobs', routes.JOBS)
+          window.location.reload()
+        }
+        else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Something went wrong'
+          )
+        }
+      }
+      else{
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'Something went wrong'
+        )
+      }
+
     } else if (response.data.status == 401) {
       openNotification(
         notificationTypes.ERROR,

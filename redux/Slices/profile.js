@@ -10,7 +10,7 @@ const profileSlice = createSlice({
     resetProfile: () => null,
     updateProfile: (state, action) => [...state, action.payload],
     getProfile: (state) => state,
-    addProfile: (state, action) => [...state, action.payload]
+    addProfile: (state, action) => action.payload
   }
 })
 

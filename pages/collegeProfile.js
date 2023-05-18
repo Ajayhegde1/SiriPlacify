@@ -2,13 +2,49 @@ import student from '../public/students.png'
 import photo from '../public/photoupload.png'
 
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
 
+import { addProfile } from '@/redux/Slices/profile'
+import { useDispatch, useSelector } from 'react-redux'
+
 export default function CollegeProfile () {
+  const dispatch = useDispatch()
+  
+  const [btnText,setBtnText] = useState('Save')
+  const [isBtnDisabled, setIsBtnDisabled] = useState(true)
+  const [username,setUsername] = useState('')
+  const [collegeName,setCollegeName] = useState('')
+  const [website,setWebsite] = useState('')
+  const [location,setLocation] = useState('')
+  const [emailID,setEmailID] = useState('')
+  const [contactNo,setContactNo] = useState('')
+  const [collegeDescription,setCollegeDescription] = useState('')
+
+  const handleProfile = () => {
+    const Data = {
+      name : collegeName,
+      username : username,
+      website : website,
+      location : location,
+      emailID : emailID,
+      contactNo: contactNo,
+      collegeDescription: collegeDescription
+    }
+    setBtnText('Saving...')
+    dispatch(addProfile(Data))
+  }
+
+  useEffect(() => {
+    if (username.length > 0 && collegeName.length > 0 && website.length > 0 && location.length > 0 && emailID.length > 0 && contactNo.length > 0 && collegeDescription.length > 0) {
+      setIsBtnDisabled(false)
+    }
+  },[username,collegeName,website,location,emailID,contactNo,collegeDescription])
+
   return (
     <div>
       <DocHeader
@@ -23,16 +59,22 @@ export default function CollegeProfile () {
                 label='Name of universities / colleges'
                 placeholder='Pes university'
                 type='text'
+                value={collegeName}
+                onChangeHandler={(e) => setCollegeName(e.target.value)}
               />
               <TextField
                 label='Account user name'
                 placeholder='TPO name'
                 type='text'
+                value={username}
+                onChangeHandler={(e) => setUsername(e.target.value)}
               />
               <TextField
                 label='Website'
                 placeholder='pes.edu'
                 type='text'
+                value={website}
+                onChangeHandler={(e) => setWebsite(e.target.value)}
               />
             </div>
             <div className='pl-5 m-auto'>
@@ -49,6 +91,8 @@ export default function CollegeProfile () {
               label='location'
               placeholder='100 Feet Ring Road, Banashankari Stage III, Dwaraka Nagar, Bengaluru, Karnataka 560085'
               type='text'
+              value={location}
+              onChangeHandler={(e) => setLocation(e.target.value)}
             />
             <div className='grid grid-cols-1 md:grid-cols-5 gap-0 md:gap-8'>
               <div className='col-span-1 md:col-span-3'>
@@ -56,6 +100,8 @@ export default function CollegeProfile () {
                   label='Email id'
                   placeholder='xyz.@gmail.com'
                   type='text'
+                  value={emailID}
+                  onChangeHandler={(e) => setEmailID(e.target.value)}
                 />
               </div>
               <div className='col-span-1 md:col-span-2'>
@@ -63,6 +109,8 @@ export default function CollegeProfile () {
                   label='Contact'
                   placeholder='9090909090'
                   type='text'
+                  value={contactNo}
+                  onChangeHandler={(e) => setContactNo(e.target.value)}
                 />
               </div>
             </div>
@@ -70,10 +118,14 @@ export default function CollegeProfile () {
               label='About the universities / colleges'
               placeholder='Your message...'
               rows='4'
+              value={collegeDescription}
+              onChangeHandler={(e) => setCollegeDescription(e.target.value)}
             />
             <div class='mb-6'>
               <Button
-                btnText='Next'
+                btnText={btnText}
+                onClickHandler={handleProfile}
+                disabled={isBtnDisabled}
               />
             </div>
           </div>

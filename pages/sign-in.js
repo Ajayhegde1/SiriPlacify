@@ -14,7 +14,7 @@ import { routes } from '@/constants/routes'
 
 export default function CollegeProfile () {
   const dispatch = useDispatch()
-  const router = useRouter()
+  // const router = useRouter()
 
   const user = useSelector((state) => state.user)
 
@@ -29,16 +29,15 @@ export default function CollegeProfile () {
     } else {
       setIsBtnDisabled(true)
     }
-    if (user) {
-      router.replace('/jobs')
-    }
+    // if (user) {
+    //   router.replace('/jobs')
+    // }
   }, [email, password])
 
   const handleLogin = (e) => {
     e.preventDefault()
     setBtnText('Signing In...')
     dispatch(signIn({ email, password }))
-    router.replace(routes.JOBS)
   }
 
   return (
