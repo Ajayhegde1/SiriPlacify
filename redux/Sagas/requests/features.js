@@ -12,3 +12,7 @@ export const getJob = (id) => {
 export const getPlacementPolicy = () => {
   return GET('/placementPolicy', { sessionID: store.getState().user.sessionId })
 }
+
+export const getCollegeProfile = () => {
+  return GET( '/collegeProfile' , { sessionID: store.getState().user.sessionId })
+}
