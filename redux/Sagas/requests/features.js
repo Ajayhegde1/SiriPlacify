@@ -20,3 +20,7 @@ export const getCollegeProfile = () => {
 export const addCollegeProfile = (data) => {
   return POST('/collegeProfile', data, { sessionID: store.getState().user.sessionId })
 }
+
+export const addPlacementPolicy = (data) => {
+  return POST('/placementPolicy', data, { sessionID: store.getState().user.sessionId })
+}

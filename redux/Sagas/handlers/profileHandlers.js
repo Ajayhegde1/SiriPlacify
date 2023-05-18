@@ -5,7 +5,6 @@ import { openNotification, notificationTypes } from '@/utils/notifications'
 import { setProfile } from '@/redux/Slices/profile'
 import { getCollegeProfile,addCollegeProfile } from '../requests/features'
 import { routes } from '@/constants/routes'
-import { store } from '@/redux/configureStore'
 
 export function * handleGetCollegeProfile () {
     try {
@@ -37,9 +36,8 @@ export function * handleADDCollegeProfile (action) {
     if (response.data.status == 200) {
       openNotification(
         notificationTypes.SUCCESS,
-        'Application Added Successfully'
+        'Profile Added Successfully'
       )
-      yield put(setProfile(response.data.data))
 
       window.history.replaceState({}, 'Placement Policy', routes.PLACEMENTPROFILE)
       window.location.reload()

@@ -10,7 +10,7 @@ const placementPolicySlice = createSlice({
     resetPlacementPolicy: () => null,
     updatePlacementPolicy: (state, action) => [...state, action.payload],
     getPlacementPolicy: (state) => state,
-    addPlacementPolicy: (state, action) => [...state, action.payload]
+    addPlacementPolicy: (state, action) => action.payload
   }
 })
 
