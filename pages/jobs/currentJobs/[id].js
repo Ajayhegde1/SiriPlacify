@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,12 +11,21 @@ import arrDown from '@/public/arrowdown.png'
 import overview from '@/public/overview.png'
 import microphone from '@/public/megaphone.png'
 
+import { getJob } from '@/redux/Sagas/requests/features';
+import { useRouter } from 'next/router';
+
 import AppliedStudents from '@/components/AppliedStudents';
 import JobDesc from '@/components/JobDesc';
+import { notificationTypes, openNotification } from '@/utils/notifications';
 
 export default function CurrentJobs() {
+    const router = useRouter();
+
     const [jobSection, setJobSection] = useState(1)
     const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [job, setJob] = useState({})
+
+    const { id } = router.query;
 
     const setDeclinedJobsSection = () => {
         setJobSection(1)
@@ -25,6 +34,19 @@ export default function CurrentJobs() {
     const setDegree = () => {
         setJobSection(2)
     }
+
+    useEffect(() => {
+        getJob(id)
+            .then((res) => {
+                setJob(res.data.data)
+            })
+            .catch((err) => {
+                openNotification(
+                    notificationTypes.ERROR,
+                    'Error'
+                )
+            })
+    }, [])
 
     return (
         <div className="bg-gray-200 min-h-screen">
@@ -45,21 +67,34 @@ export default function CurrentJobs() {
                             className='my-auto h-12 w-12'
                         />
                     </Link>
-                    <div className='ml-2 md:ml-6'>
-                        <p
-                            className='font-SubHeading text-base text-gray-400 font-bold'
-                        >
-                            Design
-                        </p>
-                        <h1 className='mt-1 text-xl md:text-2xl font-Heading font-bold text-black'>
-                            Product Designer
-                        </h1>
-                        <p
-                            className='pt-1 font-SubHeading text-base text-gray-400 font-bold'
-                        >
-                            PESU venture labs • Full time
-                        </p>
-                    </div>
+                    {
+                        job === null
+                            ?
+                            <div>
+                            </div>
+                            :
+                            Object.keys(job).length === 0
+                                ?
+                                <div>
+                                    No Data Found
+                                </div>
+                                :
+                                <div className='ml-2 md:ml-6'>
+                                    <p
+                                        className='font-SubHeading text-base text-gray-400 font-bold'
+                                    >
+                                        {job.jobSector}
+                                    </p>
+                                    <h1 className='mt-1 text-lg md:text-xl font-Heading font-bold text-black'>
+                                        {job.jobTitle}
+                                    </h1>
+                                    <p
+                                        className='pt-1 font-SubHeading text-base text-gray-400 font-bold'
+                                    >
+                                        {job.companyName} • {job.jobPositionType}
+                                    </p>
+                                </div>
+                    }
                     <div className='mr-10 md:mr-20 ml-5 xl:ml-auto mt-6 grid grid-cols-2 gap-2'>
                         <div className='h-12 font-bold rounded-lg text-gray-600 py-2 px-4 bg-gray-200 border-2 border-gray-400'>
                             <div className='flex flex-row'>
@@ -125,21 +160,33 @@ export default function CurrentJobs() {
                     jobSection === 1 ?
                         <AppliedStudents />
                         :
-                        <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
-                            <JobDesc
-                                companyName="Apple"
-                                companyDesc="is an American multinational technology company headquartered in Cupertino, California. Apple is the largest technology company by revenue, totaling US$394.3 billion in 2022. As of March 2023, Apple is the world's biggest company by market capitalization."
-                                jobTitle="Product Designer"
-                                jobLocation="Apple Rammurthy nagar, Bangalore"
-                                jobPosition="Full Time"
-                                jobSector="Design"
-                                jobCTC="₹ 10,00,000 - ₹ 15,00,000"
-                                jobDesc="We are looking for a Product Designer to join our team! As a Product Designer, you will be responsible for delivering the best online user experience, which makes your role extremely important for our success and ensuring customer satisfaction and loyalty. You will be designing ideas using various methods and latest technology. You will be designing graphic user interface elements, like menus, tabs, forms, and widgets."
-                                jobBond="2 years"
-                                jobCriteria="B.Tech"
-                                jobSection={1}
-                            />
-                        </div>
+                        job === null
+                            ?
+                            <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
+                                Loading ...
+                            </div>
+                            :
+                            Object.keys(job).length === 0
+                                ?
+                                <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
+                                    No Data Found
+                                </div>
+                                :
+                                <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
+                                    <JobDesc
+                                        companyName={job.companyName}
+                                        companyDesc=""
+                                        jobTitle={job.jobTitle}
+                                        jobLocation={job.jobLocation}
+                                        jobPosition={job.jobPositionType}
+                                        jobSector={job.jobSector}
+                                        jobCTC={job.jobCTC}
+                                        jobDesc={job.jobDescription}
+                                        jobBond={job.jobBond}
+                                        jobCriteria={job.jobCriteria}
+                                        jobSection={1}
+                                    />
+                                </div>
                 }
                 <br />
                 <br />

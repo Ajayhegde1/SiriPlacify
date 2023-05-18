@@ -1,13 +1,11 @@
-import { useState } from 'react'
+export default function JobSection({ jobSection, setJobSection, jobs }) {
+    // const setJobOffersSection = () => {
+    //     setJobSection(2)
+    // }
 
-export default function JobSection({ jobSection, setJobSection }) {
-    const setJobOffersSection = () => {
-        setJobSection(2)
-    }
-
-    const setDeclinedJobsSection = () => {
-        setJobSection(3)
-    }
+    // const setDeclinedJobsSection = () => {
+    //     setJobSection(3)
+    // }
 
     const setCurrentJobsSection = () => {
         setJobSection(1)
@@ -23,24 +21,36 @@ export default function JobSection({ jobSection, setJobSection }) {
                     <span className="pb-1 text-lg font-Heading font-semibold text-black pr-1">
                         Current  Job
                     </span>
-                    <span className="ml-2 p-1 bg-gray-300 rounded-2xl text-green-500 font-medium">
-                        09
-                    </span>
+                    {
+                        jobs === null
+                            ?
+                            <></>
+                            :
+                            jobs.length === 0
+                                ?
+                                <span className="ml-2 p-1 bg-gray-300 rounded-2xl text-green-500 font-medium">
+                                    00
+                                </span>
+                                :
+                                <span className="ml-2 p-1 bg-gray-300 rounded-2xl text-green-500 font-medium">
+                                    0{jobs.length}
+                                </span>
+                    }
                 </p>
             </div>
             <div
-                onClick={setJobOffersSection}
+                // onClick={setJobOffersSection}
                 className={jobSection === 2 ? "pb-1 border-b-4 border-green-900" : ""}
             >
-                <span className="text-lg font-Heading font-semibold text-black pr-1">Job offers</span>
-                <span className="p-1 bg-gray-300 rounded-2xl text-green-500 font-medium">12</span>
+                <span className="text-lg font-Heading font-semibold text-gray-500 pr-1">Job offers</span>
+                {/* <span className="p-1 bg-gray-300 rounded-2xl text-green-500 font-medium">12</span> */}
             </div>
             <div
                 className={jobSection === 3 ? "pb-1 border-b-4 border-green-900" : ""}
-                onClick={setDeclinedJobsSection}
+            // onClick={setDeclinedJobsSection}
             >
-                <span className="text-lg font-Heading font-semibold text-black pr-1">Declined jobs</span>
-                <span className="p-1 bg-gray-300 rounded-2xl text-red-500 font-medium">10</span>
+                <span className="text-lg font-Heading font-semibold text-gray-500 pr-1">Declined jobs</span>
+                {/* <span className="p-1 bg-gray-300 rounded-2xl text-red-500 font-medium">10</span> */}
             </div>
         </div>
     )

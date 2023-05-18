@@ -1,4 +1,5 @@
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 import Sidebar from "@/components/SideBar";
 import DocHeader from '@/components/DocHeader'
@@ -7,14 +8,19 @@ import JobOffers from "@/components/JobOffers";
 import DeclinedJobs from "@/components/DeclinedJobs";
 import JobSection from "@/components/JobSection";
 
+import { getJobs } from '@/redux/Slices/jobSlice';
 
 export default function Jobs() {
+    const dispatch = useDispatch()
+
+    const jobs = useSelector((state) => state.jobs)
+
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [jobSection, setJobSection] = useState(1)
 
     useEffect(() => {
-        console.log('useEffect')
-    }, [])
+        dispatch(getJobs())
+    }, [dispatch])
 
     return (
         <div className="bg-gray-200 min-h-screen">
@@ -33,11 +39,14 @@ export default function Jobs() {
                         <JobSection
                             jobSection={jobSection}
                             setJobSection={setJobSection}
+                            jobs={jobs}
                         />
                         {
                             jobSection === 1
                                 ?
-                                <CurrentJobs /> :
+                                <CurrentJobs
+                                    jobs={jobs}
+                                /> :
                                 jobSection === 2 ?
                                     <JobOffers />
                                     :
