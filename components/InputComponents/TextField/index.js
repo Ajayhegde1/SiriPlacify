@@ -17,7 +17,7 @@ export default function TextField({
                 label={label}
             />
             <input
-                className="border-2 border-gray-400 rounded w-full p-4 text-black leading-tight focus:outline-none focus:shadow-outline"
+                className={disabled === true ? "cursor-not-allowed bg-gray-300 border-2 border-gray-400 rounded w-full p-4 text-black leading-tight focus:outline-none focus:shadow-outline" : "border-2 border-gray-400 rounded w-full p-4 text-black leading-tight focus:outline-none focus:shadow-outline"}
                 type={type}
                 placeholder={placeholder}
                 onChange={onChangeHandler}

@@ -8,8 +8,20 @@ import { useState } from 'react'
 
 import pp from "@/public/pp1.png";
 
+import { useEffect } from 'react'
+
+import { useDispatch, useSelector } from 'react-redux';
+import { getPlacementPolicy } from '@/redux/Slices/placementPolicy';
+
 export default function EditPlacementPolicy() {
+    const dispatch = useDispatch()
     const [sidebarOpen, setSidebarOpen] = useState(false)
+
+    const placementPolicy = useSelector((state) => state.placementPolicy)
+
+    useEffect(() => {
+        dispatch(getPlacementPolicy())
+    }, [dispatch])
 
     return (
         <div className="bg-gray-200">
@@ -35,55 +47,88 @@ export default function EditPlacementPolicy() {
                             <div>
                                 <div className='pl-2 md:pl-6 xl:pl-8 ml-0 md:ml-4 xl:ml-6 mr-8 md:mr-10 xl:mr-12 2xl:mr-16'>
                                     <div className='ml-6'>
-                                        <div className='mb-3 w-full md:w-1/2'>
-                                            <TextField
-                                                label="Number of tiers"
-                                                placeholder="03"
-                                                type="text"
-                                            />
-                                        </div>
-                                        <div className='mb-3'>
-                                            <TextField
-                                                label="Maximum Number of offers a student can receive"
-                                                placeholder="03"
-                                                type="text"
-                                            />
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <TextField
-                                                label="Minimum CTC of tier 1"
-                                                placeholder="75,0000.00"
-                                                type="text"
-                                            />
-                                            <TextField
-                                                label="Maximum CTC of tier 1"
-                                                placeholder="85,0000.00"
-                                                type="text"
-                                            />
-                                            <TextField
-                                                label="Minimum CTC of tier 2"
-                                                placeholder="75,0000.00"
-                                                type="text"
-                                            />
-                                            <TextField
-                                                label="Maximum CTC of tier 2"
-                                                placeholder="85,0000.00"
-                                                type="text"
-                                            />
-                                            <TextField
-                                                label="Minimum CTC of tier 3"
-                                                placeholder="75,0000.00"
-                                                type="text"
-                                            />
-                                            <TextField
-                                                label="Maximum CTC of tier 3"
-                                                placeholder="85,0000.00"
-                                                type="text"
-                                            />
-                                        </div>
+                                        {
+                                            placementPolicy === null
+                                                ?
+                                                <div>
+                                                    Loading...
+                                                </div>
+                                                :
+                                                Object.keys(placementPolicy).length === 0
+                                                    ?
+                                                    <div>
+                                                        No Placement Policy Found
+                                                    </div>
+                                                    :
+                                                    <>
+                                                        <div className='mb-3 w-full md:w-1/2'>
+                                                            <TextField
+                                                                label="Number of tiers"
+                                                                placeholder="03"
+                                                                type="text"
+                                                                value={placementPolicy.noOfTiers}
+                                                                disabled={true}
+                                                            />
+                                                        </div>
+                                                        <div className='mb-3'>
+                                                            <TextField
+                                                                label="Maximum Number of offers a student can receive"
+                                                                placeholder="03"
+                                                                type="text"
+                                                                value={placementPolicy.maxOffers}
+                                                                disabled={true}
+                                                            />
+                                                        </div>
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                            <TextField
+                                                                label="Minimum CTC of tier 1"
+                                                                placeholder="75,0000.00"
+                                                                type="text"
+                                                                value={placementPolicy.minCTCForT1}
+                                                                disabled={true}
+                                                            />
+                                                            <TextField
+                                                                label="Maximum CTC of tier 1"
+                                                                placeholder="85,0000.00"
+                                                                type="text"
+                                                                value={placementPolicy.maxCTCForT1}
+                                                                disabled={true}
+                                                            />
+                                                            <TextField
+                                                                label="Minimum CTC of tier 2"
+                                                                placeholder="75,0000.00"
+                                                                type="text"
+                                                                value={placementPolicy.minCTCForT2}
+                                                                disabled={true}
+                                                            />
+                                                            <TextField
+                                                                label="Maximum CTC of tier 2"
+                                                                placeholder="85,0000.00"
+                                                                type="text"
+                                                                value={placementPolicy.maxCTCForT2}
+                                                                disabled={true}
+                                                            />
+                                                            <TextField
+                                                                label="Minimum CTC of tier 3"
+                                                                placeholder="75,0000.00"
+                                                                type="text"
+                                                                value={placementPolicy.maxCTCForT3}
+                                                                disabled={true}
+                                                            />
+                                                            <TextField
+                                                                label="Maximum CTC of tier 3"
+                                                                placeholder="85,0000.00"
+                                                                type="text"
+                                                                value={placementPolicy.maxCTCForT3}
+                                                                disabled={true}
+                                                            />
+                                                        </div>
+                                                    </>
+                                        }
                                         <div class="mt-6 mb-6">
                                             <Button
                                                 btnText="Done"
+                                                disabled={true}
                                             />
                                         </div>
                                     </div>

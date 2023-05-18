@@ -4,6 +4,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from './storage';
 import userReducer from './Slices/userSlice';
 import jobReducer from './Slices/jobSlice';
+import placementPolicyReducer from './Slices/placementPolicy';
 import rootSaga from './Sagas/rootSaga';
 
 const persistConfig = {
@@ -14,6 +15,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user: userReducer,
   jobs: jobReducer,
+  placementPolicy: placementPolicyReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
