@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
-const initialJobState = null;
+const initialJobState = null
 
 const jobSlice = createSlice({
   name: 'job',
@@ -10,16 +10,16 @@ const jobSlice = createSlice({
     resetJob: () => null,
     updateJob: (state, action) => [...state, action.payload],
     getJobs: (state) => state,
-    addJob: (state, action) => [...state, action.payload],
-  },
-});
+    addJob: (state, action) => [...state, action.payload]
+  }
+})
 
 export const {
   setJob,
   resetJob,
   updateJob,
   getJobs,
-  addJob,
-} = jobSlice.actions;
+  addJob
+} = jobSlice.actions
 
-export default jobSlice.reducer;
+export default jobSlice.reducer

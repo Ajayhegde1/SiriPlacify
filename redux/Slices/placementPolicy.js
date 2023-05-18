@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
-const initialPlacementPolicyState = null;
+const initialPlacementPolicyState = null
 
 const placementPolicySlice = createSlice({
   name: 'placementPolicy',
@@ -10,16 +10,16 @@ const placementPolicySlice = createSlice({
     resetPlacementPolicy: () => null,
     updatePlacementPolicy: (state, action) => [...state, action.payload],
     getPlacementPolicy: (state) => state,
-    addPlacementPolicy: (state, action) => [...state, action.payload],
-  },
-});
+    addPlacementPolicy: (state, action) => [...state, action.payload]
+  }
+})
 
 export const {
   setPlacementPolicy,
   resetPlacementPolicy,
   updatePlacementPolicy,
   getPlacementPolicy,
-  addPlacementPolicy,
-} = placementPolicySlice.actions;
+  addPlacementPolicy
+} = placementPolicySlice.actions
 
-export default placementPolicySlice.reducer;
+export default placementPolicySlice.reducer
