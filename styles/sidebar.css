@@ -52,7 +52,7 @@
 
 /*menu list*/
 .navbar .menu-list {
-   margin-top: 100px;
+   margin-top: 70px;
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -61,8 +61,8 @@
 }
 
 .navbar .menu-list .menu-item {    
-   padding-top: 20px;
-   padding-bottom: 20px;
+   padding-top: 10px;
+   padding-bottom: 10px;
    width: 100%;
 }
 

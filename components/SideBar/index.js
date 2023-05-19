@@ -1,21 +1,34 @@
 import Image from 'next/image'
+import { useDispatch } from 'react-redux'
 
 import logo from '../../public/logo.png'
 import grid from '../../public/view-grid.png'
 import jobs from '../../public/jobs.png'
-import message from '../../public/message.png'
+import Addjobs from '../../public/addJobsIcons.png'
 import pp from '../../public/pp.png'
-import error from '../../public/error.png'
+import editProfile from '../../public/editProfile.png'
+import logout from '../../public/logout.png'
+
+// import message from '../../public/message.png'
+// import error from '../../public/error.png'
+
+import { signOut } from '@/redux/Slices/userSlice'
 
 const Sidebar = ({
   sidebarOpen,
   setSidebarOpen,
   activePage
 }) => {
-  function handleSideBar () {
+  const dispatch = useDispatch()
+
+  function handleSideBar() {
     setSidebarOpen(!sidebarOpen)
   }
 
+  function handleSignOut() {
+    dispatch(signOut())
+  }  
+  
   return (
     <div className='relative'>
       <nav className={`navbar ${sidebarOpen ? 'active' : ''}`}>
@@ -53,13 +66,14 @@ const Sidebar = ({
                 <span className='menu-link-text'>Jobs</span>
               </a>
             </li>
-            <li className='menu-item'>
-              <a className='menu-link' href='#'>
+            <li className={`menu-item ${activePage == 6 ? 'current' : ''}`}>
+              <a className='menu-link' href='/jobs'>
                 <Image
-                  src={message}
-                  alt='logo for messages'
+                  src={Addjobs}
+                  className={sidebarOpen ? 'ml-3' : 'ml-0'}
+                  alt='logo for jobs'
                 />
-                <span className='menu-link-text'>Message</span>
+                <span className='menu-link-text'>Add Jobs</span>
               </a>
             </li>
             <li className={`menu-item ${activePage == 4 ? 'current' : ''}`}>
@@ -72,7 +86,30 @@ const Sidebar = ({
                 <span className='menu-link-text'>Placement Policy</span>
               </a>
             </li>
-            <li className='menu-item'>
+            <li className={`menu-item ${activePage == 7 ? 'current' : ''}`}>
+              <a className='menu-link' href='/editProfile'>
+                <Image
+                  src={editProfile}
+                  className={sidebarOpen ? 'ml-3' : 'ml-1'}
+                  alt='logo for placement policy'
+                />
+                <span className='menu-link-text'>Edit Profile</span>
+              </a>
+            </li>
+            <li 
+              className={`menu-item ${activePage == 8 ? 'current' : ''}`}
+              onClick={() => handleSignOut()}
+            >
+              <a className='menu-link'>
+                <Image
+                  src={logout}
+                  className={sidebarOpen ? 'ml-3' : 'ml-1'}
+                  alt='logo for placement policy'
+                />
+                <span className='menu-link-text'>Logout</span>
+              </a>
+            </li>
+            {/*             <li className='menu-item'>
               <a className='menu-link' href='#'>
                 <Image
                   src={error}
@@ -80,7 +117,16 @@ const Sidebar = ({
                 />
                 <span className='menu-link-text'>Error Correction</span>
               </a>
-            </li>
+            </li> */}
+            {/*             <li className='menu-item'>
+              <a className='menu-link' href='#'>
+                <Image
+                  src={message}
+                  alt='logo for messages'
+                />
+                <span className='menu-link-text'>Message</span>
+              </a>
+            </li> */}
           </ul>
         </div>
       </nav>

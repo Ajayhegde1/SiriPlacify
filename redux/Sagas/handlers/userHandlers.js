@@ -1,11 +1,15 @@
 import { call, put } from 'redux-saga/effects'
 
-import { setCookie } from '@/utils/cookies'
+import { setCookie, deleteCookie } from '@/utils/cookies'
 import { openNotification, notificationTypes } from '@/utils/notifications'
-import { setUser } from '@/redux/Slices/userSlice'
+import { setUser,resetUser } from '@/redux/Slices/userSlice'
 import { routes } from '@/constants/routes'
 
 import { signInUser } from '../requests/userRequests'
+
+import { resetJob } from '@/redux/Slices/jobSlice'
+import { resetPlacementPolicy } from '@/redux/Slices/placementPolicy'
+import { resetProfile } from '@/redux/Slices/profile'
 
 export function * handleSignIn (action) {
   try {
@@ -128,4 +132,24 @@ export function * handleSignIn (action) {
   } catch (err) {
     console.log(err)
   }
+}
+
+export function * handleSignOut (action) {
+  deleteCookie()
+
+  yield put(resetUser())
+  yield put(resetJob())
+  yield put(resetPlacementPolicy())
+  yield put(resetProfile())
+
+  openNotification(
+    notificationTypes.SUCCESS,
+    'Sucessfully Logged Out!'
+  )
+
+  window.history.replaceState({}, 'Sign In', routes.SIGN_IN)
+  window.location.reload()
+  setTimeout(() => {
+    window.location.reload()
+  }, 4000)
 }
