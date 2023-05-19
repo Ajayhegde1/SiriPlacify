@@ -36,16 +36,18 @@ export default function CurrentJobs () {
   }
 
   useEffect(() => {
-    getJob(id)
-      .then((res) => {
-        setJob(res.data.data)
-      })
-      .catch((err) => {
-        openNotification(
-          notificationTypes.ERROR,
-          'Error'
-        )
-      })
+    if (typeof id !== 'undefined') {
+      getJob(id)
+        .then((res) => {
+          setJob(res.data.data)
+        })
+        .catch((err) => {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error'
+          )
+        })
+    }
   }, [])
 
   return (
@@ -152,7 +154,18 @@ export default function CurrentJobs () {
         </div>
         {
                     jobSection === 1
-                      ? <AppliedStudents />
+                      ? 
+                      job === null
+                      ?
+                      <></>
+                      :
+                      id === null
+                      ?
+                      <></>
+                      :
+                      <AppliedStudents 
+                          jobID={id}
+                      />
                       : job === null
                         ? <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
                           Loading ...

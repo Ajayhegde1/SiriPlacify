@@ -28,3 +28,7 @@ export const addPlacementPolicy = (data) => {
 export const addJobs = (data) => {
   return POST('/jobs', data, { sessionID: store.getState().user.sessionId })
 }
+
+export const getAppliedStudents = (jobID) => {
+  return GET( `/appliedStudents?jobID=${jobID}` , { sessionID: store.getState().user.sessionId })
+}
