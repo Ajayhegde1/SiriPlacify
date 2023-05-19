@@ -86,7 +86,7 @@ export default function AddJob() {
                 </p>
 
                 <h1 className='text-center md:text-left pb-10 ml-2 md:ml-6 mt-2 md:mt-4 text-3xl md:text-4xl font-Heading font-bold text-black'>Create Job</h1>
-                <div className='ml-3 md:ml-6 grid grid-cols-2 gap-8 mr-12'>
+                <div className='ml-3 md:ml-6 grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-8 mr-12'>
                     <div>
                         <TextField
                             label='Company Name'
@@ -183,7 +183,7 @@ export default function AddJob() {
                     />
                 </div>
                 <div className='mb-10 ml-3 md:ml-6 mr-12 mt-5'>
-                    <div className='grid grid-cols-3 gap-4'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                         <TextField
                             label='Name of the contact person'
                             placeholder='Btech'
