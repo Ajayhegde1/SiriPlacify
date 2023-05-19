@@ -10,7 +10,7 @@ const jobSlice = createSlice({
     resetJob: () => null,
     updateJob: (state, action) => [...state, action.payload],
     getJobs: (state) => state,
-    addJob: (state, action) => [...state, action.payload]
+    addJob: (state, action) => state
   }
 })
 

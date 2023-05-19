@@ -67,7 +67,7 @@ const Sidebar = ({
               </a>
             </li>
             <li className={`menu-item ${activePage == 6 ? 'current' : ''}`}>
-              <a className='menu-link' href='/jobs'>
+              <a className='menu-link' href='/addJob'>
                 <Image
                   src={Addjobs}
                   className={sidebarOpen ? 'ml-3' : 'ml-0'}

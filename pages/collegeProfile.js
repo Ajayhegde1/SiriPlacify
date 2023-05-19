@@ -10,7 +10,7 @@ import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
 
 import { addProfile } from '@/redux/Slices/profile'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 export default function CollegeProfile () {
   const dispatch = useDispatch()
