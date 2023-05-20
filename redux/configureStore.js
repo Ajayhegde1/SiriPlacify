@@ -6,6 +6,7 @@ import userReducer from './Slices/userSlice'
 import jobReducer from './Slices/jobSlice'
 import placementPolicyReducer from './Slices/placementPolicy'
 import collegeProfileReducer from './Slices/profile'
+import studentSliceReducer from './Slices/studentSlice'
 import rootSaga from './Sagas/rootSaga'
 
 const persistConfig = {
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   jobs: jobReducer,
   placementPolicy: placementPolicyReducer,
-  profile: collegeProfileReducer
+  profile: collegeProfileReducer,
+  studentProfile: studentSliceReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
