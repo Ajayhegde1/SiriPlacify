@@ -52,7 +52,7 @@ export function * handleSignIn (action) {
       }
       else if (response.data.accType === "1"){
         if (response.data.signUpStatus === "0"){
-          window.history.replaceState({}, 'Profile', routes.COLLEGEPROFILE)
+          window.history.replaceState({}, 'Student Profile', routes.STUDENTPROFILE)
           window.location.reload()
         }
         else if (response.data.signUpStatus === "1"){
