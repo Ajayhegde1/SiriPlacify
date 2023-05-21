@@ -10,10 +10,11 @@ import JobSection from '@/components/JobSection'
 
 import { getJobs } from '@/redux/Slices/jobSlice'
 
-export default function Jobs () {
+export default function Jobs() {
   const dispatch = useDispatch()
 
   const jobs = useSelector((state) => state.jobs)
+  const user = useSelector((state) => state.user)
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [jobSection, setJobSection] = useState(1)
@@ -36,20 +37,31 @@ export default function Jobs () {
         <div className='pt-4 md:py-10 px-4 md:px-6 lg:p-10'>
           <div>
             <h1 className='text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>Jobs</h1>
-            <JobSection
-              jobSection={jobSection}
-              setJobSection={setJobSection}
-              jobs={jobs}
-            />
             {
-                            jobSection === 1
-                              ? <CurrentJobs
-                                  jobs={jobs}
-                                />
-                              : jobSection === 2
-                                ? <JobOffers />
-                                : <DeclinedJobs />
-                        }
+              user === null
+                ?
+                <>
+                </>
+                :
+                user.accType === '0'
+                  ?
+                  <JobSection
+                    jobSection={jobSection}
+                    setJobSection={setJobSection}
+                    jobs={jobs}
+                  />
+                  :
+                  <></>
+            }
+            {
+              jobSection === 1
+                ? <CurrentJobs
+                  jobs={jobs}
+                />
+                : jobSection === 2
+                  ? <JobOffers />
+                  : <DeclinedJobs />
+            }
           </div>
         </div>
       </main>

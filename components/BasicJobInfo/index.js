@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import moment from 'moment';
 
 export default function BasicJobInfo ({
   logo,
@@ -33,14 +34,12 @@ export default function BasicJobInfo ({
         </div>
         <div className='col-span-1'>
           <div className='ml-auto w-40 p-3 bg-rose-100 rounded-2xl text-sm'>
-            <p className='text-gray-700 text-center'>DUE DATE - {dueDate}</p>
+            <p className='text-gray-700 text-center'>DUE DATE - {moment(dueDate).format('DD MMM')}</p>
           </div>
           <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
-            <div className='rounded-lg text-base md:text-lg 2xl:text-xl bg-red-500 text-white font-bold text-center p-2'>
-              X    Decline For Now
-            </div>
+            <div></div>
             <div className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'>
-              + Accept Offer
+              Apply Now
             </div>
           </div>
         </div>

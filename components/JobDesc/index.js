@@ -16,15 +16,12 @@ export default function JobDesc ({
       {
                 jobSection === 2 &&
                   <div>
-                    <h1 className='mt-3 pb-4 border-b-2 border-gray-300 text-lg font-bold font-Heading font-bold text-black'>
-                      About {companyName}
+                    <h1 className='mt-3 pb-4 text-lg font-bold font-Heading font-bold text-black'>
+                      Company Name: {companyName}
                     </h1>
-                    <p className='mt-6 mb-4 text-gray-500 text-medium text-lg mr-8 md:mr-32'>
-                      {companyDesc}
-                    </p>
                   </div>
             }
-      <div className={jobSection === 2 ? 'mt-20' : 'mt-2'}>
+      <div className={jobSection === 2 ? 'mt-6' : 'mt-2'}>
         {
                     jobSection === 1
                       ? <h1 className='pb-4 border-b-2 border-gray-300 text-3xl font-bold font-Heading font-bold text-black'>
