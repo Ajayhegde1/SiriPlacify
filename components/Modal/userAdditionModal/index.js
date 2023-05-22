@@ -1,9 +1,8 @@
 import { useRef, useEffect } from "react"
 import styles from '@/styles/modal.module.css'
-import { saveAs } from 'file-saver';
-import * as XLSX from 'xlsx';
-import sheet from '@/public/sheets.png'
+import sheet from '../../../public/sheets.png'
 import close from '../../../public/close.png'
+import Image from 'next/image'
 
 export default function UserAdditionModal({
     showModal,
@@ -20,24 +19,6 @@ export default function UserAdditionModal({
     const handleClick = (event) => {
         hiddenFileInput.current.click()
     }
-    const handleDownload = async () => {
-        const file = await import('../../../assets/sample.xlsx');
-        const fileData = await fetch(file.default);
-        const arrayBuffer = await fileData.arrayBuffer();
-
-        // Read the workbook from the file
-        const data = new Uint8Array(arrayBuffer);
-        const workbook = XLSX.read(data, { type: 'array' });
-
-        // Generate a buffer from the workbook
-        const buffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
-
-        // Create a file blob from the buffer
-        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
-        // Save the file using file-saver library
-        saveAs(blob, 'sample-userData.xlsx');
-    };
 
     useEffect(() => {
         if (showModal) {
@@ -62,7 +43,11 @@ export default function UserAdditionModal({
                     </div>
                     <div className={styles.close}>
                         <a onClick={closeModal}>
-                            <img src={close} alt='close' className='h-12' />
+                        <Image
+                            src={close}
+                            className='h-14'
+                            alt='close button'
+                        />
                         </a>
                     </div>
                 </div>
@@ -70,7 +55,8 @@ export default function UserAdditionModal({
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='mt-4'>
                             <a
-                                onClick={handleDownload}
+                                href='/sample.xlsx'
+                                download='sample.xlsx'
                                 className='ml-10 mt-1 bg-blue-300 hover:bg-green-300 border-2 text-black font-bold py-5 px-4 text-base rounded-xl focus:outline-none focus:shadow-outline'
                             >
                                 Download Sample sheet
@@ -91,7 +77,12 @@ export default function UserAdditionModal({
                                     style={{ display: 'none' }}
                                     accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                                 />
-                                <img className='h-6' src={sheet} /> &nbsp; Import from excel
+                                <Image
+                                    src={sheet}
+                                    alt="Import excel sheet"
+                                    className='h-5 mt-1 mr-2'
+                                />
+                                Import From Excel
                             </button>
                         </div>
                     </div>
