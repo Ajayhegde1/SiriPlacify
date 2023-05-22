@@ -62,13 +62,6 @@ export default function JobItem ({
           <p className='overflow-hidden truncate mt-6 mb-4 text-gray-500 text-medium text-base'>
             {job.jobDescription}
           </p>
-          {
-                        isCurrentJobs
-                          ? <JobStatus
-                              jobStatus='Candidates Applied'
-                            />
-                          : <></>
-                    }
         </div>
       </Link>
     }

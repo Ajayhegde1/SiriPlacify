@@ -24,7 +24,6 @@ export default function getStudentJobs() {
         if (typeof id !== 'undefined') {
           getJob(id)
             .then((res) => {
-              console.log(res.data.data)
               setJob(res.data.data)
             })
             .catch((err) => {
@@ -72,6 +71,7 @@ export default function getStudentJobs() {
                         jobLocation={job.jobLocation}
                         jobCategory={job.jobSector}
                         dueDate={job.dueDate}
+                        jobID={job.uid}
                     />
                     <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
                         <JobDesc

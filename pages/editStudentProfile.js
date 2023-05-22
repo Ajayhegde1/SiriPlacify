@@ -31,7 +31,7 @@ export default function editStudentProfile() {
                     className='ml-3 md:ml-6 mb-12 font-SubHeading text-base font-normal'
                 >
                     <span className='text-gray-500'>
-                        <a href="#">
+                        <a href="/jobs">
                             Dashboard
                         </a>
                     </span> {'>'} Edit profile

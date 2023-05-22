@@ -1,13 +1,40 @@
 import Image from 'next/image'
 import moment from 'moment';
+import JobApplicationModal from '@/components/Modal/jobApplicationModal'
+import { useState, useEffect } from 'react'
+import { GET } from '@/config/api';
+import { useSelector } from 'react-redux';
+import { notificationTypes, openNotification } from '@/utils/notifications';
 
-export default function BasicJobInfo ({
+export default function BasicJobInfo({
   logo,
   jobTitle,
   jobLocation,
   jobCategory,
-  dueDate
+  dueDate,
+  jobID
 }) {
+  const [showModal, setShowModal] = useState(false)
+  const [isApplied, setIsApplied] = useState(false)
+
+  const user = useSelector(state => state.user)
+
+  useEffect(() => {
+      GET(`/checkJobApplication?jobID=${jobID}`, { sessionID: user.sessionId })
+        .then((res) => {
+          if (res.data.status === '200') {
+            setIsApplied(res.data.jobStatus)
+          }
+          else {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Something went wrong, please try again later'
+            )
+          }
+        })
+  }, [jobID])
+
   return (
     <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-5 rounded-lg'>
       <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2 md:gap-8'>
@@ -38,12 +65,29 @@ export default function BasicJobInfo ({
           </div>
           <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
             <div></div>
-            <div className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'>
-              Apply Now
-            </div>
+            {
+              isApplied ?
+                <div
+                  className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+                >
+                  Applied
+                </div>
+                :
+                <div
+                  onClick={() => setShowModal(!showModal)}
+                  className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+                >
+                  Apply Now
+                </div>
+            }
           </div>
         </div>
       </div>
+      <JobApplicationModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        jobID={jobID}
+      />
     </div>
   )
 }

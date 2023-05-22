@@ -44,3 +44,7 @@ export const addStudentProfile = (data) => {
 export const getStudentJobs = () => {
   return GET('/studentJobs', { sessionID: store.getState().user.sessionId })
 }
+
+export const applyJob = (data) => {
+  return POST('/applyJobs', data, { sessionID: store.getState().user.sessionId })
+}
