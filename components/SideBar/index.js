@@ -9,6 +9,7 @@ import pp from '../../public/pp.png'
 import editProfile from '../../public/editProfile.png'
 import logout from '../../public/logout.png'
 import myApplications from '../../public/application.png'
+import userImage from '../../public/user.png'
 
 // import message from '../../public/message.png'
 // import error from '../../public/error.png'
@@ -75,6 +76,16 @@ const Sidebar = ({
                         alt='logo for jobs'
                       />
                       <span className='menu-link-text'>Add Jobs</span>
+                    </a>
+                  </li>
+                  <li className={`menu-item ${activePage == 9 ? 'current' : ''}`}>
+                    <a className='menu-link' href='/userManagement'>
+                      <Image
+                        src={userImage}
+                        className={sidebarOpen ? 'ml-3' : 'ml-1'}
+                        alt='logo for placement policy'
+                      />
+                      <span className='menu-link-text'>User Management</span>
                     </a>
                   </li>
                   <li className={`menu-item ${activePage == 4 ? 'current' : ''}`}>
