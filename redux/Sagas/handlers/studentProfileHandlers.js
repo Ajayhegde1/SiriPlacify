@@ -39,7 +39,7 @@ export function * handleADDStudentProfile (action) {
         'Profile Added Successfully'
       )
 
-      window.history.replaceState({}, 'Student Profile', routes.EDITSTUDENTPROFILE)
+      window.history.replaceState({}, 'Jobs', routes.JOBS)
       window.location.reload()
 
     } else if (response.data.status == 466) {
