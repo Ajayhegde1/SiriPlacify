@@ -14,7 +14,7 @@ export const getPlacementPolicy = () => {
 }
 
 export const getCollegeProfile = () => {
-  return GET( '/collegeProfile' , { sessionID: store.getState().user.sessionId })
+  return GET('/collegeProfile', { sessionID: store.getState().user.sessionId })
 }
 
 export const addCollegeProfile = (data) => {
@@ -30,7 +30,7 @@ export const addJobs = (data) => {
 }
 
 export const getAppliedStudents = (jobID) => {
-  return GET( `/appliedStudents?jobID=${jobID}` , { sessionID: store.getState().user.sessionId })
+  return GET(`/appliedStudents?jobID=${jobID}`, { sessionID: store.getState().user.sessionId })
 }
 
 export const getStudentProfile = () => {

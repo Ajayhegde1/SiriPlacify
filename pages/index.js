@@ -1,7 +1,7 @@
-import Router from "next/router"
-import { useEffect } from "react"
-import { useSelector } from "react-redux"
-import { routes } from "@/constants/routes"
+import Router from 'next/router'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { routes } from '@/constants/routes'
 
 export default function Home () {
   const user = useSelector(state => state.user)
@@ -12,10 +12,9 @@ export default function Home () {
     } else {
       Router.push(routes.SIGN_IN)
     }
-  },[])
+  }, [])
 
   return (
-    <main>
-    </main>
+    <main />
   )
 }

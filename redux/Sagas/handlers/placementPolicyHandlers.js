@@ -3,7 +3,7 @@ import { call, put } from 'redux-saga/effects'
 import { openNotification, notificationTypes } from '@/utils/notifications'
 
 import { setPlacementPolicy } from '@/redux/Slices/placementPolicy'
-import { getPlacementPolicy,addPlacementPolicy } from '../requests/features'
+import { getPlacementPolicy, addPlacementPolicy } from '../requests/features'
 import { routes } from '@/constants/routes'
 
 export function * handleGetPlacementPolicy () {
@@ -40,7 +40,6 @@ export function * handleADDPlacementPolicy (action) {
 
       window.history.replaceState({}, 'Jobs', routes.JOBS)
       window.location.reload()
-
     } else if (response.data.status == 466) {
       openNotification(
         notificationTypes.ERROR,

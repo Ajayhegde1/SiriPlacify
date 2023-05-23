@@ -11,9 +11,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { addPlacementPolicy } from '@/redux/Slices/placementPolicy'
 
-export default function placementPolicy() {
+export default function placementPolicy () {
   const dispatch = useDispatch()
-  
+
   const [btnText, setBtnText] = useState('Save')
   const [isBtnDisabled, setIsBtnDisabled] = useState(true)
 
@@ -27,7 +27,7 @@ export default function placementPolicy() {
   const [maxCTCT3, setMaxCTCT3] = useState(0.0)
 
   useEffect(() => {
-    //make sure user entered proper values in field
+    // make sure user entered proper values in field
     if (numberOfTiers > 0 && maxNumberOfOffers > 0 && minCTCT1 > 0.0 && maxCTCT1 > 0.0 && minCTCT2 > 0.0 && maxCTCT2 > 0.0 && minCTCT3 > 0.0 && maxCTCT3 > 0.0) {
       setIsBtnDisabled(false)
     }
@@ -37,12 +37,12 @@ export default function placementPolicy() {
     const Data = {
       noOfTiers: numberOfTiers,
       maxOffers: maxNumberOfOffers,
-      minCTCT1: minCTCT1,
-      maxCTCT1: maxCTCT1,
-      minCTCT2: minCTCT2,
-      maxCTCT2: maxCTCT2,
-      minCTCT3: minCTCT3,
-      maxCTCT3: maxCTCT3
+      minCTCT1,
+      maxCTCT1,
+      minCTCT2,
+      maxCTCT2,
+      minCTCT3,
+      maxCTCT3
     }
 
     dispatch(addPlacementPolicy(Data))

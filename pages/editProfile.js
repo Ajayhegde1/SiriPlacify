@@ -11,7 +11,7 @@ import Button from '@/components/Buttons'
 
 import { getProfile } from '@/redux/Slices/profile'
 
-export default function EditProfile() {
+export default function EditProfile () {
   const dispatch = useDispatch()
 
   const profile = useSelector((state) => state.profile)
@@ -31,26 +31,22 @@ export default function EditProfile() {
           className='ml-3 md:ml-6 mb-12 font-SubHeading text-base font-normal'
         >
           <span className='text-gray-500'>
-            <a href="/jobs">
-            Dashboard
+            <a href='/jobs'>
+              Dashboard
             </a>
-            </span> {'>'} Edit profile
+          </span> {'>'} Edit profile
         </p>
         <h1 className='text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>Edit profile</h1>
         {
           profile === null
-            ?
-            <div>
+            ? <div>
               loading...
             </div>
-            :
-            Object.keys(profile).length === 0
-              ?
-              <div>
+            : Object.keys(profile).length === 0
+              ? <div>
                 No data provided
               </div>
-              :
-              <div className='grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-8'>
+              : <div className='grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-8'>
                 <div>
                   <div className='grid grid-cols-1 md:grid-cols-3 gap-4 content-center'>
                     <div className='pb-4 pl-2 md:pl-5 m-auto'>
@@ -67,21 +63,21 @@ export default function EditProfile() {
                         placeholder='Pes university'
                         type='text'
                         value={profile.collegeName}
-                        disabled={true}
+                        disabled
                       />
                       <TextField
                         label='Account user name'
                         placeholder='TPO name'
                         type='text'
-                        value={user !== null && Object.keys(user).length > 0 ? user.username : "" }
-                        disabled={true}
+                        value={user !== null && Object.keys(user).length > 0 ? user.username : ''}
+                        disabled
                       />
                       <TextField
                         label='Website'
                         placeholder='pes.edu'
                         type='text'
                         value={profile.collegeWebsite}
-                        disabled={true}
+                        disabled
                       />
                     </div>
                   </div>
@@ -91,8 +87,8 @@ export default function EditProfile() {
                         label='Email id'
                         placeholder='xyz.@gmail.com'
                         type='text'
-                        value={user !== null && Object.keys(user).length > 0 ? user.email : "" }
-                        disabled={true}
+                        value={user !== null && Object.keys(user).length > 0 ? user.email : ''}
+                        disabled
                       />
                     </div>
                     <div className='col-span-1 md:col-span-2'>
@@ -101,7 +97,7 @@ export default function EditProfile() {
                         placeholder='9090909090'
                         type='text'
                         value={profile.contactNo}
-                        disabled={true}
+                        disabled
                       />
                     </div>
                   </div>
@@ -112,7 +108,7 @@ export default function EditProfile() {
                     placeholder='100 Feet Ring Road, Banashankari Stage III, Dwaraka Nagar, Bengaluru, Karnataka 560085'
                     type='text'
                     value={profile.collegeLocation}
-                    disabled={true}
+                    disabled
                   />
                   <TextArea
                     label='About the universities / colleges'
@@ -124,7 +120,7 @@ export default function EditProfile() {
                             staff, students and parents.'
                     rows='8'
                     value={profile.collegeDescription}
-                    disabled={true}
+                    disabled
                   />
                   <div class='mb-6'>
                     <Button

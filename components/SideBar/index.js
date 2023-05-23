@@ -1,8 +1,7 @@
 import Image from 'next/image'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import logo from '../../public/logo.png'
-import { useSelector } from 'react-redux'
 import jobs from '../../public/jobs.png'
 import Addjobs from '../../public/addJobsIcons.png'
 import pp from '../../public/pp.png'
@@ -25,11 +24,11 @@ const Sidebar = ({
 
   const user = useSelector(state => state.user)
 
-  function handleSideBar() {
+  function handleSideBar () {
     setSidebarOpen(!sidebarOpen)
   }
 
-  function handleSignOut() {
+  function handleSignOut () {
     dispatch(signOut())
   }
 
@@ -52,12 +51,9 @@ const Sidebar = ({
           </div>
           {
             user === null
-              ?
-              <></>
-              :
-              user.accType === '0'
-                ?
-                <ul className='menu-list'>
+              ? <></>
+              : user.accType === '0'
+                ? <ul className='menu-list'>
                   <li className={`menu-item ${activePage == 2 ? 'current' : ''}`}>
                     <a className='menu-link' href='/jobs'>
                       <Image
@@ -122,8 +118,7 @@ const Sidebar = ({
                     </a>
                   </li>
                 </ul>
-                :
-                <ul className='menu-list'>
+                : <ul className='menu-list'>
                   <li className={`menu-item ${activePage == 2 ? 'current' : ''}`}>
                     <a className='menu-link' href='/jobs'>
                       <Image
@@ -188,8 +183,8 @@ const Sidebar = ({
               </a>
             </li> */}
         </div>
-      </nav >
-    </div >
+      </nav>
+    </div>
   )
 }
 

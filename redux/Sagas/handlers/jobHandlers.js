@@ -2,14 +2,14 @@ import { call, put } from 'redux-saga/effects'
 
 import { openNotification, notificationTypes } from '@/utils/notifications'
 import { setJob, updateJob } from '@/redux/Slices/jobSlice'
-import { getAllJobs,getStudentJobs, addJobs } from '../requests/features'
+import { getAllJobs, getStudentJobs, addJobs } from '../requests/features'
 import { store } from '@/redux/configureStore'
 
 import { routes } from '@/constants/routes'
 
-export function* handleGetAllJobs() {
+export function * handleGetAllJobs () {
   try {
-    if (store.getState().user.accType === "0") {
+    if (store.getState().user.accType === '0') {
       const response = yield call(getAllJobs)
       if (response.data.status === '200') {
         yield put(setJob(response.data.data))
@@ -20,8 +20,7 @@ export function* handleGetAllJobs() {
           'Something went wrong. Please try again later.'
         )
       }
-    }
-    else if (store.getState().user.accType === "1"){
+    } else if (store.getState().user.accType === '1') {
       const response = yield call(getStudentJobs)
       if (response.data.status === '200') {
         yield put(setJob(response.data.data))
@@ -32,15 +31,13 @@ export function* handleGetAllJobs() {
           'Something went wrong. Please try again later.'
         )
       }
-    }
-    else{
+    } else {
       openNotification(
         notificationTypes.ERROR,
         'account type not found'
       )
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error)
     openNotification(
       notificationTypes.ERROR,
@@ -50,8 +47,7 @@ export function* handleGetAllJobs() {
   }
 }
 
-
-export function* handleADDJob(action) {
+export function * handleADDJob (action) {
   try {
     const response = yield call(addJobs, action.payload)
 
@@ -65,7 +61,6 @@ export function* handleADDJob(action) {
 
       window.history.replaceState({}, 'Jobs', routes.JOBS)
       window.location.reload()
-
     } else if (response.data.status === 400) {
       openNotification(
         notificationTypes.WARNING,

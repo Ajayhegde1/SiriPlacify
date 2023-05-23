@@ -13,13 +13,12 @@ module.exports = {
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
-            outputPath: 'assets/',
-          },
-        },
-      ],
-    });
+            outputPath: 'assets/'
+          }
+        }
+      ]
+    })
 
-    return config;
-  },
-};
-
+    return config
+  }
+}

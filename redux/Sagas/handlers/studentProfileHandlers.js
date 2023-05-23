@@ -3,31 +3,30 @@ import { call, put } from 'redux-saga/effects'
 import { openNotification, notificationTypes } from '@/utils/notifications'
 
 import { setStudentProfile } from '@/redux/Slices/studentSlice'
-import { getStudentProfile,addStudentProfile } from '../requests/features'
+import { getStudentProfile, addStudentProfile } from '../requests/features'
 import { routes } from '@/constants/routes'
 
 export function * handleGetStudentProfile () {
-    try {
-      const response = yield call(getStudentProfile)
-      if (response.data.status === '200') {
-        yield put(setStudentProfile(response.data.data))
-      } else {
-        openNotification(
-          notificationTypes.ERROR,
-          '[500] Internal Server Error',
-          'Something went wrong. Please try again later.'
-        )
-      }
-    } catch (error) {
-      console.error(error)
+  try {
+    const response = yield call(getStudentProfile)
+    if (response.data.status === '200') {
+      yield put(setStudentProfile(response.data.data))
+    } else {
       openNotification(
         notificationTypes.ERROR,
         '[500] Internal Server Error',
         'Something went wrong. Please try again later.'
       )
     }
+  } catch (error) {
+    console.error(error)
+    openNotification(
+      notificationTypes.ERROR,
+      '[500] Internal Server Error',
+      'Something went wrong. Please try again later.'
+    )
   }
-  
+}
 
 export function * handleADDStudentProfile (action) {
   try {
@@ -41,7 +40,6 @@ export function * handleADDStudentProfile (action) {
 
       window.history.replaceState({}, 'Jobs', routes.JOBS)
       window.location.reload()
-
     } else if (response.data.status == 466) {
       openNotification(
         notificationTypes.ERROR,

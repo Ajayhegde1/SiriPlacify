@@ -3,7 +3,6 @@ import { getStudentProfile, addStudentProfile } from '@/redux/Slices/studentSlic
 import { handleGetStudentProfile, handleADDStudentProfile } from '../handlers/studentProfileHandlers'
 
 export function * studentProfileSagas () {
-    yield takeLatest(getStudentProfile.type, handleGetStudentProfile)
-    yield takeLatest(addStudentProfile.type, handleADDStudentProfile)
+  yield takeLatest(getStudentProfile.type, handleGetStudentProfile)
+  yield takeLatest(addStudentProfile.type, handleADDStudentProfile)
 }
-  

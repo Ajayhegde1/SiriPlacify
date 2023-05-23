@@ -1,6 +1,6 @@
 import Student from './Student'
 
-export default function Candidates({
+export default function Candidates ({
   students
 }) {
   return (
@@ -17,18 +17,14 @@ export default function Candidates({
         <tbody>
           {
             students === null || typeof students === 'undefined'
-              ?
-              <div>
+              ? <div>
                 Loading...
               </div>
-              :
-              students.length === 0
-                ?
-                <div className='mt-6 mb-3 ml-6 font-medium'>
+              : students.length === 0
+                ? <div className='mt-6 mb-3 ml-6 font-medium'>
                   No students found
                 </div>
-                :
-                students.map((student, index) =>
+                : students.map((student, index) =>
                   <Student
                     student={student}
                     key={index}

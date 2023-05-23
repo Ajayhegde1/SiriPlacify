@@ -1,12 +1,12 @@
 import Image from 'next/image'
-import moment from 'moment';
+import moment from 'moment'
 import JobApplicationModal from '@/components/Modal/jobApplicationModal'
 import { useState, useEffect } from 'react'
-import { GET } from '@/config/api';
-import { useSelector } from 'react-redux';
-import { notificationTypes, openNotification } from '@/utils/notifications';
+import { GET } from '@/config/api'
+import { useSelector } from 'react-redux'
+import { notificationTypes, openNotification } from '@/utils/notifications'
 
-export default function BasicJobInfo({
+export default function BasicJobInfo ({
   logo,
   jobTitle,
   jobLocation,
@@ -20,19 +20,18 @@ export default function BasicJobInfo({
   const user = useSelector(state => state.user)
 
   useEffect(() => {
-      GET(`/checkJobApplication?jobID=${jobID}`, { sessionID: user.sessionId })
-        .then((res) => {
-          if (res.data.status === '200') {
-            setIsApplied(res.data.jobStatus)
-          }
-          else {
-            openNotification(
-              notificationTypes.ERROR,
-              'Error',
-              'Something went wrong, please try again later'
-            )
-          }
-        })
+    GET(`/checkJobApplication?jobID=${jobID}`, { sessionID: user.sessionId })
+      .then((res) => {
+        if (res.data.status === '200') {
+          setIsApplied(res.data.jobStatus)
+        } else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Something went wrong, please try again later'
+          )
+        }
+      })
   }, [jobID])
 
   return (
@@ -64,19 +63,18 @@ export default function BasicJobInfo({
             <p className='text-gray-700 text-center'>DUE DATE - {moment(dueDate).format('DD MMM')}</p>
           </div>
           <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
-            <div></div>
+            <div />
             {
-              isApplied ?
-                <div
-                  className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
-                >
+              isApplied
+                ? <div
+                    className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+                  >
                   Applied
-                </div>
-                :
-                <div
-                  onClick={() => setShowModal(!showModal)}
-                  className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
-                >
+                  </div>
+                : <div
+                    onClick={() => setShowModal(!showModal)}
+                    className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+                  >
                   Apply Now
                 </div>
             }

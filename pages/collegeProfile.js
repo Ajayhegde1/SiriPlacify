@@ -14,26 +14,26 @@ import { useDispatch } from 'react-redux'
 
 export default function CollegeProfile () {
   const dispatch = useDispatch()
-  
-  const [btnText,setBtnText] = useState('Save')
+
+  const [btnText, setBtnText] = useState('Save')
   const [isBtnDisabled, setIsBtnDisabled] = useState(true)
-  const [username,setUsername] = useState('')
-  const [collegeName,setCollegeName] = useState('')
-  const [website,setWebsite] = useState('')
-  const [location,setLocation] = useState('')
-  const [emailID,setEmailID] = useState('')
-  const [contactNo,setContactNo] = useState('')
-  const [collegeDescription,setCollegeDescription] = useState('')
+  const [username, setUsername] = useState('')
+  const [collegeName, setCollegeName] = useState('')
+  const [website, setWebsite] = useState('')
+  const [location, setLocation] = useState('')
+  const [emailID, setEmailID] = useState('')
+  const [contactNo, setContactNo] = useState('')
+  const [collegeDescription, setCollegeDescription] = useState('')
 
   const handleProfile = () => {
     const Data = {
-      name : collegeName,
-      username : username,
-      website : website,
-      location : location,
-      emailID : emailID,
-      contactNo: contactNo,
-      collegeDescription: collegeDescription
+      name: collegeName,
+      username,
+      website,
+      location,
+      emailID,
+      contactNo,
+      collegeDescription
     }
     setBtnText('Saving...')
     dispatch(addProfile(Data))
@@ -43,7 +43,7 @@ export default function CollegeProfile () {
     if (username.length > 0 && collegeName.length > 0 && website.length > 0 && location.length > 0 && emailID.length > 0 && contactNo.length > 0 && collegeDescription.length > 0) {
       setIsBtnDisabled(false)
     }
-  },[username,collegeName,website,location,emailID,contactNo,collegeDescription])
+  }, [username, collegeName, website, location, emailID, contactNo, collegeDescription])
 
   return (
     <div>

@@ -120,11 +120,11 @@ export default function EditPlacementPolicy () {
                                                 </>
                                         }
                     <div class='mt-6 mb-6'>
-                        <Button
-                            btnText='Done'
-                            disabled
-                          />
-                      </div>
+                      <Button
+                        btnText='Done'
+                        disabled
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
