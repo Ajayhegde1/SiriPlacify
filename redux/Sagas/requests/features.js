@@ -42,7 +42,7 @@ export const addStudentProfile = (data) => {
 }
 
 export const getStudentJobs = () => {
-  return GET('/studentJobs', { sessionID: store.getState().user.sessionId })
+  return GET('/v2/jobs', { sessionID: store.getState().user.sessionId })
 }
 
 export const applyJob = (data) => {

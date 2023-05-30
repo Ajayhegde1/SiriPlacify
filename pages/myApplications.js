@@ -1,7 +1,7 @@
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
 import { getStudentAppliedJobs } from '@/redux/Sagas/requests/features'
-
+import { notificationTypes, openNotification } from '@/utils/notifications'
 import { useState, useEffect } from 'react'
 
 export default function myApplications () {
@@ -11,12 +11,12 @@ export default function myApplications () {
   useEffect(() => {
     getStudentAppliedJobs()
       .then((res) => {
-        if (res.data.status === '200') {
+        if (res.data.status === 200) {
           setJobApplication(res.data.data)
         } else {
           openNotification(
-            notificationTypes.ERROR,
-            'Error'
+            notificationTypes.WARNING,
+            'No Jobs Found'
           )
         }
       })

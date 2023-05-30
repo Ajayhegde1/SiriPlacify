@@ -25,7 +25,7 @@ export default function JobApplicationModal ({
 
     POST('/applyJobs', data, { sessionID: user.sessionId })
       .then((res) => {
-        if (res.data.status === '200') {
+        if (res.data.status === 200) {
           setShowModal(!showModal)
           window.location.reload()
         } else {

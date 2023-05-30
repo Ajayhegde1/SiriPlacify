@@ -17,7 +17,7 @@ export default function AppliedStudents ({
     if (typeof jobID !== 'undefined') {
       getAppliedStudents(jobID)
         .then((res) => {
-          if (res.data.status === '200') {
+          if (res.data.status === 200) {
             setStudentList(res.data.data)
             setFilteredStudentList(res.data.data)
           } else {

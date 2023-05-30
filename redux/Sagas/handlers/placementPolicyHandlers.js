@@ -9,7 +9,7 @@ import { routes } from '@/constants/routes'
 export function * handleGetPlacementPolicy () {
   try {
     const response = yield call(getPlacementPolicy)
-    if (response.data.status === '200') {
+    if (response.data.status === 200) {
       yield put(setPlacementPolicy(response.data.data))
     } else {
       openNotification(

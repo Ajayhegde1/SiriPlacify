@@ -9,7 +9,7 @@ import { routes } from '@/constants/routes'
 export function * handleGetCollegeProfile () {
   try {
     const response = yield call(getCollegeProfile)
-    if (response.data.status === '200') {
+    if (response.data.status === 200) {
       yield put(setProfile(response.data.data))
     } else {
       openNotification(

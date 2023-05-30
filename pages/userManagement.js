@@ -12,6 +12,7 @@ import Image from 'next/image'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 import { POST } from '@/config/api'
 import UserAdditionModal from '@/components/Modal/userAdditionModal'
+import { parse } from 'postcss'
 
 export default function UserManagement () {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -39,12 +40,12 @@ export default function UserManagement () {
 
           POST('/addStudents', updatedData, { sessionID: user.sessionId })
             .then((res) => {
-              if (res.data.status === 200 || res.data.status === 304 || res.data.status === 'ok') {
+              let status = parseInt(res.data.status)
+              if (status === 200 || status === 304 || status === 'ok') {
                 openNotification(
                   notificationTypes.SUCCESS,
                   'Success'
                 )
-                window.location.reload()
               } else {
                 openNotification(
                   notificationTypes.ERROR,
@@ -79,13 +80,13 @@ export default function UserManagement () {
     ]
     POST('/addStudents', Data, { sessionID: user.sessionId })
       .then((res) => {
-        if (res.data.status === '200') {
+        let status = parseInt(res.data.status)
+        if (status === 200) {
           openNotification(
             notificationTypes.SUCCESS,
             'Sucess',
             'Student Added'
           )
-          window.location.reload()
         } else {
           openNotification(
             notificationTypes.ERROR,

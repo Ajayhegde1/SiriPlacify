@@ -22,7 +22,7 @@ export default function BasicJobInfo ({
   useEffect(() => {
     GET(`/checkJobApplication?jobID=${jobID}`, { sessionID: user.sessionId })
       .then((res) => {
-        if (res.data.status === '200') {
+        if (res.data.status === 200) {
           setIsApplied(res.data.jobStatus)
         } else {
           openNotification(
