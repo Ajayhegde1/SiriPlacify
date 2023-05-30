@@ -1,0 +1,78 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.container {
+    box-sizing: border-box;
+    border: 2px solid rgb(209 213 219);
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    background-color: white;
+    color: #2c2c2c;
+    font-family: 'Baloo Tamma 2', cursive;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .container1 {
+    box-sizing: border-box;
+    border: 2px solid rgb(156 163 175 / 1);
+    border-radius: 10px;
+    padding: 13px;
+    width: 100%;
+    outline: none;
+    margin-bottom: auto;
+    transition: all 0.3s ease-in-out;
+    background-color: white;
+    color: #2c2c2c;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .container:disabled {
+    box-sizing: border-box;
+    border: 2px solid #F4F4F4;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    background-color: rgb(209 213 219);
+    color: #2c2c2c;
+    font-family: 'Baloo Tamma 2', cursive;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: not-allowed;
+  }
+
+  .container:focus {
+    box-sizing: border-box;
+    border: 2px solid #3481E9;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    background-color: white;
+    color: #2c2c2c;
+    font-family: 'Baloo Tamma 2', cursive;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  .label {
+    box-sizing: border-box;
+    text-align: left;
+    width: 100%;
+    font-family: 'Baloo Tamma 2', cursive;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+}
