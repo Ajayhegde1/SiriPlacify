@@ -60,7 +60,23 @@ export function * handleSignIn (action) {
             'Something went wrong'
           )
         }
-      } else {
+      } 
+      else if (response.data.accType === '2'){
+        if (response.data.signUpStatus === '0') {
+          window.history.replaceState({}, 'Company Profile', routes.COMPANYPROFILE)
+          window.location.reload()
+        } else if (response.data.signUpStatus === '1') {
+          window.history.replaceState({}, 'Edit Company Profile', routes.EDITCOMPANYPROFILE)
+          window.location.reload()
+        } else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Something went wrong'
+          )
+        }
+      }
+      else {
         openNotification(
           notificationTypes.ERROR,
           'Error',

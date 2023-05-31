@@ -4,6 +4,7 @@ import { jobSagas } from './watcherSagas/jobSagas'
 import { placementPolicySagas } from './watcherSagas/placementSagas'
 import { profileSagas } from './watcherSagas/profileSaga'
 import { studentProfileSagas } from './watcherSagas/studentProfileSaga'
+import {companyProfileSagas} from './watcherSagas/companyProfileSagas'
 
 export default function * rootSaga () {
   yield all([
@@ -11,7 +12,8 @@ export default function * rootSaga () {
     jobSagas(),
     placementPolicySagas(),
     profileSagas(),
-    studentProfileSagas()
+    studentProfileSagas(),
+    companyProfileSagas()
     // Add other sagas here if needed
   ])
 }

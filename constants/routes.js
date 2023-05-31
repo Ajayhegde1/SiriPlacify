@@ -7,5 +7,7 @@ export const routes = {
   EDITPROFILE: '/editProfile',
   EDITPLACEMENTPROFILE: '/editPlacementPolicy',
   STUDENTPROFILE: '/studentProfile',
-  EDITSTUDENTPROFILE: '/editStudentProfile'
+  EDITSTUDENTPROFILE: '/editStudentProfile',
+  COMPANYPROFILE: '/companyProfile',
+  EDITCOMPANYPROFILE: '/editCompanyProfile',
 }

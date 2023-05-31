@@ -41,6 +41,14 @@ export const addStudentProfile = (data) => {
   return POST('/studentProfile', data, { sessionID: store.getState().user.sessionId })
 }
 
+export const getCompany = () => {
+  return GET('/company', { sessionID: store.getState().user.sessionId })
+}
+
+export const addCompany = (data) => {
+  return POST('/company', data, { sessionID: store.getState().user.sessionId })
+}
+
 export const getStudentJobs = () => {
   return GET('/v2/jobs', { sessionID: store.getState().user.sessionId })
 }
