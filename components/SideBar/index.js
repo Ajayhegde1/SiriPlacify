@@ -53,7 +53,8 @@ const Sidebar = ({
             user === null
               ? <></>
               : user.accType === '0'
-                ? <ul className='menu-list'>
+                ? 
+                <ul className='menu-list'>
                   <li className={`menu-item ${activePage == 2 ? 'current' : ''}`}>
                     <a className='menu-link' href='/jobs'>
                       <Image
@@ -118,7 +119,10 @@ const Sidebar = ({
                     </a>
                   </li>
                 </ul>
-                : <ul className='menu-list'>
+                : 
+                user.accType === '1'
+                ?
+                <ul className='menu-list'>
                   <li className={`menu-item ${activePage == 2 ? 'current' : ''}`}>
                     <a className='menu-link' href='/jobs'>
                       <Image
@@ -162,6 +166,42 @@ const Sidebar = ({
                       <span className='menu-link-text'>Logout</span>
                     </a>
                   </li>
+                </ul>
+                :
+                <ul className='menu-list'>
+                <li className={`menu-item ${activePage == 6 ? 'current' : ''}`}>
+                  <a className='menu-link' href='/addJob'>
+                    <Image
+                      src={Addjobs}
+                      className={sidebarOpen ? 'ml-3' : 'ml-0'}
+                      alt='logo for jobs'
+                    />
+                    <span className='menu-link-text'>Add Jobs</span>
+                  </a>
+                </li>
+                  <li className={`menu-item ${activePage == 7 ? 'current' : ''}`}>
+                    <a className='menu-link' href='/editCompanyProfile'>
+                      <Image
+                        src={editProfile}
+                        className={sidebarOpen ? 'ml-3' : 'ml-1'}
+                        alt='logo for placement policy'
+                      />
+                      <span className='menu-link-text'>Edit Profile</span>
+                    </a>
+                  </li>
+                <li
+                  className={`menu-item ${activePage == 8 ? 'current' : ''}`}
+                  onClick={() => handleSignOut()}
+                >
+                  <a className='menu-link'>
+                    <Image
+                      src={logout}
+                      className={sidebarOpen ? 'ml-3' : 'ml-1'}
+                      alt='logo for placement policy'
+                    />
+                    <span className='menu-link-text'>Logout</span>
+                  </a>
+                </li>
                 </ul>
           }
           {/*             <li className='menu-item'>

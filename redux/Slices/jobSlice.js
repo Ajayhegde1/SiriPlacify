@@ -10,7 +10,8 @@ const jobSlice = createSlice({
     resetJob: () => null,
     updateJob: (state, action) => [...state, action.payload],
     getJobs: (state) => state,
-    addJob: (state, action) => state
+    addJob: (state, action) => state,
+    addJobByCompany: (state, action) => state
   }
 })
 
@@ -19,7 +20,8 @@ export const {
   resetJob,
   updateJob,
   getJobs,
-  addJob
+  addJob,
+  addJobByCompany
 } = jobSlice.actions
 
 export default jobSlice.reducer

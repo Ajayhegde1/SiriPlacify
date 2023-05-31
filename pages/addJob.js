@@ -1,14 +1,17 @@
 import DocHeader from '@/components/DocHeader'
 
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Sidebar from '@/components/SideBar'
 import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
+import SingleSelectComponent from '@/components/InputComponents/SingleSelectComponent'
 
-import { addJob } from '@/redux/Slices/jobSlice'
+import { addJob, addJobByCompany } from '@/redux/Slices/jobSlice'
+import { notificationTypes, openNotification } from '@/utils/notifications'
+import { jobStatusList,modeOfSelectionList } from '@/constants/addJobDropDowns'
 
 export default function AddJob () {
   const dispatch = useDispatch()
@@ -17,7 +20,7 @@ export default function AddJob () {
   const [isBtnDisabled, setIsBtnDisabled] = useState(true)
 
   const [designation, setDesignation] = useState('')
-  const [jobStatus, setJobStatus] = useState('')
+  const [jobStatus, setJobStatus] = useState(jobStatusList[0].value)
   const [locationOfWork, setLocationOfWork] = useState('')
   const [selectedDate, setSelectedDate] = useState(null)
   const [ctc, setCtc] = useState('')
@@ -32,6 +35,8 @@ export default function AddJob () {
   const [finalMode, setFinalMode] = useState('')
   const [companyName, setCompanyName] = useState('')
 
+  const user = useSelector((state) => state.user)
+
   useEffect(() => {
     if (finalMode && designation && jobStatus && locationOfWork && ctc &&
             sector && applicableCourses && modeOfSelection && bondDetails &&
@@ -44,24 +49,52 @@ export default function AddJob () {
   }, [finalMode, designation, jobStatus, locationOfWork, ctc, sector, applicableCourses, modeOfSelection, bondDetails, contactPersonName, contactPersonPhoneNumber, contactPersonEmail])
 
   const addJobHandler = () => {
-    const jobData = {
-      jobTitle: designation,
-      jobLocation: locationOfWork,
-      jobCTC: ctc,
-      jobDescription: briefJobDescription,
-      jobBond: bondDetails,
-      jobSector: sector,
-      jobPositionType: jobStatus,
-      jobCriteria: applicableCourses,
-      jobTestMode: modeOfSelection,
-      jobFinalSelection: finalMode,
-      jobContactName: contactPersonName,
-      jobContactNumber: contactPersonPhoneNumber,
-      jobEmailId: contactPersonEmail,
-      dueDate: selectedDate,
-      companyName
+    if (user.accType === '0') {
+      const jobData = {
+        jobTitle: designation,
+        jobLocation: locationOfWork,
+        jobCTC: ctc,
+        jobDescription: briefJobDescription,
+        jobBond: bondDetails,
+        jobSector: sector,
+        jobPositionType: jobStatus,
+        jobCriteria: applicableCourses,
+        jobTestMode: modeOfSelection,
+        jobFinalSelection: finalMode,
+        jobContactName: contactPersonName,
+        jobContactNumber: contactPersonPhoneNumber,
+        jobEmailId: contactPersonEmail,
+        dueDate: selectedDate,
+        companyName
+      }
+      dispatch(addJob(jobData))
     }
-    dispatch(addJob(jobData))
+    else if (user.accType === '2') {
+      const jobData = {
+        jobTitle: designation,
+        jobLocation: locationOfWork,
+        jobCTC: ctc,
+        jobDescription: briefJobDescription,
+        jobBond: bondDetails,
+        jobSector: sector,
+        jobPositionType: jobStatus,
+        jobCriteria: applicableCourses,
+        jobTestMode: modeOfSelection,
+        jobFinalSelection: finalMode,
+        jobContactName: contactPersonName,
+        jobContactNumber: contactPersonPhoneNumber,
+        jobEmailId: contactPersonEmail,
+        dueDate: selectedDate
+      }
+      dispatch(addJobByCompany(jobData))
+    }
+    else {
+      openNotification(
+        notificationTypes.ERROR,
+        'Error',
+        'You are not authorized to add jobs'
+      )
+    }
   }
 
   return (
@@ -88,13 +121,19 @@ export default function AddJob () {
         <h1 className='text-center md:text-left pb-10 ml-2 md:ml-6 mt-2 md:mt-4 text-3xl md:text-4xl font-Heading font-bold text-black'>Create Job</h1>
         <div className='ml-3 md:ml-6 grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-8 mr-12'>
           <div>
-            <TextField
-              label='Company Name'
-              placeholder='PESU Venture Labs'
-              type='text'
-              value={companyName}
-              onChangeHandler={(e) => setCompanyName(e.target.value)}
-            />
+            {
+              user.accType === '0' 
+              ?
+              <TextField
+                label='Company Name'
+                placeholder='PESU Venture Labs'
+                type='text'
+                value={companyName}
+                onChangeHandler={(e) => setCompanyName(e.target.value)}
+              />
+              :
+              <></>
+            }
             <TextField
               label='Designation'
               placeholder='UI, UX Designer'
@@ -102,12 +141,11 @@ export default function AddJob () {
               value={designation}
               onChangeHandler={(e) => setDesignation(e.target.value)}
             />
-            <TextField
-              label='Job Status'
-              placeholder='IT'
-              type='text'
+            <SingleSelectComponent
               value={jobStatus}
               onChangeHandler={(e) => setJobStatus(e.target.value)}
+              options={jobStatusList}
+              label='Job Status'
             />
             <TextField
               label='Location of work'
@@ -150,19 +188,17 @@ export default function AddJob () {
               value={applicableCourses}
               onChangeHandler={(e) => setApplicableCourses(e.target.value)}
             />
-            <TextField
-              label='Mode of Selection'
-              placeholder='Btech'
-              type='text'
+            <SingleSelectComponent
               value={modeOfSelection}
               onChangeHandler={(e) => setModeOfSelection(e.target.value)}
+              options={modeOfSelectionList}
+              label='Mode of Selection'
             />
-            <TextField
-              label='Final Mode of Selection'
-              placeholder='Offline'
-              type='text'
+            <SingleSelectComponent
               value={finalMode}
               onChangeHandler={(e) => setFinalMode(e.target.value)}
+              options={modeOfSelectionList}
+              label='Final Mode of Selection'
             />
             <TextArea
               rows='4'
@@ -186,7 +222,7 @@ export default function AddJob () {
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
             <TextField
               label='Name of the contact person'
-              placeholder='Btech'
+              placeholder='ABC sharma'
               type='text'
               value={contactPersonName}
               onChangeHandler={(e) => setContactPersonName(e.target.value)}
@@ -202,7 +238,7 @@ export default function AddJob () {
 
             <TextField
               label='Email ID of the contact person'
-              placeholder='Btech'
+              placeholder='Btech@gmail.com'
               type='text'
               value={contactPersonEmail}
               onChangeHandler={(e) => setContactPersonEmail(e.target.value)}

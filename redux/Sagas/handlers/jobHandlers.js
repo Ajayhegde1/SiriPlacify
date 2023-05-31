@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects'
 
 import { openNotification, notificationTypes } from '@/utils/notifications'
 import { setJob, updateJob } from '@/redux/Slices/jobSlice'
-import { getAllJobs, getStudentJobs, addJobs } from '../requests/features'
+import { getAllJobs, getStudentJobs, addJobs, addJobsByCompany } from '../requests/features'
 import { store } from '@/redux/configureStore'
 
 import { routes } from '@/constants/routes'
@@ -60,6 +60,40 @@ export function * handleADDJob (action) {
       yield put(updateJob(response.data.data))
 
       window.history.replaceState({}, 'Jobs', routes.JOBS)
+      window.location.reload()
+    } else if (response.data.status === 400) {
+      openNotification(
+        notificationTypes.WARNING,
+        'Cannot Submit data'
+      )
+    } else if (response.data.status === 500) {
+      openNotification(
+        notificationTypes.ERROR,
+        response.data.msg,
+        'Please enter a valid data.'
+      )
+    } else {
+      openNotification(
+        notificationTypes.ERROR,
+        '[500] Internal Server Error',
+        'Please try again later.'
+      )
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export function * handleADDJobByCompany (action) {
+  try {
+    const response = yield call(addJobsByCompany, action.payload)
+
+    if (response.data.status == 200) {
+      openNotification(
+        notificationTypes.SUCCESS,
+        'Job Added Successfully'
+      )
+
       window.location.reload()
     } else if (response.data.status === 400) {
       openNotification(
