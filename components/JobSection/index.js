@@ -1,11 +1,11 @@
-export default function JobSection ({ jobSection, setJobSection, jobs }) {
-  // const setJobOffersSection = () => {
-  //     setJobSection(2)
-  // }
+export default function JobSection ({ jobSection, setJobSection, jobs, offerJobs, declinedJobs }) {
+  const setJobOffersSection = () => {
+      setJobSection(2)
+  }
 
-  // const setDeclinedJobsSection = () => {
-  //     setJobSection(3)
-  // }
+  const setDeclinedJobsSection = () => {
+      setJobSection(3)
+  }
 
   const setCurrentJobsSection = () => {
     setJobSection(1)
@@ -28,24 +28,55 @@ export default function JobSection ({ jobSection, setJobSection, jobs }) {
                             ? <span className='ml-2 p-1 bg-gray-300 rounded-2xl text-green-500 font-medium'>
                               00
                               </span>
-                            : <span className='ml-2 p-1 bg-gray-300 rounded-2xl text-green-500 font-medium'>
-                              0{jobs.length}
+                            : <span className='ml-2 py-1 px-2 bg-gray-300 rounded-2xl text-green-500 font-medium'>
+                              {jobs.length}
                             </span>
                     }
         </p>
       </div>
       <div
-                // onClick={setJobOffersSection}
+        onClick={setJobOffersSection}
         className={jobSection === 2 ? 'pb-1 border-b-4 border-green-900' : ''}
       >
         <span className='text-lg font-Heading font-semibold text-gray-500 pr-1'>Job offers</span>
-        {/* <span className="p-1 bg-gray-300 rounded-2xl text-green-500 font-medium">12</span> */}
+        {
+          offerJobs === null
+          ?
+          <div> 
+          </div>
+          :
+          offerJobs.length === 0
+          ?
+          <span className='ml-2 p-1 bg-gray-300 rounded-2xl text-green-500 font-medium'>
+            00
+          </span>
+          :
+          <span className='ml-2 py-1 px-2 bg-gray-300 rounded-2xl text-green-500 font-medium'>
+            {offerJobs.length}
+          </span>
+        }
       </div>
       <div
+        onClick={setDeclinedJobsSection}
         className={jobSection === 3 ? 'pb-1 border-b-4 border-green-900' : ''}
       >
         <span className='text-lg font-Heading font-semibold text-gray-500 pr-1'>Declined jobs</span>
-        {/* <span className="p-1 bg-gray-300 rounded-2xl text-red-500 font-medium">10</span> */}
+        {
+          declinedJobs === null
+          ?
+          <>
+          </>
+          :
+          declinedJobs.length === 0
+          ?
+          <span className='ml-2 p-1 bg-gray-300 rounded-2xl text-green-500 font-medium'>
+            00
+          </span>
+          :
+          <span className='ml-2 py-1 px-2 bg-gray-300 rounded-2xl text-green-500 font-medium'>
+            {declinedJobs.length} 
+          </span>
+        }
       </div>
     </div>
   )

@@ -169,6 +169,16 @@ const Sidebar = ({
                 </ul>
                 :
                 <ul className='menu-list'>
+                  <li className={`menu-item ${activePage == 2 ? 'current' : ''}`}>
+                    <a className='menu-link' href='/jobs'>
+                      <Image
+                        src={jobs}
+                        className={sidebarOpen ? 'ml-3' : 'ml-0'}
+                        alt='logo for jobs'
+                      />
+                      <span className='menu-link-text'>Jobs</span>
+                    </a>
+                  </li>
                 <li className={`menu-item ${activePage == 6 ? 'current' : ''}`}>
                   <a className='menu-link' href='/addJob'>
                     <Image

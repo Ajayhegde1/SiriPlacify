@@ -2,7 +2,15 @@ import { GET, POST } from '@/config/api'
 import { store } from '@/redux/configureStore'
 
 export const getAllJobs = () => {
-  return GET('/jobs', { sessionID: store.getState().user.sessionId })
+  return GET('/v2/jobs?jobType=current', { sessionID: store.getState().user.sessionId })
+}
+
+export const getOfferJobs = () => {
+  return GET('/v2/jobs?jobType=offer', { sessionID: store.getState().user.sessionId })
+}
+
+export const getDeclinedJobs = () => {
+  return GET('/v2/jobs?jobType=declined', { sessionID: store.getState().user.sessionId })
 }
 
 export const getJob = (id) => {
@@ -31,6 +39,10 @@ export const addJobs = (data) => {
 
 export const addJobsByCompany = (data) => {
   return POST('/companyJobs', data, { sessionID: store.getState().user.sessionId })
+}
+
+export const getCompanyJobs = () => {
+  return GET('/v2/jobs?jobType=open', { sessionID: store.getState().user.sessionId })
 }
 
 export const getAppliedStudents = (jobID) => {

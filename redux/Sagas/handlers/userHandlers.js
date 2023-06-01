@@ -10,6 +10,8 @@ import { signInUser } from '../requests/userRequests'
 import { resetJob } from '@/redux/Slices/jobSlice'
 import { resetPlacementPolicy } from '@/redux/Slices/placementPolicy'
 import { resetProfile } from '@/redux/Slices/profile'
+import { resetOfferJob } from '@/redux/Slices/offerJobsSlice'
+import { resetDeclinedJob } from '@/redux/Slices/declinedJobsSlice'
 
 export function * handleSignIn (action) {
   try {
@@ -149,6 +151,8 @@ export function * handleSignOut (action) {
   yield put(resetJob())
   yield put(resetPlacementPolicy())
   yield put(resetProfile())
+  yield put(resetOfferJob())
+  yield put(resetDeclinedJob())
 
   openNotification(
     notificationTypes.SUCCESS,

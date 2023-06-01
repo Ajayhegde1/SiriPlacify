@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects'
 
 import { openNotification, notificationTypes } from '@/utils/notifications'
 import { setJob, updateJob } from '@/redux/Slices/jobSlice'
-import { getAllJobs, getStudentJobs, addJobs, addJobsByCompany } from '../requests/features'
+import { getAllJobs, getStudentJobs, getCompanyJobs, addJobsByCompany } from '../requests/features'
 import { store } from '@/redux/configureStore'
 
 import { routes } from '@/constants/routes'
@@ -31,7 +31,20 @@ export function * handleGetAllJobs () {
           'Something went wrong. Please try again later.'
         )
       }
-    } else {
+    } 
+    else if (store.getState().user.accType === '2') {
+      const response = yield call(getCompanyJobs)
+      if (response.data.status === '200') {
+        yield put(setJob(response.data.data))
+      } else {
+        openNotification(
+          notificationTypes.ERROR,
+          '[500] Internal Server Error',
+          'Something went wrong. Please try again later.'
+        )
+      }
+    }
+    else {
       openNotification(
         notificationTypes.ERROR,
         'account type not found'
