@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialDeclinedJobState = null
 
 const declinedJobSlice = createSlice({
-  name: 'job',
+  name: 'declinedJob',
   initialState: initialDeclinedJobState,
   reducers: {
     setDeclinedJob: (state, action) => action.payload,

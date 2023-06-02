@@ -13,6 +13,10 @@ export const getDeclinedJobs = () => {
   return GET('/v2/jobs?jobType=declined', { sessionID: store.getState().user.sessionId })
 }
 
+export const getClosedJobs = () => {
+  return GET('/v2/jobs?jobType=closed', { sessionID: store.getState().user.sessionId })
+}
+
 export const getJob = (id) => {
   return GET(`/job?jobID=${id}`, { sessionID: store.getState().user.sessionId })
 }
@@ -43,6 +47,18 @@ export const addJobsByCompany = (data) => {
 
 export const getCompanyJobs = () => {
   return GET('/v2/jobs?jobType=open', { sessionID: store.getState().user.sessionId })
+}
+
+export const getColleges = (jobID) => {
+  return GET(`/colleges?jobID=${jobID}`, { sessionID: store.getState().user.sessionId })
+}
+
+export const getOfferColleges = (jobID) => {
+  return GET(`/offeredColleges?jobID=${jobID}`, { sessionID: store.getState().user.sessionId })
+}
+
+export const sendOfferColleges = (data,jobID) => {
+  return POST(`/offerColleges?jobID=${jobID}`, data, { sessionID: store.getState().user.sessionId })
 }
 
 export const getAppliedStudents = (jobID) => {

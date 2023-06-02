@@ -11,14 +11,18 @@ import JobSection from '@/components/JobSection'
 import { getJobs } from '@/redux/Slices/jobSlice'
 import { getOfferJob } from '@/redux/Slices/offerJobsSlice'
 import { getDeclinedJob } from '@/redux/Slices/declinedJobsSlice'
+import { getClosedJob } from '@/redux/Slices/closedJobsSlice'
 
-export default function Jobs () {
+import CompanyJobSection from '@/components/CompanyJobSection'
+
+export default function Jobs() {
   const dispatch = useDispatch()
 
   const user = useSelector((state) => state.user)
   const jobs = useSelector((state) => state.jobs)
   const offerJobs = useSelector((state) => state.offerJobs)
   const declinedJobs = useSelector((state) => state.declinedJobs)
+  const closedJobs = useSelector((state) => state.closedJobs)
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [jobSection, setJobSection] = useState(1)
@@ -43,6 +47,14 @@ export default function Jobs () {
     }
   }, [dispatch]);
 
+  useEffect(() => {
+    if (user !== null) {
+      if (user.accType === '2') {
+        dispatch(getClosedJob());
+      }
+    }
+  }, [dispatch]);
+
   return (
     <div className='bg-gray-200 min-h-screen'>
       <DocHeader
@@ -63,48 +75,70 @@ export default function Jobs () {
                 </>
                 : user.accType === '0'
                   ? <JobSection
+                    jobSection={jobSection}
+                    setJobSection={setJobSection}
+                    jobs={jobs}
+                    offerJobs={offerJobs}
+                    declinedJobs={declinedJobs}
+                  />
+                  :
+                  user.accType === '2'
+                    ?
+                    <CompanyJobSection
                       jobSection={jobSection}
                       setJobSection={setJobSection}
-                      jobs={jobs}
-                      offerJobs={offerJobs}
-                      declinedJobs={declinedJobs}
+                      openJobs={jobs}
+                      closedJobs={closedJobs}
                     />
-                  : <></>
+                    :
+                    <></>
             }
             {
               user === null
-              ?
-              <></>
-              :
-              user.accType === '0'
-              ?
-              jobSection === 1
-                ? <CurrentJobs
-                    jobs={jobs}
-                  />
-                : jobSection === 2
-                  ? <JobOffers 
-                    jobs={offerJobs}
+                ?
+                <></>
+                :
+                user.accType === '0'
+                  ?
+                  jobSection === 1
+                    ? <CurrentJobs
+                      jobs={jobs}
                     />
-                  : <DeclinedJobs 
-                    jobs={declinedJobs}
+                    : jobSection === 2
+                      ? <JobOffers
+                        jobs={offerJobs}
+                      />
+                      : <DeclinedJobs
+                        jobs={declinedJobs}
+                      />
+                  :
+                  user.accType === '1'
+                    ?
+                    <CurrentJobs
+                      jobs={jobs}
                     />
-              :
-              user.accType === '1'
-              ?
-              <CurrentJobs
-                jobs={jobs}
-              />
-              :
-              user.accType === '2'
-              ?
-              <CurrentJobs
-                jobs={jobs}
-              />
-              :
-              <div>
-                You are not logged in or authorized to log in.
-              </div>
+                    :
+                    user.accType === '2'
+                      ?
+                      jobSection === 1
+                        ?
+                        <CurrentJobs
+                          jobs={jobs}
+                        />
+                        :
+                        jobSection === 2
+                          ?
+                          <JobOffers
+                            jobs={closedJobs}
+                          />
+                          :
+                          <div>
+                            You are not logged in or authorized to log in.
+                          </div>
+                      :
+                      <div>
+                        You are not logged in or authorized to log in.
+                      </div>
             }
           </div>
         </div>
