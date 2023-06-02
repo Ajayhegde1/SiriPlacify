@@ -42,6 +42,7 @@ export default function OfferedCollegesList({
                         </div>
                         : <CollegeItem
                             colleges={colleges}
+                            isOffered={true}
                         />
             }
         </div>

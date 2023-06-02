@@ -96,6 +96,7 @@ export default function CollegesList({
                                 offerColleges={offerColleges}
                                 sendOfferColleges={setOfferColleges}
                                 addCollegeList={addCollegeList}
+                                isOffered={false}
                             />
                 }
             </div>
