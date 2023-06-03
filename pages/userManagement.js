@@ -40,7 +40,7 @@ export default function UserManagement () {
 
           POST('/addStudents', updatedData, { sessionID: user.sessionId })
             .then((res) => {
-              let status = parseInt(res.data.status)
+              const status = parseInt(res.data.status)
               if (status === 200 || status === 304 || status === 'ok') {
                 openNotification(
                   notificationTypes.SUCCESS,
@@ -80,7 +80,7 @@ export default function UserManagement () {
     ]
     POST('/addStudents', Data, { sessionID: user.sessionId })
       .then((res) => {
-        let status = parseInt(res.data.status)
+        const status = parseInt(res.data.status)
         if (status === 200) {
           openNotification(
             notificationTypes.SUCCESS,

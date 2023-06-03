@@ -9,5 +9,5 @@ export const routes = {
   STUDENTPROFILE: '/studentProfile',
   EDITSTUDENTPROFILE: '/editStudentProfile',
   COMPANYPROFILE: '/companyProfile',
-  EDITCOMPANYPROFILE: '/editCompanyProfile',
+  EDITCOMPANYPROFILE: '/editCompanyProfile'
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect  } from 'react'
+import { useState, useEffect } from 'react'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -56,89 +56,73 @@ export default function JobOffers () {
         </p>
         {
           job === null
-          ?
-          <div>
-            Loading
-          </div>
-          :
-          Object.keys(job).length === 0
-          ?
-          <div>
-            No job found
-          </div>
-          :
-          <BasicJobInfo
-            uid={job.uid}
-            logo={appleLogo}
-            jobTitle={job.jobTitle}
-            jobLocation={job.jobLocation}
-            jobCategory={job.jobSector}
-            dueDate={job.dueDate}
-          />
+            ? <div>
+              Loading
+              </div>
+            : Object.keys(job).length === 0
+              ? <div>
+                No job found
+                </div>
+              : <BasicJobInfo
+                  uid={job.uid}
+                  logo={appleLogo}
+                  jobTitle={job.jobTitle}
+                  jobLocation={job.jobLocation}
+                  jobCategory={job.jobSector}
+                  dueDate={job.dueDate}
+                />
         }
         <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
           {
           job === null
-          ?
-          <div>
-            Loading
-          </div>
-          :
-          Object.keys(job).length === 0
-          ?
-          <div>
-            No job found
-          </div>
-          :
-          <JobDesc
-            companyName={job.companyName}
-            jobTitle={job.jobTitle}
-            jobLocation={job.jobLocation}
-            jobCTC={job.jobCTC}
-            jobDesc={job.jobDescription}
-            jobBond={job.jobBond}
-            jobCriteria={job.jobCriteria}
-            jobPosition={job.jobPositionType}
-            jobSector={job.jobSector}
-            jobSection={2}
-          />
+            ? <div>
+              Loading
+              </div>
+            : Object.keys(job).length === 0
+              ? <div>
+                No job found
+                </div>
+              : <JobDesc
+                  companyName={job.companyName}
+                  jobTitle={job.jobTitle}
+                  jobLocation={job.jobLocation}
+                  jobCTC={job.jobCTC}
+                  jobDesc={job.jobDescription}
+                  jobBond={job.jobBond}
+                  jobCriteria={job.jobCriteria}
+                  jobPosition={job.jobPositionType}
+                  jobSector={job.jobSector}
+                  jobSection={2}
+                />
           }
           {
           job === null
-          ?
-          <div>
-            Loading
-          </div>
-          :
-          Object.keys(job).length === 0
-          ?
-          <div>
-            No job found
-          </div>
-          :
-          <ModeOfSelection
-            modeOfSelection={job.jobTestMode}
-            finalDesc={job.jobFinalSelection}
-          />
+            ? <div>
+              Loading
+              </div>
+            : Object.keys(job).length === 0
+              ? <div>
+                No job found
+                </div>
+              : <ModeOfSelection
+                  modeOfSelection={job.jobTestMode}
+                  finalDesc={job.jobFinalSelection}
+                />
           }
           {
           job === null
-          ?
-          <div>
-            Loading
-          </div>
-          :
-          Object.keys(job).length === 0
-          ?
-          <div>
-            No job found
-          </div>
-          :
-          <CompanyContact
-            contactName={job.jobContactName}
-            contactEmail={job.jobContactEmail}
-            contactPhone={job.jobContactNumber}
-          />
+            ? <div>
+              Loading
+              </div>
+            : Object.keys(job).length === 0
+              ? <div>
+                No job found
+                </div>
+              : <CompanyContact
+                  contactName={job.jobContactName}
+                  contactEmail={job.jobContactEmail}
+                  contactPhone={job.jobContactNumber}
+                />
           }
         </div>
         {/* <ApplicableCourses /> */}

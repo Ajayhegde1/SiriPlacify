@@ -31,8 +31,7 @@ export function * handleGetAllJobs () {
           'Something went wrong. Please try again later.'
         )
       }
-    } 
-    else if (store.getState().user.accType === '2') {
+    } else if (store.getState().user.accType === '2') {
       const response = yield call(getCompanyJobs)
       if (response.data.status === '200') {
         yield put(setJob(response.data.data))
@@ -43,8 +42,7 @@ export function * handleGetAllJobs () {
           'Something went wrong. Please try again later.'
         )
       }
-    }
-    else {
+    } else {
       openNotification(
         notificationTypes.ERROR,
         'account type not found'

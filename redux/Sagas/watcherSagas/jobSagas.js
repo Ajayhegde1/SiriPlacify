@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects'
 import { getJobs, addJob, addJobByCompany } from '@/redux/Slices/jobSlice'
-import { handleGetAllJobs, handleADDJob,handleADDJobByCompany } from '../handlers/jobHandlers'
+import { handleGetAllJobs, handleADDJob, handleADDJobByCompany } from '../handlers/jobHandlers'
 import { getOfferJob } from '@/redux/Slices/offerJobsSlice'
 import { getDeclinedJob } from '@/redux/Slices/declinedJobsSlice'
 import { getClosedJob } from '@/redux/Slices/closedJobsSlice'

@@ -1,10 +1,10 @@
 export default function JobSection ({ jobSection, setJobSection, jobs, offerJobs, declinedJobs }) {
   const setJobOffersSection = () => {
-      setJobSection(2)
+    setJobSection(2)
   }
 
   const setDeclinedJobsSection = () => {
-      setJobSection(3)
+    setJobSection(3)
   }
 
   const setCurrentJobsSection = () => {
@@ -41,19 +41,14 @@ export default function JobSection ({ jobSection, setJobSection, jobs, offerJobs
         <span className='text-lg font-Heading font-semibold text-gray-500 pr-1'>Job offers</span>
         {
           offerJobs === null
-          ?
-          <div> 
-          </div>
-          :
-          offerJobs.length === 0
-          ?
-          <span className='ml-2 p-1 bg-gray-300 rounded-2xl text-green-500 font-medium'>
-            00
-          </span>
-          :
-          <span className='ml-2 py-1 px-2 bg-gray-300 rounded-2xl text-green-500 font-medium'>
-            {offerJobs.length}
-          </span>
+            ? <div />
+            : offerJobs.length === 0
+              ? <span className='ml-2 p-1 bg-gray-300 rounded-2xl text-green-500 font-medium'>
+                00
+                </span>
+              : <span className='ml-2 py-1 px-2 bg-gray-300 rounded-2xl text-green-500 font-medium'>
+                {offerJobs.length}
+              </span>
         }
       </div>
       <div
@@ -63,19 +58,15 @@ export default function JobSection ({ jobSection, setJobSection, jobs, offerJobs
         <span className='text-lg font-Heading font-semibold text-gray-500 pr-1'>Declined jobs</span>
         {
           declinedJobs === null
-          ?
-          <>
-          </>
-          :
-          declinedJobs.length === 0
-          ?
-          <span className='ml-2 p-1 bg-gray-300 rounded-2xl text-green-500 font-medium'>
-            00
-          </span>
-          :
-          <span className='ml-2 py-1 px-2 bg-gray-300 rounded-2xl text-green-500 font-medium'>
-            {declinedJobs.length} 
-          </span>
+            ? <>
+            </>
+            : declinedJobs.length === 0
+              ? <span className='ml-2 p-1 bg-gray-300 rounded-2xl text-green-500 font-medium'>
+                00
+                </span>
+              : <span className='ml-2 py-1 px-2 bg-gray-300 rounded-2xl text-green-500 font-medium'>
+                {declinedJobs.length}
+              </span>
         }
       </div>
     </div>

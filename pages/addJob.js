@@ -11,7 +11,7 @@ import SingleSelectComponent from '@/components/InputComponents/SingleSelectComp
 
 import { addJob, addJobByCompany } from '@/redux/Slices/jobSlice'
 import { notificationTypes, openNotification } from '@/utils/notifications'
-import { jobStatusList,modeOfSelectionList } from '@/constants/addJobDropDowns'
+import { jobStatusList, modeOfSelectionList } from '@/constants/addJobDropDowns'
 
 export default function AddJob () {
   const dispatch = useDispatch()
@@ -68,8 +68,7 @@ export default function AddJob () {
         companyName
       }
       dispatch(addJob(jobData))
-    }
-    else if (user.accType === '2') {
+    } else if (user.accType === '2') {
       const jobData = {
         jobTitle: designation,
         jobLocation: locationOfWork,
@@ -87,8 +86,7 @@ export default function AddJob () {
         dueDate: selectedDate
       }
       dispatch(addJobByCompany(jobData))
-    }
-    else {
+    } else {
       openNotification(
         notificationTypes.ERROR,
         'Error',
@@ -122,17 +120,15 @@ export default function AddJob () {
         <div className='ml-3 md:ml-6 grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-8 mr-12'>
           <div>
             {
-              user.accType === '0' 
-              ?
-              <TextField
-                label='Company Name'
-                placeholder='PESU Venture Labs'
-                type='text'
-                value={companyName}
-                onChangeHandler={(e) => setCompanyName(e.target.value)}
-              />
-              :
-              <></>
+              user.accType === '0'
+                ? <TextField
+                    label='Company Name'
+                    placeholder='PESU Venture Labs'
+                    type='text'
+                    value={companyName}
+                    onChangeHandler={(e) => setCompanyName(e.target.value)}
+                  />
+                : <></>
             }
             <TextField
               label='Designation'

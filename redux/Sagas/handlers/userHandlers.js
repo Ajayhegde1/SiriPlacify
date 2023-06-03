@@ -62,8 +62,7 @@ export function * handleSignIn (action) {
             'Something went wrong'
           )
         }
-      } 
-      else if (response.data.accType === '2'){
+      } else if (response.data.accType === '2') {
         if (response.data.signUpStatus === '0') {
           window.history.replaceState({}, 'Company Profile', routes.COMPANYPROFILE)
           window.location.reload()
@@ -77,8 +76,7 @@ export function * handleSignIn (action) {
             'Something went wrong'
           )
         }
-      }
-      else {
+      } else {
         openNotification(
           notificationTypes.ERROR,
           'Error',

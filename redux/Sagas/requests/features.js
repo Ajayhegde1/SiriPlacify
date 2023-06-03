@@ -57,7 +57,7 @@ export const getOfferColleges = (jobID) => {
   return GET(`/offeredColleges?jobID=${jobID}`, { sessionID: store.getState().user.sessionId })
 }
 
-export const sendOfferColleges = (data,jobID) => {
+export const sendOfferColleges = (data, jobID) => {
   return POST(`/offerColleges?jobID=${jobID}`, data, { sessionID: store.getState().user.sessionId })
 }
 
@@ -65,7 +65,7 @@ export const getAppliedStudents = (jobID) => {
   return GET(`/appliedStudents?jobID=${jobID}`, { sessionID: store.getState().user.sessionId })
 }
 
-export const getCandidates = (jobID,collegeID) => {
+export const getCandidates = (jobID, collegeID) => {
   return GET(`/candidates?jobID=${jobID}&collegeID=${collegeID}`, { sessionID: store.getState().user.sessionId })
 }
 
