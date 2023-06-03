@@ -1,4 +1,5 @@
 export default function CollegeItem({
+    jobID='#',
     colleges,
     isOffered,
     addCollegeList
@@ -6,12 +7,17 @@ export default function CollegeItem({
     return (
         <div className='overflow-auto'>
             <table className='table-auto overflow-scroll w-full mt-3 text-left'>
-                <thead>
-                    <th className='px-6 py-4 text-gray-600'></th>
-                    <th className='px-6 py-4 text-gray-600'>College Name</th>
-                    <th className='px-6 py-4 text-gray-600'>College Website</th>
+                <thead className="border-2 border-gray-400">
+                    {
+                        !isOffered ?
+                        <th>
+                        </th>
+                        :
+                        <></>
+                    }
+                    <th className='px-6 py-4 text-gray-600 border-r-2 border-gray-400'>College Name</th>
+                    <th className='px-6 py-4 text-gray-600 border-r-2 border-gray-400'>College Website</th>
                     <th className='px-6 py-4 text-gray-600'>College Contact Number</th>
-                    {isOffered ? <th className='px-6 py-4 text-gray-600'>Status</th> : ''}
                 </thead>
                 <tbody>
                     {
@@ -24,39 +30,33 @@ export default function CollegeItem({
                                     No colleges found found
                                 </div>
                                 : colleges.map((college, index) =>
-                                    <tr>
-                                        <td>
-                                            <input
-                                                onClick={(event) => addCollegeList(event, college)}
-                                                type='checkbox'
-                                                className='h-6 w-6'
-                                            />
-                                        </td>
+                                    <tr className="border-2 border-gray-400">
+                                            {
+                                                !isOffered ?
+                                                <td>
+                                                <input
+                                                    onClick={(event) => addCollegeList(event, college)}
+                                                    type='checkbox'
+                                                    className='ml-6 h-6 w-6'
+                                                />
+                                                </td>
+                                                :
+                                                <></>
+                                            }
                                         <td className='whitespace-nowrap px-6 py-4'>{college.collegeName}</td>
                                         <td className='whitespace-nowrap px-6 py-4'>{college.collegeWebsite}</td>
                                         <td className='whitespace-nowrap px-6 py-4'>{college.contactNo}</td>
                                         {
-                                            isOffered ? 
-                                             college.status !== null ?
-                                                college.status === '0' ?
-                                                    <td className='whitespace-nowrap px-6 py-4 font-bold text-yellow-500'>
-                                                        Pending
-                                                    </td>
-                                                    :
-                                                    college.status === '1'
-                                                        ? 
-                                                        <td className='whitespace-nowrap px-6 py-4 font-bold text-green-700'>
-                                                            Accepted
-                                                        </td>
-                                                        : 
-                                                        <td className='whitespace-nowrap px-6 py-4 font-bold text-red-600'>
-                                                            Rejected 
-                                                        </td>
-                                                :
-                                                <td className='whitespace-nowrap px-6 py-4 font-bold text-yellow-500'>
-                                                    Status Undefined
-                                                </td>
-                                            : ''
+                                            isOffered && college.status === '1' ?
+                                            <td>
+                                                <a href={`/jobs/companyJobs/${jobID}/${college.uid}`}>
+                                                    <button className='ml-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+                                                        View
+                                                    </button>
+                                                </a>
+                                            </td>
+                                            :
+                                            <></>
                                         }
                                     </tr>
                                 )

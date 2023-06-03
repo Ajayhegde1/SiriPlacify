@@ -21,7 +21,7 @@ export default function CompanyJobs() {
     const [isOffered, setIsOffered] = useState(1)
     const [job, setJob] = useState({})
 
-    const { id } = router.query
+    const { jobID } = router.query
 
     const setCollegesSection = () => {
         setJobSection(1)
@@ -38,8 +38,8 @@ export default function CompanyJobs() {
     }
 
     useEffect(() => {
-        if (typeof id !== 'undefined') {
-            getJob(id)
+        if (typeof jobID !== 'undefined') {
+            getJob(jobID)
                 .then((res) => {
                     setJob(res.data.data)
                 })
@@ -50,7 +50,7 @@ export default function CompanyJobs() {
                     )
                 })
         }
-    }, [id])
+    }, [jobID])
 
     return (
         <div className='bg-gray-200 min-h-screen'>
@@ -121,20 +121,20 @@ export default function CompanyJobs() {
                     jobSection === 1
                         ? job === null
                             ? <></>
-                            : id === null
+                            : jobID === null
                                 ? <></>
                                 : <CollegesList
                                     collegeType={isOffered}
-                                    jobID={id}
+                                    jobID={jobID}
                                 />
                         : jobSection === 2
                             ? job === null
                                 ? <></>
-                                : id === null
+                                : jobID === null
                                     ? <></>
                                     : <OfferedCollegesList
                                         collegeType={isOffered}
-                                        jobID={id}
+                                        jobID={jobID}
                                     />
                             : job === null
                                 ? <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>

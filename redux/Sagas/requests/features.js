@@ -65,6 +65,10 @@ export const getAppliedStudents = (jobID) => {
   return GET(`/appliedStudents?jobID=${jobID}`, { sessionID: store.getState().user.sessionId })
 }
 
+export const getCandidates = (jobID,collegeID) => {
+  return GET(`/candidates?jobID=${jobID}&collegeID=${collegeID}`, { sessionID: store.getState().user.sessionId })
+}
+
 export const getStudentProfile = () => {
   return GET('/studentProfile', { sessionID: store.getState().user.sessionId })
 }
