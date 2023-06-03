@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect  } from 'react'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -11,8 +11,32 @@ import ModeOfSelection from '@/components/ModeOfSelection'
 import CompanyContact from '@/components/CompanyContact'
 import ApplicableCourses from '@/components/ApplicableCourses'
 
+import { getJob } from '@/redux/Sagas/requests/features'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+
 export default function JobOffers () {
+  const router = useRouter()
+
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [job, setJob] = useState({})
+
+  const { id } = router.query
+
+  useEffect(() => {
+    if (typeof id !== 'undefined') {
+      getJob(id)
+        .then((res) => {
+          setJob(res.data.data)
+        })
+        .catch((err) => {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error'
+          )
+        })
+    }
+  }, [])
 
   return (
     <div className='bg-gray-200 min-h-screen'>
@@ -28,38 +52,96 @@ export default function JobOffers () {
         <p
           className='pt-14 ml-3 md:ml-6 mb-12 font-SubHeading text-base font-normal'
         >
-          <span className='text-gray-500'>Home</span> {'>'} Product Designer
+          <Link href='/jobs'><span className='text-gray-500'>Home</span></Link> {'>'} Product Designer
         </p>
-        <BasicJobInfo
-          logo={appleLogo}
-          jobTitle='Product Designer'
-          jobLocation='Apple Rammurthy nagar, Bangalore'
-          jobCategory='Design'
-          dueDate='12 NOV'
-        />
+        {
+          job === null
+          ?
+          <div>
+            Loading
+          </div>
+          :
+          Object.keys(job).length === 0
+          ?
+          <div>
+            No job found
+          </div>
+          :
+          <BasicJobInfo
+            uid={job.uid}
+            logo={appleLogo}
+            jobTitle={job.jobTitle}
+            jobLocation={job.jobLocation}
+            jobCategory={job.jobSector}
+            dueDate={job.dueDate}
+          />
+        }
         <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
+          {
+          job === null
+          ?
+          <div>
+            Loading
+          </div>
+          :
+          Object.keys(job).length === 0
+          ?
+          <div>
+            No job found
+          </div>
+          :
           <JobDesc
-            companyName='Apple'
-            companyDesc="is an American multinational technology company headquartered in Cupertino, California. Apple is the largest technology company by revenue, totaling US$394.3 billion in 2022. As of March 2023, Apple is the world's biggest company by market capitalization."
-            jobTitle='Product Designer'
-            jobLocation='Apple Rammurthy nagar, Bangalore'
-            jobCTC='₹ 10,00,000 - ₹ 15,00,000'
-            jobDesc='We are looking for a Product Designer to join our team! As a Product Designer, you will be responsible for delivering the best online user experience, which makes your role extremely important for our success and ensuring customer satisfaction and loyalty. You will be designing ideas using various methods and latest technology. You will be designing graphic user interface elements, like menus, tabs, forms, and widgets.'
-            jobBond='2 years'
-            jobCriteria='B.Tech'
+            companyName={job.companyName}
+            jobTitle={job.jobTitle}
+            jobLocation={job.jobLocation}
+            jobCTC={job.jobCTC}
+            jobDesc={job.jobDescription}
+            jobBond={job.jobBond}
+            jobCriteria={job.jobCriteria}
+            jobPosition={job.jobPositionType}
+            jobSector={job.jobSector}
             jobSection={2}
           />
+          }
+          {
+          job === null
+          ?
+          <div>
+            Loading
+          </div>
+          :
+          Object.keys(job).length === 0
+          ?
+          <div>
+            No job found
+          </div>
+          :
           <ModeOfSelection
-            modeOfSelection='Online Test'
-            finalDesc='The final selection will be based on the performance in the interview.'
+            modeOfSelection={job.jobTestMode}
+            finalDesc={job.jobFinalSelection}
           />
+          }
+          {
+          job === null
+          ?
+          <div>
+            Loading
+          </div>
+          :
+          Object.keys(job).length === 0
+          ?
+          <div>
+            No job found
+          </div>
+          :
           <CompanyContact
-            contactName='John Doe'
-            contactEmail='johnDoe@gmail.com'
-            contactPhone='+91 9876543210'
+            contactName={job.jobContactName}
+            contactEmail={job.jobContactEmail}
+            contactPhone={job.jobContactNumber}
           />
+          }
         </div>
-        <ApplicableCourses />
+        {/* <ApplicableCourses /> */}
         <br />
         <br />
       </main>

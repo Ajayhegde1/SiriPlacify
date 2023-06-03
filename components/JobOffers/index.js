@@ -1,6 +1,4 @@
 import JobItem from '../JobItem'
-import JobOffersList from '@/testingFiles/JobOffers'
-
 export default function JobOffers ({jobs}) {
   return (
     <div className='mt-10 mr-2 md:mr-6'>

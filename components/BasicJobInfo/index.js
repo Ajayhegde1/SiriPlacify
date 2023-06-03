@@ -1,12 +1,18 @@
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+
 import moment from 'moment'
+
 import JobApplicationModal from '@/components/Modal/jobApplicationModal'
+
 import { useState, useEffect } from 'react'
-import { GET } from '@/config/api'
+import { GET, POST } from '@/config/api'
+
 import { useSelector } from 'react-redux'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
-export default function BasicJobInfo ({
+export default function BasicJobInfo({
+  uid,
   logo,
   jobTitle,
   jobLocation,
@@ -14,16 +20,44 @@ export default function BasicJobInfo ({
   dueDate,
   jobID
 }) {
+  const router = useRouter()
   const [showModal, setShowModal] = useState(false)
   const [isApplied, setIsApplied] = useState(false)
 
   const user = useSelector(state => state.user)
 
   useEffect(() => {
-    GET(`/checkJobApplication?jobID=${jobID}`, { sessionID: user.sessionId })
+    if (user === null) {
+      if (user.accType === '1') {
+        GET(`/checkJobApplication?jobID=${jobID}`, { sessionID: user.sessionId })
+          .then((res) => {
+            if (res.data.status === 200) {
+              setIsApplied(res.data.jobStatus)
+            } else {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Something went wrong, please try again later'
+              )
+            }
+          })
+      }
+    }
+  }, [jobID])
+
+  const handleAcceptOffer = () => {
+    let data = {
+      jobID: uid,
+    }
+    POST('/acceptJob?status=accept', data, { sessionID: user.sessionId })
       .then((res) => {
         if (res.data.status === 200) {
-          setIsApplied(res.data.jobStatus)
+          openNotification(
+            notificationTypes.SUCCESS,
+            'Success',
+            'Job offer accepted successfully'
+          )
+          router.push('/jobs')
         } else {
           openNotification(
             notificationTypes.ERROR,
@@ -32,7 +66,44 @@ export default function BasicJobInfo ({
           )
         }
       })
-  }, [jobID])
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'Something went wrong, please try again later'
+        )
+      })
+  }
+
+  const handleDeclineOffer = () => {
+    let data = {
+      jobID: uid,
+    }
+    POST('/acceptJob?status=decline', data, { sessionID: user.sessionId })
+      .then((res) => {
+        if (res.data.status === 200) {
+          openNotification(
+            notificationTypes.SUCCESS,
+            'Success',
+            'Job offer accepted successfully'
+          )
+          router.push('/jobs')
+        } else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Something went wrong, please try again later'
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'Something went wrong, please try again later'
+        )
+      })
+  }
 
   return (
     <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-5 rounded-lg'>
@@ -62,23 +133,51 @@ export default function BasicJobInfo ({
           <div className='ml-auto w-40 p-3 bg-rose-100 rounded-2xl text-sm'>
             <p className='text-gray-700 text-center'>DUE DATE - {moment(dueDate).format('DD MMM')}</p>
           </div>
-          <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
-            <div />
             {
-              isApplied
-                ? <div
-                    className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
-                  >
-                  Applied
-                  </div>
-                : <div
-                    onClick={() => setShowModal(!showModal)}
-                    className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
-                  >
-                  Apply Now
-                </div>
+              user === null
+                ?
+                <></>
+                :
+                user.accType === '1'
+                  ?
+                  isApplied
+                    ? 
+                    <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
+                      <div />
+                      <div
+                       className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+                    >
+                      Applied
+                    </div>
+                    </div>
+                    : 
+                    <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
+                      <div />
+                      <div
+                      onClick={() => setShowModal(!showModal)}
+                      className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+                    >
+                      Apply Now
+                    </div>
+                    </div>
+                  :
+                  user.accType === '0'
+                    ?
+                    <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
+                      <button 
+                        onClick={handleDeclineOffer}
+                        className='rounded-lg text-base md:text-lg 2xl:text-xl bg-red-500 text-white font-bold text-center p-2'>
+                        X    Decline For Now
+                      </button>
+                      <button 
+                        onClick={handleAcceptOffer}
+                        className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'>
+                        + Accept Offer
+                      </button>
+                    </div>
+                    :
+                    <></>
             }
-          </div>
         </div>
       </div>
       <JobApplicationModal

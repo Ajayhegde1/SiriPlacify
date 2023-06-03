@@ -68,7 +68,7 @@ export function * handleSignIn (action) {
           window.history.replaceState({}, 'Company Profile', routes.COMPANYPROFILE)
           window.location.reload()
         } else if (response.data.signUpStatus === '1') {
-          window.history.replaceState({}, 'Edit Company Profile', routes.EDITCOMPANYPROFILE)
+          window.history.replaceState({}, 'Jobs', routes.JOBS)
           window.location.reload()
         } else {
           openNotification(
