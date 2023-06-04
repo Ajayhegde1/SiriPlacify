@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { read, utils, writeFile } from 'xlsx'
 
 import sheet from '../../../../public/sheets.png'
 
@@ -11,6 +12,7 @@ import DocHeader from '@/components/DocHeader'
 import StatusOfHire from '@/components/StatusOfHire'
 import Candidates from '@/components/Candidates'
 import UpdateStatusModal from '@/components/Modal/UpdateStatusModal'
+import { useSelector } from 'react-redux'
 
 import { getCandidates, UpdateStatus } from '@/redux/Sagas/requests/features'
 
@@ -20,6 +22,7 @@ import { notificationTypes, openNotification } from '@/utils/notifications'
 
 export default function College() {
   const router = useRouter()
+  const user = useSelector((state) => state.user)
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -51,6 +54,58 @@ export default function College() {
         })
     }
   }, [jobID, collegeName])
+
+  const handleImport = ($event) => {
+    const files = $event.target.files
+    if (files.length) {
+      const file = files[0]
+      const reader = new FileReader()
+      reader.onload = (event) => {
+        const wb = read(event.target.result)
+        const sheets = wb.SheetNames
+
+        if (sheets.length) {
+          const rows = utils.sheet_to_json(wb.Sheets[sheets[0]])
+          const updatedData = rows
+          let data = updatedData.map(obj => {
+            return { ...obj, status: obj.status.toString() };
+          });
+          let reqData = {
+            jobID: jobID,
+            collegeID: collegeID,
+            candidates: data
+          }
+          UpdateStatus(reqData)
+            .then((res) => {
+              const status = parseInt(res.data.status)
+              if (status === 200 || status === 304 || status === 'ok') {
+                openNotification(
+                  notificationTypes.SUCCESS,
+                  'Success'
+                )
+                window.location.reload()
+              } else {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Please check your data. It is not in the correct format.'
+                )
+                window.location.reload()
+              }
+            }
+            )
+            .catch((err) => {
+              openNotification(
+                notificationTypes.ERROR,
+                'Please check your data. It is not in the correct format.'
+              )
+            })
+          setShowModal(!showModal)
+          openNotification(notificationTypes.SUCCESS, 'Sucess', 'File Uploaded Sucessfully')
+        }
+      }
+      reader.readAsArrayBuffer(file)
+    }
+  }
 
   const handlePromoteStudents = () => {
     let data = {
@@ -207,6 +262,7 @@ export default function College() {
       <UpdateStatusModal
         showModal={showModal}
         setShowModal={setShowModal}
+        ImportExcel={handleImport}
       />
     </div>
   )
