@@ -4,21 +4,30 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import sheet from '../../../../public/sheets.png'
+
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
 import StatusOfHire from '@/components/StatusOfHire'
 import Candidates from '@/components/Candidates'
+import UpdateStatusModal from '@/components/Modal/UpdateStatusModal'
 
-import { getCandidates } from '@/redux/Sagas/requests/features'
+import { getCandidates, UpdateStatus } from '@/redux/Sagas/requests/features'
 
 import arrow from '@/public/arrow.png'
 
-export default function College () {
+import { notificationTypes, openNotification } from '@/utils/notifications'
+
+export default function College() {
   const router = useRouter()
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+
   const [candidates, setCandidates] = useState([])
   const [filteredStudentList, setFilteredStudentList] = useState([])
+  const [promoteStudents, setPromoteStudents] = useState([])
+
   const [collegeName, setCollegeName] = useState('')
   const [status, setStatus] = useState(1)
 
@@ -28,9 +37,11 @@ export default function College () {
     if (typeof jobID !== 'undefined' && typeof collegeID !== 'undefined') {
       getCandidates(jobID, collegeID)
         .then((res) => {
-          setCollegeName(res.data.collegeName)
-          setCandidates(res.data.data)
-          setFilteredStudentList(res.data.data.filter((student) => student.studentStatus === '0'))
+          if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
+            setCollegeName(res.data.collegeName)
+            setCandidates(res.data.data)
+            setFilteredStudentList(res.data.data.filter((student) => student.studentStatus === '0'))
+          }
         })
         .catch((err) => {
           openNotification(
@@ -39,7 +50,40 @@ export default function College () {
           )
         })
     }
-  }, [jobID, collegeName, candidates])
+  }, [jobID, collegeName])
+
+  const handlePromoteStudents = () => {
+    let data = {
+      jobID: jobID,
+      collegeID: collegeID,
+      candidates: promoteStudents
+    }
+    UpdateStatus(data)
+      .then((res) => {
+        if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
+          openNotification(
+            notificationTypes.SUCCESS,
+            'Success',
+            'Status updated successfully'
+          )
+          window.location.reload()
+        }
+        else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Error in updating status'
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'Error in updating status'
+        )
+      })
+  }
 
   const setApplied = () => {
     setStatus(1)
@@ -91,51 +135,79 @@ export default function College () {
             />
           </Link>
           {
-                        collegeName === null
-                          ? <>
-                          </>
-                          : collegeName === ''
-                            ? <div>
-                              undefined colleges
-                              </div>
-                            : <h1 className='ml-2 mt-2 text-lg md:text-2xl font-Heading font-bold text-black'>
-                              {collegeName}
-                            </h1>
-                    }
+            collegeName === null
+              ? <>
+              </>
+              : collegeName === ''
+                ? <div>
+                  undefined colleges
+                </div>
+                : <h1 className='ml-2 mt-2 text-lg md:text-2xl font-Heading font-bold text-black'>
+                  {collegeName}
+                </h1>
+          }
         </div>
-        <div className='mt-10 ml-3 md:ml-6 bg-white mb-10 mr-10 rounded-xl p-6'>
+        <div> 
+          <button
+            onClick={() => setShowModal(true)}
+            className='mt-5 flex mr-auto lg:mr-12 ml-3 md:ml-10 lg:ml-auto hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black p-4'
+          >
+            <Image
+              src={sheet}
+              alt='Import excel sheet'
+              className='h-5 mt-1 mr-2'
+            />
+            Import from excel
+          </button>
+        </div>
+        <div className='mt-4 ml-3 md:ml-6 bg-white mb-10 mr-10 rounded-xl p-6'>
           {
-                        candidates === null || typeof candidates === 'undefined'
-                          ? <div />
-                          : candidates.length === 0
-                            ? <>
-                              </>
-                            : <StatusOfHire
-                                students={candidates}
-                                status={status}
-                                setStatus={setStatus}
-                                setApplied={setApplied}
-                                setShortlisted={setShortlisted}
-                                setTest={setTest}
-                                setInterview={setInterview}
-                                setHired={setHired}
-                              />
-                    }
+            candidates === null || typeof candidates === 'undefined'
+              ? <div />
+              : candidates.length === 0
+                ? <>
+                </>
+                : <StatusOfHire
+                  students={candidates}
+                  status={status}
+                  setStatus={setStatus}
+                  setApplied={setApplied}
+                  setShortlisted={setShortlisted}
+                  setTest={setTest}
+                  setInterview={setInterview}
+                  setHired={setHired}
+                />
+          }
           {
-                        candidates === null || typeof candidates === 'undefined'
-                          ? <div>
-                            Loading...
-                            </div>
-                          : candidates.length === 0
-                            ? <div className='mt-6 mb-3 ml-6 font-medium'>
-                              No students have applied yet
-                            </div>
-                            : <Candidates
-                                students={filteredStudentList}
-                              />
-                    }
+            candidates === null || typeof candidates === 'undefined'
+              ? <div>
+                Loading...
+              </div>
+              : candidates.length === 0
+                ? <div className='mt-6 mb-3 ml-6 font-medium'>
+                  No students have applied yet
+                </div>
+                : <Candidates
+                  students={filteredStudentList}
+                  promoteStudents={promoteStudents}
+                  setPromoteStudents={setPromoteStudents}
+                />
+          }
+          <div className='flex'>
+            <button
+              type='button'
+              className='mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+              onClick={handlePromoteStudents}
+            >
+              Send to next round
+            </button>
+          </div>
         </div>
       </main>
+      <UpdateStatusModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
     </div>
   )
 }

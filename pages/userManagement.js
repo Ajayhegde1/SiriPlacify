@@ -12,7 +12,6 @@ import Image from 'next/image'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 import { POST } from '@/config/api'
 import UserAdditionModal from '@/components/Modal/userAdditionModal'
-import { parse } from 'postcss'
 
 export default function UserManagement () {
   const [sidebarOpen, setSidebarOpen] = useState(false)

@@ -4,7 +4,7 @@ import sheet from '../../../public/sheets.png'
 import close from '../../../public/close.png'
 import Image from 'next/image'
 
-export default function UserAdditionModal ({
+export default function UpdateStatusModal ({
   showModal,
   setShowModal,
   ImportExcel
@@ -36,9 +36,9 @@ export default function UserAdditionModal ({
         <div className={styles.header}>
           <div className={styles.header}>
             <h2
-              className='pb-3 mt-2 underline underline-offset-4 ml-4 text-black font-bold font-DMSANS text-base text-customGreenThree xl:text-2xl leading-none lg:leading-11'
+              className='pb-3 mt-2 underline underline-offset-8 ml-4 text-black font-bold font-DMSANS text-base text-customGreenThree xl:text-2xl leading-none lg:leading-11'
             >
-              User Addition
+              Update Student Status
             </h2>
           </div>
           <div className={styles.close}>
@@ -51,12 +51,23 @@ export default function UserAdditionModal ({
             </a>
           </div>
         </div>
+        <div className='my-4 ml-3'>
+            <h1 className='font-bold text-2xl mb-4'>Please Update student as per given excel sheet</h1>
+            <p className='font-medium text-xl mb-2'>Status must be as follows:</p>
+            <ul className='text-xl font-medium'>
+                <li>1: Applied</li>
+                <li>2: Shortlisted</li>
+                <li>3: Test</li>
+                <li>4: Interview</li>
+                <li>5: Hired</li>
+            </ul>
+        </div>
         <div className='pt-5 pl-5 rounded-3xl'>
           <div className='grid grid-cols-2 gap-4'>
             <div className='mt-4'>
               <a
-                href='/sample.xlsx'
-                download='sample.xlsx'
+                href='/sample_updateStatus.xlsx'
+                download='sampleForStatusUpdation.xlsx'
                 className='ml-10 mt-1 bg-blue-300 hover:bg-green-300 border-2 text-black font-bold py-5 px-4 text-base rounded-xl focus:outline-none focus:shadow-outline'
               >
                 Download Sample sheet
