@@ -8,10 +8,11 @@ import arrow from '@/public/arrow.png'
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
 
-import { getJob } from '@/redux/Sagas/requests/features'
+import { getJob, closeJob } from '@/redux/Sagas/requests/features'
 import CollegesList from '@/components/CollegesList'
 import JobDesc from '@/components/JobDesc'
 import OfferedCollegesList from '@/components/OfferedCollegesList'
+import { openNotification, notificationTypes } from '@/utils/notifications'
 
 export default function CompanyJobs () {
   const router = useRouter()
@@ -35,6 +36,32 @@ export default function CompanyJobs () {
 
   const setDegree = () => {
     setJobSection(3)
+  }
+
+  const handleCloseJob = () => {
+    closeJob(jobID)
+      .then((res) => {
+        if (res.data.status === 200){
+          openNotification(
+            notificationTypes.SUCCESS,
+            'Job Closed'
+          )
+          router.push('/jobs')
+        }
+        else{
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+             res.data.message
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error'
+        )
+      })
   }
 
   useEffect(() => {
@@ -145,6 +172,14 @@ export default function CompanyJobs () {
                               No Data Found
                             </div>
                             : <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
+                              <div className="flex">
+                                <button 
+                                  className='rounded-lg text-lg px-4 py-2 text-white ml-auto mr-5 border-red-500 hover:border-red-600 bg-red-500 hover:bg-red-600'
+                                  onClick={handleCloseJob}
+                                >
+                                  Close Job
+                                </button>
+                              </div>
                               <JobDesc
                                 companyName={job.companyName}
                                 companyDesc=''

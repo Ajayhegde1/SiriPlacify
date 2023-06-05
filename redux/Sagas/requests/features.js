@@ -73,6 +73,10 @@ export const UpdateStatus = (data) => {
   return POST('/updateStatus', data, { sessionID: store.getState().user.sessionId })
 }
 
+export const closeJob = (jobID) => {
+  return POST(`/closeJob?jobID=${jobID}`, {}, { sessionID: store.getState().user.sessionId })
+}
+
 export const getStudentProfile = () => {
   return GET('/studentProfile', { sessionID: store.getState().user.sessionId })
 }
