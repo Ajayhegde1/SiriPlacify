@@ -4,22 +4,35 @@ import Button from '@/components/Buttons'
 import DocHeader from '@/components/DocHeader'
 
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
 
 import pp from '@/public/pp1.png'
 
-import { useDispatch, useSelector } from 'react-redux'
 import { getPlacementPolicy } from '@/redux/Slices/placementPolicy'
+import { routes } from '@/constants/routes'
 
 export default function EditPlacementPolicy () {
   const dispatch = useDispatch()
+  const router = useRouter()
+
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const placementPolicy = useSelector((state) => state.placementPolicy)
+  const user = useSelector((state) => state.user)
 
   useEffect(() => {
-    dispatch(getPlacementPolicy())
-  }, [dispatch])
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType !== '0') {
+        router.push(routes.NOTFOUND)
+      } else {
+        dispatch(getPlacementPolicy())
+      }
+    }
+  }, [user, dispatch])
 
   return (
     <div className='bg-gray-200'>

@@ -3,9 +3,11 @@ import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
 
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
+import { routes } from '@/constants/routes'
 
 import { getStudentProfile } from '@/redux/Slices/studentSlice'
 
@@ -13,13 +15,22 @@ import photo from '../public/photoupload.png'
 
 export default function editStudentProfile () {
   const dispatch = useDispatch()
+  const router = useRouter()
 
-  const profile = useSelector((state) => state.studentProfile)
   const user = useSelector((state) => state.user)
+  const profile = useSelector((state) => state.studentProfile)
 
   useEffect(() => {
-    dispatch(getStudentProfile())
-  }, [dispatch])
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType !== '1') {
+        router.push(routes.NOTFOUND)
+      } else {
+        dispatch(getStudentProfile())
+      }
+    }
+  }, [user, dispatch])
 
   return (
     <div>

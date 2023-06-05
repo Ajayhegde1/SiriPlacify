@@ -1,6 +1,5 @@
-import DocHeader from '@/components/DocHeader'
-
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Sidebar from '@/components/SideBar'
@@ -8,17 +7,23 @@ import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
 import SingleSelectComponent from '@/components/InputComponents/SingleSelectComponent'
+import DocHeader from '@/components/DocHeader'
 
 import { addJob, addJobByCompany } from '@/redux/Slices/jobSlice'
+
 import { notificationTypes, openNotification } from '@/utils/notifications'
 import { jobStatusList, modeOfSelectionList } from '@/constants/addJobDropDowns'
+import { routes } from '@/constants/routes'
 
 export default function AddJob () {
   const dispatch = useDispatch()
+  const router = useRouter()
+
+  const user = useSelector((state) => state.user)
+
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [btnText, setBtnText] = useState('Save')
   const [isBtnDisabled, setIsBtnDisabled] = useState(true)
-
   const [designation, setDesignation] = useState('')
   const [jobStatus, setJobStatus] = useState(jobStatusList[0].value)
   const [locationOfWork, setLocationOfWork] = useState('')
@@ -26,16 +31,14 @@ export default function AddJob () {
   const [ctc, setCtc] = useState('')
   const [sector, setSector] = useState('')
   const [applicableCourses, setApplicableCourses] = useState('')
-  const [modeOfSelection, setModeOfSelection] = useState('')
+  const [modeOfSelection, setModeOfSelection] = useState(modeOfSelectionList[0].value)
   const [briefJobDescription, setBriefJobDescription] = useState('')
   const [bondDetails, setBondDetails] = useState('')
   const [contactPersonName, setContactPersonName] = useState('')
   const [contactPersonPhoneNumber, setContactPersonPhoneNumber] = useState('')
   const [contactPersonEmail, setContactPersonEmail] = useState('')
-  const [finalMode, setFinalMode] = useState('')
+  const [finalMode, setFinalMode] = useState(modeOfSelectionList[0].value)
   const [companyName, setCompanyName] = useState('')
-
-  const user = useSelector((state) => state.user)
 
   useEffect(() => {
     if (finalMode && designation && jobStatus && locationOfWork && ctc &&
@@ -47,6 +50,16 @@ export default function AddJob () {
       setIsBtnDisabled(true)
     }
   }, [finalMode, designation, jobStatus, locationOfWork, ctc, sector, applicableCourses, modeOfSelection, bondDetails, contactPersonName, contactPersonPhoneNumber, contactPersonEmail])
+
+  useEffect(() => {
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType === '1') {
+        router.push(routes.NOTFOUND)
+      }
+    }
+  }, [user])
 
   const addJobHandler = () => {
     if (user.accType === '0') {
@@ -67,6 +80,7 @@ export default function AddJob () {
         dueDate: selectedDate,
         companyName
       }
+      setBtnText('Saving...')
       dispatch(addJob(jobData))
     } else if (user.accType === '2') {
       const jobData = {
@@ -85,6 +99,7 @@ export default function AddJob () {
         jobEmailId: contactPersonEmail,
         dueDate: selectedDate
       }
+      setBtnText('Saving...')
       dispatch(addJobByCompany(jobData))
     } else {
       openNotification(

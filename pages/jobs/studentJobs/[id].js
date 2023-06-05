@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react'
-
-import Sidebar from '@/components/SideBar'
-import DocHeader from '@/components/DocHeader'
 import { useRouter } from 'next/router'
-import { getJob } from '@/redux/Sagas/requests/features'
-import BasicJobInfo from '@/components/BasicJobInfo'
+import { useSelector } from 'react-redux'
 
 import appleLogo from '@/public/appleLogo.png'
 import JobDesc from '@/components/JobDesc'
 import ModeOfSelection from '@/components/ModeOfSelection'
 import CompanyContact from '@/components/CompanyContact'
-import ApplicableCourses from '@/components/ApplicableCourses'
+// import ApplicableCourses from '@/components/ApplicableCourses'
+import BasicJobInfo from '@/components/BasicJobInfo'
+import Sidebar from '@/components/SideBar'
+import DocHeader from '@/components/DocHeader'
+
+import { openNotification, notificationTypes } from '@/utils/notifications'
+
+import { getJob } from '@/redux/Sagas/requests/features'
+import { routes } from '@/constants/routes'
 
 export default function getStudentJobs () {
   const router = useRouter()
@@ -18,20 +22,30 @@ export default function getStudentJobs () {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [job, setJob] = useState({})
 
+  const user = useSelector((state) => state.user)
+
   const { id } = router.query
 
   useEffect(() => {
-    if (typeof id !== 'undefined') {
-      getJob(id)
-        .then((res) => {
-          setJob(res.data.data)
-        })
-        .catch((err) => {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error'
-          )
-        })
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType !== '1') {
+        router.push(routes.NOTFOUND)
+      } else {
+        if (typeof id !== 'undefined') {
+          getJob(id)
+            .then((res) => {
+              setJob(res.data.data)
+            })
+            .catch((err) => {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error'
+              )
+            })
+        }
+      }
     }
   }, [id])
 

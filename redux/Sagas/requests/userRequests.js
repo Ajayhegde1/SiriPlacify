@@ -1,4 +1,4 @@
-import { POST, GET } from '@/config/api'
+import { POST } from '@/config/api'
 
 export const signInUser = (userData) => {
   return POST('/login', userData)

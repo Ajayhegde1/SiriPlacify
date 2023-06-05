@@ -2,17 +2,21 @@ import photo from '../public/policy.png'
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
 
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
 import Button from '@/components/Buttons'
 
-import { useDispatch, useSelector } from 'react-redux'
-
 import { addPlacementPolicy } from '@/redux/Slices/placementPolicy'
+import { routes } from '@/constants/routes'
 
 export default function placementPolicy () {
+  const router = useRouter()
   const dispatch = useDispatch()
+
+  const user = useSelector((state) => state.user)
 
   const [btnText, setBtnText] = useState('Save')
   const [isBtnDisabled, setIsBtnDisabled] = useState(true)
@@ -33,6 +37,16 @@ export default function placementPolicy () {
     }
   }, [numberOfTiers, maxNumberOfOffers, minCTCT1, maxCTCT1, minCTCT2, maxCTCT2, minCTCT3, maxCTCT3])
 
+  useEffect(() => {
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType !== '0') {
+        router.push(routes.NOTFOUND)
+      }
+    }
+  }, [user])
+
   const handlePlacementPolicy = () => {
     const Data = {
       noOfTiers: numberOfTiers,
@@ -44,7 +58,7 @@ export default function placementPolicy () {
       minCTCT3,
       maxCTCT3
     }
-
+    setBtnText('Saving...')
     dispatch(addPlacementPolicy(Data))
   }
 
@@ -121,7 +135,7 @@ export default function placementPolicy () {
             </div>
             <div class='mt-6 mb-6'>
               <Button
-                btnText='Done'
+                btnText={btnText}
                 isBtnDisabled={isBtnDisabled}
                 onClickHandler={handlePlacementPolicy}
               />

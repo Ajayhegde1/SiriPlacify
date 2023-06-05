@@ -19,7 +19,7 @@ export default function AppliedStudents ({
         .then((res) => {
           if (res.data.status === 200) {
             setStudentList(res.data.data)
-            setFilteredStudentList(res.data.data)
+            setFilteredStudentList(res.data.data.filter((student) => student.studentStatus === '0'))
           } else {
             setStudentList([])
           }

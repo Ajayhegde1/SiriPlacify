@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -9,14 +12,16 @@ import appleLogo from '@/public/appleLogo.png'
 import JobDesc from '@/components/JobDesc'
 import ModeOfSelection from '@/components/ModeOfSelection'
 import CompanyContact from '@/components/CompanyContact'
-import ApplicableCourses from '@/components/ApplicableCourses'
+// import ApplicableCourses from '@/components/ApplicableCourses'
 
 import { getJob } from '@/redux/Sagas/requests/features'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
+import { routes } from '@/constants/routes'
+
 
 export default function JobOffers () {
   const router = useRouter()
+
+  const user = useSelector((state) => state.user)
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [job, setJob] = useState({})
@@ -24,19 +29,27 @@ export default function JobOffers () {
   const { id } = router.query
 
   useEffect(() => {
-    if (typeof id !== 'undefined') {
-      getJob(id)
-        .then((res) => {
-          setJob(res.data.data)
-        })
-        .catch((err) => {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error'
-          )
-        })
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType !== '0') {
+        router.push(routes.NOTFOUND)
+      } else {
+        if (typeof id !== 'undefined') {
+          getJob(id)
+            .then((res) => {
+              setJob(res.data.data)
+            })
+            .catch((err) => {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error'
+              )
+            })
+        }
+      }
     }
-  }, [])
+  }, [id])
 
   return (
     <div className='bg-gray-200 min-h-screen'>
@@ -58,11 +71,11 @@ export default function JobOffers () {
           job === null
             ? <div>
               Loading
-              </div>
+            </div>
             : Object.keys(job).length === 0
               ? <div>
                 No job found
-                </div>
+              </div>
               : <BasicJobInfo
                   uid={job.uid}
                   logo={appleLogo}
@@ -77,11 +90,11 @@ export default function JobOffers () {
           job === null
             ? <div>
               Loading
-              </div>
+            </div>
             : Object.keys(job).length === 0
               ? <div>
                 No job found
-                </div>
+              </div>
               : <JobDesc
                   companyName={job.companyName}
                   jobTitle={job.jobTitle}
@@ -99,11 +112,11 @@ export default function JobOffers () {
           job === null
             ? <div>
               Loading
-              </div>
+            </div>
             : Object.keys(job).length === 0
               ? <div>
                 No job found
-                </div>
+              </div>
               : <ModeOfSelection
                   modeOfSelection={job.jobTestMode}
                   finalDesc={job.jobFinalSelection}
@@ -113,11 +126,11 @@ export default function JobOffers () {
           job === null
             ? <div>
               Loading
-              </div>
+            </div>
             : Object.keys(job).length === 0
               ? <div>
                 No job found
-                </div>
+              </div>
               : <CompanyContact
                   contactName={job.jobContactName}
                   contactEmail={job.jobContactEmail}

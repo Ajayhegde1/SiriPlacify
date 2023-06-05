@@ -2,6 +2,7 @@ import photo from '../public/photoupload.png'
 
 import Image from 'next/image'
 import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
 import DocHeader from '@/components/DocHeader'
@@ -10,16 +11,26 @@ import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
 
 import { getCompanyProfile } from '@/redux/Slices/companySlice'
+import { routes } from '@/constants/routes'
 
 export default function EditCompanyProfile () {
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const profile = useSelector((state) => state.companyProfile)
   const user = useSelector((state) => state.user)
 
   useEffect(() => {
-    dispatch(getCompanyProfile())
-  }, [dispatch])
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType !== '2') {
+        router.push(routes.NOTFOUND)
+      } else {
+        dispatch(getCompanyProfile())
+      }
+    }
+  }, [user, dispatch])
 
   return (
     <div>

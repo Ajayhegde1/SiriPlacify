@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { read, utils, writeFile } from 'xlsx'
+import { read, utils } from 'xlsx'
 
 import sheet from '../../../../public/sheets.png'
 
@@ -20,7 +20,7 @@ import arrow from '@/public/arrow.png'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
-export default function College() {
+export default function College () {
   const router = useRouter()
   const user = useSelector((state) => state.user)
 
@@ -37,21 +37,29 @@ export default function College() {
   const { jobID, collegeID } = router.query
 
   useEffect(() => {
-    if (typeof jobID !== 'undefined' && typeof collegeID !== 'undefined') {
-      getCandidates(jobID, collegeID)
-        .then((res) => {
-          if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
-            setCollegeName(res.data.collegeName)
-            setCandidates(res.data.data)
-            setFilteredStudentList(res.data.data.filter((student) => student.studentStatus === '0'))
-          }
-        })
-        .catch((err) => {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error'
-          )
-        })
+    if (user === null) {
+      router.push('/NotAuthorized')
+    } else if (user !== null) {
+      if (user.accType !== '2') {
+        router.push('/NotAuthorized')
+      } else {
+        if (typeof jobID !== 'undefined' && typeof collegeID !== 'undefined') {
+          getCandidates(jobID, collegeID)
+            .then((res) => {
+              if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
+                setCollegeName(res.data.collegeName)
+                setCandidates(res.data.data)
+                setFilteredStudentList(res.data.data.filter((student) => student.studentStatus === '0'))
+              }
+            })
+            .catch((err) => {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error'
+              )
+            })
+        }
+      }
     }
   }, [jobID, collegeName])
 
@@ -67,12 +75,12 @@ export default function College() {
         if (sheets.length) {
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]])
           const updatedData = rows
-          let data = updatedData.map(obj => {
-            return { ...obj, status: obj.status.toString() };
-          });
-          let reqData = {
-            jobID: jobID,
-            collegeID: collegeID,
+          const data = updatedData.map(obj => {
+            return { ...obj, status: obj.status.toString() }
+          })
+          const reqData = {
+            jobID,
+            collegeID,
             candidates: data
           }
           UpdateStatus(reqData)
@@ -108,9 +116,9 @@ export default function College() {
   }
 
   const handlePromoteStudents = () => {
-    let data = {
-      jobID: jobID,
-      collegeID: collegeID,
+    const data = {
+      jobID,
+      collegeID,
       candidates: promoteStudents
     }
     UpdateStatus(data)
@@ -122,8 +130,7 @@ export default function College() {
             'Status updated successfully'
           )
           window.location.reload()
-        }
-        else {
+        } else {
           openNotification(
             notificationTypes.ERROR,
             'Error',
@@ -202,7 +209,7 @@ export default function College() {
                 </h1>
           }
         </div>
-        <div> 
+        <div>
           <button
             onClick={() => setShowModal(true)}
             className='mt-5 flex mr-auto lg:mr-12 ml-3 md:ml-10 lg:ml-auto hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black p-4'
@@ -223,15 +230,15 @@ export default function College() {
                 ? <>
                 </>
                 : <StatusOfHire
-                  students={candidates}
-                  status={status}
-                  setStatus={setStatus}
-                  setApplied={setApplied}
-                  setShortlisted={setShortlisted}
-                  setTest={setTest}
-                  setInterview={setInterview}
-                  setHired={setHired}
-                />
+                    students={candidates}
+                    status={status}
+                    setStatus={setStatus}
+                    setApplied={setApplied}
+                    setShortlisted={setShortlisted}
+                    setTest={setTest}
+                    setInterview={setInterview}
+                    setHired={setHired}
+                  />
           }
           {
             candidates === null || typeof candidates === 'undefined'
@@ -243,10 +250,10 @@ export default function College() {
                   No students have applied yet
                 </div>
                 : <Candidates
-                  students={filteredStudentList}
-                  promoteStudents={promoteStudents}
-                  setPromoteStudents={setPromoteStudents}
-                />
+                    students={filteredStudentList}
+                    promoteStudents={promoteStudents}
+                    setPromoteStudents={setPromoteStudents}
+                  />
           }
           <div className='flex'>
             <button

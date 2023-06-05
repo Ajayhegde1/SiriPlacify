@@ -28,7 +28,7 @@ export default function CollegeItem ({
                               No colleges found found
                             </div>
                             : colleges.map((college, index) =>
-                              <tr className='border-2 border-gray-400'>
+                              <tr key={index} className='border-2 border-gray-400'>
                                 {
                                                 !isOffered
                                                   ? <td>

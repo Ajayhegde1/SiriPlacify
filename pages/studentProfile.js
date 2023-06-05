@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
 import TextField from '@/components/InputComponents/TextField'
@@ -11,9 +12,13 @@ import student from '../public/students.png'
 import photo from '../public/photoupload.png'
 
 import { addStudentProfile } from '@/redux/Slices/studentSlice'
+import { routes } from '@/constants/routes'
 
 export default function studentProfile () {
   const dispatch = useDispatch()
+  const router = useRouter()
+
+  const user = useSelector((state) => state.user)
 
   const [isBtnDisabled, setIsBtnDisabled] = useState(true)
   const [btnText, setBtnText] = useState('Add Profile')
@@ -31,6 +36,16 @@ export default function studentProfile () {
       setIsBtnDisabled(false)
     }
   }, [username, emailID, contactNo, studentID])
+
+  useEffect(() => {
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType !== '1') {
+        router.push(routes.NOTFOUND)
+      }
+    }
+  }, [user])
 
   const handleStudentProfile = () => {
     const data = {

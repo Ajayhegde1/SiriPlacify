@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
+import AppliedStudents from '@/components/AppliedStudents'
+import JobDesc from '@/components/JobDesc'
 
 import arrow from '@/public/arrow.png'
 import download from '@/public/download.png'
@@ -12,14 +16,14 @@ import overview from '@/public/overview.png'
 import microphone from '@/public/megaphone.png'
 
 import { getJob } from '@/redux/Sagas/requests/features'
-import { useRouter } from 'next/router'
+import { routes } from '@/constants/routes'
 
-import AppliedStudents from '@/components/AppliedStudents'
-import JobDesc from '@/components/JobDesc'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
 export default function CurrentJobs () {
   const router = useRouter()
+
+  const user = useSelector((state) => state.user)
 
   const [jobSection, setJobSection] = useState(1)
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -36,19 +40,27 @@ export default function CurrentJobs () {
   }
 
   useEffect(() => {
-    if (typeof id !== 'undefined') {
-      getJob(id)
-        .then((res) => {
-          setJob(res.data.data)
-        })
-        .catch((err) => {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error'
-          )
-        })
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType !== '0') {
+        router.push(routes.NOTFOUND)
+      } else {
+        if (typeof id !== 'undefined') {
+          getJob(id)
+            .then((res) => {
+              setJob(res.data.data)
+            })
+            .catch((err) => {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error'
+              )
+            })
+        }
+      }
     }
-  }, [])
+  }, [id])
 
   return (
     <div className='bg-gray-200 min-h-screen'>

@@ -1,19 +1,25 @@
+import { read, utils } from 'xlsx'
+import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+
+import UserAdditionModal from '@/components/Modal/userAdditionModal'
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
-import sheet from '../public/sheets.png'
-import { read, utils, writeFile } from 'xlsx'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { accountType } from '@/constants/users'
 import SingleSelectComponent from '@/components/InputComponents/SingleSelectComponent'
 import Button from '@/components/Buttons'
-import Image from 'next/image'
+
+import sheet from '../public/sheets.png'
+import { accountType } from '@/constants/users'
+import { routes } from '@/constants/routes'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 import { POST } from '@/config/api'
-import UserAdditionModal from '@/components/Modal/userAdditionModal'
 
 export default function UserManagement () {
+  const router = useRouter()
+
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
@@ -23,6 +29,16 @@ export default function UserManagement () {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [accType, setAccType] = useState(accountType[0].value)
+
+  useEffect(() => {
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType !== '0') {
+        router.push(routes.NOTFOUND)
+      }
+    }
+  }, [user])
 
   const handleImport = ($event) => {
     const files = $event.target.files

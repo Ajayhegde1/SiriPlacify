@@ -1,25 +1,36 @@
 import photo from '../public/photoupload.png'
 
 import Image from 'next/image'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
+import { routes } from '@/constants/routes'
 
 import { getProfile } from '@/redux/Slices/profile'
 
 export default function EditProfile () {
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const profile = useSelector((state) => state.profile)
   const user = useSelector((state) => state.user)
 
   useEffect(() => {
-    dispatch(getProfile())
-  }, [dispatch])
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType !== '0') {
+        router.push(routes.NOTFOUND)
+      } else {
+        dispatch(getProfile())
+      }
+    }
+  }, [user, dispatch])
 
   return (
     <div>

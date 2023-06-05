@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Sidebar from '@/components/SideBar'
@@ -7,16 +8,18 @@ import CurrentJobs from '@/components/CurrentJobs'
 import JobOffers from '@/components/JobOffers'
 import DeclinedJobs from '@/components/DeclinedJobs'
 import JobSection from '@/components/JobSection'
+import CompanyJobSection from '@/components/CompanyJobSection'
 
 import { getJobs } from '@/redux/Slices/jobSlice'
 import { getOfferJob } from '@/redux/Slices/offerJobsSlice'
 import { getDeclinedJob } from '@/redux/Slices/declinedJobsSlice'
 import { getClosedJob } from '@/redux/Slices/closedJobsSlice'
 
-import CompanyJobSection from '@/components/CompanyJobSection'
+import { routes } from '@/constants/routes'
 
 export default function Jobs () {
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const user = useSelector((state) => state.user)
   const jobs = useSelector((state) => state.jobs)
@@ -28,32 +31,40 @@ export default function Jobs () {
   const [jobSection, setJobSection] = useState(1)
 
   useEffect(() => {
-    dispatch(getJobs())
-  }, [dispatch])
+    if (user !== null) {
+      dispatch(getJobs())
+    }
+  }, [dispatch, user])
 
   useEffect(() => {
     if (user !== null) {
       if (user.accType === '0') {
         dispatch(getOfferJob())
       }
+    } else {
+      router.push(routes.NOTFOUND)
     }
-  }, [dispatch])
+  }, [dispatch, user])
 
   useEffect(() => {
     if (user !== null) {
       if (user.accType === '0') {
         dispatch(getDeclinedJob())
       }
+    } else {
+      router.push(routes.NOTFOUND)
     }
-  }, [dispatch])
+  }, [dispatch, user])
 
   useEffect(() => {
     if (user !== null) {
       if (user.accType === '2') {
         dispatch(getClosedJob())
       }
+    } else {
+      router.push(routes.NOTFOUND)
     }
-  }, [dispatch])
+  }, [dispatch, user])
 
   return (
     <div className='bg-gray-200 min-h-screen'>

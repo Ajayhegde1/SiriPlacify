@@ -3,6 +3,8 @@ import photo from '../public/photoupload.png'
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
 
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
@@ -10,10 +12,13 @@ import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
 
 import { addProfile } from '@/redux/Slices/profile'
-import { useDispatch } from 'react-redux'
+import { routes } from '@/constants/routes'
 
 export default function CollegeProfile () {
   const dispatch = useDispatch()
+  const router = useRouter()
+
+  const user = useSelector((state) => state.user)
 
   const [btnText, setBtnText] = useState('Save')
   const [isBtnDisabled, setIsBtnDisabled] = useState(true)
@@ -44,6 +49,16 @@ export default function CollegeProfile () {
       setIsBtnDisabled(false)
     }
   }, [username, collegeName, website, location, emailID, contactNo, collegeDescription])
+
+  useEffect(() => {
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType !== '0') {
+        router.push(routes.NOTFOUND)
+      }
+    }
+  }, [user])
 
   return (
     <div>

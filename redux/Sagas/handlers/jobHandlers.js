@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects'
 
 import { openNotification, notificationTypes } from '@/utils/notifications'
 import { setJob, updateJob } from '@/redux/Slices/jobSlice'
-import { getAllJobs, getStudentJobs, getCompanyJobs, addJobsByCompany } from '../requests/features'
+import { getAllJobs, getStudentJobs, getCompanyJobs, addJobsByCompany, addJobs } from '../requests/features'
 import { store } from '@/redux/configureStore'
 
 import { routes } from '@/constants/routes'

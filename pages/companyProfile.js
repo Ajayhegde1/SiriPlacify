@@ -3,6 +3,8 @@ import photo from '../public/photoupload.png'
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
 
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
@@ -10,10 +12,13 @@ import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
 
 import { addCompanyProfile } from '@/redux/Slices/companySlice'
-import { useDispatch } from 'react-redux'
+import { routes } from '@/constants/routes'
 
 export default function CompanyProfile () {
   const dispatch = useDispatch()
+  const router = useRouter()
+
+  const user = useSelector((state) => state.user)
 
   const [btnText, setBtnText] = useState('Save')
   const [isBtnDisabled, setIsBtnDisabled] = useState(true)
@@ -44,6 +49,16 @@ export default function CompanyProfile () {
       setIsBtnDisabled(false)
     }
   }, [username, companyName, website, location, emailID, contactNo, companyDescription])
+
+  useEffect(() => {
+    if (user === null) {
+      router.push(routes.NOTFOUND)
+    } else if (user !== null) {
+      if (user.accType !== '2') {
+        router.push(routes.NOTFOUND)
+      }
+    }
+  }, [user])
 
   return (
     <div>

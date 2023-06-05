@@ -10,11 +10,10 @@ import Button from '@/components/Buttons'
 
 import { signIn } from '@/redux/Slices/userSlice'
 import { useRouter } from 'next/router'
-import { routes } from '@/constants/routes'
 
 export default function CollegeProfile () {
   const dispatch = useDispatch()
-  // const router = useRouter()
+  const router = useRouter()
 
   const user = useSelector((state) => state.user)
 
@@ -29,10 +28,13 @@ export default function CollegeProfile () {
     } else {
       setIsBtnDisabled(true)
     }
-    // if (user) {
-    //   router.replace('/jobs')
-    // }
   }, [email, password])
+
+  useEffect(() => {
+    if (user) {
+      router.push('/jobs')
+    }
+  }, [user])
 
   const handleLogin = (e) => {
     e.preventDefault()
