@@ -49,7 +49,27 @@ export default function CurrentJobs () {
         if (typeof id !== 'undefined') {
           getJob(id)
             .then((res) => {
-              setJob(res.data.data)
+              if (res.data.status === 200) {
+                setJob(res.data.data)
+              } else if (res.data.status === 423) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Job ID needs to be defined'
+                )
+              } else if (res.data.status === 424) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Job ID can not be empty'
+                )
+              } else if (res.data.status === 500) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Unable to get job'
+                )
+              }
             })
             .catch((err) => {
               openNotification(

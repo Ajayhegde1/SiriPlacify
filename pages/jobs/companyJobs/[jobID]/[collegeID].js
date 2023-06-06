@@ -50,6 +50,42 @@ export default function College () {
                 setCollegeName(res.data.collegeName)
                 setCandidates(res.data.data)
                 setFilteredStudentList(res.data.data.filter((student) => student.studentStatus === '0'))
+              } else if (res.data.status === 401) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Session ID is invalid or not present'
+                )
+              } else if (res.data.status === 423) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Unable to retrieve company'
+                )
+              } else if (res.data.status === 424) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'job or college is undefined'
+                )
+              } else if (res.data.status === 425) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'job or college is empty'
+                )
+              } else if (res.data.status === 426) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Unable to retrieve job or college id'
+                )
+              } else if (res.data.status === 500) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Unable to retrieve candidates'
+                )
               }
             })
             .catch((err) => {
@@ -92,6 +128,48 @@ export default function College () {
                   'Success'
                 )
                 window.location.reload()
+              } else if (res.data.status === 423) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Invalid job or college IDs'
+                )
+              } else if (res.data.status === 424) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Unable to get jobs IDs'
+                )
+              } else if (res.data.status === 425) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Unable to get college IDs'
+                )
+              } else if (res.data.status === 426) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'college Mapping IDs is not available'
+                )
+              } else if (res.data.status === 427) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'No Candidates'
+                )
+              } else if (res.data.status === 428) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Unable to get student ID'
+                )
+              } else if (res.data.status === 500) {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Unable to get students data'
+                )
               } else {
                 openNotification(
                   notificationTypes.ERROR,
@@ -130,6 +208,48 @@ export default function College () {
             'Status updated successfully'
           )
           window.location.reload()
+        } else if (res.data.status === 423) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Invalid job or college IDs'
+          )
+        } else if (res.data.status === 424) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get jobs IDs'
+          )
+        } else if (res.data.status === 425) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get college IDs'
+          )
+        } else if (res.data.status === 426) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'college Mapping IDs is not available'
+          )
+        } else if (res.data.status === 427) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'No Candidates'
+          )
+        } else if (res.data.status === 428) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get student ID'
+          )
+        } else if (res.data.status === 500) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get students data'
+          )
         } else {
           openNotification(
             notificationTypes.ERROR,

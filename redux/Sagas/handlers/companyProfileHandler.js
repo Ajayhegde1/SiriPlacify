@@ -11,6 +11,18 @@ export function * handleGetCompanyProfile () {
     const response = yield call(getCompany)
     if (response.data.status === 200) {
       yield put(setCompanyProfile(response.data.data))
+    } else if (response.data.status === 401) {
+      openNotification(
+        notificationTypes.ERROR,
+        '[500] Internal Server Error',
+        'Session ID is invalid or not present'
+      )
+    } else if (response.data.status === 500) {
+      openNotification(
+        notificationTypes.ERROR,
+        '[500] Internal Server Error',
+        'Some error occured while getting profile.'
+      )
     } else {
       openNotification(
         notificationTypes.ERROR,
@@ -32,7 +44,7 @@ export function * handleADDCompanyProfile (action) {
   try {
     const response = yield call(addCompany, action.payload)
 
-    if (response.data.status == 200) {
+    if (response.data.status === 200) {
       openNotification(
         notificationTypes.SUCCESS,
         'Profile Added Successfully'
@@ -40,28 +52,41 @@ export function * handleADDCompanyProfile (action) {
 
       window.history.replaceState({}, 'Edit Company Profile', routes.EDITCOMPANYPROFILE)
       window.location.reload()
-    } else if (response.data.status == 466) {
+    } else if (response.data.status === 401) {
       openNotification(
         notificationTypes.ERROR,
         'Error',
-        'Space found in url or domain'
+        'Session ID is invalid or not present'
       )
-    } else if (response.data.status === 400) {
+    } else if (response.data.status === 425) {
       openNotification(
-        notificationTypes.WARNING,
-        'Cannot Submit data'
+        notificationTypes.ERROR,
+        'Error',
+        'Request Body is undefined'
+      )
+    } else if (response.data.status === 426) {
+      openNotification(
+        notificationTypes.ERROR,
+        'Error',
+        'Some attributes is undefined'
+      )
+    } else if (response.data.status === 427) {
+      openNotification(
+        notificationTypes.ERROR,
+        'Error',
+        'Some attributes is null'
+      )
+    } else if (response.data.status === 428) {
+      openNotification(
+        notificationTypes.ERROR,
+        'Error',
+        'Some attributes are empty'
       )
     } else if (response.data.status === 500) {
       openNotification(
         notificationTypes.ERROR,
-        response.data.msg,
-        'Please enter a valid data.'
-      )
-    } else {
-      openNotification(
-        notificationTypes.ERROR,
-        '[500] Internal Server Error',
-        'Please try again later.'
+        'Error',
+        'Some error occured while adding company'
       )
     }
   } catch (err) {

@@ -19,7 +19,7 @@ import { resetCompanyProfile } from '@/redux/Slices/companySlice'
 export function * handleSignIn (action) {
   try {
     const response = yield call(signInUser, action.payload)
-    if (response.data.status == 200) {
+    if (response.data.status === 200) {
       setCookie(response.data)
       openNotification(
         notificationTypes.SUCCESS,
@@ -86,7 +86,7 @@ export function * handleSignIn (action) {
           'Something went wrong'
         )
       }
-    } else if (response.data.status == 401) {
+    } else if (response.data.status === 401) {
       openNotification(
         notificationTypes.ERROR,
         'Incorrect Password!'
@@ -94,7 +94,7 @@ export function * handleSignIn (action) {
       setTimeout(() => {
         window.location.reload()
       }, 5000)
-    } else if (response.data.status == 404) {
+    } else if (response.data.status === 404) {
       openNotification(
         notificationTypes.ERROR,
         'Error',
@@ -103,7 +103,7 @@ export function * handleSignIn (action) {
       setTimeout(() => {
         window.location.reload()
       }, 5000)
-    } else if (response.data.status == 425) {
+    } else if (response.data.status === 425) {
       openNotification(
         notificationTypes.ERROR,
         'Either Username and Password is not entered. Please enter both'

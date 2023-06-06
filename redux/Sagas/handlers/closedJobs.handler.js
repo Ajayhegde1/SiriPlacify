@@ -9,8 +9,26 @@ export function * handleGetClosedJobsHandler () {
   try {
     if (store.getState().user.accType === '2') {
       const response = yield call(getClosedJobs)
-      if (response.data.status === '200') {
+      if (response.data.status === 200) {
         yield put(setClosedJob(response.data.data))
+      } else if (response.data.status === 401) {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'Session ID is invalid or not present'
+        )
+      } else if (response.data.status === 423) {
+        openNotification(
+          notificationTypes.ERROR,
+          '[404] Not Found',
+          'Job ID is invalid.'
+        )
+      } else if (response.data.status === 500) {
+        openNotification(
+          notificationTypes.ERROR,
+          '[500] Internal Server Error',
+          'Unable to close job.'
+        )
       } else {
         openNotification(
           notificationTypes.ERROR,

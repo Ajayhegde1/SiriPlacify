@@ -29,6 +29,24 @@ export default function myApplications () {
           .then((res) => {
             if (res.data.status === 200) {
               setJobApplication(res.data.data)
+            } else if (res.data.status === 401) {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Session ID is invalid or not present'
+              )
+            } else if (res.data.status === 424) {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'No Job Applications found'
+              )
+            } else if (res.data.status === 500) {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'unable to retrieve job applications'
+              )
             } else {
               openNotification(
                 notificationTypes.WARNING,

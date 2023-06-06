@@ -18,6 +18,36 @@ export default function CollegesList ({
         .then((res) => {
           if (res.data.status === 200) {
             setColleges(res.data.data)
+          } else if (res.data.status === 401) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Session ID is invalid or not present'
+            )
+          } else if (res.data.status === 423) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Unable to get Job ID'
+            )
+          } else if (res.data.status === 424) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Unable to retrieve colleges'
+            )
+          } else if (res.data.status === 425) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'colleges retrieved are undefined'
+            )
+          } else if (res.data.status === 500) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Error in retrieving colleges'
+            )
           }
         })
         .catch((err) => {

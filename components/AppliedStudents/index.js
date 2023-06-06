@@ -20,6 +20,62 @@ export default function AppliedStudents ({
           if (res.data.status === 200) {
             setStudentList(res.data.data)
             setFilteredStudentList(res.data.data.filter((student) => student.studentStatus === '0'))
+          } else if (res.data.status === 401) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Session ID is invalid or not present'
+            )
+            setStudentList([])
+          } else if (res.data.status === 423) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'college ID is undefined'
+            )
+            setStudentList([])
+          } else if (res.data.status === 424) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Job ID needs to be defined'
+            )
+            setStudentList([])
+          } else if (res.data.status === 425) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Job ID can not be empty'
+            )
+            setStudentList([])
+          } else if (res.data.status === 426) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'unable to get job'
+            )
+            setStudentList([])
+          } else if (res.data.status === 427) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Job ID or College ID is undefined'
+            )
+            setStudentList([])
+          } else if (res.data.status === 428) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Unable to retrieve students'
+            )
+            setStudentList([])
+          } else if (res.data.status === 500) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Unable to retrieve students'
+            )
+            setStudentList([])
           } else {
             setStudentList([])
           }

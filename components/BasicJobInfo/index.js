@@ -33,6 +33,36 @@ export default function BasicJobInfo ({
           .then((res) => {
             if (res.data.status === 200) {
               setIsApplied(res.data.jobStatus)
+            } else if (res.data.status === 423) {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Unable to get Job'
+              )
+            } else if (res.data.status === 424) {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Unable to retrieve Job'
+              )
+            } else if (res.data.status === 425) {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Unable to get college'
+              )
+            } else if (res.data.status === 426) {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Unable to get college or Job'
+              )
+            } else if (res.data.status === 500) {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Error in retrieving Data'
+              )
             } else {
               openNotification(
                 notificationTypes.ERROR,
@@ -58,6 +88,42 @@ export default function BasicJobInfo ({
             'Job offer accepted successfully'
           )
           router.push('/jobs')
+        } else if (res.data.status === 401) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Session ID is invalid or not present'
+          )
+        } else if (res.data.status === 423) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to retrieve college'
+          )
+        } else if (res.data.status === 424) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Status is null'
+          )
+        } else if (res.data.status === 425) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Job is undefined'
+          )
+        } else if (res.data.status === 426) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'invalid option'
+          )
+        } else if (res.data.status === 500) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'unable to approve job'
+          )
         } else {
           openNotification(
             notificationTypes.ERROR,
@@ -88,6 +154,42 @@ export default function BasicJobInfo ({
             'Job offer accepted successfully'
           )
           router.push('/jobs')
+        } else if (res.data.status === 401) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Session ID is invalid or not present'
+          )
+        } else if (res.data.status === 423) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to retrieve college'
+          )
+        } else if (res.data.status === 424) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Status is null'
+          )
+        } else if (res.data.status === 425) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Job is undefined'
+          )
+        } else if (res.data.status === 426) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'invalid option'
+          )
+        } else if (res.data.status === 500) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'unable to approve job'
+          )
         } else {
           openNotification(
             notificationTypes.ERROR,

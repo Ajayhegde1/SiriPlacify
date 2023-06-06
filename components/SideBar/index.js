@@ -54,7 +54,7 @@ const Sidebar = ({
               ? <></>
               : user.accType === '0'
                 ? <ul className='menu-list'>
-                  <li className={`menu-item ${activePage == 2 ? 'current' : ''}`}>
+                  <li className={`menu-item ${parseInt(activePage) == 2 ? 'current' : ''}`}>
                     <a className='menu-link' href='/jobs'>
                       <Image
                         src={jobs}
@@ -64,7 +64,7 @@ const Sidebar = ({
                       <span className='menu-link-text'>Jobs</span>
                     </a>
                   </li>
-                  <li className={`menu-item ${activePage == 6 ? 'current' : ''}`}>
+                  <li className={`menu-item ${parseInt(activePage) === 6 ? 'current' : ''}`}>
                     <a className='menu-link' href='/addJob'>
                       <Image
                         src={Addjobs}
@@ -74,7 +74,7 @@ const Sidebar = ({
                       <span className='menu-link-text'>Add Jobs</span>
                     </a>
                   </li>
-                  <li className={`menu-item ${activePage == 9 ? 'current' : ''}`}>
+                  <li className={`menu-item ${parseInt(activePage) === 9 ? 'current' : ''}`}>
                     <a className='menu-link' href='/userManagement'>
                       <Image
                         src={userImage}
@@ -84,7 +84,7 @@ const Sidebar = ({
                       <span className='menu-link-text'>User Management</span>
                     </a>
                   </li>
-                  <li className={`menu-item ${activePage == 4 ? 'current' : ''}`}>
+                  <li className={`menu-item ${parseInt(activePage) === 4 ? 'current' : ''}`}>
                     <a className='menu-link' href='/editPlacementPolicy'>
                       <Image
                         src={pp}
@@ -94,7 +94,7 @@ const Sidebar = ({
                       <span className='menu-link-text'>Placement Policy</span>
                     </a>
                   </li>
-                  <li className={`menu-item ${activePage == 7 ? 'current' : ''}`}>
+                  <li className={`menu-item ${parseInt(activePage) === 7 ? 'current' : ''}`}>
                     <a className='menu-link' href='/editProfile'>
                       <Image
                         src={editProfile}
@@ -105,7 +105,7 @@ const Sidebar = ({
                     </a>
                   </li>
                   <li
-                    className={`menu-item ${activePage == 8 ? 'current' : ''}`}
+                    className={`menu-item ${parseInt(activePage) === 8 ? 'current' : ''}`}
                     onClick={() => handleSignOut()}
                   >
                     <a className='menu-link'>
@@ -120,7 +120,7 @@ const Sidebar = ({
                 </ul>
                 : user.accType === '1'
                   ? <ul className='menu-list'>
-                    <li className={`menu-item ${activePage == 2 ? 'current' : ''}`}>
+                    <li className={`menu-item ${parseInt(activePage) === 2 ? 'current' : ''}`}>
                       <a className='menu-link' href='/jobs'>
                         <Image
                           src={jobs}
@@ -130,7 +130,7 @@ const Sidebar = ({
                         <span className='menu-link-text'>Jobs</span>
                       </a>
                     </li>
-                    <li className={`menu-item ${activePage == 6 ? 'current' : ''}`}>
+                    <li className={`menu-item ${parseInt(activePage) === 6 ? 'current' : ''}`}>
                       <a className='menu-link' href='/myApplications'>
                         <Image
                           src={myApplications}
@@ -140,7 +140,7 @@ const Sidebar = ({
                         <span className='menu-link-text'>My Applications</span>
                       </a>
                     </li>
-                    <li className={`menu-item ${activePage == 7 ? 'current' : ''}`}>
+                    <li className={`menu-item ${parseInt(activePage) === 7 ? 'current' : ''}`}>
                       <a className='menu-link' href='/editStudentProfile'>
                         <Image
                           src={editProfile}
@@ -151,7 +151,7 @@ const Sidebar = ({
                       </a>
                     </li>
                     <li
-                      className={`menu-item ${activePage == 8 ? 'current' : ''}`}
+                      className={`menu-item ${parseInt(activePage) === 8 ? 'current' : ''}`}
                       onClick={() => handleSignOut()}
                     >
                       <a className='menu-link'>
@@ -165,7 +165,7 @@ const Sidebar = ({
                     </li>
                   </ul>
                   : <ul className='menu-list'>
-                    <li className={`menu-item ${activePage == 2 ? 'current' : ''}`}>
+                    <li className={`menu-item ${parseInt(activePage) === 2 ? 'current' : ''}`}>
                       <a className='menu-link' href='/jobs'>
                         <Image
                           src={jobs}
@@ -175,7 +175,7 @@ const Sidebar = ({
                         <span className='menu-link-text'>Jobs</span>
                       </a>
                     </li>
-                    <li className={`menu-item ${activePage == 6 ? 'current' : ''}`}>
+                    <li className={`menu-item ${parseInt(activePage) === 6 ? 'current' : ''}`}>
                       <a className='menu-link' href='/addJob'>
                         <Image
                           src={Addjobs}
@@ -185,7 +185,7 @@ const Sidebar = ({
                         <span className='menu-link-text'>Add Jobs</span>
                       </a>
                     </li>
-                    <li className={`menu-item ${activePage == 7 ? 'current' : ''}`}>
+                    <li className={`menu-item ${parseInt(activePage) === 7 ? 'current' : ''}`}>
                       <a className='menu-link' href='/editCompanyProfile'>
                         <Image
                           src={editProfile}
@@ -196,7 +196,7 @@ const Sidebar = ({
                       </a>
                     </li>
                     <li
-                      className={`menu-item ${activePage == 8 ? 'current' : ''}`}
+                      className={`menu-item ${parseInt(activePage) === 8 ? 'current' : ''}`}
                       onClick={() => handleSignOut()}
                     >
                       <a className='menu-link'>

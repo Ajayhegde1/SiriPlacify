@@ -11,6 +11,18 @@ export function * handleGetStudentProfile () {
     const response = yield call(getStudentProfile)
     if (response.data.status === 200) {
       yield put(setStudentProfile(response.data.data))
+    } else if (response.data.status === 401) {
+      openNotification(
+        notificationTypes.ERROR,
+        '[500] Internal Server Error',
+        'Session ID is invalid or not present.'
+      )
+    } else if (response.data.status === 500) {
+      openNotification(
+        notificationTypes.ERROR,
+        '[500] Internal Server Error',
+        'Some error occured while getting profile.'
+      )
     } else {
       openNotification(
         notificationTypes.ERROR,
@@ -32,7 +44,7 @@ export function * handleADDStudentProfile (action) {
   try {
     const response = yield call(addStudentProfile, action.payload)
 
-    if (response.data.status == 200) {
+    if (response.data.status === 200) {
       openNotification(
         notificationTypes.SUCCESS,
         'Profile Added Successfully'
@@ -40,22 +52,37 @@ export function * handleADDStudentProfile (action) {
 
       window.history.replaceState({}, 'Jobs', routes.JOBS)
       window.location.reload()
-    } else if (response.data.status == 466) {
+    } else if (response.data.status === 401) {
       openNotification(
         notificationTypes.ERROR,
         'Error',
-        'Space found in url or domain'
+        'Session ID is invalid or not present'
       )
-    } else if (response.data.status === 400) {
+    } else if (response.data.status === 425) {
       openNotification(
         notificationTypes.WARNING,
-        'Cannot Submit data'
+        'Request Body is undefined.'
+      )
+    } else if (response.data.status === 426) {
+      openNotification(
+        notificationTypes.WARNING,
+        'Some attributes is undefined.'
+      )
+    } else if (response.data.status === 427) {
+      openNotification(
+        notificationTypes.WARNING,
+        'Some attributes is null.'
+      )
+    } else if (response.data.status === 428) {
+      openNotification(
+        notificationTypes.WARNING,
+        'Some attributes are empty.'
       )
     } else if (response.data.status === 500) {
       openNotification(
         notificationTypes.ERROR,
         response.data.msg,
-        'Please enter a valid data.'
+        'Some error occured while adding profile.'
       )
     } else {
       openNotification(
@@ -66,5 +93,10 @@ export function * handleADDStudentProfile (action) {
     }
   } catch (err) {
     console.error(err)
+    openNotification(
+      notificationTypes.ERROR,
+      '[500] Internal Server Error',
+      'Please try again later.'
+    )
   }
 }
