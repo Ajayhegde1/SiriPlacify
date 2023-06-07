@@ -27,8 +27,8 @@ export default function BasicJobInfo ({
   const user = useSelector(state => state.user)
 
   useEffect(() => {
-    if (user === null) {
-      if (user.accType === '1') {
+    if (user !== null) {
+      if (parseInt(user.accType) === 1) {
         GET(`/checkJobApplication?jobID=${jobID}`, { sessionID: user.sessionId })
           .then((res) => {
             if (res.data.status === 200) {
@@ -243,7 +243,7 @@ export default function BasicJobInfo ({
                     ? <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
                       <div />
                       <div
-                        className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+                        className='rounded-lg text-base md:text-lg 2xl:text-xl bg-green-600 text-white font-bold text-center p-2'
                       >
                         Applied
                       </div>

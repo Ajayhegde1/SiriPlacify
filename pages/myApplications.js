@@ -77,7 +77,7 @@ export default function myApplications () {
       <main class={`dashboard ${sidebarOpen ? 'active' : ''}`}>
         <h1 className='text-center md:text-left mb-20 ml-2 md:ml-6 pt-6 md:pt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>My Applications</h1>
         <div className='bg-white p-5 rounded-xl mr-4 md:mr-12 overflow-auto'>
-          <table className='table-auto overflow-scroll w-full mt-3 text-left'>
+          <table className='pb-5 table-auto overflow-scroll w-full mt-3 text-left'>
             <thead className='border-2 border-gray-300'>
               <th className='border-r-2 border-gray-300 px-6 py-4 text-gray-600'>Company Name</th>
               <th className='border-r-2 border-gray-300 px-6 py-4 text-gray-600'>Job Title</th>
