@@ -3,9 +3,10 @@ import { useRouter } from 'next/router'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { read, utils } from 'xlsx'
+import { read, utils, writeFile } from 'xlsx'
 
 import sheet from '../../../../public/sheets.png'
+import exportIMG from '../../../../public/export.png'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -20,7 +21,7 @@ import arrow from '@/public/arrow.png'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
-export default function College () {
+export default function College() {
   const router = useRouter()
   const user = useSelector((state) => state.user)
 
@@ -98,6 +99,42 @@ export default function College () {
       }
     }
   }, [jobID, collegeName])
+
+  const handleExport = () => {
+    const headings = [
+      [
+        "uid",
+        "username",
+        "email",
+        "contactNo",
+        "tenthMarks",
+        "twelthMarks",
+        "studentUGMarks",
+        "studentPGMarks",
+        "studentStatus",
+        "studentDescription"
+      ],
+    ];
+    const wb = utils.book_new();
+    const ws = utils.json_to_sheet([]);
+    utils.sheet_add_aoa(ws, headings);
+    const outdata = JSON.stringify(candidates, [
+      "uid",
+      "username",
+      "email",
+      "contactNo",
+      "tenthMarks",
+      "twelthMarks",
+      "studentUGMarks",
+      "studentPGMarks",
+      "studentStatus",
+      "studentDescription"
+    ]);
+    const output = JSON.parse(outdata);
+    utils.sheet_add_json(ws, output, { origin: "A2", skipHeader: true });
+    utils.book_append_sheet(wb, ws, "Students List");
+    writeFile(wb, "candidatesData.xlsx");
+  }
 
   const handleImport = ($event) => {
     const files = $event.target.files
@@ -308,7 +345,7 @@ export default function College () {
         activePage={2}
       />
       <main class={`dashboard ${sidebarOpen ? 'active' : ''}`}>
-        <div className='pt-14 ml-0 md:ml-6 flex flex-col md:flex-row'>
+        <div className='pt-14 ml-0 md:ml-6 flex flex-row'>
           <Link href={`/jobs/companyJobs/${jobID}`}>
             <Image
               src={arrow}
@@ -329,18 +366,37 @@ export default function College () {
                 </h1>
           }
         </div>
-        <div>
-          <button
-            onClick={() => setShowModal(true)}
-            className='mt-5 flex mr-auto lg:mr-12 ml-3 md:ml-10 lg:ml-auto hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black p-4'
-          >
-            <Image
-              src={sheet}
-              alt='Import excel sheet'
-              className='h-5 mt-1 mr-2'
-            />
-            Import from excel
-          </button>
+        <div className='ml-3 md:ml-0 mt-10 flex flex-col md:flex-row gap-4 justify-end mr-12'>
+          <div>
+            <button
+              onClick={handleExport}
+              className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+            >
+              <Image
+                src={exportIMG}
+                alt='Export Students Data to excel'
+                className='h-5 w-5 mt-1 mr-2'
+                width={20}
+                height={20}
+              />
+              Export Students Data to excel
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={() => setShowModal(true)}
+              className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+            >
+              <Image
+                src={sheet}
+                alt='Import from excel'
+                className='h-5 mt-1 mr-2'
+                width={20}
+                height={20}
+              />
+              Import from excel
+            </button>
+          </div>
         </div>
         <div className='mt-4 ml-3 md:ml-6 bg-white mb-10 mr-10 rounded-xl p-6'>
           {
@@ -350,15 +406,15 @@ export default function College () {
                 ? <>
                 </>
                 : <StatusOfHire
-                    students={candidates}
-                    status={status}
-                    setStatus={setStatus}
-                    setApplied={setApplied}
-                    setShortlisted={setShortlisted}
-                    setTest={setTest}
-                    setInterview={setInterview}
-                    setHired={setHired}
-                  />
+                  students={candidates}
+                  status={status}
+                  setStatus={setStatus}
+                  setApplied={setApplied}
+                  setShortlisted={setShortlisted}
+                  setTest={setTest}
+                  setInterview={setInterview}
+                  setHired={setHired}
+                />
           }
           {
             candidates === null || typeof candidates === 'undefined'
@@ -370,10 +426,10 @@ export default function College () {
                   No students have applied yet
                 </div>
                 : <Candidates
-                    students={filteredStudentList}
-                    promoteStudents={promoteStudents}
-                    setPromoteStudents={setPromoteStudents}
-                  />
+                  students={filteredStudentList}
+                  promoteStudents={promoteStudents}
+                  setPromoteStudents={setPromoteStudents}
+                />
           }
           <div className='flex'>
             <button

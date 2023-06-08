@@ -55,11 +55,12 @@ export default function UpdateStatusModal ({
           <h1 className='font-bold text-2xl mb-4'>Please Update student as per given excel sheet</h1>
           <p className='font-medium text-xl mb-2'>Status must be as follows:</p>
           <ul className='text-xl font-medium'>
-            <li>1: Applied</li>
-            <li>2: Shortlisted</li>
-            <li>3: Test</li>
-            <li>4: Interview</li>
-            <li>5: Hired</li>
+            <li>0: Applied</li>
+            <li>1: Shortlisted</li>
+            <li>2: Test</li>
+            <li>3: Interview</li>
+            <li>4: Hired</li>
+            <li>5: Reject</li>
           </ul>
         </div>
         <div className='pt-5 pl-5 rounded-3xl'>
