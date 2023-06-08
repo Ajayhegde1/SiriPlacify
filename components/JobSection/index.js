@@ -38,7 +38,7 @@ export default function JobSection ({ jobSection, setJobSection, jobs, offerJobs
         onClick={setJobOffersSection}
         className={jobSection === 2 ? 'pb-1 border-b-4 border-green-900' : ''}
       >
-        <span className='text-lg font-Heading font-semibold text-gray-500 pr-1'>Job offers</span>
+        <span className='pb-1 text-lg font-Heading font-semibold text-black pr-1'>Job offers</span>
         {
           offerJobs === null
             ? <div />
@@ -55,7 +55,7 @@ export default function JobSection ({ jobSection, setJobSection, jobs, offerJobs
         onClick={setDeclinedJobsSection}
         className={jobSection === 3 ? 'pb-1 border-b-4 border-green-900' : ''}
       >
-        <span className='text-lg font-Heading font-semibold text-gray-500 pr-1'>Declined jobs</span>
+        <span className='pb-1 text-lg font-Heading font-semibold text-black pr-1'>Declined jobs</span>
         {
           declinedJobs === null
             ? <>

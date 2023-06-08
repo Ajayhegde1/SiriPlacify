@@ -1,4 +1,4 @@
-import { read, utils } from 'xlsx'
+import { read, utils, writeFile } from 'xlsx'
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Image from 'next/image'
@@ -12,12 +12,14 @@ import SingleSelectComponent from '@/components/InputComponents/SingleSelectComp
 import Button from '@/components/Buttons'
 
 import sheet from '../public/sheets.png'
+import exportIMG from '../public/export.png'
 import { accountType } from '@/constants/users'
 import { routes } from '@/constants/routes'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 import { POST } from '@/config/api'
+import { getStudents } from '@/redux/Sagas/requests/features'
 
-export default function UserManagement () {
+export default function UserManagement() {
   const router = useRouter()
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -29,6 +31,7 @@ export default function UserManagement () {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [accType, setAccType] = useState(accountType[0].value)
+  const [students, setStudents] = useState([])
 
   useEffect(() => {
     if (user === null) {
@@ -36,6 +39,42 @@ export default function UserManagement () {
     } else if (user !== null) {
       if (user.accType !== '0') {
         router.push(routes.NOTFOUND)
+      }
+      else if (user.accType === '0') {
+        getStudents()
+          .then((res) => {
+            if (res.data.status === 200){
+              setStudents(res.data.data)
+            }
+            else if (res.data.status === 401){
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Error identifying user email'
+              )
+            }
+            else if (res.data.status === 423){
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Unable to retrieve college'
+              )
+            }
+            else if (res.data.status === 424){
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Error fetching students'
+              )
+            }
+            else if (res.data.status === 500){
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Unable to get students data'
+              )
+            }
+          })
       }
     }
   }, [user])
@@ -82,6 +121,40 @@ export default function UserManagement () {
       }
       reader.readAsArrayBuffer(file)
     }
+  }
+
+  const handleExport = () => {
+    const headings = [
+      [
+        "uid",
+        "username",
+        "email",
+        "contactNo",
+        "tenthMarks",
+        "twelthMarks",
+        "studentUGMarks",
+        "studentPGMarks",
+        "studentDescription"
+      ],
+    ];
+    const wb = utils.book_new();
+    const ws = utils.json_to_sheet([]);
+    utils.sheet_add_aoa(ws, headings);
+    const outdata = JSON.stringify(students, [
+      "uid",
+      "username",
+      "email",
+      "contactNo",
+      "tenthMarks",
+      "twelthMarks",
+      "studentUGMarks",
+      "studentPGMarks",
+      "studentDescription"
+    ]);
+    const output = JSON.parse(outdata);
+    utils.sheet_add_json(ws, output, { origin: "A2", skipHeader: true });
+    utils.book_append_sheet(wb, ws, "Students List");
+    writeFile(wb, "studentsData.xlsx");
   }
 
   const handleUserAddition = () => {
@@ -134,17 +207,34 @@ export default function UserManagement () {
           <div className='pb-4'>
             <h1 className='text-center md:text-left mb-4 ml-2 md:ml-6 pt-6 md:pt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>User Management</h1>
           </div>
-          <button
-            onClick={() => setShowModal(true)}
-            className='ml-2 md:ml-6 flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-          >
-            <Image
-              src={sheet}
-              alt='Import excel sheet'
-              className='h-5 mt-1 mr-2'
-            />
-            Import from excel
-          </button>
+          <div className='flex flex-col md:flex-row gap-4'>
+            <div>
+              <button
+                onClick={() => setShowModal(true)}
+                className='ml-2 md:ml-6 flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={sheet}
+                  alt='Import excel sheet'
+                  className='h-5 mt-1 mr-2'
+                />
+                Import from excel
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={handleExport}
+                className='ml-2 md:ml-6 flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={exportIMG}
+                  alt='Import excel sheet'
+                  className='h-5 w-5 mt-1 mr-2'
+                />
+                Export Students Data to excel
+              </button>
+            </div>
+          </div>
           <div className='ml-2 md:ml-6 mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4'>
             <TextField
               label='Email ID'

@@ -8,8 +8,8 @@ export default function DeclinedJobs ({ jobs }) {
                     jobs === null
                       ? <></>
                       : jobs.length === 0
-                        ? <div className='text-center text-2xl font-Heading font-bold text-gray-500'>
-                          No declined jobs
+                        ? <div className='text-2xl font-Heading font-bold text-gray-500'>
+                          No offered jobs
                           </div>
                         : jobs.map((job, index) =>
                           <JobItem

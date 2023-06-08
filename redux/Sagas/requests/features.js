@@ -77,6 +77,10 @@ export const closeJob = (jobID) => {
   return POST(`/closeJob?jobID=${jobID}`, {}, { sessionID: store.getState().user.sessionId })
 }
 
+export const getStudents = () => {
+  return GET('/getStudents', { sessionID: store.getState().user.sessionId })
+}
+
 export const getStudentProfile = () => {
   return GET('/studentProfile', { sessionID: store.getState().user.sessionId })
 }
