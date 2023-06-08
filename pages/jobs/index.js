@@ -32,7 +32,7 @@ export default function Jobs () {
 
   useEffect(() => {
     if (user !== null) {
-      if (parseInt(user.accType) < 2)
+      if (parseInt(user.accType) <= 2)
       dispatch(getJobs())
     }
   }, [dispatch, user])
