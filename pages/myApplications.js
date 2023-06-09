@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
 
-import { getStudentAppliedJobs } from '@/redux/Sagas/requests/features'
-
-import { notificationTypes, openNotification } from '@/utils/notifications'
+import { getJobApplication } from '@/redux/Slices/jobApplicationSlice'
 import { routes } from '@/constants/routes'
 
 export default function myApplications () {
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const user = useSelector((state) => state.user)
+  const jobApplication = useSelector((state) => state.jobApplication)
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [jobApplication, setJobApplication] = useState([])
 
   useEffect(() => {
     if (user === null) {
@@ -25,44 +24,14 @@ export default function myApplications () {
       if (user.accType !== '1') {
         router.push(routes.NOTFOUND)
       } else {
-        getStudentAppliedJobs()
-          .then((res) => {
-            if (res.data.status === 200) {
-              setJobApplication(res.data.data)
-            } else if (res.data.status === 401) {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'Session ID is invalid or not present'
-              )
-            } else if (res.data.status === 424) {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'No Job Applications found'
-              )
-            } else if (res.data.status === 500) {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'unable to retrieve job applications'
-              )
-            } else {
-              openNotification(
-                notificationTypes.WARNING,
-                'No Jobs Found'
-              )
-            }
-          })
-          .catch((err) => {
-            openNotification(
-              notificationTypes.ERROR,
-              'Error'
-            )
-          })
+        dispatch(getJobApplication())
       }
     }
-  }, [user])
+  }, [user, dispatch])
+
+  const handleCustomPage = (id) => {
+    router.push(`/applications/${id}`)
+  }
 
   return (
     <div className='min-h-screen bg-gray-200'>
@@ -72,21 +41,21 @@ export default function myApplications () {
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
-        activePage={9}
+        activePage={6}
       />
       <main class={`dashboard ${sidebarOpen ? 'active' : ''}`}>
-        <h1 className='text-center md:text-left mb-20 ml-2 md:ml-6 pt-6 md:pt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>My Applications</h1>
-        <div className='bg-white p-5 rounded-xl mr-4 md:mr-12 overflow-auto'>
-          <table className='pb-5 table-auto overflow-scroll w-full mt-3 text-left'>
-            <thead className='border-2 border-gray-300'>
-              <th className='border-r-2 border-gray-300 px-6 py-4 text-gray-600'>Company Name</th>
-              <th className='border-r-2 border-gray-300 px-6 py-4 text-gray-600'>Job Title</th>
-              <th className='border-r-2 border-gray-300 px-6 py-4 text-gray-600'>Status</th>
+        <h1 className='text-center md:text-left mb-12 ml-2 md:ml-6 pt-6 md:pt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>My Applications</h1>
+        <div className='pt-5 px-5 pb-10 rounded-xl mr-4 md:mr-12 overflow-auto'>
+          <table className='pb-12 table-auto overflow-scroll w-full mt-3 text-left'>
+            <thead className='bg-white rounded-xl border-b-8'>
+              <th className='px-6 py-4 text-gray-600'>Company Name</th>
+              <th className='px-6 py-4 text-gray-600'>Job Title</th>
+              <th className='px-6 py-4 text-gray-600'>Status</th>
             </thead>
-            <tbody>
+            <tbody className='bg-white border-t-8 rounded-xl'>
               {
                 jobApplication === null
-                  ? <div className='border-2 border-gray-300 mt-4'>
+                  ? <div className='mt-4'>
                     Loading...
                   </div>
                   : jobApplication.length === 0
@@ -94,23 +63,27 @@ export default function myApplications () {
                       No Applications found
                     </div>
                     : jobApplication.map((job, index) =>
-                      <tr key={index} className='border-2 border-gray-300'>
-                        <td className='font-medium border-r-2 border-gray-300 whitespace-nowrap px-6 py-4'>
+                      <tr onClick={() => handleCustomPage(job.id)} key={index} className='mt-10 border-b-2 border-gray-200'>
+                        <td className='font-medium whitespace-nowrap px-6 py-4'>
                           {job.companyName}
                         </td>
-                        <td className='font-medium border-r-2 border-gray-300 whitespace-nowrap px-6 py-4'>
+                        <td className='font-medium whitespace-nowrap px-6 py-4'>
                           {job.jobTitle}
                         </td>
-                        <td className='font-medium border-r-2 border-gray-300 whitespace-nowrap px-6 py-4'>
+                        <td className='font-bold whitespace-nowrap px-6 py-4'>
                           {job.jobStatus === '0'
-                            ? 'Applied'
+                            ? <span className="text-cyan-600">Applied</span>
                             : job.jobStatus === '1'
-                              ? 'Shortlisted'
+                              ? <span className="text-blue-600">Shortlisted</span>
                               : job.jobStatus === '2'
-                                ? 'Test'
+                                ? <span className="text-yellow-600">Test</span>
                                 : job.jobStatus === '3'
-                                  ? 'Interview'
-                                  : job.jobStatus === '4' ? 'Hired' : job.jobStatus === '5' ? 'Rejected' : 'Undefined'}
+                                  ? <span className="text-lime-600">Interview</span>
+                                  : job.jobStatus === '4' ? <span className="text-green-600">Hired</span> 
+                                    : job.jobStatus === '5' 
+                                      ? <span className="text-red-800">Rejected</span> 
+                                        : 
+                                        <span className="text-red-800">Undefined</span>}
                         </td>
                       </tr>
                     )
