@@ -29,6 +29,9 @@ export default function AddJob () {
   const [locationOfWork, setLocationOfWork] = useState('')
   const [selectedDate, setSelectedDate] = useState(null)
   const [ctc, setCtc] = useState('')
+  const [basePay, setBasePay] = useState(0.0)
+  const [variablePay, setVariablePay] = useState(0.0)
+  const [RSU, setRSU] = useState(0.0)
   const [sector, setSector] = useState('')
   const [applicableCourses, setApplicableCourses] = useState('')
   const [modeOfSelection, setModeOfSelection] = useState(modeOfSelectionList[0].value)
@@ -78,7 +81,10 @@ export default function AddJob () {
         jobContactNumber: contactPersonPhoneNumber,
         jobEmailId: contactPersonEmail,
         dueDate: selectedDate,
-        companyName
+        companyName,
+        basePay: basePay,
+        variablePay: variablePay,
+        RSU: RSU
       }
       setBtnText('Saving...')
       dispatch(addJob(jobData))
@@ -97,7 +103,10 @@ export default function AddJob () {
         jobContactName: contactPersonName,
         jobContactNumber: contactPersonPhoneNumber,
         jobEmailId: contactPersonEmail,
-        dueDate: selectedDate
+        dueDate: selectedDate,
+        basePay: basePay,
+        variablePay: variablePay,
+        RSU: RSU
       }
       setBtnText('Saving...')
       dispatch(addJobByCompany(jobData))
@@ -176,13 +185,6 @@ export default function AddJob () {
                 className='border-2 border-gray-400 rounded w-full p-4 text-black leading-tight focus:outline-none focus:shadow-outline'
               />
             </div>
-            <TextField
-              label='CTC'
-              placeholder='75,0000.00'
-              type='text'
-              value={ctc}
-              onChangeHandler={(e) => setCtc(e.target.value)}
-            />
           </div>
           <div>
             <TextField
@@ -217,6 +219,41 @@ export default function AddJob () {
               placeholder='Write a detailed description of the job'
               value={briefJobDescription}
               onChangeHandler={(e) => setBriefJobDescription(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className='ml-3 md:ml-6 mr-12'>
+          <div className='w-1/3'>
+            <TextField
+              label='CTC'
+              placeholder='75,0000.00'
+              type='text'
+              value={ctc}
+              onChangeHandler={(e) => setCtc(e.target.value)}
+            />
+          </div>
+          <h1 className='text-center md:text-left pb-4 mt-3 md:mt-6 text-xl md:text-2xl font-Heading font-bold text-gray-800'>CTC Breakdown</h1>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+          <TextField
+              label='Base Pay'
+              placeholder='75,0000.00'
+              type='text'
+              value={basePay}
+              onChangeHandler={(e) => setBasePay(e.target.value)}
+            />
+            <TextField
+              label='Variable Pay'
+              placeholder='75,0000.00'
+              type='text'
+              value={variablePay}
+              onChangeHandler={(e) => setVariablePay(e.target.value)}
+            />
+            <TextField
+              label='RSU'
+              placeholder='75,0000.00'
+              type='text'
+              value={RSU}
+              onChangeHandler={(e) => setRSU(e.target.value)}
             />
           </div>
         </div>

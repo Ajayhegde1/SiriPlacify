@@ -134,7 +134,8 @@ export default function UserManagement() {
         "twelthMarks",
         "studentUGMarks",
         "studentPGMarks",
-        "studentDescription"
+        "studentDescription",
+        "tempPassword"
       ],
     ];
     const wb = utils.book_new();
@@ -149,7 +150,8 @@ export default function UserManagement() {
       "twelthMarks",
       "studentUGMarks",
       "studentPGMarks",
-      "studentDescription"
+      "studentDescription",
+      "tempPassword"
     ]);
     const output = JSON.parse(outdata);
     utils.sheet_add_json(ws, output, { origin: "A2", skipHeader: true });
@@ -161,7 +163,6 @@ export default function UserManagement() {
     const Data = [
       {
         email,
-        password,
         accountType: accType,
         username
       }
@@ -175,6 +176,7 @@ export default function UserManagement() {
             'Sucess',
             'Student Added'
           )
+          window.location.reload()
         } else {
           openNotification(
             notificationTypes.ERROR,
@@ -256,15 +258,6 @@ export default function UserManagement() {
               options={accountType}
               label='Type of the User'
             />
-            <div className='col-span-1 lg:col-span-2'>
-              <TextField
-                label='Password'
-                placeholder='**********'
-                type='password'
-                value={password}
-                onChangeHandler={e => setPassword(e.target.value)}
-              />
-            </div>
           </div>
           <div className='mt-8 ml-2 md:ml-6'>
             <Button
