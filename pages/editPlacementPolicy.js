@@ -18,6 +18,17 @@ export default function EditPlacementPolicy () {
   const router = useRouter()
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [noOfTiers, setNoOfTiers] = useState('')
+  const [maxOffers, setMaxOffers] = useState('')
+  const [minCTCForT1, setMinCTCForT1] = useState('')
+  const [minCTCForT2, setMinCTCForT2] = useState('')
+  const [minCTCForT3, setMinCTCForT3] = useState('')
+  const [maxCTCForT1, setMaxCTCForT1] = useState('')
+  const [maxCTCForT2, setMaxCTCForT2] = useState('')
+  const [maxCTCForT3, setMaxCTCForT3] = useState('')
+  const [update, setUpdate] = useState('Update')
+  const [isDisabled, setIsDisabled] = useState(false)
+
 
   const placementPolicy = useSelector((state) => state.placementPolicy)
   const user = useSelector((state) => state.user)
@@ -33,6 +44,38 @@ export default function EditPlacementPolicy () {
       }
     }
   }, [user, dispatch])
+
+  useEffect(() => {
+    if (placementPolicy !== null){
+      if (Object.keys(placementPolicy) !== 0){
+        setNoOfTiers(placementPolicy.noOfTiers)
+        setMaxOffers(placementPolicy.maxOffers)
+        setMinCTCForT1(placementPolicy.minCTCForT1)
+        setMinCTCForT2(placementPolicy.minCTCForT2)
+        setMinCTCForT3(placementPolicy.minCTCForT3)
+        setMaxCTCForT1(placementPolicy.maxCTCForT1)
+        setMaxCTCForT2(placementPolicy.maxCTCForT2)
+        setMaxCTCForT3(placementPolicy.maxCTCForT3)
+      }
+    }
+  } , [placementPolicy])
+
+  const updatePlacementPolicy = () => {
+    const data = {
+      noOfTiers,
+      maxOffers,
+      minCTCForT1,
+      minCTCForT2,
+      minCTCForT3,
+      maxCTCForT1,
+      maxCTCForT2,
+      maxCTCForT3
+    }
+    setIsDisabled(true)
+    setUpdate('Updating...')
+    console.log(data)
+    // dispatch(updateProfile(data))
+  }
 
   return (
     <div className='bg-gray-200'>
@@ -73,8 +116,8 @@ export default function EditPlacementPolicy () {
                                                       label='Number of tiers'
                                                       placeholder='03'
                                                       type='text'
-                                                      value={placementPolicy.noOfTiers}
-                                                      disabled
+                                                      value={noOfTiers}
+                                                      onChangeHandler={(e) => setNoOfTiers(e.target.value)}
                                                     />
                                                   </div>
                                                   <div className='mb-3'>
@@ -82,8 +125,8 @@ export default function EditPlacementPolicy () {
                                                       label='Maximum Number of offers a student can receive'
                                                       placeholder='03'
                                                       type='text'
-                                                      value={placementPolicy.maxOffers}
-                                                      disabled
+                                                      value={maxOffers}
+                                                      onChangeHandler={(e) => setMaxOffers(e.target.value)}
                                                     />
                                                   </div>
                                                   <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
@@ -91,43 +134,43 @@ export default function EditPlacementPolicy () {
                                                       label='Minimum CTC of tier 1'
                                                       placeholder='75,0000.00'
                                                       type='text'
-                                                      value={placementPolicy.minCTCForT1}
-                                                      disabled
+                                                      value={minCTCForT1}
+                                                      onChangeHandler={(e) => setMinCTCForT1(e.target.value)}
                                                     />
                                                     <TextField
                                                       label='Maximum CTC of tier 1'
                                                       placeholder='85,0000.00'
                                                       type='text'
-                                                      value={placementPolicy.maxCTCForT1}
-                                                      disabled
+                                                      value={maxCTCForT1}
+                                                      onChangeHandler={(e) => setMaxCTCForT1(e.target.value)}
                                                     />
                                                     <TextField
                                                       label='Minimum CTC of tier 2'
                                                       placeholder='75,0000.00'
                                                       type='text'
-                                                      value={placementPolicy.minCTCForT2}
-                                                      disabled
+                                                      value={minCTCForT2}
+                                                      onChangeHandler={(e) => setMinCTCForT2(e.target.value)}
                                                     />
                                                     <TextField
                                                       label='Maximum CTC of tier 2'
                                                       placeholder='85,0000.00'
                                                       type='text'
-                                                      value={placementPolicy.maxCTCForT2}
-                                                      disabled
+                                                      value={maxCTCForT2}
+                                                      onChangeHandler={(e) => setMaxCTCForT2(e.target.value)}
                                                     />
                                                     <TextField
                                                       label='Minimum CTC of tier 3'
                                                       placeholder='75,0000.00'
                                                       type='text'
-                                                      value={placementPolicy.maxCTCForT3}
-                                                      disabled
+                                                      value={minCTCForT3}
+                                                      onChangeHandler={(e) => setMinCTCForT3(e.target.value)}
                                                     />
                                                     <TextField
                                                       label='Maximum CTC of tier 3'
                                                       placeholder='85,0000.00'
                                                       type='text'
-                                                      value={placementPolicy.maxCTCForT3}
-                                                      disabled
+                                                      value={maxCTCForT3}
+                                                      onChangeHandler={(e) => setMaxCTCForT3(e.target.value)}
                                                     />
                                                   </div>
                                                 </>
@@ -135,7 +178,8 @@ export default function EditPlacementPolicy () {
                     <div class='mt-6 mb-6'>
                       <Button
                         btnText='Done'
-                        disabled
+                        disabled={isDisabled}
+                        onClickHandler={updatePlacementPolicy}
                       />
                     </div>
                   </div>

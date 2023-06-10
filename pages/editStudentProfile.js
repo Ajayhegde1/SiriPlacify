@@ -4,7 +4,7 @@ import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
 
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { routes } from '@/constants/routes'
@@ -150,6 +150,11 @@ export default function editStudentProfile () {
                           </div>
                         </div>
                 }
+              <div className='mt-12'>
+                <p className='shadow-2xl p-5 text-center font-bold text-gray-500 text-2xl'>
+                  Contact Placement Officer to change the details
+                </p>
+              </div>
       </div>
     </div>
   )

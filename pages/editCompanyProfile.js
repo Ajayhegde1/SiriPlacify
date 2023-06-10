@@ -1,7 +1,7 @@
 import photo from '../public/photoupload.png'
 
 import Image from 'next/image'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -17,6 +17,15 @@ export default function EditCompanyProfile () {
   const dispatch = useDispatch()
   const router = useRouter()
 
+  const [userName, setUserName] = useState('')
+  const [email, setEmail] = useState('')
+  const [companyName, setCompanyName] = useState('')
+  const [companyWebsite, setCompanyWebsite] = useState('')
+  const [companyContactNo, setCompanyContactNo] = useState('')
+  const [companyLocation, setCompanyLocation] = useState('')
+  const [companyDescription, setCompanyDescription] = useState('')
+  const [isDisabled, setIsDisabled] = useState(false)
+
   const profile = useSelector((state) => state.companyProfile)
   const user = useSelector((state) => state.user)
 
@@ -28,9 +37,40 @@ export default function EditCompanyProfile () {
         router.push(routes.NOTFOUND)
       } else {
         dispatch(getCompanyProfile())
+        setUserName(user.username)
+        setEmail(user.email)
       }
     }
   }, [user, dispatch])
+
+  useEffect(() => {
+    if (profile !== null){
+      if (Object.keys(profile).length !== 0) {
+        setCompanyName(profile.companyName)
+        setCompanyWebsite(profile.companyWebsite)
+        setCompanyContactNo(profile.companyContactNo)
+        setCompanyLocation(profile.companyLocation)
+        setCompanyDescription(profile.companyDescription)
+      }
+    }
+  }, [profile])
+
+  const updateProfile = () => {
+    setIsDisabled(true)
+    const data = {
+      userName,
+      email,
+      companyName,
+      companyWebsite,
+      companyContactNo,
+      companyLocation,
+      companyDescription
+    }
+    console.log(data)
+    setTimeout(() => {
+      setIsDisabled(false)
+    }, 1000)
+  }
 
   return (
     <div>
@@ -73,22 +113,22 @@ export default function EditCompanyProfile () {
                         label='Name of universities / colleges'
                         placeholder='Pes university'
                         type='text'
-                        value={profile.companyName}
-                        disabled
+                        value={companyName}
+                        onChangeHandler={(e) => setCompanyName(e.target.value)}
                       />
                       <TextField
                         label='Account user name'
                         placeholder='TPO name'
                         type='text'
-                        value={user !== null && Object.keys(user).length > 0 ? user.username : ''}
-                        disabled
+                        value={userName}
+                        onChangeHandler={(e) => setUserName(e.target.value)}
                       />
                       <TextField
                         label='Website'
                         placeholder='pes.edu'
                         type='text'
-                        value={profile.companyWebsite}
-                        disabled
+                        value={companyWebsite}
+                        onChangeHandler={(e) => setCompanyWebsite(e.target.value)}
                       />
                     </div>
                   </div>
@@ -98,8 +138,8 @@ export default function EditCompanyProfile () {
                         label='Email id'
                         placeholder='xyz.@gmail.com'
                         type='text'
-                        value={user !== null && Object.keys(user).length > 0 ? user.email : ''}
-                        disabled
+                        value={email}
+                        onChangeHandler={(e) => setEmail(e.target.value)}
                       />
                     </div>
                     <div className='col-span-1 md:col-span-2'>
@@ -107,8 +147,8 @@ export default function EditCompanyProfile () {
                         label='Contact'
                         placeholder='9090909090'
                         type='text'
-                        value={profile.companyContactNo}
-                        disabled
+                        value={companyContactNo}
+                        onChangeHandler={(e) => setCompanyContactNo(e.target.value)}
                       />
                     </div>
                   </div>
@@ -118,11 +158,11 @@ export default function EditCompanyProfile () {
                     label='location'
                     placeholder='100 Feet Ring Road, Banashankari Stage III, Dwaraka Nagar, Bengaluru, Karnataka 560085'
                     type='text'
-                    value={profile.companyLocation}
-                    disabled
+                    value={companyLocation}
+                    onChangeHandler={(e) => setCompanyLocation(e.target.value)}
                   />
                   <TextArea
-                    label='About the universities / colleges'
+                    label='About the company'
                     placeholder='PES University, located in Bangalore, India is one of the country’s leading teaching and research universities.
                             The University is committed to providing “navigation for the real world” that inspires students to find their
                             true north.
@@ -130,13 +170,14 @@ export default function EditCompanyProfile () {
                             environment. Over the years, we have accomplished this with the participative efforts of the management,
                             staff, students and parents.'
                     rows='8'
-                    value={profile.companyDescription}
-                    disabled
+                    value={companyDescription}
+                    onChangeHandler={(e) => setCompanyDescription(e.target.value)}
                   />
                   <div class='mb-6'>
                     <Button
-                      btnText='Next'
-                      disabled
+                      btnText={isDisabled ? 'Updating...' : 'Update'}
+                      disabled={isDisabled}
+                      onClickHandler={updateProfile}
                     />
                   </div>
                 </div>

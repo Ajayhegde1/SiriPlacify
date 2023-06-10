@@ -1,7 +1,7 @@
 import photo from '../public/photoupload.png'
 
 import Image from 'next/image'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -17,6 +17,16 @@ export default function EditProfile () {
   const dispatch = useDispatch()
   const router = useRouter()
 
+  const [collegeName, setCollegeName] = useState('')
+  const [collegeWebsite, setCollegeWebsite] = useState('')
+  const [collegeLocation, setCollegeLocation] = useState('')
+  const [collegeDescription, setCollegeDescription] = useState('')
+  const [contactNo, setContactNo] = useState('')
+  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
+  const [update, setUpdate] = useState('Update')
+  const [isDisabled, setIsDisabled] = useState(false)
+
   const profile = useSelector((state) => state.profile)
   const user = useSelector((state) => state.user)
 
@@ -28,9 +38,39 @@ export default function EditProfile () {
         router.push(routes.NOTFOUND)
       } else {
         dispatch(getProfile())
+        setEmail(user.email)
+        setUsername(user.username)
       }
     }
   }, [user, dispatch])
+
+  useEffect(() => {
+    if (profile !== null) {
+      if (Object.keys(profile).length !== 0) {
+        setCollegeName(profile.collegeName)
+        setCollegeWebsite(profile.collegeWebsite)
+        setCollegeLocation(profile.collegeLocation)
+        setCollegeDescription(profile.collegeDescription)
+        setContactNo(profile.contactNo)
+      }
+    }
+  }, [profile])
+
+  const updateProfile = () => {
+    const data = {
+      collegeName,
+      collegeWebsite,
+      collegeLocation,
+      collegeDescription,
+      contactNo,
+      email,
+      username
+    }
+    setUpdate('Updating...')
+    setIsDisabled(true)
+    console.log(data)
+    // dispatch(updateProfile(data))
+  }
 
   return (
     <div>
@@ -73,22 +113,22 @@ export default function EditProfile () {
                         label='Name of universities / colleges'
                         placeholder='Pes university'
                         type='text'
-                        value={profile.collegeName}
-                        disabled
+                        value={collegeName}
+                        onChangeHandler={(e) => setCollegeName(e.target.value)}
                       />
                       <TextField
                         label='Account user name'
                         placeholder='TPO name'
                         type='text'
-                        value={user !== null && Object.keys(user).length > 0 ? user.username : ''}
-                        disabled
+                        value={username}
+                        onChangeHandler={(e) => setUsername(e.target.value)}
                       />
                       <TextField
                         label='Website'
                         placeholder='pes.edu'
                         type='text'
-                        value={profile.collegeWebsite}
-                        disabled
+                        value={collegeWebsite}
+                        onChangeHandler={(e) => setCollegeWebsite(e.target.value)}
                       />
                     </div>
                   </div>
@@ -98,8 +138,8 @@ export default function EditProfile () {
                         label='Email id'
                         placeholder='xyz.@gmail.com'
                         type='text'
-                        value={user !== null && Object.keys(user).length > 0 ? user.email : ''}
-                        disabled
+                        value={email}
+                        onChangeHandler={(e) => setEmail(e.target.value)}
                       />
                     </div>
                     <div className='col-span-1 md:col-span-2'>
@@ -107,8 +147,8 @@ export default function EditProfile () {
                         label='Contact'
                         placeholder='9090909090'
                         type='text'
-                        value={profile.contactNo}
-                        disabled
+                        value={contactNo}
+                        onChangeHandler={(e) => setContactNo(e.target.value)}
                       />
                     </div>
                   </div>
@@ -118,8 +158,8 @@ export default function EditProfile () {
                     label='location'
                     placeholder='100 Feet Ring Road, Banashankari Stage III, Dwaraka Nagar, Bengaluru, Karnataka 560085'
                     type='text'
-                    value={profile.collegeLocation}
-                    disabled
+                    value={collegeLocation}
+                    onChangeHandler={(e) => setCollegeLocation(e.target.value)}
                   />
                   <TextArea
                     label='About the universities / colleges'
@@ -130,13 +170,14 @@ export default function EditProfile () {
                             environment. Over the years, we have accomplished this with the participative efforts of the management,
                             staff, students and parents.'
                     rows='8'
-                    value={profile.collegeDescription}
-                    disabled
+                    value={collegeDescription}
+                    onChangeHandler={(e) => setCollegeDescription(e.target.value)}
                   />
                   <div class='mb-6'>
                     <Button
-                      btnText='Next'
-                      disabled
+                      btnText={update}
+                      disabled={isDisabled}
+                      onClickHandler={updateProfile}
                     />
                   </div>
                 </div>
