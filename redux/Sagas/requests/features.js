@@ -85,6 +85,10 @@ export const updateCompanyProfile = (data) => {
   return POST('/updateCompany', data, { sessionID: store.getState().user.sessionId })
 }
 
+export const updateJob = (jobID, data) => {
+  return POST(`/updateJob?jobID=${jobID}`, data, { sessionID: store.getState().user.sessionId })
+}
+
 export const updatePlacementPolicy = (data) => {
   return POST('/updatePlacementPolicy', data, { sessionID: store.getState().user.sessionId })
 }
