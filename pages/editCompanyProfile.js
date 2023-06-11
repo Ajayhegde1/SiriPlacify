@@ -12,6 +12,8 @@ import Button from '@/components/Buttons'
 
 import { getCompanyProfile } from '@/redux/Slices/companySlice'
 import { routes } from '@/constants/routes'
+import { updateCompanyProfile } from '@/redux/Sagas/requests/features'
+import { notificationTypes, openNotification } from '@/utils/notifications'
 
 export default function EditCompanyProfile () {
   const dispatch = useDispatch()
@@ -66,7 +68,39 @@ export default function EditCompanyProfile () {
       companyLocation,
       companyDescription
     }
-    console.log(data)
+
+    updateCompanyProfile(data)
+      .then((res) => {
+        if (res.data.status === 200){
+          openNotification(notificationTypes.SUCCESS, 'Success', 'Profile updated successfully')
+        }
+        else if (res.data.status === 401){
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 424){
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 425){
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 426){
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 427){
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 500){
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'Internal server error'
+        )
+      })
+
     setTimeout(() => {
       setIsDisabled(false)
     }, 1000)
