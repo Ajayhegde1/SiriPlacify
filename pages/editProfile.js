@@ -91,6 +91,9 @@ export default function EditProfile() {
         else if (res.data.status === 500) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
         }
+        else {
+          openNotification(notificationTypes.ERROR, 'Error', 'Internal server error')
+        }
 
         setTimeout(() => {
           window.location.reload()

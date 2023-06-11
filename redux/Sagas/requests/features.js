@@ -81,6 +81,10 @@ export const updateProfile = (data) => {
   return POST('/updateCollegeProfile', data, { sessionID: store.getState().user.sessionId })
 }
 
+export const updatePlacementPolicy = (data) => {
+  return POST('/updatePlacementPolicy', data, { sessionID: store.getState().user.sessionId })
+}
+
 export const getStudents = () => {
   return GET('/getStudents', { sessionID: store.getState().user.sessionId })
 }

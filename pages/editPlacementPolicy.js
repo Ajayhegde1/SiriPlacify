@@ -12,6 +12,8 @@ import pp from '@/public/pp1.png'
 
 import { getPlacementPolicy } from '@/redux/Slices/placementPolicy'
 import { routes } from '@/constants/routes'
+import { updatePlacementPolicy } from '@/redux/Sagas/requests/features'
+import { openNotification, notificationTypes } from '@/utils/notifications'
 
 export default function EditPlacementPolicy () {
   const dispatch = useDispatch()
@@ -60,7 +62,7 @@ export default function EditPlacementPolicy () {
     }
   } , [placementPolicy])
 
-  const updatePlacementPolicy = () => {
+  const updatePlacementPolicyHandler = () => {
     const data = {
       noOfTiers,
       maxOffers,
@@ -73,8 +75,46 @@ export default function EditPlacementPolicy () {
     }
     setIsDisabled(true)
     setUpdate('Updating...')
-    console.log(data)
-    // dispatch(updateProfile(data))
+    
+    updatePlacementPolicy(data)
+      .then((res) => {
+        if (res.data.status === 200){
+          openNotification(notificationTypes.SUCCESS, 'Success', 'Placement Policy Updated Successfully')
+        }
+        else if (res.data.status === 401){
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 423) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 424) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 425) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 426) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 427) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 500){
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else{
+          openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong')
+        }
+        setTimeout(() => {
+          window.location.reload()
+        }, 4000)
+      })
+      .catch((err) => {
+        openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong')
+        setTimeout(() => {
+          window.location.reload()
+        }, 4000)
+      })
   }
 
   return (
@@ -177,9 +217,9 @@ export default function EditPlacementPolicy () {
                                         }
                     <div class='mt-6 mb-6'>
                       <Button
-                        btnText='Done'
+                        btnText={update}
                         disabled={isDisabled}
-                        onClickHandler={updatePlacementPolicy}
+                        onClickHandler={updatePlacementPolicyHandler}
                       />
                     </div>
                   </div>
