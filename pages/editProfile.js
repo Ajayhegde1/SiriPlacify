@@ -12,8 +12,10 @@ import Button from '@/components/Buttons'
 import { routes } from '@/constants/routes'
 
 import { getProfile } from '@/redux/Slices/profile'
+import { updateProfile } from '@/redux/Sagas/requests/features'
+import { notificationTypes, openNotification } from '@/utils/notifications'
 
-export default function EditProfile () {
+export default function EditProfile() {
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -56,7 +58,7 @@ export default function EditProfile () {
     }
   }, [profile])
 
-  const updateProfile = () => {
+  const updateProfileHandler = () => {
     const data = {
       collegeName,
       collegeWebsite,
@@ -68,8 +70,36 @@ export default function EditProfile () {
     }
     setUpdate('Updating...')
     setIsDisabled(true)
-    console.log(data)
-    // dispatch(updateProfile(data))
+
+    updateProfile(data)
+      .then((res) => {
+        if (res.data.status === 200) {
+          openNotification(notificationTypes.SUCCESS, 'Success', res.data.message)
+        }
+        else if (res.data.status === 401) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 423) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 424) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 425) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+        else if (res.data.status === 500) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+        }
+
+        setTimeout(() => {
+          window.location.reload()
+        }, 4000)
+      })
+      .catch((err) => {
+        console.log(err)
+        openNotification(notificationTypes.ERROR, 'Error', 'Internal server error')
+      })
   }
 
   return (
@@ -177,7 +207,7 @@ export default function EditProfile () {
                     <Button
                       btnText={update}
                       disabled={isDisabled}
-                      onClickHandler={updateProfile}
+                      onClickHandler={updateProfileHandler}
                     />
                   </div>
                 </div>
