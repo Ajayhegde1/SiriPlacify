@@ -126,6 +126,12 @@ export default function JobOffers () {
                   jobCriteria={job.jobCriteria}
                   jobPosition={job.jobPositionType}
                   jobSector={job.jobSector}
+                  basePay={job.basePay}
+                  variablePay={job.variablePay}
+                  RSU={job.RSU}
+                  tenthMarks={job.tenthMarks}
+                  twelfthMarks={job.twelfthMarks}
+                  UGCgpa={job.ugCGPA}
                   jobSection={2}
                 />
           }

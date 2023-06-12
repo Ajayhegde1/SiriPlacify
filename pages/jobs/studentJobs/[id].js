@@ -114,6 +114,12 @@ export default function getStudentJobs () {
                               jobDesc={job.jobDescription}
                               jobBond={job.jobBond}
                               jobCriteria={job.jobCriteria}
+                              basePay={job.basePay}
+                              variablePay={job.variablePay}
+                              RSU={job.RSU}
+                              tenthMarks={job.tenthMarks}
+                              twelfthMarks={job.twelfthMarks}
+                              UGCgpa={job.ugCGPA}
                               jobSection={2}
                             />
                             <ModeOfSelection

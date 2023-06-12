@@ -213,6 +213,12 @@ export default function CurrentJobs () {
                               jobDesc={job.jobDescription}
                               jobBond={job.jobBond}
                               jobCriteria={job.jobCriteria}
+                              basePay={job.basePay}
+                              variablePay={job.variablePay}
+                              RSU={job.RSU}
+                              tenthMarks={job.tenthMarks}
+                              twelfthMarks={job.twelfthMarks}
+                              UGCgpa={job.ugCGPA}
                               jobSection={1}
                             />
                           </div>
