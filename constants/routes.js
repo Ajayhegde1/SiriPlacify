@@ -10,5 +10,6 @@ export const routes = {
   EDITSTUDENTPROFILE: '/editStudentProfile',
   COMPANYPROFILE: '/companyProfile',
   EDITCOMPANYPROFILE: '/editCompanyProfile',
-  NOTFOUND: '/404'
+  NOTFOUND: '/404',
+  USERMANAGEMENT: '/userManagement'
 }

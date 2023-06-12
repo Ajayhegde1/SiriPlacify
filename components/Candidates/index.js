@@ -22,7 +22,7 @@ export default function Candidates ({
   }
 
   return (
-    <div className='overflow-auto'>
+    <div className='overflow-auto h-96'>
       <table className='table-auto overflow-scroll w-full mt-3 text-left'>
         <thead>
           {
@@ -32,7 +32,7 @@ export default function Candidates ({
                 ? <th />
                 : <></>
           }
-          <th className='px-6 py-4 text-gray-600'>Candidate Name</th>
+          <th className='px-6 py-4 text-gray-600'>Student Name</th>
           <th className='px-6 py-4 text-gray-600'>Email</th>
           <th className='px-6 py-4 text-gray-600'>Mobile</th>
           <th className='px-6 py-4 text-gray-600'>Class X%</th>

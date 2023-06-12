@@ -1,4 +1,4 @@
-import { read, utils, writeFile } from 'xlsx'
+import { read, utils } from 'xlsx'
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Image from 'next/image'
@@ -12,7 +12,6 @@ import SingleSelectComponent from '@/components/InputComponents/SingleSelectComp
 import Button from '@/components/Buttons'
 
 import sheet from '../public/sheets.png'
-import exportIMG from '../public/export.png'
 import { accountType } from '@/constants/users'
 import { routes } from '@/constants/routes'
 import { notificationTypes, openNotification } from '@/utils/notifications'
@@ -29,7 +28,6 @@ export default function UserManagement() {
 
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [accType, setAccType] = useState(accountType[0].value)
   const [students, setStudents] = useState([])
 
@@ -123,42 +121,6 @@ export default function UserManagement() {
     }
   }
 
-  const handleExport = () => {
-    const headings = [
-      [
-        "uid",
-        "username",
-        "email",
-        "contactNo",
-        "tenthMarks",
-        "twelthMarks",
-        "studentUGMarks",
-        "studentPGMarks",
-        "studentDescription",
-        "tempPassword"
-      ],
-    ];
-    const wb = utils.book_new();
-    const ws = utils.json_to_sheet([]);
-    utils.sheet_add_aoa(ws, headings);
-    const outdata = JSON.stringify(students, [
-      "uid",
-      "username",
-      "email",
-      "contactNo",
-      "tenthMarks",
-      "twelthMarks",
-      "studentUGMarks",
-      "studentPGMarks",
-      "studentDescription",
-      "tempPassword"
-    ]);
-    const output = JSON.parse(outdata);
-    utils.sheet_add_json(ws, output, { origin: "A2", skipHeader: true });
-    utils.book_append_sheet(wb, ws, "Students List");
-    writeFile(wb, "studentsData.xlsx");
-  }
-
   const handleUserAddition = () => {
     const Data = [
       {
@@ -221,19 +183,6 @@ export default function UserManagement() {
                   className='h-5 mt-1 mr-2'
                 />
                 Import from excel
-              </button>
-            </div>
-            <div>
-              <button
-                onClick={handleExport}
-                className='ml-2 md:ml-6 flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-              >
-                <Image
-                  src={exportIMG}
-                  alt='Import excel sheet'
-                  className='h-5 w-5 mt-1 mr-2'
-                />
-                Export Students Data to excel
               </button>
             </div>
           </div>
