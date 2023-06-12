@@ -93,7 +93,7 @@ export default function getStudentJobs () {
                           <p
                             className='pt-14 ml-3 md:ml-6 mb-12 font-SubHeading text-base font-normal'
                           >
-                            <span className='text-gray-500'><a href='/jobs'>Home</a></span> {'>'} Product Designer
+                            <span className='text-gray-500'><a href='/jobs'>Home</a></span> {'>'} {job.jobTitle}
                           </p>
                           <BasicJobInfo
                             logo={appleLogo}

@@ -28,6 +28,12 @@ export default function JobDesc({
   setJobBond,
   jobCriteria,
   setJobCriteria,
+  tenthMarks,
+  setTenthMarks,
+  twelfthMarks,
+  setTwelfthMarks,
+  UGCgpa,
+  setUGCgpa,
   jobSection,
   isEdit,
   setIsEdit,
@@ -123,8 +129,8 @@ export default function JobDesc({
               disabled={isEdit && user.accType === '2' ? false : true}
             />
           </div>
+          <div className='text-gray-700 text-2xl font-bold font-Heading col-span-1 mt-8 pb-5'>CTC Breakdown</div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
-            <div className='text-gray-700 text-2xl font-bold font-Heading col-span-1 my-auto pb-5'>CTC Breakdown</div>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>CTC</div>
             <input
               className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
@@ -179,13 +185,44 @@ export default function JobDesc({
               disabled={isEdit && user.accType === '2' ? false : true}
             />
           </div>
+          <div className='text-gray-700 text-2xl font-bold font-Heading col-span-1 mt-8 pb-5'>Criteria</div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
-            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Criteria</div>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Stream</div>
             <input
               className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
               type="text"
               value={jobCriteria}
               onChange={(e) => setJobCriteria(e.target.value)}
+              disabled={isEdit && user.accType === '2' ? false : true}
+            />
+          </div>
+          <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>10th Marks</div>
+            <input
+              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              type="text"
+              value={tenthMarks}
+              onChange={(e) => setTenthMarks(e.target.value)}
+              disabled={isEdit && user.accType === '2' ? false : true}
+            />
+          </div>
+          <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>12th Marks</div>
+            <input
+              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              type="text"
+              value={twelfthMarks}
+              onChange={(e) => setTwelfthMarks(e.target.value)}
+              disabled={isEdit && user.accType === '2' ? false : true}
+            />
+          </div>
+          <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>UG Marks</div>
+            <input
+              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              type="text"
+              value={UGCgpa}
+              onChange={(e) => setUGCgpa(e.target.value)}
               disabled={isEdit && user.accType === '2' ? false : true}
             />
           </div>

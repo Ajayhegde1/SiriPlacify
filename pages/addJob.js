@@ -15,7 +15,7 @@ import { notificationTypes, openNotification } from '@/utils/notifications'
 import { jobStatusList, modeOfSelectionList } from '@/constants/addJobDropDowns'
 import { routes } from '@/constants/routes'
 
-export default function AddJob () {
+export default function AddJob() {
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -32,6 +32,9 @@ export default function AddJob () {
   const [basePay, setBasePay] = useState(0.0)
   const [variablePay, setVariablePay] = useState(0.0)
   const [RSU, setRSU] = useState(0.0)
+  const [tenthMarks, setTenthMarks] = useState(0.0)
+  const [twelfthMarks, setTwelfthMarks] = useState(0.0)
+  const [UGCgpa, setUGCgpa] = useState(0.0)
   const [sector, setSector] = useState('')
   const [applicableCourses, setApplicableCourses] = useState('')
   const [modeOfSelection, setModeOfSelection] = useState(modeOfSelectionList[0].value)
@@ -45,8 +48,8 @@ export default function AddJob () {
 
   useEffect(() => {
     if (finalMode && designation && jobStatus && locationOfWork && ctc &&
-            sector && applicableCourses && modeOfSelection && bondDetails &&
-            contactPersonName && contactPersonPhoneNumber && contactPersonEmail
+      sector && applicableCourses && modeOfSelection && bondDetails &&
+      contactPersonName && contactPersonPhoneNumber && contactPersonEmail
     ) {
       setIsBtnDisabled(false)
     } else {
@@ -84,7 +87,10 @@ export default function AddJob () {
         companyName,
         basePay: basePay,
         variablePay: variablePay,
-        RSU: RSU
+        RSU: RSU,
+        tenthMarks: tenthMarks,
+        twelfthMarks: twelfthMarks,
+        UGCgpa: UGCgpa
       }
       setBtnText('Saving...')
       dispatch(addJob(jobData))
@@ -106,7 +112,10 @@ export default function AddJob () {
         dueDate: selectedDate,
         basePay: basePay,
         variablePay: variablePay,
-        RSU: RSU
+        RSU: RSU,
+        tenthMarks: tenthMarks,
+        twelfthMarks: twelfthMarks,
+        UGCgpa: UGCgpa
       }
       setBtnText('Saving...')
       dispatch(addJobByCompany(jobData))
@@ -146,12 +155,12 @@ export default function AddJob () {
             {
               user.accType === '0'
                 ? <TextField
-                    label='Company Name'
-                    placeholder='PESU Venture Labs'
-                    type='text'
-                    value={companyName}
-                    onChangeHandler={(e) => setCompanyName(e.target.value)}
-                  />
+                  label='Company Name'
+                  placeholder='PESU Venture Labs'
+                  type='text'
+                  value={companyName}
+                  onChangeHandler={(e) => setCompanyName(e.target.value)}
+                />
                 : <></>
             }
             <TextField
@@ -174,7 +183,7 @@ export default function AddJob () {
               value={locationOfWork}
               onChangeHandler={(e) => setLocationOfWork(e.target.value)}
             />
-            <div className='mt-4 mb-6'>
+            <div className='my-4'>
               <label className='block font-Heading font-medium text-black mb-2'>
                 Last date to apply
               </label>
@@ -183,6 +192,30 @@ export default function AddJob () {
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
                 className='border-2 border-gray-400 rounded w-full p-4 text-black leading-tight focus:outline-none focus:shadow-outline'
+              />
+            </div>
+          <h1 className='text-center md:text-left pb-3 mt-2 text-xl md:text-2xl font-Heading font-bold text-gray-800'>Marks Requirement</h1>
+            <div className="grid grid-cols-3 gap-4" >
+              <TextField
+                label='10th Marks'
+                placeholder='95.00'
+                type='text'
+                value={tenthMarks}
+                onChangeHandler={(e) => setTenthMarks(e.target.value)}
+              />
+              <TextField
+                label='12th Marks'
+                placeholder='95.00'
+                type='text'
+                value={twelfthMarks}
+                onChangeHandler={(e) => setTwelfthMarks(e.target.value)}
+              />
+              <TextField
+                label='UG Cgpa'
+                placeholder='0.0'
+                type='text'
+                value={UGCgpa}
+                onChangeHandler={(e) => setUGCgpa(e.target.value)}
               />
             </div>
           </div>
@@ -234,7 +267,7 @@ export default function AddJob () {
           </div>
           <h1 className='text-center md:text-left pb-4 mt-3 md:mt-6 text-xl md:text-2xl font-Heading font-bold text-gray-800'>CTC Breakdown</h1>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-          <TextField
+            <TextField
               label='Base Pay'
               placeholder='75,0000.00'
               type='text'

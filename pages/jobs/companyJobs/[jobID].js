@@ -44,6 +44,9 @@ export default function CompanyJobs() {
   const [jobContactPhoneNo, setJobContactPhoneNo] = useState('')
   const [jobContactEmail, setJobContactEmail] = useState('')
   const [jobFinalSelection, setJobFinalSelection] = useState('')
+  const [tenthMarks, setTenthMarks] = useState(0.0)
+  const [twelfthMarks, setTwelfthMarks] = useState(0.0)
+  const [UGCgpa, setUGCgpa] = useState(0.0)
   const [isEdit, setIsEdit] = useState(false)
 
   const { jobID } = router.query
@@ -128,6 +131,9 @@ export default function CompanyJobs() {
                 setJobContactPhoneNo(res.data.data.jobContactNumber)
                 setJobContactEmail(res.data.data.jobContactEmail)
                 setJobFinalSelection(res.data.data.jobFinalSelection)
+                setTenthMarks(res.data.data.tenthMarks)
+                setTwelfthMarks(res.data.data.twelfthMarks)
+                setUGCgpa(res.data.data.ugCGPA)
               } else if (res.data.status === 423) {
                 openNotification(
                   notificationTypes.ERROR,
@@ -176,11 +182,14 @@ export default function CompanyJobs() {
       jobContactName,
       jobContactPhoneNo,
       jobContactEmail,
-      jobFinalSelection
+      jobFinalSelection,
+      tenthMarks,
+      twelfthMarks,
+      UGCgpa
     }
     updateJob(jobID, data)
       .then((res) => {
-        if (res.data.status === 200){
+        if (res.data.status === 200) {
           openNotification(
             notificationTypes.SUCCESS,
             'Job Updated'
@@ -222,10 +231,10 @@ export default function CompanyJobs() {
           'Unable to update job'
         )
       })
-      
-      setTimeout(() => {
-        window.location.reload()
-      }, 4000)
+
+    setTimeout(() => {
+      window.location.reload()
+    }, 4000)
   }
 
   return (
@@ -355,6 +364,12 @@ export default function CompanyJobs() {
                       setJobBond={setJobBond}
                       jobCriteria={jobCriteria}
                       setJobCriteria={setJobCriteria}
+                      tenthMarks={tenthMarks}
+                      setTenthMarks={setTenthMarks}
+                      twelfthMarks={twelfthMarks}
+                      setTwelfthMarks={setTwelfthMarks}
+                      UGCgpa={UGCgpa}
+                      setUGCgpa={setUGCgpa}
                       jobSection={1}
                       isEdit={isEdit}
                       setIsEdit={setIsEdit}
