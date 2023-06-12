@@ -9,13 +9,14 @@ import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
-import { routes } from '@/constants/routes'
+import ChangePasswordModal from '@/components/Modal/changePassword'
 
+import { routes } from '@/constants/routes'
 import { getProfile } from '@/redux/Slices/profile'
 import { updateProfile } from '@/redux/Sagas/requests/features'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
-export default function EditProfile() {
+export default function EditProfile () {
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -28,6 +29,7 @@ export default function EditProfile() {
   const [username, setUsername] = useState('')
   const [update, setUpdate] = useState('Update')
   const [isDisabled, setIsDisabled] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   const profile = useSelector((state) => state.profile)
   const user = useSelector((state) => state.user)
@@ -75,23 +77,17 @@ export default function EditProfile() {
       .then((res) => {
         if (res.data.status === 200) {
           openNotification(notificationTypes.SUCCESS, 'Success', res.data.message)
-        }
-        else if (res.data.status === 401) {
+        } else if (res.data.status === 401) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
-        }
-        else if (res.data.status === 423) {
+        } else if (res.data.status === 423) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
-        }
-        else if (res.data.status === 424) {
+        } else if (res.data.status === 424) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
-        }
-        else if (res.data.status === 425) {
+        } else if (res.data.status === 425) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
-        }
-        else if (res.data.status === 500) {
+        } else if (res.data.status === 500) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
-        }
-        else {
+        } else {
           openNotification(notificationTypes.ERROR, 'Error', 'Internal server error')
         }
 
@@ -120,7 +116,16 @@ export default function EditProfile() {
             </a>
           </span> {'>'} Edit profile
         </p>
-        <h1 className='text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>Edit profile</h1>
+        <div className='flex gap-2'>
+          <h1 className='text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-12 text-3xl md:text-4xl font-Heading font-bold text-black'>Edit profile</h1>
+          <button
+            onClick={() => setShowModal(true)}
+            className='flex ml-auto h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-6 md:mt-12 rounded-xl py-2 px-4'
+          >
+            Change Password
+          </button>
+        </div>
+
         {
           profile === null
             ? <div>
@@ -217,6 +222,10 @@ export default function EditProfile() {
               </div>
         }
       </div>
+      <ChangePasswordModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
     </div>
   )
 }

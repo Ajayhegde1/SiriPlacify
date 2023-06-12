@@ -18,7 +18,7 @@ import { notificationTypes, openNotification } from '@/utils/notifications'
 import { POST } from '@/config/api'
 import { getStudents } from '@/redux/Sagas/requests/features'
 
-export default function UserManagement() {
+export default function UserManagement () {
   const router = useRouter()
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -37,35 +37,30 @@ export default function UserManagement() {
     } else if (user !== null) {
       if (user.accType !== '0') {
         router.push(routes.NOTFOUND)
-      }
-      else if (user.accType === '0') {
+      } else if (user.accType === '0') {
         getStudents()
           .then((res) => {
-            if (res.data.status === 200){
+            if (res.data.status === 200) {
               setStudents(res.data.data)
-            }
-            else if (res.data.status === 401){
+            } else if (res.data.status === 401) {
               openNotification(
                 notificationTypes.ERROR,
                 'Error',
                 'Error identifying user email'
               )
-            }
-            else if (res.data.status === 423){
+            } else if (res.data.status === 423) {
               openNotification(
                 notificationTypes.ERROR,
                 'Error',
                 'Unable to retrieve college'
               )
-            }
-            else if (res.data.status === 424){
+            } else if (res.data.status === 424) {
               openNotification(
                 notificationTypes.ERROR,
                 'Error',
                 'Error fetching students'
               )
-            }
-            else if (res.data.status === 500){
+            } else if (res.data.status === 500) {
               openNotification(
                 notificationTypes.ERROR,
                 'Error',

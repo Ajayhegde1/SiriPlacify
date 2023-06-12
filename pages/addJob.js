@@ -15,7 +15,7 @@ import { notificationTypes, openNotification } from '@/utils/notifications'
 import { jobStatusList, modeOfSelectionList } from '@/constants/addJobDropDowns'
 import { routes } from '@/constants/routes'
 
-export default function AddJob() {
+export default function AddJob () {
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -85,12 +85,12 @@ export default function AddJob() {
         jobEmailId: contactPersonEmail,
         dueDate: selectedDate,
         companyName,
-        basePay: basePay,
-        variablePay: variablePay,
-        RSU: RSU,
-        tenthMarks: tenthMarks,
-        twelfthMarks: twelfthMarks,
-        UGCgpa: UGCgpa
+        basePay,
+        variablePay,
+        RSU,
+        tenthMarks,
+        twelfthMarks,
+        UGCgpa
       }
       setBtnText('Saving...')
       dispatch(addJob(jobData))
@@ -110,12 +110,12 @@ export default function AddJob() {
         jobContactNumber: contactPersonPhoneNumber,
         jobEmailId: contactPersonEmail,
         dueDate: selectedDate,
-        basePay: basePay,
-        variablePay: variablePay,
-        RSU: RSU,
-        tenthMarks: tenthMarks,
-        twelfthMarks: twelfthMarks,
-        UGCgpa: UGCgpa
+        basePay,
+        variablePay,
+        RSU,
+        tenthMarks,
+        twelfthMarks,
+        UGCgpa
       }
       setBtnText('Saving...')
       dispatch(addJobByCompany(jobData))
@@ -155,12 +155,12 @@ export default function AddJob() {
             {
               user.accType === '0'
                 ? <TextField
-                  label='Company Name'
-                  placeholder='PESU Venture Labs'
-                  type='text'
-                  value={companyName}
-                  onChangeHandler={(e) => setCompanyName(e.target.value)}
-                />
+                    label='Company Name'
+                    placeholder='PESU Venture Labs'
+                    type='text'
+                    value={companyName}
+                    onChangeHandler={(e) => setCompanyName(e.target.value)}
+                  />
                 : <></>
             }
             <TextField
@@ -194,8 +194,8 @@ export default function AddJob() {
                 className='border-2 border-gray-400 rounded w-full p-4 text-black leading-tight focus:outline-none focus:shadow-outline'
               />
             </div>
-          <h1 className='text-center md:text-left pb-3 mt-2 text-xl md:text-2xl font-Heading font-bold text-gray-800'>Marks Requirement</h1>
-            <div className="grid grid-cols-3 gap-4" >
+            <h1 className='text-center md:text-left pb-3 mt-2 text-xl md:text-2xl font-Heading font-bold text-gray-800'>Marks Requirement</h1>
+            <div className='grid grid-cols-3 gap-4'>
               <TextField
                 label='10th Marks'
                 placeholder='95.00'

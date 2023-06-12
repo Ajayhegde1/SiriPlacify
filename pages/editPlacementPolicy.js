@@ -31,7 +31,6 @@ export default function EditPlacementPolicy () {
   const [update, setUpdate] = useState('Update')
   const [isDisabled, setIsDisabled] = useState(false)
 
-
   const placementPolicy = useSelector((state) => state.placementPolicy)
   const user = useSelector((state) => state.user)
 
@@ -48,8 +47,8 @@ export default function EditPlacementPolicy () {
   }, [user, dispatch])
 
   useEffect(() => {
-    if (placementPolicy !== null){
-      if (Object.keys(placementPolicy) !== 0){
+    if (placementPolicy !== null) {
+      if (Object.keys(placementPolicy) !== 0) {
         setNoOfTiers(placementPolicy.noOfTiers)
         setMaxOffers(placementPolicy.maxOffers)
         setMinCTCForT1(placementPolicy.minCTCForT1)
@@ -60,7 +59,7 @@ export default function EditPlacementPolicy () {
         setMaxCTCForT3(placementPolicy.maxCTCForT3)
       }
     }
-  } , [placementPolicy])
+  }, [placementPolicy])
 
   const updatePlacementPolicyHandler = () => {
     const data = {
@@ -75,34 +74,26 @@ export default function EditPlacementPolicy () {
     }
     setIsDisabled(true)
     setUpdate('Updating...')
-    
+
     updatePlacementPolicy(data)
       .then((res) => {
-        if (res.data.status === 200){
+        if (res.data.status === 200) {
           openNotification(notificationTypes.SUCCESS, 'Success', 'Placement Policy Updated Successfully')
-        }
-        else if (res.data.status === 401){
+        } else if (res.data.status === 401) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
-        }
-        else if (res.data.status === 423) {
+        } else if (res.data.status === 423) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
-        }
-        else if (res.data.status === 424) {
+        } else if (res.data.status === 424) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
-        }
-        else if (res.data.status === 425) {
+        } else if (res.data.status === 425) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
-        }
-        else if (res.data.status === 426) {
+        } else if (res.data.status === 426) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
-        }
-        else if (res.data.status === 427) {
+        } else if (res.data.status === 427) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
-        }
-        else if (res.data.status === 500){
+        } else if (res.data.status === 500) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
-        }
-        else{
+        } else {
           openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong')
         }
         setTimeout(() => {

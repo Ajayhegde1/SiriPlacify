@@ -248,12 +248,12 @@ export default function BasicJobInfo ({
                   ? isApplied
                     ? <div className='mt-6 lg:mt-20 grid grid-cols-3 gap-2'>
                       <div className='flex my-auto col-span-2 text-red-500 font-bold'>
-                        {message !== 'Job application status checked successfully' ? message : ""}
+                        {message !== 'Job application status checked successfully' ? message : ''}
                       </div>
                       <div
                         className='col-span-1 rounded-lg text-base md:text-lg 2xl:text-xl bg-green-600 text-white font-bold text-center p-2'
                       >
-                        <span>{message === 'Job application status checked successfully' ? "Applied" : "Not Eligible"}</span>
+                        <span>{message === 'Job application status checked successfully' ? 'Applied' : 'Not Eligible'}</span>
                       </div>
                     </div>
                     : <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>

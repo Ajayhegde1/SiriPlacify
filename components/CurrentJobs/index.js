@@ -1,6 +1,6 @@
 import JobItem from '../JobItem'
 
-export default function CurrentJobs({
+export default function CurrentJobs ({
   jobs
 }) {
   return (

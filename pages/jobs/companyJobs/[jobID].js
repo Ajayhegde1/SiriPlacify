@@ -18,7 +18,7 @@ import { getJob, closeJob, updateJob } from '@/redux/Sagas/requests/features'
 import { openNotification, notificationTypes } from '@/utils/notifications'
 import { routes } from '@/constants/routes'
 
-export default function CompanyJobs() {
+export default function CompanyJobs () {
   const router = useRouter()
 
   const user = useSelector((state) => state.user)
@@ -194,29 +194,25 @@ export default function CompanyJobs() {
             notificationTypes.SUCCESS,
             'Job Updated'
           )
-        }
-        else if (res.data.status === 423) {
+        } else if (res.data.status === 423) {
           openNotification(
             notificationTypes.ERROR,
             'Error',
             res.data.message
           )
-        }
-        else if (res.data.status === 424) {
+        } else if (res.data.status === 424) {
           openNotification(
             notificationTypes.ERROR,
             'Error',
             res.data.message
           )
-        }
-        else if (res.data.status === 425) {
+        } else if (res.data.status === 425) {
           openNotification(
             notificationTypes.ERROR,
             'Error',
             res.data.message
           )
-        }
-        else if (res.data.status === 500) {
+        } else if (res.data.status === 500) {
           openNotification(
             notificationTypes.ERROR,
             'Error',
@@ -309,18 +305,18 @@ export default function CompanyJobs() {
               : jobID === null
                 ? <></>
                 : <CollegesList
-                  collegeType={isOffered}
-                  jobID={jobID}
-                />
+                    collegeType={isOffered}
+                    jobID={jobID}
+                  />
             : jobSection === 2
               ? job === null
                 ? <></>
                 : jobID === null
                   ? <></>
                   : <OfferedCollegesList
-                    collegeType={isOffered}
-                    jobID={jobID}
-                  />
+                      collegeType={isOffered}
+                      jobID={jobID}
+                    />
               : job === null
                 ? <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
                   Loading ...

@@ -4,7 +4,7 @@ import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
 
 import Image from 'next/image'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { routes } from '@/constants/routes'
@@ -12,6 +12,7 @@ import { routes } from '@/constants/routes'
 import { getStudentProfile } from '@/redux/Slices/studentSlice'
 
 import photo from '../public/photoupload.png'
+import ChangePasswordModal from '@/components/Modal/changePassword'
 
 export default function editStudentProfile () {
   const dispatch = useDispatch()
@@ -19,6 +20,8 @@ export default function editStudentProfile () {
 
   const user = useSelector((state) => state.user)
   const profile = useSelector((state) => state.studentProfile)
+
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     if (user === null) {
@@ -47,6 +50,15 @@ export default function editStudentProfile () {
             </a>
           </span> {'>'} Edit profile
         </p>
+        <div className='flex gap-2'>
+          <h1 className='text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-12 text-3xl md:text-4xl font-Heading font-bold text-black'>Edit profile</h1>
+          <button
+            onClick={() => setShowModal(true)}
+            className='flex ml-auto h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-6 md:mt-12 rounded-xl py-2 px-4'
+          >
+            Change Password
+          </button>
+        </div>
         {
                     profile === null
                       ? <div>
@@ -150,12 +162,16 @@ export default function editStudentProfile () {
                           </div>
                         </div>
                 }
-              <div className='mt-12'>
-                <p className='shadow-2xl p-5 text-center font-bold text-gray-500 text-2xl'>
-                  Contact Placement Officer to change the details
-                </p>
-              </div>
+        <div className='mt-12'>
+          <p className='shadow-2xl p-5 text-center font-bold text-gray-500 text-2xl'>
+            Contact Placement Officer to change the details
+          </p>
+        </div>
       </div>
+      <ChangePasswordModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
     </div>
   )
 }

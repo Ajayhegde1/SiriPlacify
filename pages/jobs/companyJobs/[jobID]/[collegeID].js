@@ -21,7 +21,7 @@ import arrow from '@/public/arrow.png'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
-export default function College() {
+export default function College () {
   const router = useRouter()
   const user = useSelector((state) => state.user)
 
@@ -103,37 +103,37 @@ export default function College() {
   const handleExport = () => {
     const headings = [
       [
-        "uid",
-        "username",
-        "email",
-        "contactNo",
-        "tenthMarks",
-        "twelthMarks",
-        "studentUGMarks",
-        "studentPGMarks",
-        "studentStatus",
-        "studentDescription"
-      ],
-    ];
-    const wb = utils.book_new();
-    const ws = utils.json_to_sheet([]);
-    utils.sheet_add_aoa(ws, headings);
+        'uid',
+        'username',
+        'email',
+        'contactNo',
+        'tenthMarks',
+        'twelthMarks',
+        'studentUGMarks',
+        'studentPGMarks',
+        'studentStatus',
+        'studentDescription'
+      ]
+    ]
+    const wb = utils.book_new()
+    const ws = utils.json_to_sheet([])
+    utils.sheet_add_aoa(ws, headings)
     const outdata = JSON.stringify(candidates, [
-      "uid",
-      "username",
-      "email",
-      "contactNo",
-      "tenthMarks",
-      "twelthMarks",
-      "studentUGMarks",
-      "studentPGMarks",
-      "studentStatus",
-      "studentDescription"
-    ]);
-    const output = JSON.parse(outdata);
-    utils.sheet_add_json(ws, output, { origin: "A2", skipHeader: true });
-    utils.book_append_sheet(wb, ws, "Students List");
-    writeFile(wb, "candidatesData.xlsx");
+      'uid',
+      'username',
+      'email',
+      'contactNo',
+      'tenthMarks',
+      'twelthMarks',
+      'studentUGMarks',
+      'studentPGMarks',
+      'studentStatus',
+      'studentDescription'
+    ])
+    const output = JSON.parse(outdata)
+    utils.sheet_add_json(ws, output, { origin: 'A2', skipHeader: true })
+    utils.book_append_sheet(wb, ws, 'Students List')
+    writeFile(wb, 'candidatesData.xlsx')
   }
 
   const handleImport = ($event) => {
@@ -406,15 +406,15 @@ export default function College() {
                 ? <>
                 </>
                 : <StatusOfHire
-                  students={candidates}
-                  status={status}
-                  setStatus={setStatus}
-                  setApplied={setApplied}
-                  setShortlisted={setShortlisted}
-                  setTest={setTest}
-                  setInterview={setInterview}
-                  setHired={setHired}
-                />
+                    students={candidates}
+                    status={status}
+                    setStatus={setStatus}
+                    setApplied={setApplied}
+                    setShortlisted={setShortlisted}
+                    setTest={setTest}
+                    setInterview={setInterview}
+                    setHired={setHired}
+                  />
           }
           {
             candidates === null || typeof candidates === 'undefined'
@@ -426,10 +426,10 @@ export default function College() {
                   No students have applied yet
                 </div>
                 : <Candidates
-                  students={filteredStudentList}
-                  promoteStudents={promoteStudents}
-                  setPromoteStudents={setPromoteStudents}
-                />
+                    students={filteredStudentList}
+                    promoteStudents={promoteStudents}
+                    setPromoteStudents={setPromoteStudents}
+                  />
           }
           <div className='flex'>
             <button

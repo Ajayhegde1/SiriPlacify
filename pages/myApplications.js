@@ -72,18 +72,18 @@ export default function myApplications () {
                         </td>
                         <td className='font-bold whitespace-nowrap px-6 py-4'>
                           {job.jobStatus === '0'
-                            ? <span className="text-cyan-600">Applied</span>
+                            ? <span className='text-cyan-600'>Applied</span>
                             : job.jobStatus === '1'
-                              ? <span className="text-blue-600">Shortlisted</span>
+                              ? <span className='text-blue-600'>Shortlisted</span>
                               : job.jobStatus === '2'
-                                ? <span className="text-yellow-600">Test</span>
+                                ? <span className='text-yellow-600'>Test</span>
                                 : job.jobStatus === '3'
-                                  ? <span className="text-lime-600">Interview</span>
-                                  : job.jobStatus === '4' ? <span className="text-green-600">Hired</span> 
-                                    : job.jobStatus === '5' 
-                                      ? <span className="text-red-800">Rejected</span> 
-                                        : 
-                                        <span className="text-red-800">Undefined</span>}
+                                  ? <span className='text-lime-600'>Interview</span>
+                                  : job.jobStatus === '4'
+                                    ? <span className='text-green-600'>Hired</span>
+                                    : job.jobStatus === '5'
+                                      ? <span className='text-red-800'>Rejected</span>
+                                      : <span className='text-red-800'>Undefined</span>}
                         </td>
                       </tr>
                     )
