@@ -68,10 +68,10 @@ export function * handleSignIn (action) {
         }
       } else if (response.data.accType === '2') {
         if (response.data.signUpStatus === '0') {
-          window.history.replaceState({}, 'Dashboard', routes.COMPANYDASHBOARD)
+          window.history.replaceState({}, 'Profile', routes.COMPANYPROFILE)
           window.location.reload()
         } else if (response.data.signUpStatus === '1') {
-          window.history.replaceState({}, 'Jobs', routes.JOBS)
+          window.history.replaceState({}, 'Dashboard', routes.COMPANYDASHBOARD)
           window.location.reload()
         } else {
           openNotification(

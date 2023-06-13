@@ -56,7 +56,7 @@ export default function College() {
             <Sidebar
                 sidebarOpen={sidebarOpen}
                 setSidebarOpen={setSidebarOpen}
-                activePage={9}
+                activePage={1}
             />
             <main class={`dashboard ${sidebarOpen ? 'active' : ''}`}>
                 <div className='min-h-screen pt-4 md:py-10 px-4 md:px-6 lg:p-10'>

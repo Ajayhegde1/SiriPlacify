@@ -128,3 +128,7 @@ export const getStudentAppliedJobs = () => {
 export const getTPODashboard = () => {
   return GET('/getTPODashboard', { sessionID: store.getState().user.sessionId })
 }
+
+export const getCompanyDashboard = () => {
+  return GET('/companyDashboard', { sessionID: store.getState().user.sessionId })
+}

@@ -9,7 +9,7 @@ import editProfile from '../../public/editProfile.png'
 import logout from '../../public/logout.png'
 import myApplications from '../../public/application.png'
 import userImage from '../../public/user.png'
-
+import dashboard from '../../public/dashboard.png'
 // import message from '../../public/message.png'
 // import error from '../../public/error.png'
 
@@ -54,6 +54,16 @@ const Sidebar = ({
               ? <></>
               : user.accType === '0'
                 ? <ul className='menu-list'>
+                <li className={`menu-item ${parseInt(activePage) == 1 ? 'current' : ''}`}>
+                  <a className='menu-link' href='/dashboard/College'>
+                    <Image
+                      src={dashboard}
+                      className={sidebarOpen ? 'ml-3' : 'ml-0'}
+                      alt='logo for jobs'
+                    />
+                    <span className='menu-link-text'>Dashboard</span>
+                  </a>
+                </li>
                   <li className={`menu-item ${parseInt(activePage) == 2 ? 'current' : ''}`}>
                     <a className='menu-link' href='/jobs'>
                       <Image
@@ -165,6 +175,16 @@ const Sidebar = ({
                     </li>
                   </ul>
                   : <ul className='menu-list'>
+                  <li className={`menu-item ${parseInt(activePage) == 1 ? 'current' : ''}`}>
+                    <a className='menu-link' href='/dashboard/Company'>
+                      <Image
+                        src={dashboard}
+                        className={sidebarOpen ? 'ml-3' : 'ml-0'}
+                        alt='logo for jobs'
+                      />
+                      <span className='menu-link-text'>Dashboard</span>
+                    </a>
+                  </li>
                     <li className={`menu-item ${parseInt(activePage) === 2 ? 'current' : ''}`}>
                       <a className='menu-link' href='/jobs'>
                         <Image
