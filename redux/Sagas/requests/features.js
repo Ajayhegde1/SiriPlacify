@@ -124,3 +124,7 @@ export const applyJob = (data) => {
 export const getStudentAppliedJobs = () => {
   return GET('/getJobApplications', { sessionID: store.getState().user.sessionId })
 }
+
+export const getTPODashboard = () => {
+  return GET('/getTPODashboard', { sessionID: store.getState().user.sessionId })
+}

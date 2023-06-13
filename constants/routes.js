@@ -11,5 +11,7 @@ export const routes = {
   COMPANYPROFILE: '/companyProfile',
   EDITCOMPANYPROFILE: '/editCompanyProfile',
   NOTFOUND: '/404',
-  USERMANAGEMENT: '/userManagement'
+  USERMANAGEMENT: '/userManagement',
+  TPODASHBOARD: '/dashboard/College',
+  COMPANYDASHBOARD: '/dashboard/Company'
 }

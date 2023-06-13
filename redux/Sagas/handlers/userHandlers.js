@@ -43,7 +43,7 @@ export function * handleSignIn (action) {
           window.history.replaceState({}, 'Placement Policy', routes.PLACEMENTPROFILE)
           window.location.reload()
         } else if (response.data.signUpStatus === '2') {
-          window.history.replaceState({}, 'Jobs', routes.JOBS)
+          window.history.replaceState({}, 'Dashboard', routes.TPODASHBOARD)
           window.location.reload()
         } else {
           openNotification(
@@ -68,7 +68,7 @@ export function * handleSignIn (action) {
         }
       } else if (response.data.accType === '2') {
         if (response.data.signUpStatus === '0') {
-          window.history.replaceState({}, 'Company Profile', routes.COMPANYPROFILE)
+          window.history.replaceState({}, 'Dashboard', routes.COMPANYDASHBOARD)
           window.location.reload()
         } else if (response.data.signUpStatus === '1') {
           window.history.replaceState({}, 'Jobs', routes.JOBS)
