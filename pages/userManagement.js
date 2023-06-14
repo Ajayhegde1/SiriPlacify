@@ -29,48 +29,6 @@ export default function UserManagement () {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [accType, setAccType] = useState(accountType[0].value)
-  const [students, setStudents] = useState([])
-
-  useEffect(() => {
-    if (user === null) {
-      router.push(routes.NOTFOUND)
-    } else if (user !== null) {
-      if (user.accType !== '0') {
-        router.push(routes.NOTFOUND)
-      } else if (user.accType === '0') {
-        getStudents()
-          .then((res) => {
-            if (res.data.status === 200) {
-              setStudents(res.data.data)
-            } else if (res.data.status === 401) {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'Error identifying user email'
-              )
-            } else if (res.data.status === 423) {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'Unable to retrieve college'
-              )
-            } else if (res.data.status === 424) {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'Error fetching students'
-              )
-            } else if (res.data.status === 500) {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'Unable to get students data'
-              )
-            }
-          })
-      }
-    }
-  }, [user])
 
   const handleImport = ($event) => {
     const files = $event.target.files

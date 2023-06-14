@@ -12,6 +12,8 @@ import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
 import Candidates from '@/components/Candidates'
 
+import { notificationTypes, openNotification } from '@/utils/notifications'
+
 export default function UserList () {
   const router = useRouter()
 
