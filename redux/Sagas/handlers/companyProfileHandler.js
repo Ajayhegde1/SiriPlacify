@@ -50,7 +50,7 @@ export function * handleADDCompanyProfile (action) {
         'Profile Added Successfully'
       )
 
-      window.history.replaceState({}, 'Edit Company Profile', routes.EDITCOMPANYPROFILE)
+      window.history.replaceState({}, 'Dashboard', routes.COMPANYDASHBOARD)
       window.location.reload()
     } else if (response.data.status === 401) {
       openNotification(

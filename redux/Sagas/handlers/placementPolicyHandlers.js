@@ -56,7 +56,7 @@ export function * handleADDPlacementPolicy (action) {
         'Placement Policy Added Successfully'
       )
 
-      window.history.replaceState({}, 'Jobs', routes.JOBS)
+      window.history.replaceState({}, 'Dashboard', routes.TPODASHBOARD)
       window.location.reload()
     } else if (response.data.status === 401) {
       openNotification(
