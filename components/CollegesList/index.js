@@ -17,7 +17,9 @@ export default function CollegesList ({
       getColleges(jobID)
         .then((res) => {
           if (res.data.status === 200) {
-            setColleges(res.data.data)
+            let colleges = res.data.data
+            colleges = colleges.sort((a, b) => a.id - b.id);
+            setColleges(colleges)
           } else if (res.data.status === 401) {
             openNotification(
               notificationTypes.ERROR,
