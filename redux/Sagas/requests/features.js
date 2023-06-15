@@ -132,3 +132,7 @@ export const getTPODashboard = () => {
 export const getCompanyDashboard = () => {
   return GET('/companyDashboard', { sessionID: store.getState().user.sessionId })
 }
+
+export const getNotifications = () => {
+  return GET('/notifications', { sessionID: store.getState().user.sessionId })
+}

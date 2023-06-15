@@ -13,6 +13,7 @@ import offerJobSlice from './Slices/offerJobsSlice'
 import declinedJobSlice from './Slices/declinedJobsSlice'
 import closedJobSlice from './Slices/closedJobsSlice'
 import rootSaga from './Sagas/rootSaga'
+import notificationReducer from './Slices/notificationSlice'
 
 const persistConfig = {
   key: 'root',
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
   offerJobs: offerJobSlice,
   declinedJobs: declinedJobSlice,
   closedJobs: closedJobSlice,
-  jobApplication: jobApplicationReducer
+  jobApplication: jobApplicationReducer,
+  notifications: notificationReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
