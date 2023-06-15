@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
 
-import { getNotifications } from '@/redux/Slices/notificationSlice'
+import { getNotifications, updateNotification } from '@/redux/Slices/notificationSlice'
 
 export default function Notifications() {
     const dispatch = useDispatch()
@@ -16,6 +16,10 @@ export default function Notifications() {
     useEffect(() => {
         dispatch(getNotifications())
     }, [dispatch])
+
+    const handleMarkNotifications = (id) => {
+        dispatch(updateNotification(id))
+    }
 
     return (
         <div className='min-h-screen bg-gray-200'>
@@ -47,6 +51,7 @@ export default function Notifications() {
                                     </div>
                                     <div>
                                         <button
+                                            onClick={() => handleMarkNotifications(notification.uid)}
                                             className='p-2 bg-blue-500 hover:bg-blue-700 rounded-lg text-sm font-bold text-white flex ml-auto mt-2'
                                         >
                                             Mark as Read

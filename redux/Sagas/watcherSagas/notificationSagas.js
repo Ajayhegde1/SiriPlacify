@@ -1,8 +1,9 @@
 import { takeLatest } from 'redux-saga/effects'
 
-import { handleGetNotifications } from '../handlers/notifications.handler'
-import { getNotifications } from '@/redux/Slices/notificationSlice'
+import { handleGetNotifications, handleMarkNotifications } from '../handlers/notifications.handler'
+import { getNotifications, updateNotification } from '@/redux/Slices/notificationSlice'
 
 export function * NotificationSagas () {
     yield takeLatest(getNotifications.type, handleGetNotifications)
+    yield takeLatest(updateNotification.type, handleMarkNotifications)
   } 

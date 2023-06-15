@@ -136,3 +136,7 @@ export const getCompanyDashboard = () => {
 export const getNotifications = () => {
   return GET('/notifications', { sessionID: store.getState().user.sessionId })
 }
+
+export const updateNotificationRequest = (Id) => {
+  return POST(`/updateNotification?notificationId=${Id}`, {}, { sessionID: store.getState().user.sessionId })
+}
