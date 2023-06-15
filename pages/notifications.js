@@ -5,16 +5,24 @@ import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
 
 import { getNotifications, updateNotification } from '@/redux/Slices/notificationSlice'
+import { useRouter } from 'next/router'
 
 export default function Notifications() {
     const dispatch = useDispatch()
+    const router = useRouter()
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
     const Notifications = useSelector((state) => state.notifications)
+    const user = useSelector((state) => state.user)
 
     useEffect(() => {
-        dispatch(getNotifications())
+        if (user !== null){
+            dispatch(getNotifications())
+        }
+        else{
+            router.push(routes.NOTFOUND)
+        }
     }, [dispatch])
 
     const handleMarkNotifications = (id) => {
@@ -38,7 +46,18 @@ export default function Notifications() {
                             <h2 className='text-4xl my-10 font-bold text-gray-900'>Notifications</h2>
                         </div>
                         <div class='flex flex-col space-y-4'>
-                            {Notifications.map((notification) => (
+                            {
+                            Notifications === null ?
+                                <div className='w-full p-4 bg-white rounded-lg shadow-xs'>
+                                    Loading...
+                                </div>
+                                :
+                            Notifications.length === 0 ?
+                                <div className='w-full p-4 bg-white rounded-lg shadow-xs'>
+                                    No Notifications
+                                </div>
+                                :
+                            Notifications.map((notification) => (
                                 <div className='w-full p-4 bg-white rounded-lg shadow-xs'>
                                     <div className='flex flex-row items-center justify-between'>
                                         <div className='flex flex-col space-y-2 w-2/3'>

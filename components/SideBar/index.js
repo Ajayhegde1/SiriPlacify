@@ -72,7 +72,7 @@ const Sidebar = ({
                           Notifications
                           <span
                             className="ml-2 inline-block whitespace-nowrap rounded-2xl bg-red-300 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700"
-                          >7</span
+                          >{notifications === null ? 0 : notifications.length}</span
                           >
                         </button>
                       </a>
@@ -164,7 +164,7 @@ const Sidebar = ({
                           Notifications
                           <span
                             className="ml-2 inline-block whitespace-nowrap rounded-2xl bg-red-300 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700"
-                          >7</span
+                          >{notifications === null ? 0 : notifications.length}</span
                           >
                         </button>
                       </a>
