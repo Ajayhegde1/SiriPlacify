@@ -4,3 +4,28 @@
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Karla&display=swap');
+
+
+.openingSection{
+    padding-top: 100px;
+    padding-bottom: 40px;
+    background: rgb(255,255,255);
+    background: linear-gradient(70deg, rgba(255,255,255,1) 45%, rgba(177,216,183,1) 45%, rgba(220,246,245,1) 95%);
+}
+
+@media (max-width: 1024px) {
+    .openingSection{
+        background: white;
+    }
+}
+
+@media (max-width: 500px) {
+    .openingSection{
+        padding-bottom: 0px;
+    }
+}
+
+.footer{
+    background: rgb(177,216,183);
+background: radial-gradient(circle, rgba(177,216,183,1) 90%, rgba(215,243,238,1) 98%);
+}
