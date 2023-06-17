@@ -53,14 +53,14 @@ export default function UserAdditionModal ({
         </div>
         <div className={styles.modalBody}>
           <div className='mt-5 mb-6 ml-4 mr-10'>
-          <p className="text-gray-700">
-            Define rules for adding users. The Excel sheet should contain columns for studentName, email, and accountType.
-          </p>
-          <ul className="list-disc list-inside mt-4 text-gray-700">
-            <li>The Student Name should have alphanumeric characters and it should match the entries in the database.</li>
-            <li>The Email should be unique, valid and must have alphanumeric characters.</li>
-            <li>The Account Type should be either 0 or 1, where 0 represents TPO and 1 represents student.</li>
-          </ul>
+            <p className='text-gray-700'>
+              Define rules for adding users. The Excel sheet should contain columns for studentName, email, and accountType.
+            </p>
+            <ul className='list-disc list-inside mt-4 text-gray-700'>
+              <li>The Student Name should have alphanumeric characters and it should match the entries in the database.</li>
+              <li>The Email should be unique, valid and must have alphanumeric characters.</li>
+              <li>The Account Type should be either 0 or 1, where 0 represents TPO and 1 represents student.</li>
+            </ul>
           </div>
         </div>
         <div className='pt-5 pl-5 rounded-3xl'>

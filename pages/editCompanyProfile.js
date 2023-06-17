@@ -198,7 +198,7 @@ export default function EditCompanyProfile () {
                 <div className='mr-0 md:mr-4'>
                   <TextField
                     label='Planned Hires'
-                    placeholder="123"
+                    placeholder='123'
                     type='text'
                     value={plannedHires}
                     onChangeHandler={(e) => setPlannedHires(e.target.value)}

@@ -4,6 +4,6 @@ import { handleGetNotifications, handleMarkNotifications } from '../handlers/not
 import { getNotifications, updateNotification } from '@/redux/Slices/notificationSlice'
 
 export function * NotificationSagas () {
-    yield takeLatest(getNotifications.type, handleGetNotifications)
-    yield takeLatest(updateNotification.type, handleMarkNotifications)
-  } 
+  yield takeLatest(getNotifications.type, handleGetNotifications)
+  yield takeLatest(updateNotification.type, handleMarkNotifications)
+}

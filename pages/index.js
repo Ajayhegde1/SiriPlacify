@@ -10,7 +10,7 @@ import ThirdSection from '@/components/ThirdSection'
 import ContactSection from '@/components/ContactSection'
 import FooterSection from '@/components/FooterSection'
 
-export default function Home() {
+export default function Home () {
   const user = useSelector(state => state.user)
   const snapContainerRef = useRef(null)
 
@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <div>
-      <DocHeader DocTitle="Placify.io" />
+      <DocHeader DocTitle='Placify.io' />
       <Navbar />
       <OpeningSection />
       <SecondSection />

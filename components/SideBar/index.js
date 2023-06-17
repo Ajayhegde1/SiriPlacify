@@ -10,7 +10,7 @@ import logout from '../../public/logout.png'
 import myApplications from '../../public/application.png'
 import userImage from '../../public/user.png'
 import dashboard from '../../public/dashboard.png'
-import { BellOutlined } from '@ant-design/icons';
+import { BellOutlined } from '@ant-design/icons'
 
 import { signOut } from '@/redux/Slices/userSlice'
 import { getNotifications } from '@/redux/Slices/notificationSlice'
@@ -27,11 +27,11 @@ const Sidebar = ({
   const user = useSelector(state => state.user)
   const notifications = useSelector(state => state.notifications)
 
-  function handleSideBar() {
+  function handleSideBar () {
     setSidebarOpen(!sidebarOpen)
   }
 
-  function handleSignOut() {
+  function handleSignOut () {
     dispatch(signOut())
   }
 
@@ -62,21 +62,23 @@ const Sidebar = ({
               : user.accType === '0'
                 ? <ul className='menu-list'>
                   <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
-                      <a className='menu-link' href='/notifications'>
-                        <div className={sidebarOpen ? 'ml-3' : 'ml-0'}>
-                          <BellOutlined style={{ fontSize: '24px' }} />
-                        </div>
-                        <button
-                          type="button"
-                          className='menu-link-text'>
-                          Notifications
-                          <span
-                            className="ml-2 inline-block whitespace-nowrap rounded-2xl bg-red-300 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700"
-                          >{notifications === null ? 0 : notifications.length}</span
+                    <a className='menu-link' href='/notifications'>
+                      <div className={sidebarOpen ? 'ml-3' : 'ml-0'}>
+                        <BellOutlined style={{ fontSize: '24px' }} />
+                      </div>
+                      <button
+                        type='button'
+                        className='menu-link-text'
+                      >
+                        Notifications
+                        <span
+                          className='ml-2 inline-block whitespace-nowrap rounded-2xl bg-red-300 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700'
+                        >{notifications === null ? 0 : notifications.length}
+                        </span
                           >
-                        </button>
-                      </a>
-                    </li>
+                      </button>
+                    </a>
+                  </li>
                   <li className={`menu-item ${parseInt(activePage) == 1 ? 'current' : ''}`}>
                     <a className='menu-link' href='/dashboard/College'>
                       <Image
@@ -153,18 +155,20 @@ const Sidebar = ({
                 </ul>
                 : user.accType === '1'
                   ? <ul className='menu-list'>
-                  <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
+                    <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
                       <a className='menu-link' href='/notifications'>
                         <div className={sidebarOpen ? 'ml-3' : 'ml-0'}>
                           <BellOutlined style={{ fontSize: '24px' }} />
                         </div>
                         <button
-                          type="button"
-                          className='menu-link-text'>
+                          type='button'
+                          className='menu-link-text'
+                        >
                           Notifications
                           <span
-                            className="ml-2 inline-block whitespace-nowrap rounded-2xl bg-red-300 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700"
-                          >{notifications === null ? 0 : notifications.length}</span
+                            className='ml-2 inline-block whitespace-nowrap rounded-2xl bg-red-300 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700'
+                          >{notifications === null ? 0 : notifications.length}
+                          </span
                           >
                         </button>
                       </a>
@@ -220,12 +224,14 @@ const Sidebar = ({
                           <BellOutlined style={{ fontSize: '24px' }} />
                         </div>
                         <button
-                          type="button"
-                          className='menu-link-text'>
+                          type='button'
+                          className='menu-link-text'
+                        >
                           Notifications
                           <span
-                            className="ml-2 inline-block whitespace-nowrap rounded-2xl bg-red-500 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-white"
-                          >{notifications === null ? 0 : notifications.length}</span
+                            className='ml-2 inline-block whitespace-nowrap rounded-2xl bg-red-500 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-white'
+                          >{notifications === null ? 0 : notifications.length}
+                          </span
                           >
                         </button>
                       </a>

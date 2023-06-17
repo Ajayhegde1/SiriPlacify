@@ -40,16 +40,16 @@ const Navbar = () => {
             <AiFillCloseCircle onClick={handleToggleMenu} />
           </div>
           <div className={styles.navEleContainer}>
-              {signedOutNavLinks.map((link, index) => (
-                <a
-                  onClick={handleToggleMenu}
-                  className={styles.navLink}
-                  key={index}
-                  href={`${link.route}`}
-                >
-                  {link.name}
-                </a>
-              ))}
+            {signedOutNavLinks.map((link, index) => (
+              <a
+                onClick={handleToggleMenu}
+                className={styles.navLink}
+                key={index}
+                href={`${link.route}`}
+              >
+                {link.name}
+              </a>
+            ))}
             <a href='/sign-in' className={styles.btn1}>Sign In</a>
             <a className={styles.btn}>Book a Demo</a>
           </div>

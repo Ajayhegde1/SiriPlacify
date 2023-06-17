@@ -42,7 +42,7 @@ export default function UserManagement () {
         if (sheets.length) {
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]])
           const updatedData = rows
-          //replace studentName with username in updatedData
+          // replace studentName with username in updatedData
           updatedData.forEach((element) => {
             element.username = element.studentName
             delete element.studentName
