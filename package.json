@@ -11,9 +11,11 @@
   "dependencies": {
     "@heroicons/react": "^2.0.17",
     "@reduxjs/toolkit": "^1.9.5",
+    "@types/chart.js": "^2.9.37",
     "antd": "^5.5.0",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
+    "chart.js": "^4.3.0",
     "dayjs": "^1.11.7",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.4",

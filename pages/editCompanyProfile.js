@@ -28,6 +28,7 @@ export default function EditCompanyProfile () {
   const [companyContactNo, setCompanyContactNo] = useState('')
   const [companyLocation, setCompanyLocation] = useState('')
   const [companyDescription, setCompanyDescription] = useState('')
+  const [plannedHires, setPlannedHires] = useState(0)
   const [isDisabled, setIsDisabled] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
@@ -56,6 +57,7 @@ export default function EditCompanyProfile () {
         setCompanyContactNo(profile.companyContactNo)
         setCompanyLocation(profile.companyLocation)
         setCompanyDescription(profile.companyDescription)
+        setPlannedHires(profile.plannedHires)
       }
     }
   }, [profile])
@@ -69,7 +71,8 @@ export default function EditCompanyProfile () {
       companyWebsite,
       companyContactNo,
       companyLocation,
-      companyDescription
+      companyDescription,
+      plannedHires
     }
 
     updateCompanyProfile(data)
@@ -110,10 +113,10 @@ export default function EditCompanyProfile () {
       />
       <div className='mx-8 md:mx-20 mt-16'>
         <p
-          className='ml-3 md:ml-6 mb-12 font-SubHeading text-base font-normal'
+          className='ml-3 md:ml-6 mb-4 font-SubHeading text-base font-normal'
         >
           <span className='text-gray-500'>
-            <a href='/jobs'>
+            <a href={routes.COMPANYDASHBOARD}>
               Dashboard
             </a>
           </span> {'>'} Edit profile
@@ -194,6 +197,13 @@ export default function EditCompanyProfile () {
                 </div>
                 <div className='mr-0 md:mr-4'>
                   <TextField
+                    label='Planned Hires'
+                    placeholder="123"
+                    type='text'
+                    value={plannedHires}
+                    onChangeHandler={(e) => setPlannedHires(e.target.value)}
+                  />
+                  <TextField
                     label='location'
                     placeholder='100 Feet Ring Road, Banashankari Stage III, Dwaraka Nagar, Bengaluru, Karnataka 560085'
                     type='text'
@@ -208,7 +218,7 @@ export default function EditCompanyProfile () {
                             Our students graduate with the ability to adapt to an intellectually and technologically changing
                             environment. Over the years, we have accomplished this with the participative efforts of the management,
                             staff, students and parents.'
-                    rows='8'
+                    rows='4'
                     value={companyDescription}
                     onChangeHandler={(e) => setCompanyDescription(e.target.value)}
                   />

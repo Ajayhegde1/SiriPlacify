@@ -29,6 +29,7 @@ export default function CompanyProfile () {
   const [emailID, setEmailID] = useState('')
   const [contactNo, setContactNo] = useState('')
   const [companyDescription, setCompanyDescription] = useState('')
+  const [plannedHires, setPlannedHires] = useState('')
 
   const handleCompanyProfile = () => {
     const Data = {
@@ -38,7 +39,8 @@ export default function CompanyProfile () {
       location,
       emailID,
       contactNo,
-      companyDescription
+      companyDescription,
+      plannedHires
     }
     setBtnText('Saving...')
     dispatch(addCompanyProfile(Data))
@@ -72,7 +74,7 @@ export default function CompanyProfile () {
             <div className='col-span-1 md:col-span-2 order-last md:order-first ml-6'>
               <TextField
                 label='Name of company'
-                placeholder='Pes university'
+                placeholder='ABC Company'
                 type='text'
                 value={companyName}
                 onChangeHandler={(e) => setCompanyName(e.target.value)}
@@ -86,7 +88,7 @@ export default function CompanyProfile () {
               />
               <TextField
                 label='Website'
-                placeholder='pes.edu'
+                placeholder='company.com'
                 type='text'
                 value={website}
                 onChangeHandler={(e) => setWebsite(e.target.value)}
@@ -109,7 +111,7 @@ export default function CompanyProfile () {
               value={location}
               onChangeHandler={(e) => setLocation(e.target.value)}
             />
-            <div className='grid grid-cols-1 md:grid-cols-5 gap-0 md:gap-8'>
+            <div className='grid grid-cols-1 md:grid-cols-7 gap-0 md:gap-8'>
               <div className='col-span-1 md:col-span-3'>
                 <TextField
                   label='Email id'
@@ -117,6 +119,15 @@ export default function CompanyProfile () {
                   type='text'
                   value={emailID}
                   onChangeHandler={(e) => setEmailID(e.target.value)}
+                />
+              </div>
+              <div className='col-span-1 md:col-span-2'>
+                <TextField
+                  label='Planned Hires'
+                  placeholder='100'
+                  type='text'
+                  value={plannedHires}
+                  onChangeHandler={(e) => setPlannedHires(e.target.value)}
                 />
               </div>
               <div className='col-span-1 md:col-span-2'>
