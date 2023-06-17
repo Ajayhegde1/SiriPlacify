@@ -429,6 +429,8 @@ export default function College () {
                     students={filteredStudentList}
                     promoteStudents={promoteStudents}
                     setPromoteStudents={setPromoteStudents}
+                    jobID={jobID}
+                    collegeID={collegeID}
                   />
           }
           <div className='flex'>

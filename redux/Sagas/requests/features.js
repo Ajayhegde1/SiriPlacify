@@ -140,3 +140,7 @@ export const getNotifications = () => {
 export const updateNotificationRequest = (Id) => {
   return POST(`/updateNotification?notificationId=${Id}`, {}, { sessionID: store.getState().user.sessionId })
 }
+
+export const GetStudent = (id) => {
+  return GET(`/student?studentId=${id}`, { sessionID: store.getState().user.sessionId })
+}
