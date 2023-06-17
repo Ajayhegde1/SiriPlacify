@@ -7,7 +7,8 @@ import photo4 from '../../public/photo2.4.png'
 
 export default function SecondSection () {
   return (
-    <div className='my-6 md:my-20'>
+    <div className='min-h-screen'>
+    <div className='pt-2'>
       <h1 className='text-center mt-12 xl:mt-16 2xl:mt-32 mb-12 xl:mb-16 2xl:mb-24 text-5xl lg:text-6xl 2xl:text-7xl font-Heading font-bold text-green-800'>How do we help?</h1>
       <div className='mb-12 xl:mb-24 2xl:mb-36 mt-12 xl:mt-32 2xl:mt-40  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 mx-20'>
         <div>
@@ -47,6 +48,7 @@ export default function SecondSection () {
           <p className='text-center text-base font-SubHeading font-medium text-black'>Personalized dashboards for the stakeholders to view the insights drawn from the existing data without compromising the security of the universities and corporates</p>
         </div>
       </div>
+    </div>
     </div>
   )
 }

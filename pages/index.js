@@ -24,10 +24,18 @@ export default function Home () {
     <div>
       <DocHeader DocTitle='Placify.io' />
       <Navbar />
+      <div id='Home'>
       <OpeningSection />
+      </div>
+      <div id="About">
       <SecondSection />
+      </div>
+      <div id='Portfolio'>
       <ThirdSection />
+      </div>
+      <div id='contact'>
       <ContactSection />
+      </div>
       <FooterSection />
     </div>
   )

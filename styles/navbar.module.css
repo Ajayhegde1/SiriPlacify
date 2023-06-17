@@ -43,6 +43,7 @@
     margin-right: 15px;
     background: #095D40;
     border-color: #095D40;
+    cursor: pointer;
   }
 
   .btn{
@@ -57,6 +58,7 @@
     margin-right: 15px;
     background: #095D40;
     border-color: #095D40;
+    cursor: pointer;
   }
 
   .btn:hover{

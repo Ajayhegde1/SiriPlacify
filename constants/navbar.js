@@ -1,7 +1,7 @@
 export const signedOutNavLinks = [
   {
     name: 'Home',
-    route: '#'
+    route: '#Home'
   },
   {
     name: 'About',
