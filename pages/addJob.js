@@ -143,7 +143,7 @@ export default function AddJob () {
           className='pt-16 ml-3 md:ml-6 pb-12 font-SubHeading text-base font-normal'
         >
           <span className='text-gray-500'>
-            <a href='/jobs'>
+            <a href={user !== null ? user.accType === '2' ? routes.COMPANYDASHBOARD : routes.TPODASHBOARD : routes.NOTFOUND}>
               Dashboard
             </a>
           </span> {'>'} Create Job
