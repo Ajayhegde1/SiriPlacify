@@ -11,7 +11,7 @@ export default function CompanyJobSection ({ jobSection, setJobSection, openJobs
     <div className='ml-2 md:ml-6 flex flex-col md:flex-row gap-4 md:gap-16 border-b-2 border-gray-300'>
       <div
         onClick={setCurrentJobsSection}
-        className={jobSection === 1 ? 'pb-1 border-b-4 border-green-900' : ''}
+        className={jobSection === 1 ? 'cursor-pointer pb-1 border-b-4 border-green-900' : 'cursor-pointer hover:border-b-4 hover:border-green-900 ease-in duration-300'}
       >
         <p>
           <span className='pb-1 text-lg font-Heading font-semibold text-black pr-1'>
@@ -32,7 +32,7 @@ export default function CompanyJobSection ({ jobSection, setJobSection, openJobs
       </div>
       <div
         onClick={setJobOffersSection}
-        className={jobSection === 2 ? 'pb-1 border-b-4 border-green-900' : ''}
+        className={jobSection === 2 ? 'cursor-pointer pb-1 border-b-4 border-green-900' : 'cursor-pointer hover:border-b-4 hover:border-green-900 ease-in duration-300'}
       >
         <span className='text-lg font-Heading font-semibold text-gray-500 pr-1'>Completed Jobs</span>
         {

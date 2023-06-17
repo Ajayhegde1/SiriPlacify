@@ -6,6 +6,7 @@ import DocHeader from '@/components/DocHeader'
 
 import { getNotifications, updateNotification } from '@/redux/Slices/notificationSlice'
 import { useRouter } from 'next/router'
+import { routes } from '@/constants/routes'
 
 export default function Notifications() {
     const dispatch = useDispatch()

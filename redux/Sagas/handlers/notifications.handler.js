@@ -72,6 +72,11 @@ export function* handleMarkNotifications(action) {
             });
             notifications = notifications.sort((a, b) => b.date - a.date);
             yield put(setNotification(notifications))
+            openNotification(
+                notificationTypes.SUCCESS,
+                'Success',
+                'Notification marked as read.'
+            )
         }
         else if (response.data.status === 401) {
             openNotification(

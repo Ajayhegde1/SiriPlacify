@@ -13,7 +13,7 @@ export default function StatusOfHire ({
       <div className='mt-4 ml-2 md:ml-6 flex flex-col lg:flex-row gap-4 lg:gap-16 border-b-2 border-gray-300'>
         <div
           onClick={setApplied}
-          className={status === 1 ? 'pb-1 border-b-4 border-green-900' : ''}
+          className={status === 1 ? 'cursor-pointer pb-1 border-b-4 border-green-900' : 'cursor-pointer hover:border-b-4 hover:border-green-900 ease-in duration-300'}
         >
           <p>
             <span className='text-lg font-Heading font-semibold text-black pr-3'>
@@ -26,7 +26,7 @@ export default function StatusOfHire ({
         </div>
         <div
           onClick={setShortlisted}
-          className={status === 2 ? 'pb-1 border-b-4 border-green-900' : ''}
+          className={status === 2 ? 'cursor-pointer pb-1 border-b-4 border-green-900' : 'cursor-pointer hover:border-b-4 hover:border-green-900 ease-in duration-300'}
         >
           <span className='text-lg font-Heading font-semibold text-black pr-3'>Shortlisted</span>
           <span className='px-2 py-1 bg-gray-100 rounded-2xl text-blue-400 font-bold'>
@@ -34,7 +34,7 @@ export default function StatusOfHire ({
           </span>
         </div>
         <div
-          className={status === 3 ? 'pb-1 border-b-4 border-green-900' : ''}
+          className={status === 3 ? 'cursor-pointer pb-1 border-b-4 border-green-900' : 'cursor-pointer hover:border-b-4 hover:border-green-900 ease-in duration-300'}
           onClick={setTest}
         >
           <span className='text-lg font-Heading font-semibold text-black pr-3'>Test</span>
@@ -43,7 +43,7 @@ export default function StatusOfHire ({
           </span>
         </div>
         <div
-          className={status === 4 ? 'pb-1 border-b-4 border-green-900' : ''}
+          className={status === 4 ? 'cursor-pointer pb-1 border-b-4 border-green-900' : 'cursor-pointer hover:border-b-4 hover:border-green-900 ease-in duration-300'}
           onClick={setInterview}
         >
           <span className='text-lg font-Heading font-semibold text-black pr-3'>Interview</span>
@@ -52,7 +52,7 @@ export default function StatusOfHire ({
           </span>
         </div>
         <div
-          className={status === 5 ? 'pb-1 border-b-4 border-green-900' : ''}
+          className={status === 5 ? 'cursor-pointer pb-1 border-b-4 border-green-900' : 'cursor-pointer hover:border-b-4 hover:border-green-900 ease-in duration-300'}
           onClick={setHired}
         >
           <span className='text-lg font-Heading font-semibold text-black pr-3'>Hired</span>
