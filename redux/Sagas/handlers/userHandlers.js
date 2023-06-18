@@ -92,44 +92,29 @@ export function * handleSignIn (action) {
         notificationTypes.ERROR,
         'Incorrect Password!'
       )
-      setTimeout(() => {
-        window.location.reload()
-      }, 5000)
     } else if (response.data.status === 404) {
       openNotification(
         notificationTypes.ERROR,
         'Error',
         'This email does not exist!'
       )
-      setTimeout(() => {
-        window.location.reload()
-      }, 5000)
     } else if (response.data.status === 425) {
       openNotification(
         notificationTypes.ERROR,
         'Either Username and Password is not entered. Please enter both'
       )
-      setTimeout(() => {
-        window.location.reload()
-      }, 5000)
     } else if (response.data.status === 427) {
       openNotification(
         notificationTypes.ERROR,
         'Error',
         'Email not verified.'
       )
-      setTimeout(() => {
-        window.location.reload()
-      }, 5000)
     } else if (response.data.status === 431) {
       openNotification(
         notificationTypes.ERROR,
         'Error',
         'Unable to send verification mail. Please try again later.'
       )
-      setTimeout(() => {
-        window.location.reload()
-      }, 5000)
     } else {
       // Notification message invalid creds
       openNotification(
@@ -137,12 +122,13 @@ export function * handleSignIn (action) {
         'Invalid Credentials',
         'Please ensure that the email and password match.'
       )
-      setTimeout(() => {
-        window.location.reload()
-      }, 5000)
     }
   } catch (err) {
-    console.log(err)
+    openNotification(
+      notificationTypes.ERROR,
+      'Invalid Credentials',
+      'Please ensure that the email and password match.'
+    )
   }
 }
 

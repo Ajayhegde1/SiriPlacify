@@ -104,6 +104,7 @@ export default function College () {
     const headings = [
       [
         'uid',
+        'studentID',
         'username',
         'email',
         'contactNo',
@@ -111,7 +112,7 @@ export default function College () {
         'twelthMarks',
         'studentUGMarks',
         'studentPGMarks',
-        'studentStatus',
+        'status',
         'studentDescription'
       ]
     ]
@@ -120,6 +121,7 @@ export default function College () {
     utils.sheet_add_aoa(ws, headings)
     const outdata = JSON.stringify(candidates, [
       'uid',
+      'studentID',
       'username',
       'email',
       'contactNo',

@@ -26,6 +26,7 @@ export default function UserList () {
     const headings = [
       [
         'uid',
+        'studentId',
         'username',
         'email',
         'contactNo',
@@ -42,6 +43,7 @@ export default function UserList () {
     utils.sheet_add_aoa(ws, headings)
     const outdata = JSON.stringify(students, [
       'uid',
+      'studentId',
       'username',
       'email',
       'contactNo',

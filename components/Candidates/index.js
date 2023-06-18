@@ -1,6 +1,9 @@
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
+import { deleteStudent } from '@/redux/Sagas/requests/features'
+import { openNotification } from '@/utils/notifications'
+
 export default function Candidates({
   students,
   promoteStudents,
@@ -26,6 +29,22 @@ export default function Candidates({
     }
   }
 
+  const deleteStudentHandler = (uid) => {
+    deleteStudent(uid)
+      .then((res) => {
+        if (res.data.status === 200){
+          openNotification('success', 'Student deleted successfully')
+        }
+        else {
+          openNotification('error', 'Unable to delete student')
+        }
+        window.location.reload()
+      })
+      .catch((err) => {
+        openNotification('error', 'Unable to delete student')
+      })
+  }
+
   return (
     <div className='overflow-auto h-96'>
       <table className='table-auto overflow-scroll w-full mt-3 text-left'>
@@ -37,6 +56,7 @@ export default function Candidates({
                 ? <th />
                 : <></>
           }
+          <th className='px-6 py-4 text-gray-600'>Student ID</th>
           <th className='px-6 py-4 text-gray-600'>Student Name</th>
           <th className='px-6 py-4 text-gray-600'>Email</th>
           <th className='px-6 py-4 text-gray-600'>Mobile</th>
@@ -80,6 +100,7 @@ export default function Candidates({
                           </td>
                           : <></>
                     }
+                    <td className='whitespace-nowrap px-6 py-4'>{student.studentId}</td>
                     <td className='whitespace-nowrap px-6 py-4'>{student.username}</td>
                     <td className='whitespace-nowrap px-6 py-4'>{student.email}</td>
                     <td className='whitespace-nowrap px-6 py-4'>{student.contactNo}</td>
@@ -97,6 +118,24 @@ export default function Candidates({
                               className='font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded'
                             >
                               View Profile
+                            </button>
+                          </td>
+                          :
+                          <></>
+                        :
+                        <></>
+                    }
+                    {
+                      user !== null
+                        ?
+                        user.accType === '0'
+                          ?
+                          <td className='whitespace-nowrap px-6 py-4'>
+                            <button
+                              onClick={() => deleteStudentHandler(student.uid)}
+                              className='font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded'
+                            >
+                              Delete Student
                             </button>
                           </td>
                           :

@@ -38,7 +38,6 @@ export default function CollegeProfile () {
 
   const handleLogin = (e) => {
     e.preventDefault()
-    setBtnText('Signing In...')
     dispatch(signIn({ email, password }))
   }
 
@@ -53,6 +52,7 @@ export default function CollegeProfile () {
         </div>
         <div className='mt-4 py-4 md:py-12 ml-0 md:ml-4 xl:ml-6 mr-8 md:mr-10 xl:mr-12 2xl:mr-16'>
           <h1 className='text-center md:text-left mb-10 mt-12 text-3xl md:text-4xl font-Heading font-medium text-black'>Login</h1>
+          <form onSubmit={handleLogin}>
           <TextField
             label='Email ID'
             placeholder='sample@gmail.com'
@@ -71,11 +71,13 @@ export default function CollegeProfile () {
           />
           <div>
             <Button
+              type='submit'
               onClickHandler={handleLogin}
               disabled={isBtnDisabled}
               btnText={btnText}
             />
           </div>
+        </form>
           <div className='border-2 border-gray-300 shadow-lg rounded-lg mt-6 p-8'>
             <p className='font-bold text-center md:text-left text-sm md:text-base font-Body text-black'>
               New to Placify?

@@ -1,4 +1,4 @@
-import { GET, POST } from '@/config/api'
+import { GET, POST, DELETE } from '@/config/api'
 import { store } from '@/redux/configureStore'
 
 export const getAllJobs = () => {
@@ -143,4 +143,8 @@ export const updateNotificationRequest = (Id) => {
 
 export const GetStudent = (id) => {
   return GET(`/student?studentId=${id}`, { sessionID: store.getState().user.sessionId })
+}
+
+export const deleteStudent = (id) => {
+  return DELETE(`/student?studentID=${id}`, {}, { sessionID: store.getState().user.sessionId })
 }

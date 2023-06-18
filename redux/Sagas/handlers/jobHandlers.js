@@ -253,7 +253,8 @@ export function * handleADDJobByCompany (action) {
         notificationTypes.SUCCESS,
         'Job Added Successfully'
       )
-
+      
+      window.history.replaceState({}, 'Jobs', routes.JOBS)
       window.location.reload()
     } else if (response.data.status === 400) {
       openNotification(
