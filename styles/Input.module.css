@@ -31,9 +31,9 @@
     margin-bottom: auto;
     transition: all 0.3s ease-in-out;
     background-color: white;
-    color: #2c2c2c;
+    color : #5D5B74;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 500;
   }
 
   .container:disabled {

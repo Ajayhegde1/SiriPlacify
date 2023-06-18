@@ -12,7 +12,7 @@ import DocHeader from '@/components/DocHeader'
 import { addJob, addJobByCompany } from '@/redux/Slices/jobSlice'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
-import { jobStatusList, modeOfSelectionList } from '@/constants/addJobDropDowns'
+import { jobStatusList, modeOfSelectionList, finalSelection,jobSector,genderList } from '@/constants/addJobDropDowns'
 import { routes } from '@/constants/routes'
 
 export default function AddJob () {
@@ -25,7 +25,6 @@ export default function AddJob () {
   const [btnText, setBtnText] = useState('Save')
   const [isBtnDisabled, setIsBtnDisabled] = useState(true)
   const [designation, setDesignation] = useState('')
-  const [jobStatus, setJobStatus] = useState(jobStatusList[0].value)
   const [locationOfWork, setLocationOfWork] = useState('')
   const [selectedDate, setSelectedDate] = useState(null)
   const [ctc, setCtc] = useState('')
@@ -35,27 +34,30 @@ export default function AddJob () {
   const [tenthMarks, setTenthMarks] = useState(0.0)
   const [twelfthMarks, setTwelfthMarks] = useState(0.0)
   const [UGCgpa, setUGCgpa] = useState(0.0)
-  const [sector, setSector] = useState('')
   const [applicableCourses, setApplicableCourses] = useState('')
-  const [modeOfSelection, setModeOfSelection] = useState(modeOfSelectionList[0].value)
   const [briefJobDescription, setBriefJobDescription] = useState('')
   const [bondDetails, setBondDetails] = useState('')
   const [contactPersonName, setContactPersonName] = useState('')
   const [contactPersonPhoneNumber, setContactPersonPhoneNumber] = useState('')
   const [contactPersonEmail, setContactPersonEmail] = useState('')
-  const [finalMode, setFinalMode] = useState(modeOfSelectionList[0].value)
+  const [jobStatus, setJobStatus] = useState(jobStatusList[0].value)
+  const [sector, setSector] = useState(jobSector[0].value)
+  const [modeOfSelection, setModeOfSelection] = useState(modeOfSelectionList[0].value)
+  const [gender, setGender] = useState(genderList[0].value)
+  const [finalMode, setFinalMode] = useState(finalSelection[0].value)
   const [companyName, setCompanyName] = useState('')
 
   useEffect(() => {
-    if (finalMode && designation && jobStatus && locationOfWork && ctc &&
-      sector && applicableCourses && modeOfSelection && bondDetails &&
-      contactPersonName && contactPersonPhoneNumber && contactPersonEmail
+    if (finalMode !== 'Final Mode of Selection' && designation && jobStatus !== 'Job Type' && locationOfWork && ctc &&
+      sector && applicableCourses && modeOfSelection !== 'Mode of Selection' && bondDetails &&
+      contactPersonName && contactPersonPhoneNumber && contactPersonEmail && selectedDate &&
+      gender !== 'Gender'
     ) {
       setIsBtnDisabled(false)
     } else {
       setIsBtnDisabled(true)
     }
-  }, [finalMode, designation, jobStatus, locationOfWork, ctc, sector, applicableCourses, modeOfSelection, bondDetails, contactPersonName, contactPersonPhoneNumber, contactPersonEmail])
+  }, [finalMode, designation, jobStatus, locationOfWork, ctc, sector,selectedDate ,applicableCourses, modeOfSelection, bondDetails, contactPersonName, contactPersonPhoneNumber, contactPersonEmail])
 
   useEffect(() => {
     if (user === null) {
@@ -81,6 +83,7 @@ export default function AddJob () {
         jobTestMode: modeOfSelection,
         jobFinalSelection: finalMode,
         jobContactName: contactPersonName,
+        gender: gender,
         jobContactNumber: contactPersonPhoneNumber,
         jobEmailId: contactPersonEmail,
         dueDate: selectedDate,
@@ -194,7 +197,7 @@ export default function AddJob () {
                 className='border-2 border-gray-400 rounded w-full p-4 text-black leading-tight focus:outline-none focus:shadow-outline'
               />
             </div>
-            <h1 className='text-center md:text-left pb-3 mt-2 text-xl md:text-2xl font-Heading font-bold text-gray-800'>Marks Requirement</h1>
+            <h1 className='text-center md:text-left pb-6 mt-10 text-xl md:text-2xl font-Heading font-bold text-gray-800'>Marks Requirement</h1>
             <div className='grid grid-cols-3 gap-4'>
               <TextField
                 label='10th Marks'
@@ -220,13 +223,13 @@ export default function AddJob () {
             </div>
           </div>
           <div>
-            <TextField
-              label='Sector'
-              placeholder='IT'
-              type='text'
+            <div className='mt-8 mb-6'>
+            <SingleSelectComponent
               value={sector}
               onChangeHandler={(e) => setSector(e.target.value)}
+              options={jobSector}
             />
+            </div>
             <TextField
               label='Applicable courses'
               placeholder='Btech'
@@ -234,20 +237,28 @@ export default function AddJob () {
               value={applicableCourses}
               onChangeHandler={(e) => setApplicableCourses(e.target.value)}
             />
+            <div className='mb-8'>
             <SingleSelectComponent
               value={modeOfSelection}
               onChangeHandler={(e) => setModeOfSelection(e.target.value)}
               options={modeOfSelectionList}
-              label='Mode of Selection'
             />
+            </div>
+            <div className='mb-8'>
             <SingleSelectComponent
               value={finalMode}
               onChangeHandler={(e) => setFinalMode(e.target.value)}
-              options={modeOfSelectionList}
-              label='Final Mode of Selection'
+              options={finalSelection}
             />
+            </div>
+            <div className='mb-8'>
+            <SingleSelectComponent
+              value={gender}
+              onChangeHandler={(e) => setGender(e.target.value)}
+              options={genderList}
+            />
+            </div>
             <TextArea
-              rows='4'
               label='Brief Job Description'
               placeholder='Write a detailed description of the job'
               value={briefJobDescription}
@@ -256,15 +267,6 @@ export default function AddJob () {
           </div>
         </div>
         <div className='ml-3 md:ml-6 mr-12'>
-          <div className='w-1/3'>
-            <TextField
-              label='CTC'
-              placeholder='75,0000.00'
-              type='text'
-              value={ctc}
-              onChangeHandler={(e) => setCtc(e.target.value)}
-            />
-          </div>
           <h1 className='text-center md:text-left pb-4 mt-3 md:mt-6 text-xl md:text-2xl font-Heading font-bold text-gray-800'>CTC Breakdown</h1>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
             <TextField
@@ -287,6 +289,15 @@ export default function AddJob () {
               type='text'
               value={RSU}
               onChangeHandler={(e) => setRSU(e.target.value)}
+            />
+          </div>
+          <div className='w-1/3'>
+            <TextField
+              label='CTC'
+              placeholder='75,0000.00'
+              type='text'
+              value={ctc}
+              onChangeHandler={(e) => setCtc(e.target.value)}
             />
           </div>
         </div>

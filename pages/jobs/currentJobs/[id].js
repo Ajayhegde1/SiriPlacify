@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import { read, utils, writeFile } from 'xlsx'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -26,7 +27,9 @@ export default function CurrentJobs () {
   const user = useSelector((state) => state.user)
 
   const [jobSection, setJobSection] = useState(1)
+  const [studentList, setStudentList] = useState([])
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [isEdit, setIsEdit] = useState(false)
   const [job, setJob] = useState({})
 
   const { id } = router.query
@@ -37,6 +40,44 @@ export default function CurrentJobs () {
 
   const setDegree = () => {
     setJobSection(2)
+  }
+
+  const handleExport = () => {
+    const headings = [
+      [
+        'uid',
+        'studentID',
+        'username',
+        'email',
+        'contactNo',
+        'tenthMarks',
+        'twelthMarks',
+        'studentUGMarks',
+        'studentPGMarks',
+        'status',
+        'studentDescription'
+      ]
+    ]
+    const wb = utils.book_new()
+    const ws = utils.json_to_sheet([])
+    utils.sheet_add_aoa(ws, headings)
+    const outdata = JSON.stringify(studentList, [
+      'uid',
+      'studentID',
+      'username',
+      'email',
+      'contactNo',
+      'tenthMarks',
+      'twelthMarks',
+      'studentUGMarks',
+      'studentPGMarks',
+      'studentStatus',
+      'studentDescription'
+    ])
+    const output = JSON.parse(outdata)
+    utils.sheet_add_json(ws, output, { origin: 'A2', skipHeader: true })
+    utils.book_append_sheet(wb, ws, 'Students List')
+    writeFile(wb, 'candidatesData.xlsx')
   }
 
   useEffect(() => {
@@ -81,6 +122,10 @@ export default function CurrentJobs () {
       }
     }
   }, [id])
+
+  const handleEdit = () => {
+    console.log('edit')
+  }
 
   return (
     <div className='bg-gray-200 min-h-screen'>
@@ -165,7 +210,9 @@ export default function CurrentJobs () {
           {
                         jobSection === 1
 
-                          ? <div className='ml-auto flex flex-row'>
+                          ? <div 
+                            onClick={handleExport}
+                            className='px-2 py-1 rounded cursor-pointer ml-auto flex flex-row'>
                             <Image
                               src={download}
                               alt='arrow-left'
@@ -175,11 +222,6 @@ export default function CurrentJobs () {
 
                               Download
                             </p>
-                            <Image
-                              src={arrDown}
-                              alt='arrow-left'
-                              className='ml-2 mt-4 h-2 w-4'
-                            />
                           </div>
                           : <></>
                     }
@@ -192,6 +234,8 @@ export default function CurrentJobs () {
                           ? <></>
                           : <AppliedStudents
                               jobID={id}
+                              studentList={studentList}
+                              setStudentList={setStudentList}
                             />
                       : job === null
                         ? <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
@@ -220,6 +264,9 @@ export default function CurrentJobs () {
                               twelfthMarks={job.twelfthMarks}
                               UGCgpa={job.ugCGPA}
                               jobSection={1}
+                              isEdit={isEdit}
+                              setIsEdit={setIsEdit}
+                              handleEditFunction={handleEdit}
                             />
                           </div>
                 }

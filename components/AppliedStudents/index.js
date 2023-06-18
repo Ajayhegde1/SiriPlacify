@@ -7,9 +7,10 @@ import { notificationTypes, openNotification } from '@/utils/notifications'
 import { getAppliedStudents } from '@/redux/Sagas/requests/features'
 
 export default function AppliedStudents ({
-  jobID
+  jobID,
+  studentList,
+  setStudentList
 }) {
-  const [studentList, setStudentList] = useState([])
   const [filteredStudentList, setFilteredStudentList] = useState([])
   const [status, setStatus] = useState(1)
 

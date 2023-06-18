@@ -25,6 +25,9 @@ export default function JobItem ({
                 </span>
               </p>
               <h1 className='overflow-hidden truncate mt-5 text-xl font-Heading font-bold text-black'>
+                {job.companyName}
+              </h1>
+              <h1 className='overflow-hidden truncate mt-5 text-2xl font-Heading font-bold text-black'>
                 {job.jobTitle}
               </h1>
               <p className='my-2 text-sm text-medium font-Heading'>

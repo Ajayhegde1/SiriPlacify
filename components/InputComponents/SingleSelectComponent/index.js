@@ -3,11 +3,7 @@ import inputStyles from '../../../styles/Input.module.css'
 // Constants
 import { defaultInputMargin } from '@/constants/appConstants'
 
-// components
-import Label from '../Label'
-
 const SingleSelectComponent = ({
-  label,
   value,
   options = [],
   onChangeHandler,
@@ -21,7 +17,6 @@ const SingleSelectComponent = ({
       }}
       className={inputStyles.wrapper}
     >
-      {label && <Label label={label} required={required} />}
 
       <select
         className={inputStyles.container1}
