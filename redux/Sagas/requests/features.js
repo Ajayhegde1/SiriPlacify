@@ -148,3 +148,7 @@ export const GetStudent = (id) => {
 export const deleteStudent = (id) => {
   return DELETE(`/student?studentID=${id}`, {}, { sessionID: store.getState().user.sessionId })
 }
+
+export const uploadResume = (filename,contentType) => {
+  return GET(`/uploadResume?filename=${filename}&content_type=${contentType}`, { sessionID: store.getState().user.sessionId })
+}
