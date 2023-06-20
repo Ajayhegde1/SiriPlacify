@@ -66,7 +66,7 @@ export const modeOfSelectionList = [
     label: 'Offline'
   },
   {
-    id: 3,
+    id: 4,
     value: 'Hybrid',
     label: 'Hybrid'
   }
@@ -89,7 +89,7 @@ export const finalSelection = [
     label: 'Offline'
   },
   {
-    id: 3,
+    id: 4,
     value: 'Hybrid',
     label: 'Hybrid'
   }

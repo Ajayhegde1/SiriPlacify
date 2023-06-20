@@ -1,4 +1,4 @@
-export default function JobSection ({ jobSection, setJobSection, jobs, offerJobs, declinedJobs }) {
+export default function JobSection ({ jobSection, setJobSection, jobs, offerJobs, declinedJobs,closedJobs }) {
   const setJobOffersSection = () => {
     setJobSection(2)
   }
@@ -9,6 +9,10 @@ export default function JobSection ({ jobSection, setJobSection, jobs, offerJobs
 
   const setCurrentJobsSection = () => {
     setJobSection(1)
+  }
+
+  const setClosedJobsSection = () => {
+    setJobSection(4)
   }
 
   return (
@@ -66,6 +70,24 @@ export default function JobSection ({ jobSection, setJobSection, jobs, offerJobs
                 </span>
               : <span className='ml-2 py-1 px-2 bg-gray-300 rounded-2xl text-green-500 font-medium'>
                 {declinedJobs.length}
+              </span>
+        }
+      </div>
+      <div
+        onClick={setClosedJobsSection}
+        className={jobSection === 4 ? 'cursor-pointer pb-1 border-b-4 border-green-900' : 'cursor-pointer hover:border-b-4 hover:border-green-900 ease-in duration-300'}
+      >
+        <span className='pb-1 text-lg font-Heading font-semibold text-black pr-1'>Closed jobs</span>
+        {
+          closedJobs === null
+            ? <>
+            </>
+            : closedJobs.length === 0
+              ? <span className='ml-2 p-1 bg-gray-300 rounded-2xl text-green-500 font-medium'>
+                00
+                </span>
+              : <span className='ml-2 py-1 px-2 bg-gray-300 rounded-2xl text-green-500 font-medium'>
+                {closedJobs.length}
               </span>
         }
       </div>

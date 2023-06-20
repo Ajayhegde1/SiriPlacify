@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import { openNotification, notificationTypes } from '@/utils/notifications'
 import { setJob, updateJob } from '@/redux/Slices/jobSlice'
+import { setClosedJobForCollege } from '@/redux/Slices/closedJobsCollegeSlice'
 import { getAllJobs, getStudentJobs, getCompanyJobs, addJobsByCompany, addJobs, uploadJobDescFile } from '../requests/features'
 import { store } from '@/redux/configureStore'
 
@@ -66,7 +67,10 @@ export function* handleGetAllJobs() {
     } else if (store.getState().user.accType === '1') {
       const response = yield call(getStudentJobs)
       if (response.data.status === 200) {
-        yield put(setJob(response.data.data))
+        let openJobs = response.data.data.filter((job) => job.isClosed === false)
+        let closedJobs = response.data.data.filter((job) => job.isClosed === true)
+        yield put(setClosedJobForCollege(closedJobs))
+        yield put(setJob(openJobs))
       } else if (response.data.status === 401) {
         openNotification(
           notificationTypes.ERROR,

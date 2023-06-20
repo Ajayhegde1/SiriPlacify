@@ -4,6 +4,8 @@ import { handleGetAllJobs, handleADDJob, handleADDJobByCompany } from '../handle
 import { getOfferJob } from '@/redux/Slices/offerJobsSlice'
 import { getDeclinedJob } from '@/redux/Slices/declinedJobsSlice'
 import { getClosedJob } from '@/redux/Slices/closedJobsSlice'
+import { getClosedJobForCollege } from '@/redux/Slices/closedJobsCollegeSlice'
+import { handleGetClosedJobsCollegeHandler } from '../handlers/closedJobsTPO.handler'
 import { handleGetClosedJobsHandler } from '../handlers/closedJobs.handler'
 import { handleGetOfferJobsHandler } from '../handlers/offerJobsHandler'
 import { handleGetDeclinedJobs } from '../handlers/declinedJobsHandler'
@@ -13,6 +15,7 @@ export function * jobSagas () {
   yield takeLatest(getOfferJob.type, handleGetOfferJobsHandler)
   yield takeLatest(getDeclinedJob.type, handleGetDeclinedJobs)
   yield takeLatest(getClosedJob.type, handleGetClosedJobsHandler)
+  yield takeLatest(getClosedJobForCollege.type, handleGetClosedJobsCollegeHandler)
   yield takeLatest(addJob.type, handleADDJob)
   yield takeLatest(addJobByCompany.type, handleADDJobByCompany)
 }

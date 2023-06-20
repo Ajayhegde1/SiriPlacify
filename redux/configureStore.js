@@ -9,6 +9,7 @@ import collegeProfileReducer from './Slices/profile'
 import studentSliceReducer from './Slices/studentSlice'
 import companyProfileReducer from './Slices/companySlice'
 import jobApplicationReducer from './Slices/jobApplicationSlice'
+import closedJobsCollegeSlice from './Slices/closedJobsCollegeSlice'
 import offerJobSlice from './Slices/offerJobsSlice'
 import declinedJobSlice from './Slices/declinedJobsSlice'
 import closedJobSlice from './Slices/closedJobsSlice'
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
   declinedJobs: declinedJobSlice,
   closedJobs: closedJobSlice,
   jobApplication: jobApplicationReducer,
-  notifications: notificationReducer
+  notifications: notificationReducer,
+  closedJobsCollege: closedJobsCollegeSlice
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

@@ -9,15 +9,17 @@ import JobOffers from '@/components/JobOffers'
 import DeclinedJobs from '@/components/DeclinedJobs'
 import JobSection from '@/components/JobSection'
 import CompanyJobSection from '@/components/CompanyJobSection'
+import StudentJobSection from '@/components/StudentJobSection'
 
 import { getJobs } from '@/redux/Slices/jobSlice'
 import { getOfferJob } from '@/redux/Slices/offerJobsSlice'
 import { getDeclinedJob } from '@/redux/Slices/declinedJobsSlice'
 import { getClosedJob } from '@/redux/Slices/closedJobsSlice'
+import { getClosedJobForCollege } from '@/redux/Slices/closedJobsCollegeSlice'
 
 import { routes } from '@/constants/routes'
 
-export default function Jobs () {
+export default function Jobs() {
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -26,6 +28,7 @@ export default function Jobs () {
   const offerJobs = useSelector((state) => state.offerJobs)
   const declinedJobs = useSelector((state) => state.declinedJobs)
   const closedJobs = useSelector((state) => state.closedJobs)
+  const closedJobCollege = useSelector((state) => state.closedJobsCollege)
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [jobSection, setJobSection] = useState(1)
@@ -40,6 +43,16 @@ export default function Jobs () {
     if (user !== null) {
       if (user.accType === '0') {
         dispatch(getOfferJob())
+      }
+    } else {
+      router.push(routes.NOTFOUND)
+    }
+  }, [dispatch, user])
+
+  useEffect(() => {
+    if (user !== null) {
+      if (user.accType === '0') {
+        dispatch(getClosedJobForCollege())
       }
     } else {
       router.push(routes.NOTFOUND)
@@ -86,20 +99,30 @@ export default function Jobs () {
                 </>
                 : user.accType === '0'
                   ? <JobSection
-                      jobSection={jobSection}
-                      setJobSection={setJobSection}
-                      jobs={jobs}
-                      offerJobs={offerJobs}
-                      declinedJobs={declinedJobs}
-                    />
+                    jobSection={jobSection}
+                    setJobSection={setJobSection}
+                    jobs={jobs}
+                    offerJobs={offerJobs}
+                    declinedJobs={declinedJobs}
+                    closedJobs={closedJobCollege}
+                  />
                   : user.accType === '2'
                     ? <CompanyJobSection
+                      jobSection={jobSection}
+                      setJobSection={setJobSection}
+                      openJobs={jobs}
+                      closedJobs={closedJobs}
+                    />
+                    :
+                    user.accType === '1'
+                      ? <StudentJobSection
                         jobSection={jobSection}
                         setJobSection={setJobSection}
-                        openJobs={jobs}
-                        closedJobs={closedJobs}
+                        jobs={jobs}
+                        closedJobs={closedJobCollege}
                       />
-                    : <></>
+                      :
+                      <></>
             }
             {
               user === null
@@ -107,28 +130,42 @@ export default function Jobs () {
                 : user.accType === '0'
                   ? jobSection === 1
                     ? <CurrentJobs
-                        jobs={jobs}
-                      />
+                      jobs={jobs}
+                    />
                     : jobSection === 2
                       ? <JobOffers
-                          jobs={offerJobs}
-                        />
-                      : <DeclinedJobs
+                        jobs={offerJobs}
+                      />
+                      :
+                      jobSection === 3
+                        ?
+                        <DeclinedJobs
                           jobs={declinedJobs}
                         />
+                        :
+                        <DeclinedJobs
+                          jobs={closedJobCollege}
+                        />
                   : user.accType === '1'
-                    ? <CurrentJobs
-                        jobs={jobs}
-                      />
+                    ? 
+                    jobSection === 1
+                    ?
+                    <CurrentJobs
+                      jobs={jobs}
+                    />
+                    :
+                    <DeclinedJobs
+                      jobs={closedJobCollege}
+                    />
                     : user.accType === '2'
                       ? jobSection === 1
                         ? <CurrentJobs
-                            jobs={jobs}
-                          />
+                          jobs={jobs}
+                        />
                         : jobSection === 2
                           ? <JobOffers
-                              jobs={closedJobs}
-                            />
+                            jobs={closedJobs}
+                          />
                           : <div>
                             You are not logged in or authorized to log in.
                           </div>

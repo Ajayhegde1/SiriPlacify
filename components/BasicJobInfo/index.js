@@ -11,14 +11,16 @@ import { GET, POST } from '@/config/api'
 import { useSelector } from 'react-redux'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
-export default function BasicJobInfo ({
+export default function BasicJobInfo({
   uid,
   logo,
   jobTitle,
   jobLocation,
   jobCategory,
   dueDate,
-  jobID
+  jobID,
+  isClosedTPO = false,
+  isClosedStudent = false
 }) {
   const router = useRouter()
   const [showModal, setShowModal] = useState(false)
@@ -242,31 +244,40 @@ export default function BasicJobInfo ({
             <p className='text-gray-700 text-center'>DUE DATE - {moment(dueDate).format('DD MMM')}</p>
           </div>
           {
-              user === null
-                ? <></>
-                : user.accType === '1'
-                  ? isApplied
-                    ? <div className='mt-6 lg:mt-20 grid grid-cols-3 gap-2'>
-                      <div className='flex my-auto col-span-2 text-red-500 font-bold'>
-                        {message !== 'Job application status checked successfully' ? message : ''}
-                      </div>
-                      <div
-                        className='col-span-1 rounded-lg text-base md:text-lg 2xl:text-xl bg-green-600 text-white font-bold text-center p-2'
-                      >
-                        <span>{message === 'Job application status checked successfully' ? 'Applied' : 'Not Eligible'}</span>
-                      </div>
+            user === null
+              ? <></>
+              : user.accType === '1'
+                ?
+                isClosedStudent 
+                ?
+                <>
+                </>
+                :
+                isApplied
+                  ? <div className='mt-6 lg:mt-20 grid grid-cols-3 gap-2'>
+                    <div className='flex my-auto col-span-2 text-red-500 font-bold'>
+                      {message !== 'Job application status checked successfully' ? message : ''}
                     </div>
-                    : <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
-                      <div />
-                      <div
-                        onClick={() => setShowModal(!showModal)}
-                        className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
-                      >
-                        Apply Now
-                      </div>
+                    <div
+                      className='col-span-1 rounded-lg text-base md:text-lg 2xl:text-xl bg-green-600 text-white font-bold text-center p-2'
+                    >
+                      <span>{message === 'Job application status checked successfully' ? 'Applied' : 'Not Eligible'}</span>
                     </div>
-                  : user.accType === '0'
-                    ? <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
+                  </div>
+                  : <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
+                    <div />
+                    <div
+                      onClick={() => setShowModal(!showModal)}
+                      className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+                    >
+                      Apply Now
+                    </div>
+                  </div>
+                : user.accType === '0'
+                  ?
+                  !isClosedTPO
+                    ?
+                    <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
                       <button
                         onClick={handleDeclineOffer}
                         className='rounded-lg text-base md:text-lg 2xl:text-xl bg-red-500 text-white font-bold text-center p-2'
@@ -280,8 +291,10 @@ export default function BasicJobInfo ({
                         + Accept Offer
                       </button>
                     </div>
-                    : <></>
-            }
+                    :
+                    <></>
+                  : <></>
+          }
         </div>
       </div>
       <JobApplicationModal

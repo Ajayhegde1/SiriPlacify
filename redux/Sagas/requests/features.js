@@ -13,6 +13,10 @@ export const getDeclinedJobs = () => {
   return GET('/v2/jobs?jobType=declined', { sessionID: store.getState().user.sessionId })
 }
 
+export const getClosed = () => {
+  return GET('/v2/jobs?jobType=closed', { sessionID: store.getState().user.sessionId })
+}
+
 export const getClosedJobs = () => {
   return GET('/v2/jobs?jobType=closed', { sessionID: store.getState().user.sessionId })
 }
