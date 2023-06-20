@@ -207,7 +207,6 @@ export function* handleADDJob(action) {
               },
             })
               .then((res) => {
-                console.log(res);
                 openNotification('success', 'Resume uploaded successfully');
                 window.history.replaceState({}, 'Jobs', routes.JOBS)
                 window.location.reload()

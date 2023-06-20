@@ -1,8 +1,15 @@
 import { useSelector } from 'react-redux'
-import edit from '../../public/edit.png'
+import { useRef } from 'react'
+import axios from 'axios'
 import Image from 'next/image'
 
-export default function JobDesc ({
+import edit from '../../public/edit.png'
+import { getJobDescFile, uploadJobDescFile } from '@/redux/Sagas/requests/features'
+import { notificationTypes, openNotification } from '@/utils/notifications'
+
+export default function JobDesc({
+  jobID,
+  jdFile,
   companyName,
   setCompanyName,
   companyDesc,
@@ -40,20 +47,93 @@ export default function JobDesc ({
   handleEditFunction
 }) {
   const user = useSelector((state) => state.user)
+  const fileInputRef = useRef(null);
 
   const handleEdit = () => {
     setIsEdit(!isEdit)
   }
 
+  const handleGetJD = () => {
+    getJobDescFile(jobID)
+      .then((res) => {
+        if (res.data.status === 200) {
+          let url = res.data.url;
+          axios
+            .get(url, {
+              responseType: 'blob',
+            })
+            .then((res) => {
+              const downloadUrl = window.URL.createObjectURL(res.data);
+              const link = document.createElement('a');
+              link.href = downloadUrl;
+              link.setAttribute('download', 'JD.pdf');
+              document.body.appendChild(link);
+              link.click();
+              link.remove();
+              window.URL.revokeObjectURL(downloadUrl);
+              openNotification(notificationTypes.SUCCESS, 'success', 'Resume downloaded successfully');
+            })
+            .catch((err) => {
+              openNotification(notificationTypes.ERROR, 'error', 'Error downloading resume');
+            });
+        }
+        else if (res.data.status === 401) {
+          openNotification(notificationTypes.WARNING, 'Warning', res.data.message)
+        }
+        else if (res.data.status === 423) {
+          openNotification(notificationTypes.WARNING, 'Warning', res.data.message)
+        }
+        else if (res.data.status === 500) {
+          openNotification(notificationTypes.ERROR, 'error', res.data.message)
+        }
+        else {
+          openNotification(notificationTypes.ERROR, 'error', 'Something went wrong')
+        }
+      })
+      .catch((err) => {
+        openNotification(notificationTypes.ERROR, 'error', 'Error', 'Something went wrong')
+      })
+  }
+
+  const handleJDUpload = async () => {
+    fileInputRef.current.click();
+  };
+
+  const handleJDChange = (event) => {
+    let file = event.target.files[0];
+    if (file){
+      uploadJobDescFile(file.name, jobID)
+          .then((res) => {
+            let url = res.data.url
+
+            axios.put(url, file, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
+              .then((res) => {
+                openNotification('success', 'Job Description uploaded successfully');
+              })
+              .catch((err) => {
+                console.log(err);
+                openNotification('error', 'Error uploading resume');
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    }
+  };
+
   return (
     <div>
       {
         jobSection === 2 &&
-          <div>
-            <h1 className='mt-3 pb-4 text-lg font-bold font-Heading font-bold text-black'>
-              Company Name: {companyName}
-            </h1>
-          </div>
+        <div>
+          <h1 className='mt-3 pb-4 text-lg font-bold font-Heading font-bold text-black'>
+            Company Name: {companyName}
+          </h1>
+        </div>
       }
       {
         isEdit
@@ -163,14 +243,47 @@ export default function JobDesc ({
           </div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Job description</div>
-            <textarea
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
-              type='text'
-              value={jobDesc}
-              onChange={(e) => setJobDesc(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
-              rows='4'
-            />
+            <div className='col-span-1 lg:col-span-5'>
+              <textarea
+                className={isEdit ? 'my-auto w-full border-2 border-gray-300 text-gray-500 font-Heading p-4' : 'my-auto w-full text-gray-500 font-Heading pb-2'}
+                type='text'
+                value={jobDesc}
+                onChange={(e) => setJobDesc(e.target.value)}
+                disabled={!(isEdit && user.accType === '2')}
+                rows='4'
+              />
+              <button
+                onClick={handleGetJD}
+                className='flex text-base md:text-lg h-16 md:h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 md:mt-5 rounded-xl py-2 px-2 md:px-4'
+              >
+                <span className='mx-auto'>
+                  View JD
+                </span>
+              </button>
+              {
+                isEdit
+                  ?
+                  <>
+                    <input
+                      type="file"
+                      accept=".pdf"
+                      onChange={handleJDChange}
+                      style={{ display: 'none' }}
+                      ref={fileInputRef}
+                    />
+                    <button
+                      onClick={handleJDUpload}
+                      className='flex text-md md:text-lg h-16 md:h-10 bg-green-500 hover:bg-green-700 text-white mt-4 font-bold rounded-xl py-2 px-4'
+                    >
+                      <span className='mx-auto'>
+                        Upload Job Description
+                      </span>
+                    </button>
+                  </>
+                  :
+                  <></>
+              }
+            </div>
           </div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Bond / Service agreement details if any</div>

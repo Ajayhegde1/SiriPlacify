@@ -335,6 +335,7 @@ export default function CompanyJobs () {
                       </button>
                     </div>
                     <JobDesc
+                      jobID={job.uid}
                       companyName={job.companyName}
                       setCompanyName={setCompanyName}
                       companyDesc=''
