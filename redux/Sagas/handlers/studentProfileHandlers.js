@@ -50,7 +50,7 @@ export function * handleADDStudentProfile (action) {
         'Profile Added Successfully'
       )
 
-      window.history.replaceState({}, 'Jobs', routes.JOBS)
+      window.history.replaceState({}, 'Student Profile', routes.UPLOADSTUDENTRESUME)
       window.location.reload()
     } else if (response.data.status === 401) {
       openNotification(

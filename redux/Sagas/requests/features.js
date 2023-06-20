@@ -152,3 +152,11 @@ export const deleteStudent = (id) => {
 export const uploadResume = (filename,contentType) => {
   return GET(`/uploadResume?filename=${filename}&content_type=${contentType}`, { sessionID: store.getState().user.sessionId })
 }
+
+export const getResume = () => {
+  return GET('/getResume', { sessionID: store.getState().user.sessionId })
+}
+
+export const getCandidateResume = (id) => {
+  return GET(`/getCandidateResume?studentID=${id}`, { sessionID: store.getState().user.sessionId })
+}

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
+import axios from 'axios'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -9,7 +10,7 @@ import Button from '@/components/Buttons'
 import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea'
 
-import { GetStudent } from '@/redux/Sagas/requests/features'
+import { GetStudent, getCandidateResume } from '@/redux/Sagas/requests/features'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
 import photo from '@/public/photoupload.png'
@@ -62,6 +63,43 @@ export default function CandidatesPage() {
         }
     }, [id])
 
+    const handleGetResume = () => {
+        getCandidateResume(id)
+        .then((res) => {
+            if (res.data.status === 200) {
+              let url = res.data.url;
+              axios
+                .get(url, {
+                  responseType: 'blob',
+                })
+                .then((res) => {
+                  const downloadUrl = window.URL.createObjectURL(res.data);
+                  const link = document.createElement('a');
+                  link.href = downloadUrl;
+                  link.setAttribute('download', 'resume.pdf');
+                  document.body.appendChild(link);
+                  link.click();
+                  link.remove();
+                  window.URL.revokeObjectURL(downloadUrl);
+                  openNotification(notificationTypes.SUCCESS, 'success', 'Resume downloaded successfully');
+                })
+                .catch((err) => {
+                  openNotification(notificationTypes.ERROR, 'error', 'Candidate has not uploaded his resume');
+                });
+            } else {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error getting resume',
+                'Candidate has not uploaded his resume'
+              );
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            openNotification(notificationTypes.ERROR, 'Error getting resume');
+          });
+    };
+
     return (
         <div className='bg-gray-200 min-h-screen'>
             <DocHeader
@@ -88,6 +126,12 @@ export default function CandidatesPage() {
                 <div className='mx-auto md:mx-20'>
                     <div className='flex gap-2'>
                         <h1 className='text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-12 text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl font-Heading font-bold text-black'>Student Profile</h1>
+                        <button
+                            onClick={handleGetResume}
+                            className='h-12 ml-auto mt-6 md:mt-12 mr-2 md:mr-6 bg-blue-500 hover:bg-blue-700 text-lg text-white font-bold py-2 px-4 rounded'
+                        >
+                        Resume
+                        </button>
                     </div>
                     {
                         profile === null

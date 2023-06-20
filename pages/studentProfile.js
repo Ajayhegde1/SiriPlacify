@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -30,6 +30,7 @@ export default function studentProfile () {
   const [studentGraduationMarks, setStudentGraduationMarks] = useState('')
   const [studentID, setStudentID] = useState('')
   const [userDescription, setUserDescription] = useState('')
+  const [selectedFile, setSelectedFile] = useState(null)
 
   useEffect(() => {
     if (username.length > 0 && emailID.length > 0 && contactNo.length > 0 && studentID.length > 0) {

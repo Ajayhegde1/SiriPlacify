@@ -9,7 +9,8 @@ export default function Candidates({
   promoteStudents,
   setPromoteStudents,
   jobID,
-  collegeID
+  collegeID,
+  isStudentsList = false
 }) {
   const router = useRouter()
 
@@ -110,7 +111,7 @@ export default function Candidates({
                     {
                       user !== null
                         ?
-                        user.accType === '2'
+                        user.accType === '2' && !isStudentsList
                           ?
                           <td className='whitespace-nowrap px-6 py-4'>
                             <button
@@ -128,7 +129,7 @@ export default function Candidates({
                     {
                       user !== null
                         ?
-                        user.accType === '0'
+                        user.accType === '0' && isStudentsList
                           ?
                           <td className='whitespace-nowrap px-6 py-4'>
                             <button

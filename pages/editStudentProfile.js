@@ -15,8 +15,8 @@ import { uploadResume } from '@/redux/Sagas/requests/features'
 
 import photo from '../public/photoupload.png'
 import ChangePasswordModal from '@/components/Modal/changePassword'
-import { openNotification } from '@/utils/notifications'
-import { PUT } from '@/config/api'
+import { notificationTypes, openNotification } from '@/utils/notifications'
+import { getResume } from '@/redux/Sagas/requests/features'
 
 export default function editStudentProfile() {
   const dispatch = useDispatch()
@@ -28,7 +28,6 @@ export default function editStudentProfile() {
   const profile = useSelector((state) => state.studentProfile)
 
   const [showModal, setShowModal] = useState(false)
-  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     if (user === null) {
@@ -44,22 +43,24 @@ export default function editStudentProfile() {
 
   const handleResumeChange = (event) => {
     const file = event.target.files[0];
-    
+
     if (file) {
       try {
         uploadResume(file.name, file.type)
           .then((res) => {
             let url = res.data.url
-            console.log(url);
-            
+
             axios.put(url, file, {
-                headers: {
-                  'Content-Type': 'multipart/form-data',
-                },
-              })
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
               .then((res) => {
-                console.log(res);
                 openNotification('success', 'Resume uploaded successfully');
+                setTimeout(() => {
+                  window.location.reload();
+                }
+                , 2000);
               })
               .catch((err) => {
                 console.log(err);
@@ -77,10 +78,47 @@ export default function editStudentProfile() {
       openNotification('error', 'Please select a file');
     }
   };
-  
+
   const handleResumeUpload = async () => {
     fileInputRef.current.click();
   };
+
+  const handleGetResume = () => {
+    getResume()
+      .then((res) => {
+        if (res.status === 200) {
+          let url = res.data.url;
+          axios
+            .get(url, {
+              responseType: 'blob',
+            })
+            .then((res) => {
+              const downloadUrl = window.URL.createObjectURL(res.data);
+              const link = document.createElement('a');
+              link.href = downloadUrl;
+              link.setAttribute('download', 'resume.pdf');
+              document.body.appendChild(link);
+              link.click();
+              link.remove();
+              window.URL.revokeObjectURL(downloadUrl);
+              openNotification(notificationTypes.SUCCESS, 'success', 'Resume downloaded successfully');
+            })
+            .catch((err) => {
+              openNotification(notificationTypes.ERROR, 'error', 'Error downloading resume');
+            });
+        } else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error getting resume',
+            res.data.message || 'Unknown error occurred'
+          );
+        }
+      })
+      .catch((err) => {
+        openNotification(notificationTypes.ERROR, 'Error getting resume');
+      });
+  };
+
 
   return (
     <div>
@@ -97,27 +135,82 @@ export default function editStudentProfile() {
             </a>
           </span> {'>'} Edit profile
         </p>
-        <div className='flex gap-4'>
-          <h1 className='text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-12 text-3xl md:text-4xl font-Heading font-bold text-black'>Edit profile</h1>
-          <button
-            onClick={() => setShowModal(true)}
-            className='flex ml-auto h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-6 md:mt-12 rounded-xl py-2 px-4'
-          >
-            Change Password
-          </button>
-          <input
-            type="file"
-            accept=".pdf"
-            onChange={handleResumeChange}
-            style={{ display: 'none' }}
-            ref={fileInputRef}
-          />
-          <button
-            onClick={handleResumeUpload}
-            className='flex h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-6 md:mt-12 rounded-xl py-2 px-4'
-          >
-            Add Resume
-          </button>
+        <div className='flex flex-col md:flex-row gap-4'>
+          <h1 className='text-center md:text-left mb-4 md:mb-10 ml-2 md:ml-6 mt-6 md:mt-12 text-3xl md:text-4xl font-Heading font-bold text-black'>Edit profile</h1>
+          {
+            profile === null
+              ? <div>
+                loading...
+              </div>
+              : Object.keys(profile).length === 0
+                ? <div>
+                  No data provided
+                </div>
+                :
+                typeof profile.resumeFile === 'undefined' || profile.resumeFile === null || profile.resumeFile === ''
+                  ?
+                  <>
+                    <div className='ml-auto grid grid-cols-2 gap-2 mb-4 md:mb-0'>
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={handleResumeChange}
+                        style={{ display: 'none' }}
+                        ref={fileInputRef}
+                      />
+                      <button
+                        onClick={handleResumeUpload}
+                        className='flex text-base md:text-lg h-16 md:h-10 ml-0 md:ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 md:mt-12 rounded-xl py-2 px-2 md:px-4'
+                      >
+                        Update Resume
+                      </button>
+                      <button
+                        onClick={() => setShowModal(true)}
+                        className='flex text-md md:text-lg h-16 md:h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 md:mt-12 rounded-xl py-2 px-2 md:px-4'
+                      >
+                        <span className='mx-auto'>
+                          Change Password
+                        </span>
+                      </button>
+                    </div>
+                  </>
+                  :
+                  <>
+                    <div className='ml-auto grid grid-cols-3 gap-2 mb-4 md:mb-0'>
+                      <button
+                        onClick={handleGetResume}
+                        className='flex text-base md:text-lg h-16 md:h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 md:mt-12 rounded-xl py-2 px-auto'
+                      >
+                        <span className='mx-auto'>
+                          View Resume
+                        </span>
+                      </button>
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={handleResumeChange}
+                        style={{ display: 'none' }}
+                        ref={fileInputRef}
+                      />
+                      <button
+                        onClick={handleResumeUpload}
+                        className='flex text-md md:text-lg h-16 md:h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 md:mt-12 rounded-xl py-2 px-auto'
+                      >
+                        <span className='mx-auto'>
+                          Update Resume
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => setShowModal(true)}
+                        className='flex text-md md:text-lg h-16 md:h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 md:mt-12 rounded-xl py-2 px-2 md:px-4'
+                      >
+                        <span className='mx-auto'>
+                          Change Password
+                        </span>
+                      </button>
+                    </div>
+                  </>
+          }
         </div>
         {
           profile === null
@@ -227,11 +320,11 @@ export default function editStudentProfile() {
             Contact Placement Officer to change the details
           </p>
         </div>
-      </div>
+      </div >
       <ChangePasswordModal
         showModal={showModal}
         setShowModal={setShowModal}
       />
-    </div>
+    </div >
   )
 }

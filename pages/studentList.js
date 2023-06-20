@@ -149,6 +149,7 @@ export default function UserList () {
                                 </div>
                                 : <Candidates
                                     students={students}
+                                    isStudentsList={true}
                                   />
                         }
           </div>
