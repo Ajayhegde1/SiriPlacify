@@ -105,6 +105,7 @@ export default function getClosedJobs () {
                               />
                               <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
                                 <JobDesc
+                                  jobID={job.uid}
                                   companyName={job.companyName}
                                   jobTitle={job.jobTitle}
                                   jobLocation={job.jobLocation}
