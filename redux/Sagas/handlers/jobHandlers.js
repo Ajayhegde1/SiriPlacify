@@ -1,13 +1,14 @@
 import { call, put } from 'redux-saga/effects'
+import axios from 'axios'
 
 import { openNotification, notificationTypes } from '@/utils/notifications'
 import { setJob, updateJob } from '@/redux/Slices/jobSlice'
-import { getAllJobs, getStudentJobs, getCompanyJobs, addJobsByCompany, addJobs } from '../requests/features'
+import { getAllJobs, getStudentJobs, getCompanyJobs, addJobsByCompany, addJobs, uploadJobDescFile } from '../requests/features'
 import { store } from '@/redux/configureStore'
 
 import { routes } from '@/constants/routes'
 
-export function * handleGetAllJobs () {
+export function* handleGetAllJobs() {
   try {
     if (store.getState().user.accType === '0') {
       const response = yield call(getAllJobs)
@@ -184,9 +185,9 @@ export function * handleGetAllJobs () {
   }
 }
 
-export function * handleADDJob (action) {
+export function* handleADDJob(action) {
   try {
-    const response = yield call(addJobs, action.payload)
+    const response = yield call(addJobs, action.payload.data)
 
     if (response.data.status === 200) {
       openNotification(
@@ -194,10 +195,40 @@ export function * handleADDJob (action) {
         'Job Added Successfully'
       )
 
-      yield put(updateJob(response.data.data))
+      if (action.payload.file){
+        uploadJobDescFile(action.payload.file.name, response.data.data.uid)
+          .then((res) => {
+            let url = res.data.url
 
-      window.history.replaceState({}, 'Jobs', routes.JOBS)
-      window.location.reload()
+            console.log(res);
+            axios.put(url, action.payload.file, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
+              .then((res) => {
+                console.log(res);
+                openNotification('success', 'Resume uploaded successfully');
+                window.history.replaceState({}, 'Jobs', routes.JOBS)
+                window.location.reload()
+              })
+              .catch((err) => {
+                console.log(err);
+                openNotification('error', 'Error uploading resume');
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+          yield put(updateJob(response.data.data))
+      }
+      else{
+        openNotification(
+          notificationTypes.ERROR,
+          'File not found'
+        )
+      }
     } else if (response.data.status === 401) {
       openNotification(
         notificationTypes.WARNING,
@@ -244,7 +275,7 @@ export function * handleADDJob (action) {
   }
 }
 
-export function * handleADDJobByCompany (action) {
+export function* handleADDJobByCompany(action) {
   try {
     const response = yield call(addJobsByCompany, action.payload)
 
@@ -253,7 +284,7 @@ export function * handleADDJobByCompany (action) {
         notificationTypes.SUCCESS,
         'Job Added Successfully'
       )
-      
+
       window.history.replaceState({}, 'Jobs', routes.JOBS)
       window.location.reload()
     } else if (response.data.status === 400) {

@@ -157,6 +157,15 @@ export const getResume = () => {
   return GET('/getResume', { sessionID: store.getState().user.sessionId })
 }
 
+export const uploadJobDescFile = (filename, ID) => {
+  return GET(`/uploadJD?filename=${filename}&jobID=${ID}`, { sessionID: store.getState().user.sessionId })
+}
+
+export const getJobDescFile = (ID) => {
+  return GET(`/getJD?jobID=${ID}`, { sessionID: store.getState().user.sessionId })
+}
+
+
 export const getCandidateResume = (id) => {
   return GET(`/getCandidateResume?studentID=${id}`, { sessionID: store.getState().user.sessionId })
 }

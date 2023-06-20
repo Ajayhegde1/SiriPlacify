@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -12,12 +12,14 @@ import DocHeader from '@/components/DocHeader'
 import { addJob, addJobByCompany } from '@/redux/Slices/jobSlice'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
-import { jobStatusList, modeOfSelectionList, finalSelection,jobSector,genderList } from '@/constants/addJobDropDowns'
+import { jobStatusList, modeOfSelectionList, finalSelection, jobSector, genderList } from '@/constants/addJobDropDowns'
 import { routes } from '@/constants/routes'
 
-export default function AddJob () {
+export default function AddJob() {
   const dispatch = useDispatch()
   const router = useRouter()
+
+  const fileInputRef = useRef(null);
 
   const user = useSelector((state) => state.user)
 
@@ -46,6 +48,7 @@ export default function AddJob () {
   const [gender, setGender] = useState(genderList[0].value)
   const [finalMode, setFinalMode] = useState(finalSelection[0].value)
   const [companyName, setCompanyName] = useState('')
+  const [selectedFile, setSelectedFile] = useState(null)
 
   useEffect(() => {
     if (finalMode !== 'Final Mode of Selection' && designation && jobStatus !== 'Job Type' && locationOfWork && ctc &&
@@ -57,7 +60,7 @@ export default function AddJob () {
     } else {
       setIsBtnDisabled(true)
     }
-  }, [finalMode, designation, jobStatus, locationOfWork, ctc, sector,selectedDate ,applicableCourses, modeOfSelection, bondDetails, contactPersonName, contactPersonPhoneNumber, contactPersonEmail])
+  }, [finalMode, designation, jobStatus, locationOfWork, ctc, sector, selectedDate, applicableCourses, modeOfSelection, bondDetails, contactPersonName, contactPersonPhoneNumber, contactPersonEmail])
 
   useEffect(() => {
     if (user === null) {
@@ -95,8 +98,12 @@ export default function AddJob () {
         twelfthMarks,
         UGCgpa
       }
+      const Data = {
+        data: jobData,
+        file: selectedFile
+      }
       setBtnText('Saving...')
-      dispatch(addJob(jobData))
+      dispatch(addJob(Data))
     } else if (user.accType === '2') {
       const jobData = {
         jobTitle: designation,
@@ -120,8 +127,12 @@ export default function AddJob () {
         twelfthMarks,
         UGCgpa
       }
+      const Data = {
+        data: jobData,
+        file: selectedFile
+      }
       setBtnText('Saving...')
-      dispatch(addJobByCompany(jobData))
+      dispatch(addJobByCompany(Data))
     } else {
       openNotification(
         notificationTypes.ERROR,
@@ -130,6 +141,15 @@ export default function AddJob () {
       )
     }
   }
+
+  const handleJDUpload = async () => {
+    fileInputRef.current.click();
+  };
+
+  const handleJDChange = (event) => {
+    let file = event.target.files[0];
+    setSelectedFile(file)
+  };
 
   return (
     <div className='bg-gray-100'>
@@ -158,12 +178,12 @@ export default function AddJob () {
             {
               user.accType === '0'
                 ? <TextField
-                    label='Company Name'
-                    placeholder='PESU Venture Labs'
-                    type='text'
-                    value={companyName}
-                    onChangeHandler={(e) => setCompanyName(e.target.value)}
-                  />
+                  label='Company Name'
+                  placeholder='PESU Venture Labs'
+                  type='text'
+                  value={companyName}
+                  onChangeHandler={(e) => setCompanyName(e.target.value)}
+                />
                 : <></>
             }
             <TextField
@@ -224,11 +244,11 @@ export default function AddJob () {
           </div>
           <div>
             <div className='mt-8 mb-6'>
-            <SingleSelectComponent
-              value={sector}
-              onChangeHandler={(e) => setSector(e.target.value)}
-              options={jobSector}
-            />
+              <SingleSelectComponent
+                value={sector}
+                onChangeHandler={(e) => setSector(e.target.value)}
+                options={jobSector}
+              />
             </div>
             <TextField
               label='Applicable courses'
@@ -238,32 +258,47 @@ export default function AddJob () {
               onChangeHandler={(e) => setApplicableCourses(e.target.value)}
             />
             <div className='mb-8'>
-            <SingleSelectComponent
-              value={modeOfSelection}
-              onChangeHandler={(e) => setModeOfSelection(e.target.value)}
-              options={modeOfSelectionList}
-            />
+              <SingleSelectComponent
+                value={modeOfSelection}
+                onChangeHandler={(e) => setModeOfSelection(e.target.value)}
+                options={modeOfSelectionList}
+              />
             </div>
             <div className='mb-8'>
-            <SingleSelectComponent
-              value={finalMode}
-              onChangeHandler={(e) => setFinalMode(e.target.value)}
-              options={finalSelection}
-            />
+              <SingleSelectComponent
+                value={finalMode}
+                onChangeHandler={(e) => setFinalMode(e.target.value)}
+                options={finalSelection}
+              />
             </div>
             <div className='mb-8'>
-            <SingleSelectComponent
-              value={gender}
-              onChangeHandler={(e) => setGender(e.target.value)}
-              options={genderList}
-            />
+              <SingleSelectComponent
+                value={gender}
+                onChangeHandler={(e) => setGender(e.target.value)}
+                options={genderList}
+              />
             </div>
             <TextArea
               label='Brief Job Description'
-              placeholder='Write a detailed description of the job'
+              placeholder='Write a detailed description of the job or upload a pdf file with the job description'
               value={briefJobDescription}
               onChangeHandler={(e) => setBriefJobDescription(e.target.value)}
             />
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={handleJDChange}
+              style={{ display: 'none' }}
+              ref={fileInputRef}
+            />
+            <button
+              onClick={handleJDUpload}
+              className='flex text-md md:text-lg h-16 md:h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-xl py-2 px-4'
+            >
+              <span className='mx-auto'>
+                Upload Job Description
+              </span>
+            </button>
           </div>
         </div>
         <div className='ml-3 md:ml-6 mr-12'>
