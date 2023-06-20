@@ -117,6 +117,7 @@ export default function JobOffers () {
                 No job found
               </div>
               : <JobDesc
+                  jobID={job.uid}
                   companyName={job.companyName}
                   jobTitle={job.jobTitle}
                   jobLocation={job.jobLocation}
