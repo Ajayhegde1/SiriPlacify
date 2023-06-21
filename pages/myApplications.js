@@ -63,7 +63,7 @@ export default function myApplications () {
                       No Applications found
                     </div>
                     : jobApplication.map((job, index) =>
-                      <tr onClick={() => handleCustomPage(job.id)} key={index} className='mt-10 border-b-2 border-gray-200'>
+                      <tr onClick={() => handleCustomPage(job.collegeJobMappingId)} key={index} className='cursor-pointer mt-10 border-b-2 border-gray-200'>
                         <td className='font-medium whitespace-nowrap px-6 py-4'>
                           {job.companyName}
                         </td>

@@ -5,10 +5,10 @@ import logo from '../../public/logo.png'
 import jobs from '../../public/jobs.png'
 import Addjobs from '../../public/addJobsIcons.png'
 import pp from '../../public/pp.png'
-import editProfile from '../../public/editProfile.png'
+import editProfile from '../../public/editProfile.svg'
 import logout from '../../public/logout.png'
 import myApplications from '../../public/application.png'
-import userImage from '../../public/user.png'
+import userImage from '../../public/userManagement.svg'
 import dashboard from '../../public/dashboard.png'
 import { BellOutlined } from '@ant-design/icons'
 
@@ -113,7 +113,7 @@ const Sidebar = ({
                     <a className='menu-link' href='/studentList'>
                       <Image
                         src={userImage}
-                        className={sidebarOpen ? 'ml-3' : 'ml-1'}
+                        className={sidebarOpen ? 'ml-3' : 'ml-0'}
                         alt='logo for placement policy'
                       />
                       <span className='menu-link-text'>User Management</span>

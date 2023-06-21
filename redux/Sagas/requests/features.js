@@ -185,3 +185,7 @@ export const scheduleTest = (data) => {
 export const scheduleInterview = (data) => {
   return POST('/scheduleInterview', data, { sessionID: store.getState().user.sessionId })
 }
+
+export const getSpecificJobApplication = (id) => {
+  return GET(`/getJobApplication?id=${id}`, { sessionID: store.getState().user.sessionId })
+}
