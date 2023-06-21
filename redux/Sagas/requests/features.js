@@ -181,3 +181,7 @@ export const schedulePPT = (data) => {
 export const scheduleTest = (data) => {
   return POST('/scheduleTest', data, { sessionID: store.getState().user.sessionId })
 }
+
+export const scheduleInterview = (data) => {
+  return POST('/scheduleInterview', data, { sessionID: store.getState().user.sessionId })
+}

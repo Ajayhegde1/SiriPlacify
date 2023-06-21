@@ -10,7 +10,7 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
-import { POST } from '@/config/api'
+import { scheduleInterview } from '@/redux/Sagas/requests/features';
 
 import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea';
@@ -23,7 +23,6 @@ export default function SetInterviewModal({
     collegeID
 }) {
     const modalRef = useRef(null)
-    const user = useSelector((state) => state.user)
 
     const [btnText, setBtnText] = useState('Schedule')
     const [url, setURL] = useState('')
@@ -38,7 +37,7 @@ export default function SetInterviewModal({
 
     useEffect(() => {
         //check platform, url, value
-        if (platform !== '' && url !== '' && value !== '') {
+        if (platform !== '' && value !== '') {
             setIsDisabled(false)
         }
     }, [platform, url, value])
@@ -51,10 +50,39 @@ export default function SetInterviewModal({
             platform: platform,
             url: url,
             date: value,
-            prerequisties: prerequisties
+            prerequistes: prerequisties
         }
-        console.log(data)
-        setShowModal(!showModal)
+        scheduleInterview(data)
+            .then((res) => {
+                if (res.data.status === 200) {
+                    openNotification(notificationTypes.SUCCESS, 'Success', 'Interview Scheduled Successfully')
+                    setShowModal(!showModal)
+                }
+                else if (res.data.status === 423) {
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 424) {
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 425) {
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 426) {
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 427) {
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 500) {
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else {
+                    openNotification(notificationTypes.ERROR, 'Error', 'Unable To Schedule Interview')
+                }
+            })
+            .catch((err) => {
+                openNotification(notificationTypes.ERROR, 'Error', 'Unable To Schedule Interview')
+            })
         setBtnText('Schedule')
     }
 
@@ -76,7 +104,7 @@ export default function SetInterviewModal({
                         <h2
                             className='pb-3 mt-2 ml-4 text-black font-bold font-Heading text-base text-customGreenThree xl:text-2xl leading-none lg:leading-11'
                         >
-                            Schedule Test
+                            Schedule Interview
                         </h2>
                     </div>
                     <div className={styles.close}>
@@ -94,7 +122,7 @@ export default function SetInterviewModal({
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 xl:gap-8'>
                             <TextField
                                 label='Platform'
-                                type='url'
+                                type='text'
                                 placeholder='Zoom, Google Meet, etc.'
                                 value={platform}
                                 onChangeHandler={(e) => setPlatform(e.target.value)}
