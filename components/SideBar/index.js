@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
+import { Tooltip } from 'antd'
 
 import logo from '../../public/logo.png'
 import jobs from '../../public/jobs.png'
@@ -61,6 +62,7 @@ const Sidebar = ({
               ? <></>
               : user.accType === '0'
                 ? <ul className='menu-list'>
+                  <Tooltip title="Notifications" placement="right">
                   <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
                     <a className='menu-link' href='/notifications'>
                       <div className={sidebarOpen ? 'ml-3' : 'ml-0'}>
@@ -79,6 +81,8 @@ const Sidebar = ({
                       </button>
                     </a>
                   </li>
+                  </Tooltip>
+                  <Tooltip title="Dashboard" placement="right">
                   <li className={`menu-item ${parseInt(activePage) == 1 ? 'current' : ''}`}>
                     <a className='menu-link' href='/dashboard/College'>
                       <Image
@@ -89,6 +93,8 @@ const Sidebar = ({
                       <span className='menu-link-text'>Dashboard</span>
                     </a>
                   </li>
+                  </Tooltip>
+                  <Tooltip title="Jobs" placement="right">
                   <li className={`menu-item ${parseInt(activePage) == 2 ? 'current' : ''}`}>
                     <a className='menu-link' href='/jobs'>
                       <Image
@@ -99,6 +105,8 @@ const Sidebar = ({
                       <span className='menu-link-text'>Jobs</span>
                     </a>
                   </li>
+                  </Tooltip>
+                  <Tooltip title="Add Job" placement="right">
                   <li className={`menu-item ${parseInt(activePage) === 6 ? 'current' : ''}`}>
                     <a className='menu-link' href='/addJob'>
                       <Image
@@ -109,6 +117,8 @@ const Sidebar = ({
                       <span className='menu-link-text'>Add Jobs</span>
                     </a>
                   </li>
+                  </Tooltip>
+                  <Tooltip title="User Managment" placement="right">
                   <li className={`menu-item ${parseInt(activePage) === 9 ? 'current' : ''}`}>
                     <a className='menu-link' href='/studentList'>
                       <Image
@@ -119,6 +129,8 @@ const Sidebar = ({
                       <span className='menu-link-text'>User Management</span>
                     </a>
                   </li>
+                  </Tooltip>
+                  <Tooltip title="Placement Policy" placement="right">
                   <li className={`menu-item ${parseInt(activePage) === 4 ? 'current' : ''}`}>
                     <a className='menu-link' href='/editPlacementPolicy'>
                       <Image
@@ -129,6 +141,8 @@ const Sidebar = ({
                       <span className='menu-link-text'>Placement Policy</span>
                     </a>
                   </li>
+                  </Tooltip>
+                  <Tooltip title="Profile" placement="right">
                   <li className={`menu-item ${parseInt(activePage) === 7 ? 'current' : ''}`}>
                     <a className='menu-link' href='/editProfile'>
                       <Image
@@ -139,6 +153,8 @@ const Sidebar = ({
                       <span className='menu-link-text'>Edit Profile</span>
                     </a>
                   </li>
+                  </Tooltip>
+                  <Tooltip title="Log Out" placement="right">
                   <li
                     className={`menu-item ${parseInt(activePage) === 8 ? 'current' : ''}`}
                     onClick={() => handleSignOut()}
@@ -152,9 +168,11 @@ const Sidebar = ({
                       <span className='menu-link-text'>Logout</span>
                     </a>
                   </li>
+                  </Tooltip>
                 </ul>
                 : user.accType === '1'
                   ? <ul className='menu-list'>
+                  <Tooltip title="Notifications" placement="right">
                     <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
                       <a className='menu-link' href='/notifications'>
                         <div className={sidebarOpen ? 'ml-3' : 'ml-0'}>
@@ -173,6 +191,8 @@ const Sidebar = ({
                         </button>
                       </a>
                     </li>
+                  </Tooltip>
+                  <Tooltip title="Jobs" placement="right">
                     <li className={`menu-item ${parseInt(activePage) === 2 ? 'current' : ''}`}>
                       <a className='menu-link' href='/jobs'>
                         <Image
@@ -183,6 +203,8 @@ const Sidebar = ({
                         <span className='menu-link-text'>Jobs</span>
                       </a>
                     </li>
+                  </Tooltip>
+                  <Tooltip title="Applications" placement="right">
                     <li className={`menu-item ${parseInt(activePage) === 6 ? 'current' : ''}`}>
                       <a className='menu-link' href='/myApplications'>
                         <Image
@@ -193,6 +215,8 @@ const Sidebar = ({
                         <span className='menu-link-text'>My Applications</span>
                       </a>
                     </li>
+                  </Tooltip>
+                  <Tooltip title="Profile" placement="right">
                     <li className={`menu-item ${parseInt(activePage) === 7 ? 'current' : ''}`}>
                       <a className='menu-link' href='/editStudentProfile'>
                         <Image
@@ -203,6 +227,8 @@ const Sidebar = ({
                         <span className='menu-link-text'>Edit Profile</span>
                       </a>
                     </li>
+                  </Tooltip>
+                  <Tooltip title="Log Out" placement="right">
                     <li
                       className={`menu-item ${parseInt(activePage) === 8 ? 'current' : ''}`}
                       onClick={() => handleSignOut()}
@@ -216,8 +242,10 @@ const Sidebar = ({
                         <span className='menu-link-text'>Logout</span>
                       </a>
                     </li>
+                  </Tooltip>
                   </ul>
                   : <ul className='menu-list'>
+                  <Tooltip title="Notifications" placement="right">
                     <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
                       <a className='menu-link' href='/notifications'>
                         <div className={sidebarOpen ? 'ml-3' : 'ml-0'}>
@@ -236,6 +264,8 @@ const Sidebar = ({
                         </button>
                       </a>
                     </li>
+                  </Tooltip>
+                  <Tooltip title="Dashboard" placement="right">
                     <li className={`menu-item ${parseInt(activePage) == 1 ? 'current' : ''}`}>
                       <a className='menu-link' href='/dashboard/Company'>
                         <Image
@@ -246,6 +276,8 @@ const Sidebar = ({
                         <span className='menu-link-text'>Dashboard</span>
                       </a>
                     </li>
+                  </Tooltip>
+                  <Tooltip title="Jobs" placement="right">
                     <li className={`menu-item ${parseInt(activePage) === 2 ? 'current' : ''}`}>
                       <a className='menu-link' href='/jobs'>
                         <Image
@@ -256,6 +288,8 @@ const Sidebar = ({
                         <span className='menu-link-text'>Jobs</span>
                       </a>
                     </li>
+                  </Tooltip>
+                  <Tooltip title="Add Job" placement="right">
                     <li className={`menu-item ${parseInt(activePage) === 6 ? 'current' : ''}`}>
                       <a className='menu-link' href='/addJob'>
                         <Image
@@ -266,6 +300,8 @@ const Sidebar = ({
                         <span className='menu-link-text'>Add Jobs</span>
                       </a>
                     </li>
+                  </Tooltip>
+                  <Tooltip title="Profile" placement="right">
                     <li className={`menu-item ${parseInt(activePage) === 7 ? 'current' : ''}`}>
                       <a className='menu-link' href='/editCompanyProfile'>
                         <Image
@@ -276,6 +312,8 @@ const Sidebar = ({
                         <span className='menu-link-text'>Edit Profile</span>
                       </a>
                     </li>
+                  </Tooltip>
+                  <Tooltip title="Log Out" placement="right">
                     <li
                       className={`menu-item ${parseInt(activePage) === 8 ? 'current' : ''}`}
                       onClick={() => handleSignOut()}
@@ -289,6 +327,7 @@ const Sidebar = ({
                         <span className='menu-link-text'>Logout</span>
                       </a>
                     </li>
+                  </Tooltip>
                   </ul>
           }
           {/*             <li className='menu-item'>
