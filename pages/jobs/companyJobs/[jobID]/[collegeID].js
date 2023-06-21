@@ -1,19 +1,24 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-
+import { useSelector } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
 import { read, utils, writeFile } from 'xlsx'
 
 import sheet from '../../../../public/sheets.png'
 import exportIMG from '../../../../public/export.png'
+import ppt from '../../../../public/pptIcon.png'
+import test from '../../../../public/testIcon.png'
+import interview from '../../../../public/interviewIcon.png'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
 import StatusOfHire from '@/components/StatusOfHire'
 import Candidates from '@/components/Candidates'
 import UpdateStatusModal from '@/components/Modal/UpdateStatusModal'
-import { useSelector } from 'react-redux'
+import SetPPTModal from '@/components/Modal/SetPPTModal'
+import SetTestLinkModal from '@/components/Modal/SetTestLinkModal'
+import SetInterviewModal from '@/components/Modal/SetInterviewModal'
 
 import { getCandidates, UpdateStatus } from '@/redux/Sagas/requests/features'
 
@@ -21,12 +26,15 @@ import arrow from '@/public/arrow.png'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
-export default function College () {
+export default function College() {
   const router = useRouter()
   const user = useSelector((state) => state.user)
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [showPPTModal, setShowPPTModal] = useState(false)
+  const [showTestModal, setShowTestModal] = useState(false)
+  const [showIntModal, setShowIntModal] = useState(false)
 
   const [candidates, setCandidates] = useState([])
   const [filteredStudentList, setFilteredStudentList] = useState([])
@@ -368,36 +376,85 @@ export default function College () {
                 </h1>
           }
         </div>
-        <div className='ml-3 md:ml-0 mt-10 flex flex-col md:flex-row gap-4 justify-end mr-12'>
-          <div>
-            <button
-              onClick={handleExport}
-              className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-            >
-              <Image
-                src={exportIMG}
-                alt='Export Students Data to excel'
-                className='h-5 w-5 mt-1 mr-2'
-                width={20}
-                height={20}
-              />
-              Export Students Data to excel
-            </button>
+        <div className='flex flex-col md:flex-row gap-0 md:gap-2 mb-6'>
+          <div className='ml-3 md:ml-6 mt-10 flex flex-col xl:flex-row gap-4 justify-start mr-3 md:mr-12'>
+            <div>
+              <button
+                onClick={() => setShowPPTModal(true)}
+                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={ppt}
+                  alt='ppt'
+                  className='h-6 w-6 mr-2'
+                  width={20}
+                  height={20}
+                />
+                Schedule PPT
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={() => setShowTestModal(true)}
+                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={test}
+                  alt='Test'
+                  className='h-6 w-6 mr-2'
+                  width={20}
+                  height={20}
+                />
+                Schedule Test
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={() => setShowIntModal(true)}
+                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={interview}
+                  alt='Interview'
+                  className='h-6 w-6 mr-2'
+                  width={20}
+                  height={20}
+                />
+                Schedule Interview
+              </button>
+            </div>
           </div>
-          <div>
-            <button
-              onClick={() => setShowModal(true)}
-              className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-            >
-              <Image
-                src={sheet}
-                alt='Import from excel'
-                className='h-5 mt-1 mr-2'
-                width={20}
-                height={20}
-              />
-              Import from excel
-            </button>
+          <div className='mt-4 md:mt-10 flex flex-col xl:flex-row gap-4 ml-3 md:ml-auto mr-3 md:mr-12'>
+            <div>
+              <button
+                onClick={handleExport}
+                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={exportIMG}
+                  alt='Export Students Data to excel'
+                  className='h-5 w-5 mt-1 mr-2'
+                  width={20}
+                  height={20}
+                />
+                Export Students Data to excel
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={() => setShowModal(true)}
+                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={sheet}
+                  alt='Import from excel'
+                  className='h-5 mt-1 mr-2'
+                  width={20}
+                  height={20}
+                />
+                Import from excel
+              </button>
+            </div>
           </div>
         </div>
         <div className='mt-4 ml-3 md:ml-6 bg-white mb-10 mr-10 rounded-xl p-6'>
@@ -408,15 +465,15 @@ export default function College () {
                 ? <>
                 </>
                 : <StatusOfHire
-                    students={candidates}
-                    status={status}
-                    setStatus={setStatus}
-                    setApplied={setApplied}
-                    setShortlisted={setShortlisted}
-                    setTest={setTest}
-                    setInterview={setInterview}
-                    setHired={setHired}
-                  />
+                  students={candidates}
+                  status={status}
+                  setStatus={setStatus}
+                  setApplied={setApplied}
+                  setShortlisted={setShortlisted}
+                  setTest={setTest}
+                  setInterview={setInterview}
+                  setHired={setHired}
+                />
           }
           {
             candidates === null || typeof candidates === 'undefined'
@@ -428,28 +485,28 @@ export default function College () {
                   No students have applied yet
                 </div>
                 : <Candidates
-                    students={filteredStudentList}
-                    promoteStudents={promoteStudents}
-                    setPromoteStudents={setPromoteStudents}
-                    jobID={jobID}
-                    collegeID={collegeID}
-                  />
+                  students={filteredStudentList}
+                  promoteStudents={promoteStudents}
+                  setPromoteStudents={setPromoteStudents}
+                  jobID={jobID}
+                  collegeID={collegeID}
+                />
           }
           {
             status === 5
-            ?
-            <>
-            </>
-            :
-            <div className='flex'>
-              <button
-                type='button'
-                className='mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-                onClick={handlePromoteStudents}
-              >
-                Send to next round
-              </button>
-            </div>
+              ?
+              <>
+              </>
+              :
+              <div className='flex'>
+                <button
+                  type='button'
+                  className='mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+                  onClick={handlePromoteStudents}
+                >
+                  Send to next round
+                </button>
+              </div>
           }
         </div>
       </main>
@@ -457,6 +514,24 @@ export default function College () {
         showModal={showModal}
         setShowModal={setShowModal}
         ImportExcel={handleImport}
+      />
+      <SetPPTModal
+        showModal={showPPTModal}
+        setShowModal={setShowPPTModal}
+        jobID={jobID}
+        collegeID={collegeID}
+      />
+      <SetTestLinkModal
+        showModal={showTestModal}
+        setShowModal={setShowTestModal}
+        jobID={jobID}
+        collegeID={collegeID}
+      />
+      <SetInterviewModal
+        showModal={showIntModal}
+        setShowModal={setShowIntModal}
+        jobID={jobID}
+        collegeID={collegeID}
       />
     </div>
   )
