@@ -177,3 +177,7 @@ export const getCandidateResume = (id) => {
 export const schedulePPT = (data) => {
   return POST('/schedulePPT', data, { sessionID: store.getState().user.sessionId })
 }
+
+export const scheduleTest = (data) => {
+  return POST('/scheduleTest', data, { sessionID: store.getState().user.sessionId })
+}

@@ -10,11 +10,12 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
-import { POST } from '@/config/api'
 
 import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea';
 import Label from '@/components/InputComponents/Label';
+
+import { scheduleTest } from '@/redux/Sagas/requests/features';
 
 export default function SetTestLinkModal({
     showModal,
@@ -38,7 +39,7 @@ export default function SetTestLinkModal({
 
     useEffect(() => {
         //check platform, url, value
-        if (platform !== '' && url !== '' && value !== '') {
+        if (platform !== '' && value !== '') {
             setIsDisabled(false)
         }
     }, [platform, url, value])
@@ -51,10 +52,36 @@ export default function SetTestLinkModal({
             platform: platform,
             url: url,
             date: value,
-            prerequisties: prerequisties
+            prerequistes: prerequisties
         }
-        console.log(data)
-        setShowModal(!showModal)
+        scheduleTest(data)
+            .then((res) => {
+                if (res.data.status === 200){
+                    openNotification(notificationTypes.SUCCESS, 'Success', 'PPT Scheduled Successfully')
+                    setShowModal(!showModal)
+                }
+                else if (res.data.status === 424){
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 425){
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 426){
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 427){
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 500){
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else{
+                    openNotification(notificationTypes.ERROR, 'Error', 'Unable To Schedule Test')
+                }
+            })
+            .catch((err) => {
+                openNotification(notificationTypes.ERROR, 'Error', 'Unable To Schedule Test')
+            })
         setBtnText('Schedule')
     }
 
@@ -94,8 +121,8 @@ export default function SetTestLinkModal({
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 xl:gap-8'>
                             <TextField
                                 label='Platform'
-                                type='url'
-                                placeholder='Zoom, Google Meet, etc.'
+                                type='text'
+                                placeholder='HackerRank, CodeChef, etc.'
                                 value={platform}
                                 onChangeHandler={(e) => setPlatform(e.target.value)}
                             />
@@ -112,9 +139,9 @@ export default function SetTestLinkModal({
                             </div>
                         </div>
                         <TextField
-                            label='Meeting Link'
-                            type='text'
-                            placeholder='meet.google.com/abc-xyz'
+                            label='Test Link'
+                            type='url'
+                            placeholder='hackerrank/abc-xyz'
                             value={url}
                             onChangeHandler={(e) => setURL(e.target.value)}
                         />

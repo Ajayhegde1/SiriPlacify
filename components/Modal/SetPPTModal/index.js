@@ -10,7 +10,6 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
-import { POST } from '@/config/api'
 
 import { schedulePPT } from '@/redux/Sagas/requests/features';
 
@@ -38,7 +37,7 @@ export default function SetPPTModal({
 
     useEffect(() => {
         //check platform, url, value
-        if (platform !== '' && url !== '' && value !== '') {
+        if (platform !== '' && value !== '') {
             setIsDisabled(false)
         }
     }, [platform, url, value])
@@ -118,14 +117,14 @@ export default function SetPPTModal({
                     <div className='mt-6 ml-4 mr-10'>
                         <TextField
                             label='Platform'
-                            type='url'
+                            type='text'
                             placeholder='Zoom, Google Meet, etc.'
                             value={platform}
                             onChangeHandler={(e) => setPlatform(e.target.value)}
                         />
                         <TextField
                             label='Meeting Link'
-                            type='text'
+                            type='url'
                             placeholder='meet.google.com/abc-xyz'
                             value={url}
                             onChangeHandler={(e) => setURL(e.target.value)}
