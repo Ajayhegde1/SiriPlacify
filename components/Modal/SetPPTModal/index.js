@@ -12,6 +12,8 @@ import 'react-clock/dist/Clock.css';
 import { notificationTypes, openNotification } from '@/utils/notifications'
 import { POST } from '@/config/api'
 
+import { schedulePPT } from '@/redux/Sagas/requests/features';
+
 import TextField from '@/components/InputComponents/TextField'
 import Label from '@/components/InputComponents/Label';
 
@@ -50,8 +52,34 @@ export default function SetPPTModal({
             url: url,
             date: value
         }
-        console.log(data)
-        setShowModal(!showModal)
+        schedulePPT(data)
+            .then((res) => {
+                if (res.data.status === 200){
+                    openNotification(notificationTypes.SUCCESS, 'Success', 'PPT Scheduled Successfully')
+                    setShowModal(!showModal)
+                }
+                else if (res.data.status === 424){
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 425){
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 426){
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 427){
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else if (res.data.status === 500){
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message)
+                }
+                else{
+                    openNotification(notificationTypes.ERROR, 'Error', 'Unable To Schedule PPT')
+                }
+            })
+            .catch((err) => {
+                openNotification(notificationTypes.ERROR, 'Error', 'Unable To Schedule PPT')
+            })
         setBtnText('Schedule')
     }
 

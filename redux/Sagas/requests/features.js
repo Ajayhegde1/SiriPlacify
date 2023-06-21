@@ -173,3 +173,7 @@ export const getJobDescFile = (ID) => {
 export const getCandidateResume = (id) => {
   return GET(`/getCandidateResume?studentID=${id}`, { sessionID: store.getState().user.sessionId })
 }
+
+export const schedulePPT = (data) => {
+  return POST('/schedulePPT', data, { sessionID: store.getState().user.sessionId })
+}
