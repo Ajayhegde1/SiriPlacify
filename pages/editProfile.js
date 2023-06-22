@@ -4,6 +4,8 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
 
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
@@ -16,10 +18,14 @@ import { getProfile } from '@/redux/Slices/profile'
 import { updateProfile } from '@/redux/Sagas/requests/features'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
-export default function EditProfile () {
+import { getDepartment } from '@/redux/Sagas/requests/features'
+
+export default function EditProfile() {
   const dispatch = useDispatch()
   const router = useRouter()
+  const animatedComponents = makeAnimated();
 
+  const [collegeID, setCollegeID] = useState('')
   const [collegeName, setCollegeName] = useState('')
   const [collegeWebsite, setCollegeWebsite] = useState('')
   const [collegeLocation, setCollegeLocation] = useState('')
@@ -27,6 +33,8 @@ export default function EditProfile () {
   const [contactNo, setContactNo] = useState('')
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
+  const [stream, setStream] = useState({})
+  const [departmentList, setDepartmentList] = useState([])
   const [update, setUpdate] = useState('Update')
   const [isDisabled, setIsDisabled] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -51,24 +59,69 @@ export default function EditProfile () {
   useEffect(() => {
     if (profile !== null) {
       if (Object.keys(profile).length !== 0) {
+        setCollegeID(profile.id)
         setCollegeName(profile.collegeName)
         setCollegeWebsite(profile.collegeWebsite)
         setCollegeLocation(profile.collegeLocation)
         setCollegeDescription(profile.collegeDescription)
         setContactNo(profile.contactNo)
+        let departments = profile.dept
+        departments = departments.map((department) => {
+          return {
+            value: department.id,
+            label: department.depName
+          }
+        })
+        setStream(departments)
       }
     }
   }, [profile])
 
+  function handleSelect(data) {
+    setStream(data);
+  }
+
+  useEffect(() => {
+    getDepartment()
+      .then((res) => {
+        if (res.data.status === 200) {
+          let departments = res.data.data
+          departments = departments.map((department) => {
+            return {
+              value: department.id,
+              label: department.depName
+            }
+          })
+          setDepartmentList(departments)
+        }
+        else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            res.data.message
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          err.message
+        )
+      })
+  }, [])
+
   const updateProfileHandler = () => {
     const data = {
+      collegeID,
       collegeName,
       collegeWebsite,
       collegeLocation,
       collegeDescription,
       contactNo,
       email,
-      username
+      username,
+      stream
     }
     setUpdate('Updating...')
     setIsDisabled(true)
@@ -106,7 +159,7 @@ export default function EditProfile () {
       <DocHeader
         DocTitle='Edit Profile'
       />
-      <div className='mx-8 md:mx-20 mt-16'>
+      <div className='mx-8 md:mx-20 mt-10'>
         <p
           className='ml-3 md:ml-6 mb-12 font-SubHeading text-base font-normal'
         >
@@ -117,7 +170,7 @@ export default function EditProfile () {
           </span> {'>'} Edit profile
         </p>
         <div className='flex gap-2'>
-          <h1 className='text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-12 text-3xl md:text-4xl font-Heading font-bold text-black'>Edit profile</h1>
+          <h1 className='text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 text-3xl md:text-4xl font-Heading font-bold text-black'>Edit profile</h1>
           <button
             onClick={() => setShowModal(true)}
             className='flex ml-auto h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-6 md:mt-12 rounded-xl py-2 px-4'
@@ -192,6 +245,21 @@ export default function EditProfile () {
                   </div>
                 </div>
                 <div className='mr-0 md:mr-4'>
+                  <div class='mt-2 mb-6'>
+                    <label class='block font-Poppins text-black text-md font-bold mb-2' for='username'>
+                      Streams
+                    </label>
+                    <Select
+                      options={departmentList}
+                      placeholder="Select Streams"
+                      value={stream}
+                      onChange={handleSelect}
+                      isSearchable={true}
+                      components={animatedComponents}
+                      closeMenuOnSelect={false}
+                      isMulti
+                    />
+                  </div>
                   <TextField
                     label='location'
                     placeholder='100 Feet Ring Road, Banashankari Stage III, Dwaraka Nagar, Bengaluru, Karnataka 560085'

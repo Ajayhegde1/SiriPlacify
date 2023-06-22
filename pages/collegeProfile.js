@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
 
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
@@ -13,10 +15,12 @@ import Button from '@/components/Buttons'
 
 import { addProfile } from '@/redux/Slices/profile'
 import { routes } from '@/constants/routes'
+import { getDepartment } from '@/redux/Sagas/requests/features'
 
-export default function CollegeProfile () {
+export default function CollegeProfile() {
   const dispatch = useDispatch()
   const router = useRouter()
+  const animatedComponents = makeAnimated();
 
   const user = useSelector((state) => state.user)
 
@@ -28,24 +32,61 @@ export default function CollegeProfile () {
   const [location, setLocation] = useState('')
   const [emailID, setEmailID] = useState('')
   const [contactNo, setContactNo] = useState('')
+  const [departmentList, setDepartmentList] = useState([])
   const [collegeDescription, setCollegeDescription] = useState('')
+  const [stream, setStream] = useState([])
 
   const handleProfile = () => {
     const Data = {
       name: collegeName,
-      username,
+      username: user.username,
       website,
       location,
-      emailID,
+      emailID: user.email,
       contactNo,
-      collegeDescription
+      collegeDescription,
+      stream
     }
     setBtnText('Saving...')
     dispatch(addProfile(Data))
   }
 
+  function handleSelect(data) {
+    setStream(data);
+  }
+
   useEffect(() => {
-    if (username.length > 0 && collegeName.length > 0 && website.length > 0 && location.length > 0 && emailID.length > 0 && contactNo.length > 0 && collegeDescription.length > 0) {
+    getDepartment()
+      .then((res) => {
+        if (res.data.status === 200) {
+          let departments = res.data.data
+          departments = departments.map((department) => {
+            return {
+              value: department.id,
+              label: department.depName
+            }
+          })
+          setDepartmentList(departments)
+        }
+        else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            res.data.message
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          err.message
+        )
+      })
+  }, [])
+
+  useEffect(() => {
+    if (collegeName.length > 0 && website.length > 0 && location.length > 0 && contactNo.length > 0 && collegeDescription.length > 0) {
       setIsBtnDisabled(false)
     }
   }, [username, collegeName, website, location, emailID, contactNo, collegeDescription])
@@ -81,8 +122,8 @@ export default function CollegeProfile () {
                 label='Account user name'
                 placeholder='TPO name'
                 type='text'
-                value={username}
-                onChangeHandler={(e) => setUsername(e.target.value)}
+                value={user === null ? '' : user.username}
+                disabled={true}
               />
               <TextField
                 label='Website'
@@ -115,8 +156,8 @@ export default function CollegeProfile () {
                   label='Email id'
                   placeholder='xyz.@gmail.com'
                   type='text'
-                  value={emailID}
-                  onChangeHandler={(e) => setEmailID(e.target.value)}
+                  value={user === null ? '' : user.email}
+                  disabled={true}
                 />
               </div>
               <div className='col-span-1 md:col-span-2'>
@@ -128,6 +169,18 @@ export default function CollegeProfile () {
                   onChangeHandler={(e) => setContactNo(e.target.value)}
                 />
               </div>
+            </div>
+            <div className='mt-3 mb-6'>
+            <Select
+              options={departmentList}
+              placeholder="Select Streams"
+              value={stream}
+              onChange={handleSelect}
+              isSearchable={true}
+              components={animatedComponents}
+              closeMenuOnSelect={false}
+              isMulti
+            />
             </div>
             <TextArea
               label='About the universities / colleges'

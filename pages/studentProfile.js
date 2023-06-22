@@ -2,6 +2,8 @@ import Image from 'next/image'
 import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
 
 import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea'
@@ -14,9 +16,12 @@ import photo from '../public/photoupload.png'
 import { addStudentProfile } from '@/redux/Slices/studentSlice'
 import { routes } from '@/constants/routes'
 
-export default function studentProfile () {
+import { getDepartment } from '@/redux/Sagas/requests/features'
+
+export default function studentProfile() {
   const dispatch = useDispatch()
   const router = useRouter()
+  const animatedComponents = makeAnimated();
 
   const user = useSelector((state) => state.user)
 
@@ -31,9 +36,11 @@ export default function studentProfile () {
   const [studentID, setStudentID] = useState('')
   const [userDescription, setUserDescription] = useState('')
   const [selectedFile, setSelectedFile] = useState(null)
+  const [stream, setStream] = useState({})
+  const [departmentList, setDepartmentList] = useState([])
 
   useEffect(() => {
-    if (username.length > 0 && emailID.length > 0 && contactNo.length > 0 && studentID.length > 0) {
+    if (contactNo.length > 0 && studentID.length > 0) {
       setIsBtnDisabled(false)
     }
   }, [username, emailID, contactNo, studentID])
@@ -48,16 +55,53 @@ export default function studentProfile () {
     }
   }, [user])
 
+  useEffect(() => {
+    getDepartment()
+      .then((res) => {
+        if (res.data.status === 200) {
+          let departments = res.data.data
+          departments = departments.map((department) => {
+            return {
+              value: department.id,
+              label: department.depName
+            }
+          })
+          setDepartmentList(departments)
+        }
+        else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            res.data.message
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          err.message
+        )
+      })
+  }, [])
+
+  function handleSelect(data) {
+    setStream(data);
+  }
+
   const handleStudentProfile = () => {
+    let dept = stream.value
+
     const data = {
-      username,
-      emailID,
+      username: user.username,
+      emailID: user.email,
       contactNo,
       studentID,
       studentTenthMarks,
       studentTwelthMarks,
       studentUGMarks: studentGraduationMarks,
-      userDescription
+      userDescription,
+      dept
     }
     dispatch(addStudentProfile(data))
     setBtnText('Adding Profile...')
@@ -78,15 +122,15 @@ export default function studentProfile () {
                 label='Name'
                 placeholder='ABC XYZ'
                 type='text'
-                value={username}
-                onChangeHandler={(e) => setUsername(e.target.value)}
+                value={user ? user.username : ''}
+                disabled={true}
               />
               <TextField
                 label='Email'
                 placeholder='sample@gmail.com'
                 type='text'
-                value={emailID}
-                onChangeHandler={(e) => setEmail(e.target.value)}
+                value={user ? user.email : ''}
+                disabled={true}
               />
               <TextField
                 label='Contact No'
@@ -144,6 +188,32 @@ export default function studentProfile () {
                 />
               </div>
             </div>
+            {
+              departmentList === null
+                ?
+                <></>
+                :
+                departmentList.length === 0
+                  ?
+                  <div>
+                  </div>
+                  :
+                  <div class='mt-2 mb-6'>
+                    <label class='block font-Poppins text-black text-md font-bold mb-2' for='username'>
+                      Select Streams
+                    </label>
+                    <Select
+                      options={departmentList}
+                      placeholder="Select Streams"
+                      value={stream}
+                      onChange={handleSelect}
+                      isSearchable={true}
+                      components={animatedComponents}
+                      closeMenuOnSelect={false}
+                      isMulti={false}
+                    />
+                  </div>
+            }
             <TextArea
               label='Describe yourself in 2 lines'
               placeholder='Your message...'

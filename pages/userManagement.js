@@ -159,12 +159,14 @@ export default function UserManagement () {
               value={username}
               onChangeHandler={e => setUsername(e.target.value)}
             />
+            <div className='mt-8'>
             <SingleSelectComponent
               value={accType}
               onChangeHandler={(e) => setAccType(e.target.value)}
               options={accountType}
               label='Type of the User'
             />
+            </div>
           </div>
           <div className='mt-8 ml-2 md:ml-6'>
             <Button

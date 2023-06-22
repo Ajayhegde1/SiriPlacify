@@ -125,7 +125,7 @@ export default function editStudentProfile() {
       <DocHeader
         DocTitle='Edit Profile'
       />
-      <div className='mx-8 md:mx-20 mt-16'>
+      <div className='mx-8 md:mx-20 mt-10'>
         <p
           className='ml-3 md:ml-6 mb-12 font-SubHeading text-base font-normal'
         >
@@ -136,7 +136,7 @@ export default function editStudentProfile() {
           </span> {'>'} Edit profile
         </p>
         <div className='flex flex-col md:flex-row gap-4'>
-          <h1 className='text-center md:text-left mb-4 md:mb-10 ml-2 md:ml-6 mt-6 md:mt-12 text-3xl md:text-4xl font-Heading font-bold text-black'>Edit profile</h1>
+          <h1 className='text-center md:text-left mb-4 md:mb-10 ml-2 md:ml-6 mt-6 text-3xl md:text-4xl font-Heading font-bold text-black'>Edit profile</h1>
           {
             profile === null
               ? <div>
@@ -288,6 +288,13 @@ export default function editStudentProfile() {
                 </div>
                 <div className='mr-0 md:mr-4'>
                   <TextField
+                    label='Department'
+                    placeholder='CSE'
+                    type='text'
+                    value={profile.dept}
+                    disabled
+                  />
+                  <TextField
                     label='student ID'
                     placeholder='ABCUG123'
                     type='text'
@@ -302,7 +309,7 @@ export default function editStudentProfile() {
                             Our students graduate with the ability to adapt to an intellectually and technologically changing
                             environment. Over the years, we have accomplished this with the participative efforts of the management,
                             staff, students and parents.'
-                    rows='8'
+                    rows='6'
                     disabled
                     value={profile.studentDescription}
                   />
