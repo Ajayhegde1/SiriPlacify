@@ -4,6 +4,7 @@ export default function TextField ({
   label,
   placeholder,
   onChangeHandler,
+  onClickHandler,
   value,
   maxLength = 500,
   type = 'text',
@@ -21,6 +22,7 @@ export default function TextField ({
         type={type}
         placeholder={placeholder}
         onChange={onChangeHandler}
+        onClick={onClickHandler}
         value={value}
         maxLength={maxLength}
         required={required}

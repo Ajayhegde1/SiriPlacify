@@ -189,3 +189,11 @@ export const scheduleInterview = (data) => {
 export const getSpecificJobApplication = (id) => {
   return GET(`/getJobApplication?id=${id}`, { sessionID: store.getState().user.sessionId })
 }
+
+export const getDepartment = () => {
+  return GET('/department', { sessionID: store.getState().user.sessionId })
+}
+
+export const getDegrees = () => {
+  return GET('/degrees', { sessionID: store.getState().user.sessionId })
+}

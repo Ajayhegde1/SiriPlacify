@@ -280,13 +280,39 @@ export function* handleADDJob(action) {
 
 export function* handleADDJobByCompany(action) {
   try {
-    const response = yield call(addJobsByCompany, action.payload)
+    const response = yield call(addJobsByCompany, action.payload.data)
 
     if (response.data.status === 200) {
       openNotification(
         notificationTypes.SUCCESS,
         'Job Added Successfully'
       )
+
+      if (action.payload.file){
+        uploadJobDescFile(action.payload.file.name, response.data.data.uid)
+          .then((res) => {
+            let url = res.data.url
+
+            console.log(res);
+            axios.put(url, action.payload.file, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
+              .then((res) => {
+                openNotification('success', 'Resume uploaded successfully');
+                window.history.replaceState({}, 'Jobs', routes.JOBS)
+                window.location.reload()
+              })
+              .catch((err) => {
+                console.log(err);
+                openNotification('error', 'Error uploading resume');
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
 
       window.history.replaceState({}, 'Jobs', routes.JOBS)
       window.location.reload()

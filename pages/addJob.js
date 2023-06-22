@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
 
 import Sidebar from '@/components/SideBar'
 import TextField from '@/components/InputComponents/TextField'
@@ -15,7 +17,11 @@ import { notificationTypes, openNotification } from '@/utils/notifications'
 import { jobStatusList, modeOfSelectionList, finalSelection, jobSector, genderList } from '@/constants/addJobDropDowns'
 import { routes } from '@/constants/routes'
 
+import { getDepartment } from '@/redux/Sagas/requests/features';
+
 export default function AddJob() {
+  const animatedComponents = makeAnimated();
+
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -48,6 +54,8 @@ export default function AddJob() {
   const [gender, setGender] = useState(genderList[0].value)
   const [finalMode, setFinalMode] = useState(finalSelection[0].value)
   const [companyName, setCompanyName] = useState('')
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [departmentList, setDepartmentList] = useState([])
   const [selectedFile, setSelectedFile] = useState(null)
 
   useEffect(() => {
@@ -60,7 +68,7 @@ export default function AddJob() {
     } else {
       setIsBtnDisabled(true)
     }
-  }, [finalMode, designation, jobStatus, locationOfWork, ctc, sector, selectedDate, applicableCourses, modeOfSelection, bondDetails, contactPersonName, contactPersonPhoneNumber, contactPersonEmail])
+  }, [finalMode, designation, jobStatus, selectedOptions,locationOfWork, ctc, sector, selectedDate, modeOfSelection, bondDetails, contactPersonName, contactPersonPhoneNumber, contactPersonEmail])
 
   useEffect(() => {
     if (user === null) {
@@ -71,6 +79,41 @@ export default function AddJob() {
       }
     }
   }, [user])
+
+  useEffect(() => {
+    getDepartment()
+    .then((res) => {
+      if (res.data.status === 200){
+        //value should be id and label should be depName
+        let departments = res.data.data
+        departments = departments.map((department) => {
+          return {
+            value: department.id,
+            label: department.depName
+          }
+        })
+        setDepartmentList(departments)
+      }
+      else{
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          res.data.message
+        )
+      }
+    })
+    .catch((err) => {
+      openNotification(
+        notificationTypes.ERROR,
+        'Error',
+        err.message
+      )
+    })
+  }, [])
+
+  function handleSelect(data) {
+    setSelectedOptions(data);
+  }
 
   const addJobHandler = () => {
     if (user.accType === '0') {
@@ -114,6 +157,7 @@ export default function AddJob() {
         jobSector: sector,
         jobPositionType: jobStatus,
         jobCriteria: applicableCourses,
+        gender: gender,
         jobTestMode: modeOfSelection,
         jobFinalSelection: finalMode,
         jobContactName: contactPersonName,
@@ -125,7 +169,8 @@ export default function AddJob() {
         RSU,
         tenthMarks,
         twelfthMarks,
-        UGCgpa
+        UGCgpa,
+        degree: selectedOptions
       }
       const Data = {
         data: jobData,
@@ -257,6 +302,33 @@ export default function AddJob() {
               value={applicableCourses}
               onChangeHandler={(e) => setApplicableCourses(e.target.value)}
             />
+            {
+              departmentList === null
+              ?
+              <></>
+              :
+              departmentList.length === 0
+              ?
+              <div>
+                No departments found
+              </div>
+              :
+              <div class='mt-12 mb-8'>
+              <label class='block font-Poppins text-black text-md font-bold mb-2' for='username'>
+                Select Streams
+              </label>
+              <Select
+                options={departmentList}
+                placeholder="Select Streams"
+                value={selectedOptions}
+                onChange={handleSelect}
+                isSearchable={true}
+                components={animatedComponents}
+                closeMenuOnSelect={false}
+                isMulti
+              />
+            </div>
+            }
             <div className='mb-8'>
               <SingleSelectComponent
                 value={modeOfSelection}
@@ -284,6 +356,7 @@ export default function AddJob() {
               value={briefJobDescription}
               onChangeHandler={(e) => setBriefJobDescription(e.target.value)}
             />
+            <div className='flex flex-col md:flex-row gap-4'>
             <input
               type="file"
               accept=".pdf"
@@ -299,6 +372,18 @@ export default function AddJob() {
                 Upload Job Description
               </span>
             </button>
+            
+            {
+              selectedFile === null
+              ?
+              <>
+              </>
+              :
+              <div className='mt-1 font-heading text-lg font-medium'>
+                {selectedFile.name}
+              </div>
+            }
+            </div>
           </div>
         </div>
         <div className='ml-3 md:ml-6 mr-12'>

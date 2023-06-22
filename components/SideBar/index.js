@@ -29,8 +29,6 @@ const Sidebar = ({
   const user = useSelector(state => state.user)
   const notifications = useSelector(state => state.notifications)
 
-  console.log(notifications.length)
-
   function handleSideBar() {
     setSidebarOpen(!sidebarOpen)
   }
