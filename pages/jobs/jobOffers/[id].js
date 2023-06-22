@@ -128,6 +128,7 @@ export default function JobOffers () {
                   jobPosition={job.jobPositionType}
                   jobSector={job.jobSector}
                   basePay={job.basePay}
+                  jobDept={job.jobDept}
                   variablePay={job.variablePay}
                   RSU={job.RSU}
                   tenthMarks={job.tenthMarks}

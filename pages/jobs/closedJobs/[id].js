@@ -118,6 +118,7 @@ export default function getClosedJobs () {
                                   jobBond={job.jobBond}
                                   jobCriteria={job.jobCriteria}
                                   basePay={job.basePay}
+                                  jobDept={job.jobDept}
                                   variablePay={job.variablePay}
                                   RSU={job.RSU}
                                   tenthMarks={job.tenthMarks}

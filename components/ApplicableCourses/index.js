@@ -3,7 +3,7 @@ import { useState } from 'react'
 import ApplicableCoursesSelector from '../ApplicableCoursesSelector'
 import Button from '../Buttons'
 
-export default function ApplicableCourses () {
+export default function ApplicableCourses() {
   const [jobSection, setJobSection] = useState(1)
 
   return (
@@ -25,8 +25,7 @@ export default function ApplicableCourses () {
                   class='mt-1 md:mt-2 text-base md:text-lg inline-block pl-[0.75rem] md:pl-[2rem] text-gray-500 font-Heading '
                   for='inlineCheckbox1'
                 >Visual Design Design
-                </label
-                                >
+                </label>
               </div>
               <div class='mb-[1rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]'>
                 <input
@@ -39,8 +38,7 @@ export default function ApplicableCourses () {
                   class='mt-1 md:mt-2 text-base md:text-lg inline-block pl-[0.75rem] md:pl-[2rem] text-gray-500 font-Heading'
                   for='inlineCheckbox1'
                 >Interaction Design
-                </label
-                                >
+                </label>
               </div>
               <div class='mb-[1rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]'>
                 <input
@@ -53,8 +51,7 @@ export default function ApplicableCourses () {
                   class='mt-1 md:mt-2 text-base md:text-lg inline-block pl-[0.75rem] md:pl-[2rem] text-gray-500 font-Heading'
                   for='inlineCheckbox2'
                 >Product Design
-                </label
-                                >
+                </label>
               </div>
               <div class='mb-[1rem] inline-block min-h-[1.5rem] pl-[1.5rem]'>
                 <input
@@ -67,8 +64,7 @@ export default function ApplicableCourses () {
                   class='mt-1 md:mt-2 text-base md:text-lg inline-block pl-[0.75rem] md:pl-[2rem] text-gray-500 font-Heading'
                   for='inlineCheckbox3'
                 >Communication Design
-                </label
-                                >
+                </label >
               </div>
             </div>
           </div>

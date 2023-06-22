@@ -117,6 +117,7 @@ export default function getStudentJobs () {
                               jobCriteria={job.jobCriteria}
                               basePay={job.basePay}
                               variablePay={job.variablePay}
+                              jobDept={job.jobDept}
                               RSU={job.RSU}
                               tenthMarks={job.tenthMarks}
                               twelfthMarks={job.twelfthMarks}

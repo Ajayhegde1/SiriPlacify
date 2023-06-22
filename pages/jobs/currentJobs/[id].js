@@ -257,6 +257,7 @@ export default function CurrentJobs () {
                               jobSector={job.jobSector}
                               jobCTC={job.jobCTC}
                               jobDesc={job.jobDescription}
+                              jobDept={job.jobDept}
                               jobBond={job.jobBond}
                               jobCriteria={job.jobCriteria}
                               basePay={job.basePay}

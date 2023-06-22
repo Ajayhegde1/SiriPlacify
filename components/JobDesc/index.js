@@ -42,6 +42,8 @@ export default function JobDesc({
   UGCgpa,
   setUGCgpa,
   jobSection,
+  jobDept,
+  setJobDept,
   isEdit,
   setIsEdit,
   handleEditFunction
@@ -101,27 +103,27 @@ export default function JobDesc({
 
   const handleJDChange = (event) => {
     let file = event.target.files[0];
-    if (file){
+    if (file) {
       uploadJobDescFile(file.name, jobID)
-          .then((res) => {
-            let url = res.data.url
+        .then((res) => {
+          let url = res.data.url
 
-            axios.put(url, file, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            })
-              .then((res) => {
-                openNotification('success', 'Job Description uploaded successfully');
-              })
-              .catch((err) => {
-                console.log(err);
-                openNotification('error', 'Error uploading resume');
-              });
+          axios.put(url, file, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
           })
-          .catch((err) => {
-            console.log(err);
-          });
+            .then((res) => {
+              openNotification('success', 'Job Description uploaded successfully');
+            })
+            .catch((err) => {
+              console.log(err);
+              openNotification('error', 'Error uploading resume');
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -297,7 +299,7 @@ export default function JobDesc({
           </div>
           <div className='text-gray-700 text-2xl font-bold font-Heading col-span-1 mt-8 pb-5'>Criteria</div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
-            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Stream</div>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Degree</div>
             <input
               className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
               type='text'
@@ -306,6 +308,32 @@ export default function JobDesc({
               disabled={!(isEdit && user.accType === '2')}
             />
           </div>
+          {
+            typeof jobDept === 'undefined' || jobDept === null 
+              ?
+              <></>
+              :
+              jobDept.length === 0
+                ?
+                <div>
+                </div>
+                :
+                <div class="py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200">
+                  <div class="col-span-1 text-gray-700 font-bold font-Heading mb-4 lg:mb-0">Streams</div>
+                  <ul class="col-span-1 lg:col-span-5 flex flex-wrap lg:flex-nowrap space-x-4">
+                    {jobDept.map((degree, index) => (
+                      <li
+                        key={index}
+                        class={`text-gray-500 font-Heading focus:p-4 ${index !== jobDept.length - 1 ? 'after:content-[","]' : ''
+                          }`}
+                      >
+                        {degree}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+          }
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>10th Marks</div>
             <input

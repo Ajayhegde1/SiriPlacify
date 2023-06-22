@@ -13,6 +13,7 @@ import JobDesc from '@/components/JobDesc'
 import ModeOfSelection from '@/components/ModeOfSelection'
 import CompanyContact from '@/components/CompanyContact'
 import OfferedCollegesList from '@/components/OfferedCollegesList'
+import ApplicableCourses from '@/components/ApplicableCoursesSelector'
 
 import { getJob, closeJob, updateJob } from '@/redux/Sagas/requests/features'
 import { openNotification, notificationTypes } from '@/utils/notifications'
@@ -47,6 +48,7 @@ export default function CompanyJobs () {
   const [tenthMarks, setTenthMarks] = useState(0.0)
   const [twelfthMarks, setTwelfthMarks] = useState(0.0)
   const [UGCgpa, setUGCgpa] = useState(0.0)
+  const [jobDept, setjobDept] = useState([])
   const [isEdit, setIsEdit] = useState(false)
 
   const { jobID } = router.query
@@ -134,6 +136,7 @@ export default function CompanyJobs () {
                 setTenthMarks(res.data.data.tenthMarks)
                 setTwelfthMarks(res.data.data.twelfthMarks)
                 setUGCgpa(res.data.data.ugCGPA)
+                setjobDept(res.data.data.jobDept)
               } else if (res.data.status === 423) {
                 openNotification(
                   notificationTypes.ERROR,
@@ -352,6 +355,8 @@ export default function CompanyJobs () {
                       basePay={jobBasePay}
                       setBasePay={setJobBasePay}
                       variablePay={jobVariablePay}
+                      jobDept={jobDept}
+                      setJobDept={setjobDept}
                       setVariablePay={setJobVariablePay}
                       RSU={jobRSU}
                       setRSU={setJobRSU}
