@@ -1,11 +1,14 @@
 import { useSelector } from 'react-redux'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import axios from 'axios'
 import Image from 'next/image'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
 
 import edit from '../../public/edit.png'
 import { getJobDescFile, uploadJobDescFile } from '@/redux/Sagas/requests/features'
 import { notificationTypes, openNotification } from '@/utils/notifications'
+import { getDepartment } from '@/redux/Sagas/requests/features'
 
 export default function JobDesc({
   jobID,
@@ -50,6 +53,9 @@ export default function JobDesc({
 }) {
   const user = useSelector((state) => state.user)
   const fileInputRef = useRef(null);
+  const animatedComponents = makeAnimated();
+
+  const [departmentList, setDepartmentList] = useState([])
 
   const handleEdit = () => {
     setIsEdit(!isEdit)
@@ -97,6 +103,10 @@ export default function JobDesc({
       })
   }
 
+  function handleSelect(data) {
+    setJobDept(data);
+  }
+
   const handleJDUpload = async () => {
     fileInputRef.current.click();
   };
@@ -126,6 +136,36 @@ export default function JobDesc({
         });
     }
   };
+
+  useEffect(() => {
+    getDepartment()
+      .then((res) => {
+        if (res.data.status === 200) {
+          let departments = res.data.data
+          departments = departments.map((department) => {
+            return {
+              value: department.id,
+              label: department.depName
+            }
+          })
+          setDepartmentList(departments)
+        }
+        else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            res.data.message
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          err.message
+        )
+      })
+  }, [])
 
   return (
     <div>
@@ -309,7 +349,7 @@ export default function JobDesc({
             />
           </div>
           {
-            typeof jobDept === 'undefined' || jobDept === null 
+            typeof jobDept === 'undefined' || jobDept === null
               ?
               <></>
               :
@@ -319,18 +359,24 @@ export default function JobDesc({
                 </div>
                 :
                 <div class="py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200">
-                  <div class="col-span-1 text-gray-700 font-bold font-Heading mb-4 lg:mb-0">Streams</div>
-                  <ul class="col-span-1 lg:col-span-5 flex flex-wrap lg:flex-nowrap space-x-4">
-                    {jobDept.map((degree, index) => (
-                      <li
-                        key={index}
-                        class={`text-gray-500 font-Heading focus:p-4 ${index !== jobDept.length - 1 ? 'after:content-[","]' : ''
-                          }`}
-                      >
-                        {degree}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className='col-span-1'>
+                    <label class='block font-Poppins text-black text-md font-bold mb-2' for='username'>
+                      Streams
+                    </label>
+                  </div>
+                  <div className='col-span-1 lg:col-span-5'>
+                    <Select
+                      options={departmentList}
+                      placeholder="Select Streams"
+                      value={jobDept}
+                      onChange={handleSelect}
+                      isSearchable={true}
+                      components={animatedComponents}
+                      isDisabled={!(isEdit && user.accType === '2')}
+                      closeMenuOnSelect={false}
+                      isMulti
+                    />
+                  </div>
                 </div>
 
           }

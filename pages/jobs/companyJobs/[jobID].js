@@ -136,7 +136,14 @@ export default function CompanyJobs () {
                 setTenthMarks(res.data.data.tenthMarks)
                 setTwelfthMarks(res.data.data.twelfthMarks)
                 setUGCgpa(res.data.data.ugCGPA)
-                setjobDept(res.data.data.jobDept)
+                let deet = res.data.data.jobDept
+                deet = deet.map((department) => {
+                  return {
+                    value: department.id,
+                    label: department.depName
+                  }
+                })
+                setjobDept(deet)
               } else if (res.data.status === 423) {
                 openNotification(
                   notificationTypes.ERROR,

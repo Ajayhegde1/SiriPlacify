@@ -21,7 +21,8 @@ export default function SetTestLinkModal({
     showModal,
     setShowModal,
     jobID,
-    collegeID
+    collegeID,
+    data
 }) {
     const modalRef = useRef(null)
     const user = useSelector((state) => state.user)
@@ -56,26 +57,27 @@ export default function SetTestLinkModal({
         }
         scheduleTest(data)
             .then((res) => {
-                if (res.data.status === 200){
+                if (res.data.status === 200) {
                     openNotification(notificationTypes.SUCCESS, 'Success', 'PPT Scheduled Successfully')
                     setShowModal(!showModal)
+                    window.location.reload()
                 }
-                else if (res.data.status === 424){
+                else if (res.data.status === 424) {
                     openNotification(notificationTypes.ERROR, 'Error', res.data.message)
                 }
-                else if (res.data.status === 425){
+                else if (res.data.status === 425) {
                     openNotification(notificationTypes.ERROR, 'Error', res.data.message)
                 }
-                else if (res.data.status === 426){
+                else if (res.data.status === 426) {
                     openNotification(notificationTypes.ERROR, 'Error', res.data.message)
                 }
-                else if (res.data.status === 427){
+                else if (res.data.status === 427) {
                     openNotification(notificationTypes.ERROR, 'Error', res.data.message)
                 }
-                else if (res.data.status === 500){
+                else if (res.data.status === 500) {
                     openNotification(notificationTypes.ERROR, 'Error', res.data.message)
                 }
-                else{
+                else {
                     openNotification(notificationTypes.ERROR, 'Error', 'Unable To Schedule Test')
                 }
             })
@@ -116,52 +118,153 @@ export default function SetTestLinkModal({
                         </a>
                     </div>
                 </div>
-                <div className={styles.modalBody}>
-                    <div className='mt-4 ml-4 mr-10'>
-                        <div className='grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 xl:gap-8'>
-                            <TextField
-                                label='Platform'
-                                type='text'
-                                placeholder='HackerRank, CodeChef, etc.'
-                                value={platform}
-                                onChangeHandler={(e) => setPlatform(e.target.value)}
-                            />
-                            <div className='mb-6'>
-                                <Label
-                                    label='Date and Time'
-                                />
-                                <div className="mt-4">
-                                    <DateTimePicker
-                                        onChange={onChange}
-                                        value={value}
+                {
+                    data === null
+                        ?
+                        <div className={styles.modalBody}>
+                            <div className='mt-4 ml-4 mr-10'>
+                                <div className='grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 xl:gap-8'>
+                                    <TextField
+                                        label='Platform'
+                                        type='text'
+                                        placeholder='HackerRank, CodeChef, etc.'
+                                        value={platform}
+                                        onChangeHandler={(e) => setPlatform(e.target.value)}
                                     />
+                                    <div className='mb-6'>
+                                        <Label
+                                            label='Date and Time'
+                                        />
+                                        <div className="mt-4">
+                                            <DateTimePicker
+                                                onChange={onChange}
+                                                value={value}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
+                                <TextField
+                                    label='Test Link'
+                                    type='url'
+                                    placeholder='hackerrank/abc-xyz'
+                                    value={url}
+                                    onChangeHandler={(e) => setURL(e.target.value)}
+                                />
+                                <TextArea
+                                    label='Prerequisties'
+                                    placeholder='Enter prerequisties for the students'
+                                    value={prerequisties}
+                                    onChangeHandler={(e) => setPrerequistes(e.target.value)}
+                                />
+                            </div>
+                            <div className='mt-6 ml-4 mr-10'>
+                                <button
+                                    onClick={handleChangePassword}
+                                    className={isDisabled ? 'flex ml-auto h-10 bg-gray-500 text-white font-bold rounded-lg py-2 px-4' : 'flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'}
+                                    disabled={isDisabled}
+                                >
+                                    {btnText}
+                                </button>
                             </div>
                         </div>
-                        <TextField
-                            label='Test Link'
-                            type='url'
-                            placeholder='hackerrank/abc-xyz'
-                            value={url}
-                            onChangeHandler={(e) => setURL(e.target.value)}
-                        />
-                        <TextArea
-                            label='Prerequisties'
-                            placeholder='Enter prerequisties for the students'
-                            value={prerequisties}
-                            onChangeHandler={(e) => setPrerequistes(e.target.value)}
-                        />
-                    </div>
-                    <div className='mt-6 ml-4 mr-10'>
-                        <button
-                            onClick={handleChangePassword}
-                            className={isDisabled ? 'flex ml-auto h-10 bg-gray-500 text-white font-bold rounded-lg py-2 px-4' : 'flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'}
-                            disabled={isDisabled}
-                        >
-                            {btnText}
-                        </button>
-                    </div>
-                </div>
+                        :
+                        Object.keys(data).length === 0
+                            ?
+                            <div className={styles.modalBody}>
+                                <div className='mt-4 ml-4 mr-10'>
+                                    <div className='grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 xl:gap-8'>
+                                        <TextField
+                                            label='Platform'
+                                            type='text'
+                                            placeholder='HackerRank, CodeChef, etc.'
+                                            value={platform}
+                                            onChangeHandler={(e) => setPlatform(e.target.value)}
+                                        />
+                                        <div className='mb-6'>
+                                            <Label
+                                                label='Date and Time'
+                                            />
+                                            <div className="mt-4">
+                                                <DateTimePicker
+                                                    onChange={onChange}
+                                                    value={value}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <TextField
+                                        label='Test Link'
+                                        type='url'
+                                        placeholder='hackerrank/abc-xyz'
+                                        value={url}
+                                        onChangeHandler={(e) => setURL(e.target.value)}
+                                    />
+                                    <TextArea
+                                        label='Prerequisties'
+                                        placeholder='Enter prerequisties for the students'
+                                        value={prerequisties}
+                                        onChangeHandler={(e) => setPrerequistes(e.target.value)}
+                                    />
+                                </div>
+                                <div className='mt-6 ml-4 mr-10'>
+                                    <button
+                                        onClick={handleChangePassword}
+                                        className={isDisabled ? 'flex ml-auto h-10 bg-gray-500 text-white font-bold rounded-lg py-2 px-4' : 'flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'}
+                                        disabled={isDisabled}
+                                    >
+                                        {btnText}
+                                    </button>
+                                </div>
+                            </div>
+                            :
+                            <div className={styles.modalBody}>
+                                <div className='mt-4 ml-4 mr-10'>
+                                    <div className='grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 xl:gap-8'>
+                                        <TextField
+                                            label='Platform'
+                                            type='text'
+                                            placeholder='HackerRank, CodeChef, etc.'
+                                            value={data.platform}
+                                            disabled={true}
+                                        />
+                                        <div className='mb-6'>
+                                            <Label
+                                                label='Date and Time'
+                                            />
+                                            <div className="mt-4">
+                                                <DateTimePicker
+                                                    onChange={onChange}
+                                                    value={data.testDateTime}
+                                                    disabled={true}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <TextField
+                                        label='Test Link'
+                                        type='url'
+                                        placeholder='hackerrank/abc-xyz'
+                                        value={data.url}
+                                        disabled={true}
+                                    />
+                                    <TextArea
+                                        label='Prerequisties'
+                                        placeholder='Enter prerequisties for the students'
+                                        value={data.prerequistes}
+                                        disabled={true}
+                                    />
+                                </div>
+                                <div className='mt-6 ml-4 mr-10'>
+                                    <button
+                                        onClick={handleChangePassword}
+                                        className={isDisabled ? 'flex ml-auto h-10 bg-gray-500 text-white font-bold rounded-lg py-2 px-4' : 'flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'}
+                                        disabled={isDisabled}
+                                    >
+                                        {btnText}
+                                    </button>
+                                </div>
+                            </div>
+                }
             </div>
         </div>
     )

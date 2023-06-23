@@ -25,6 +25,7 @@ import { getCandidates, UpdateStatus } from '@/redux/Sagas/requests/features'
 import arrow from '@/public/arrow.png'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
+import { getJobData } from '@/redux/Sagas/requests/features'
 
 export default function College() {
   const router = useRouter()
@@ -39,6 +40,9 @@ export default function College() {
   const [candidates, setCandidates] = useState([])
   const [filteredStudentList, setFilteredStudentList] = useState([])
   const [promoteStudents, setPromoteStudents] = useState([])
+  const [pptData, setPptData] = useState({})
+  const [testData, setTestData] = useState({})
+  const [intData, setIntData] = useState({})
 
   const [collegeName, setCollegeName] = useState('')
   const [status, setStatus] = useState(1)
@@ -101,6 +105,28 @@ export default function College() {
               openNotification(
                 notificationTypes.ERROR,
                 'Error'
+              )
+            })
+          getJobData(jobID, collegeID)
+            .then((res) => {
+              if (res.data.status === 200) {
+                setPptData(res.data.data.pptData)
+                setTestData(res.data.data.testData)
+                setIntData(res.data.data.interviewData)
+              }
+              else {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Unable to retrieve job data'
+                )
+              }
+            })
+            .catch((err) => {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Unable to retrieve job data'
               )
             })
         }
@@ -390,7 +416,23 @@ export default function College() {
                   width={20}
                   height={20}
                 />
-                Schedule PPT
+                {
+                  pptData === null
+                    ?
+                    <span>
+                      Schedule PPT
+                    </span>
+                    :
+                    Object.keys(pptData).length === 0
+                      ?
+                      <span>
+                        Schedule PPT
+                      </span>
+                      :
+                      <span>
+                        View PPT
+                      </span>
+                }
               </button>
             </div>
             <div>
@@ -405,7 +447,23 @@ export default function College() {
                   width={20}
                   height={20}
                 />
-                Schedule Test
+                {
+                  testData === null
+                    ?
+                    <span>
+                    Schedule Test
+                    </span>
+                    :
+                    Object.keys(testData).length === 0
+                      ?
+                      <span>
+                      Schedule Test
+                      </span>
+                      :
+                      <span>
+                        View Test
+                      </span>
+                }
               </button>
             </div>
             <div>
@@ -420,7 +478,23 @@ export default function College() {
                   width={20}
                   height={20}
                 />
-                Schedule Interview
+                {
+                  testData === null
+                    ?
+                    <span>
+                    Schedule Interview
+                    </span>
+                    :
+                    Object.keys(testData).length === 0
+                      ?
+                      <span>
+                      Schedule Interview
+                      </span>
+                      :
+                      <span>
+                        View Interview
+                      </span>
+                }
               </button>
             </div>
           </div>
@@ -520,18 +594,21 @@ export default function College() {
         setShowModal={setShowPPTModal}
         jobID={jobID}
         collegeID={collegeID}
+        data={pptData}
       />
       <SetTestLinkModal
         showModal={showTestModal}
         setShowModal={setShowTestModal}
         jobID={jobID}
         collegeID={collegeID}
+        data={testData}
       />
       <SetInterviewModal
         showModal={showIntModal}
         setShowModal={setShowIntModal}
         jobID={jobID}
         collegeID={collegeID}
+        data={intData}
       />
     </div>
   )

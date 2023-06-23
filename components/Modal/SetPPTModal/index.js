@@ -20,7 +20,9 @@ export default function SetPPTModal({
     showModal,
     setShowModal,
     jobID,
-    collegeID
+    collegeID,
+    data,
+    setData
 }) {
     const modalRef = useRef(null)
     const user = useSelector((state) => state.user)
@@ -53,26 +55,27 @@ export default function SetPPTModal({
         }
         schedulePPT(data)
             .then((res) => {
-                if (res.data.status === 200){
+                if (res.data.status === 200) {
                     openNotification(notificationTypes.SUCCESS, 'Success', 'PPT Scheduled Successfully')
                     setShowModal(!showModal)
+                    window.location.reload()
                 }
-                else if (res.data.status === 424){
+                else if (res.data.status === 424) {
                     openNotification(notificationTypes.ERROR, 'Error', res.data.message)
                 }
-                else if (res.data.status === 425){
+                else if (res.data.status === 425) {
                     openNotification(notificationTypes.ERROR, 'Error', res.data.message)
                 }
-                else if (res.data.status === 426){
+                else if (res.data.status === 426) {
                     openNotification(notificationTypes.ERROR, 'Error', res.data.message)
                 }
-                else if (res.data.status === 427){
+                else if (res.data.status === 427) {
                     openNotification(notificationTypes.ERROR, 'Error', res.data.message)
                 }
-                else if (res.data.status === 500){
+                else if (res.data.status === 500) {
                     openNotification(notificationTypes.ERROR, 'Error', res.data.message)
                 }
-                else{
+                else {
                     openNotification(notificationTypes.ERROR, 'Error', 'Unable To Schedule PPT')
                 }
             })
@@ -113,40 +116,118 @@ export default function SetPPTModal({
                         </a>
                     </div>
                 </div>
-                <div className={styles.modalBody}>
-                    <div className='mt-6 ml-4 mr-10'>
-                        <TextField
-                            label='Platform'
-                            type='text'
-                            placeholder='Zoom, Google Meet, etc.'
-                            value={platform}
-                            onChangeHandler={(e) => setPlatform(e.target.value)}
-                        />
-                        <TextField
-                            label='Meeting Link'
-                            type='url'
-                            placeholder='meet.google.com/abc-xyz'
-                            value={url}
-                            onChangeHandler={(e) => setURL(e.target.value)}
-                        />
-                        <Label
-                            label='Date and Time'
-                        />
-                        <DateTimePicker
-                            onChange={onChange}
-                            value={value}
-                        />
-                    </div>
-                    <div className='mt-6 ml-4 mr-10'>
-                        <button
-                            onClick={handleChangePassword}
-                            className={isDisabled ? 'flex ml-auto h-10 bg-gray-500 text-white font-bold rounded-lg py-2 px-4' : 'flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'}
-                            disabled={isDisabled}
-                        >
-                            {btnText}
-                        </button>
-                    </div>
-                </div>
+                {
+                    data === null
+                        ?
+                        <div className={styles.modalBody}>
+                            <div className='mt-6 ml-4 mr-10'>
+                                <TextField
+                                    label='Platform'
+                                    type='text'
+                                    placeholder='Zoom, Google Meet, etc.'
+                                    value={platform}
+                                    onChangeHandler={(e) => setPlatform(e.target.value)}
+                                />
+                                <TextField
+                                    label='Meeting Link'
+                                    type='url'
+                                    placeholder='meet.google.com/abc-xyz'
+                                    value={url}
+                                    onChangeHandler={(e) => setURL(e.target.value)}
+                                />
+                                <Label
+                                    label='Date and Time'
+                                />
+                                <DateTimePicker
+                                    onChange={onChange}
+                                    value={value}
+                                />
+                            </div>
+                            <div className='mt-6 ml-4 mr-10'>
+                                <button
+                                    onClick={handleChangePassword}
+                                    className={isDisabled ? 'flex ml-auto h-10 bg-gray-500 text-white font-bold rounded-lg py-2 px-4' : 'flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'}
+                                    disabled={isDisabled}
+                                >
+                                    {btnText}
+                                </button>
+                            </div>
+                        </div>
+                        :
+                        Object.keys(data).length === 0
+                            ?
+                            <div className={styles.modalBody}>
+                                <div className='mt-6 ml-4 mr-10'>
+                                    <TextField
+                                        label='Platform'
+                                        type='text'
+                                        placeholder='Zoom, Google Meet, etc.'
+                                        value={platform}
+                                        onChangeHandler={(e) => setPlatform(e.target.value)}
+                                    />
+                                    <TextField
+                                        label='Meeting Link'
+                                        type='url'
+                                        placeholder='meet.google.com/abc-xyz'
+                                        value={url}
+                                        onChangeHandler={(e) => setURL(e.target.value)}
+                                    />
+                                    <Label
+                                        label='Date and Time'
+                                    />
+                                    <DateTimePicker
+                                        onChange={onChange}
+                                        value={value}
+                                    />
+                                </div>
+                                <div className='mt-6 ml-4 mr-10'>
+                                    <button
+                                        onClick={handleChangePassword}
+                                        className={isDisabled ? 'flex ml-auto h-10 bg-gray-500 text-white font-bold rounded-lg py-2 px-4' : 'flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'}
+                                        disabled={isDisabled}
+                                    >
+                                        {btnText}
+                                    </button>
+                                </div>
+                            </div>
+                            :
+                            <div className={styles.modalBody}>
+                                <div className='mt-6 ml-4 mr-10'>
+                                    <TextField
+                                        label='Platform'
+                                        type='text'
+                                        placeholder='Zoom, Google Meet, etc.'
+                                        value={data.platform}
+                                        disabled={true}
+                                    />
+                                    <TextField
+                                        label='Meeting Link'
+                                        type='url'
+                                        placeholder='meet.google.com/abc-xyz'
+                                        value={data.url}
+                                        disabled={true}
+                                    />
+                                    <Label
+                                        label='Date and Time'
+                                    />
+                                    <DateTimePicker
+                                        onChange={onChange}
+                                        value={data.pptDateTime}
+                                        disabled={true}
+                                    />
+                                </div>
+                                <div className='mt-6 ml-4 mr-10'>
+                                    <button
+                                        onClick={handleChangePassword}
+                                        className={isDisabled ? 'flex ml-auto h-10 bg-gray-500 text-white font-bold rounded-lg py-2 px-4' : 'flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'}
+                                        disabled={isDisabled}
+                                    >
+                                        {btnText}
+                                    </button>
+                                </div>
+                            </div>
+
+                }
             </div>
         </div>
     )

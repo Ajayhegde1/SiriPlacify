@@ -129,6 +129,24 @@ export default function Candidates({
                     {
                       user !== null
                         ?
+                        user.accType === '0'
+                          ?
+                          <td className='whitespace-nowrap px-6 py-4'>
+                            <button
+                              onClick={() => router.push(`/students/${student.uid}`)}
+                              className='font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded'
+                            >
+                              View Profile
+                            </button>
+                          </td>
+                          :
+                          <></>
+                        :
+                        <></>
+                    }
+                    {
+                      user !== null
+                        ?
                         user.accType === '0' && isStudentsList
                           ?
                           <td className='whitespace-nowrap px-6 py-4'>
