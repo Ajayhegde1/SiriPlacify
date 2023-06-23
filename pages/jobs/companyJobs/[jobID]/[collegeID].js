@@ -19,6 +19,7 @@ import UpdateStatusModal from '@/components/Modal/UpdateStatusModal'
 import SetPPTModal from '@/components/Modal/SetPPTModal'
 import SetTestLinkModal from '@/components/Modal/SetTestLinkModal'
 import SetInterviewModal from '@/components/Modal/SetInterviewModal'
+import LastRoundInterviewModal from '@/components/Modal/LastRoundInterviewModal'
 
 import { getCandidates, UpdateStatus } from '@/redux/Sagas/requests/features'
 
@@ -36,6 +37,7 @@ export default function College() {
   const [showPPTModal, setShowPPTModal] = useState(false)
   const [showTestModal, setShowTestModal] = useState(false)
   const [showIntModal, setShowIntModal] = useState(false)
+  const [showLastRoundModal, setShowLastRoundModal] = useState(false)
 
   const [candidates, setCandidates] = useState([])
   const [filteredStudentList, setFilteredStudentList] = useState([])
@@ -43,6 +45,7 @@ export default function College() {
   const [pptData, setPptData] = useState({})
   const [testData, setTestData] = useState({})
   const [intData, setIntData] = useState({})
+  const [isLastRound, setLastRound] = useState(false)
 
   const [collegeName, setCollegeName] = useState('')
   const [status, setStatus] = useState(1)
@@ -155,7 +158,7 @@ export default function College() {
     utils.sheet_add_aoa(ws, headings)
     const outdata = JSON.stringify(candidates, [
       'uid',
-      'studentID',
+      'studentId',
       'username',
       'email',
       'contactNo',
@@ -420,19 +423,104 @@ export default function College() {
       })
   }
 
-  const handlePromoteStudents = () => {
+  const notLastRoundHandler = () => {
     const stdList = filteredStudentList.map((student) => {
       return { email: student.email, status: student.status }
     })
 
-    const rejectedStudents = stdList.filter((student) =>
+    let rejectedStudents = stdList.filter((student) =>
+      promoteStudents.findIndex((std) => std.email === student.email) === -1
+    )
+
+    rejectedStudents = rejectedStudents.map((student) => {
+      return { ...student, status: "5" }
+    })
+
+    const data = {
+      jobID,
+      collegeID,
+      candidates: rejectedStudents
+    }
+    UpdateStatus(data)
+      .then((res) => {
+        if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
+          openNotification(
+            notificationTypes.SUCCESS,
+            'Success',
+            'Status updated successfully'
+          )
+          window.location.reload()
+        } else if (res.data.status === 423) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Invalid job or college IDs'
+          )
+        } else if (res.data.status === 424) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get jobs IDs'
+          )
+        } else if (res.data.status === 425) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get college IDs'
+          )
+        } else if (res.data.status === 426) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'college Mapping IDs is not available'
+          )
+        } else if (res.data.status === 427) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'No Candidates'
+          )
+        } else if (res.data.status === 428) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get student ID'
+          )
+        } else if (res.data.status === 500) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get students data'
+          )
+        } else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Error in updating status'
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'Error in updating status'
+        )
+      })
+  }
+
+  const lastRoundHandler = () => {
+    const stdList = filteredStudentList.map((student) => {
+      return { email: student.email, status: student.status }
+    })
+
+    let rejectedStudents = stdList.filter((student) =>
       promoteStudents.findIndex((std) => std.email === student.email) === -1
     )
 
     const studentsStatus = [...promoteStudents, ...rejectedStudents.map((student) => {
       return { ...student, status: "5" }
     })]
-
     const data = {
       jobID,
       collegeID,
@@ -504,6 +592,97 @@ export default function College() {
           'Error in updating status'
         )
       })
+  }
+
+  const handlePromoteStudents = () => {
+    const stdList = filteredStudentList.map((student) => {
+      return { email: student.email, status: student.status }
+    })
+
+    let rejectedStudents = stdList.filter((student) =>
+      promoteStudents.findIndex((std) => std.email === student.email) === -1
+    )
+
+    const studentsStatus = [...promoteStudents, ...rejectedStudents.map((student) => {
+      return { ...student, status: "5" }
+    })]
+
+    if (status === 4) {
+      setShowLastRoundModal(true)
+    }
+    else {
+      const data = {
+        jobID,
+        collegeID,
+        candidates: studentsStatus
+      }
+      UpdateStatus(data)
+        .then((res) => {
+          if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
+            openNotification(
+              notificationTypes.SUCCESS,
+              'Success',
+              'Status updated successfully'
+            )
+            window.location.reload()
+          } else if (res.data.status === 423) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Invalid job or college IDs'
+            )
+          } else if (res.data.status === 424) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Unable to get jobs IDs'
+            )
+          } else if (res.data.status === 425) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Unable to get college IDs'
+            )
+          } else if (res.data.status === 426) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'college Mapping IDs is not available'
+            )
+          } else if (res.data.status === 427) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'No Candidates'
+            )
+          } else if (res.data.status === 428) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Unable to get student ID'
+            )
+          } else if (res.data.status === 500) {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Unable to get students data'
+            )
+          } else {
+            openNotification(
+              notificationTypes.ERROR,
+              'Error',
+              'Error in updating status'
+            )
+          }
+        })
+        .catch((err) => {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Error in updating status'
+          )
+        })
+    }
   }
 
   const setApplied = () => {
@@ -816,6 +995,14 @@ export default function College() {
         jobID={jobID}
         collegeID={collegeID}
         data={intData}
+      />
+      <LastRoundInterviewModal
+        showModal={showLastRoundModal}
+        setShowModal={setShowLastRoundModal}
+        isLastRound={isLastRound}
+        setIsLastRound={setLastRound}
+        lastRoundModalFunction={lastRoundHandler}
+        notLastRoundHandler={notLastRoundHandler}
       />
     </div>
   )
