@@ -28,6 +28,7 @@ export default function CurrentJobs () {
 
   const [jobSection, setJobSection] = useState(1)
   const [studentList, setStudentList] = useState([])
+  const [dept,setDept] = useState([])
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [job, setJob] = useState({})
@@ -92,6 +93,16 @@ export default function CurrentJobs () {
             .then((res) => {
               if (res.data.status === 200) {
                 setJob(res.data.data)
+                if (typeof res.data.data.jobDept !== 'undefined' && res.data.data.jobDept !== null && res.data.data.jobDept.length > 0) {
+                  let deet = res.data.data.jobDept
+                  deet = deet.map((department) => {
+                    return {
+                      value: department.id,
+                      label: department.depName
+                    }
+                  })
+                  setDept(deet)
+                }
               } else if (res.data.status === 423) {
                 openNotification(
                   notificationTypes.ERROR,
@@ -257,7 +268,7 @@ export default function CurrentJobs () {
                               jobSector={job.jobSector}
                               jobCTC={job.jobCTC}
                               jobDesc={job.jobDescription}
-                              jobDept={job.jobDept}
+                              jobDept={dept}
                               jobBond={job.jobBond}
                               jobCriteria={job.jobCriteria}
                               basePay={job.basePay}

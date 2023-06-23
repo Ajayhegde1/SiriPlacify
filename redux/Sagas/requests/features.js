@@ -125,6 +125,10 @@ export const applyJob = (data) => {
   return POST('/applyJobs', data, { sessionID: store.getState().user.sessionId })
 }
 
+export const withdrawJob = (data) => {
+  return POST('/withdrawJob', data, { sessionID: store.getState().user.sessionId })
+}
+
 export const getStudentAppliedJobs = () => {
   return GET('/getJobApplications', { sessionID: store.getState().user.sessionId })
 }

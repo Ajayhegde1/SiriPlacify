@@ -21,6 +21,7 @@ export default function getClosedJobs () {
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [job, setJob] = useState({})
+    const [dept,setDept] = useState([])
   
     const user = useSelector((state) => state.user)
   
@@ -38,6 +39,16 @@ export default function getClosedJobs () {
               .then((res) => {
                 if (res.data.status === 200) {
                   setJob(res.data.data)
+                  if (typeof res.data.data.jobDept !== 'undefined' && res.data.data.jobDept !== null && res.data.data.jobDept.length > 0) {
+                    let deet = res.data.data.jobDept
+                    deet = deet.map((department) => {
+                      return {
+                        value: department.id,
+                        label: department.depName
+                      }
+                    })
+                    setDept(deet)
+                  }
                 } else if (res.data.status === 423) {
                   openNotification(
                     notificationTypes.ERROR,
@@ -118,7 +129,7 @@ export default function getClosedJobs () {
                                   jobBond={job.jobBond}
                                   jobCriteria={job.jobCriteria}
                                   basePay={job.basePay}
-                                  jobDept={job.jobDept}
+                                  jobDept={dept}
                                   variablePay={job.variablePay}
                                   RSU={job.RSU}
                                   tenthMarks={job.tenthMarks}
