@@ -6,7 +6,8 @@ export default function StatusOfHire ({
   setShortlisted,
   setTest,
   setInterview,
-  setHired
+  setHired,
+  setRejected
 }) {
   return (
     <div className='overflow-x-auto'>
@@ -58,6 +59,15 @@ export default function StatusOfHire ({
           <span className='text-lg font-Heading font-semibold text-black pr-3'>Hired</span>
           <span className='px-2 py-1 bg-gray-100 rounded-2xl text-green-800 font-medium'>
             {students.filter((student) => student.studentStatus === '4').length}
+          </span>
+        </div>
+        <div
+          className={status === 6 ? 'cursor-pointer pb-1 border-b-4 border-green-900' : 'cursor-pointer hover:border-b-4 hover:border-green-900 ease-in duration-300'}
+          onClick={setRejected}
+        >
+          <span className='text-lg font-Heading font-semibold text-black pr-3'>Rejected</span>
+          <span className='px-2 py-1 bg-gray-100 rounded-2xl text-red-600 font-bold'>
+            {students.filter((student) => student.studentStatus === '5').length}
           </span>
         </div>
       </div>

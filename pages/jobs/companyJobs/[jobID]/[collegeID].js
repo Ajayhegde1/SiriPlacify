@@ -266,11 +266,100 @@ export default function College() {
     }
   }
 
-  const handlePromoteStudents = () => {
+  const sendStudentsToPrevRound = () => {
+    const studentsStatus = promoteStudents.map((student) => {
+      return { ...student, status: (parseInt(student.status) - 2).toString() }
+    })
     const data = {
       jobID,
       collegeID,
-      candidates: promoteStudents
+      candidates: studentsStatus
+    }
+    UpdateStatus(data)
+      .then((res) => {
+        if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
+          openNotification(
+            notificationTypes.SUCCESS,
+            'Success',
+            'Status updated successfully'
+          )
+          window.location.reload()
+        } else if (res.data.status === 423) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Invalid job or college IDs'
+          )
+        } else if (res.data.status === 424) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get jobs IDs'
+          )
+        } else if (res.data.status === 425) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get college IDs'
+          )
+        } else if (res.data.status === 426) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'college Mapping IDs is not available'
+          )
+        } else if (res.data.status === 427) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'No Candidates'
+          )
+        } else if (res.data.status === 428) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get student ID'
+          )
+        } else if (res.data.status === 500) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get students data'
+          )
+        } else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Error in updating status'
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'Error in updating status'
+        )
+      })
+  }
+
+  const handlePromoteStudents = () => {
+    const stdList = filteredStudentList.map((student) => {
+      return { email: student.email, status: student.status }
+    })
+
+    const rejectedStudents = stdList.filter((student) =>
+      promoteStudents.findIndex((std) => std.email === student.email) === -1
+    )
+
+    const studentsStatus = [...promoteStudents, ...rejectedStudents.map((student) => {
+      return { ...student, status: "5" }
+    })]
+
+    const data = {
+      jobID,
+      collegeID,
+      candidates: studentsStatus
     }
     UpdateStatus(data)
       .then((res) => {
@@ -370,6 +459,12 @@ export default function College() {
     setFilteredStudentList(filtered)
   }
 
+  const setRejected = () => {
+    setStatus(6)
+    const filtered = candidates.filter((student) => student.studentStatus === '5')
+    setFilteredStudentList(filtered)
+  }
+
   return (
     <div className='bg-gray-200 min-h-screen'>
       <DocHeader
@@ -451,13 +546,13 @@ export default function College() {
                   testData === null
                     ?
                     <span>
-                    Schedule Test
+                      Schedule Test
                     </span>
                     :
                     Object.keys(testData).length === 0
                       ?
                       <span>
-                      Schedule Test
+                        Schedule Test
                       </span>
                       :
                       <span>
@@ -482,13 +577,13 @@ export default function College() {
                   testData === null
                     ?
                     <span>
-                    Schedule Interview
+                      Schedule Interview
                     </span>
                     :
                     Object.keys(testData).length === 0
                       ?
                       <span>
-                      Schedule Interview
+                        Schedule Interview
                       </span>
                       :
                       <span>
@@ -531,57 +626,78 @@ export default function College() {
             </div>
           </div>
         </div>
-        <div className='mt-4 ml-3 md:ml-6 bg-white mb-10 mr-10 rounded-xl p-6'>
-          {
-            candidates === null || typeof candidates === 'undefined'
-              ? <div />
-              : candidates.length === 0
-                ? <>
-                </>
-                : <StatusOfHire
-                  students={candidates}
-                  status={status}
-                  setStatus={setStatus}
-                  setApplied={setApplied}
-                  setShortlisted={setShortlisted}
-                  setTest={setTest}
-                  setInterview={setInterview}
-                  setHired={setHired}
-                />
-          }
-          {
-            candidates === null || typeof candidates === 'undefined'
-              ? <div>
-                Loading...
-              </div>
-              : candidates.length === 0
-                ? <div className='mt-6 mb-3 ml-6 font-medium'>
-                  No students have applied yet
+        <div className='pb-10'>
+          <div className='mt-4 ml-3 md:ml-6 bg-white mr-10 rounded-xl p-6'>
+            {
+              candidates === null || typeof candidates === 'undefined'
+                ? <div />
+                : candidates.length === 0
+                  ? <>
+                  </>
+                  : <StatusOfHire
+                    students={candidates}
+                    status={status}
+                    setStatus={setStatus}
+                    setApplied={setApplied}
+                    setShortlisted={setShortlisted}
+                    setTest={setTest}
+                    setInterview={setInterview}
+                    setHired={setHired}
+                    setRejected={setRejected}
+                  />
+            }
+            {
+              candidates === null || typeof candidates === 'undefined'
+                ? <div>
+                  Loading...
                 </div>
-                : <Candidates
-                  students={filteredStudentList}
-                  promoteStudents={promoteStudents}
-                  setPromoteStudents={setPromoteStudents}
-                  jobID={jobID}
-                  collegeID={collegeID}
-                />
-          }
-          {
-            status === 5
-              ?
-              <>
-              </>
-              :
-              <div className='flex'>
-                <button
-                  type='button'
-                  className='mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-                  onClick={handlePromoteStudents}
-                >
-                  Send to next round
-                </button>
-              </div>
-          }
+                : candidates.length === 0
+                  ? <div className='mt-6 mb-3 ml-6 font-medium'>
+                    No students have applied yet
+                  </div>
+                  : <Candidates
+                    students={filteredStudentList}
+                    promoteStudents={promoteStudents}
+                    setPromoteStudents={setPromoteStudents}
+                    jobID={jobID}
+                    collegeID={collegeID}
+                  />
+            }
+            <div className='flex justify-end'>
+              {
+                status !== 6 && status !== 1 ? (
+                  <div className='flex'>
+                    <button
+                      type='button'
+                      className='mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+                      onClick={sendStudentsToPrevRound}
+                    >
+                      Send to previous round
+                    </button>
+                  </div>
+                ) : (
+                  <></>
+                )
+              }
+
+              {
+                status >= 5
+                  ?
+                  <>
+                  </>
+                  :
+                  <div className='flex'>
+                    <button
+                      type='button'
+                      className='mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+                      onClick={handlePromoteStudents}
+                    >
+                      Send to next round
+                    </button>
+                  </div>
+              }
+            </div>
+          </div>
         </div>
       </main>
       <UpdateStatusModal
