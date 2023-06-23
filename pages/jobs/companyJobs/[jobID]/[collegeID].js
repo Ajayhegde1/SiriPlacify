@@ -266,6 +266,83 @@ export default function College() {
     }
   }
 
+  const reconsiderStudents = () => {
+    const studentsStatus = promoteStudents.map((student) => {
+      return { ...student, status: "0" }
+    })
+    const data = {
+      jobID,
+      collegeID,
+      candidates: studentsStatus
+    }
+    UpdateStatus(data)
+      .then((res) => {
+        if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
+          openNotification(
+            notificationTypes.SUCCESS,
+            'Success',
+            'Status updated successfully'
+          )
+          window.location.reload()
+        } else if (res.data.status === 423) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Invalid job or college IDs'
+          )
+        } else if (res.data.status === 424) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get jobs IDs'
+          )
+        } else if (res.data.status === 425) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get college IDs'
+          )
+        } else if (res.data.status === 426) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'college Mapping IDs is not available'
+          )
+        } else if (res.data.status === 427) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'No Candidates'
+          )
+        } else if (res.data.status === 428) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get student ID'
+          )
+        } else if (res.data.status === 500) {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Unable to get students data'
+          )
+        } else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Error in updating status'
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'Error in updating status'
+        )
+      })
+  }
+
   const sendStudentsToPrevRound = () => {
     const studentsStatus = promoteStudents.map((student) => {
       return { ...student, status: (parseInt(student.status) - 2).toString() }
@@ -665,6 +742,21 @@ export default function College() {
             }
             <div className='flex justify-end'>
               {
+                status === 6 ? (
+                  <div className='flex'>
+                    <button
+                      type='button'
+                      className='mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+                      onClick={reconsiderStudents}
+                    >
+                      Reconsider Students
+                    </button>
+                  </div>
+                ) : (
+                  <></>
+                )
+              }
+              {
                 status !== 6 && status !== 1 ? (
                   <div className='flex'>
                     <button
@@ -679,7 +771,6 @@ export default function College() {
                   <></>
                 )
               }
-
               {
                 status >= 5
                   ?
