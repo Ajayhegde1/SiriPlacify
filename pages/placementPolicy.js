@@ -1,18 +1,20 @@
 import photo from '../public/policy.png'
 
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Fragment } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
+import { CloseCircleOutlined } from '@ant-design/icons'
 
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
 import Button from '@/components/Buttons'
+import AddTierModal from '@/components/Modal/AddTierModal'
 
 import { addPlacementPolicy } from '@/redux/Slices/placementPolicy'
 import { routes } from '@/constants/routes'
 
-export default function placementPolicy () {
+export default function placementPolicy() {
   const router = useRouter()
   const dispatch = useDispatch()
 
@@ -20,22 +22,17 @@ export default function placementPolicy () {
 
   const [btnText, setBtnText] = useState('Save')
   const [isBtnDisabled, setIsBtnDisabled] = useState(true)
+  const [showTierModal, setShowTierModal] = useState(false)
 
   const [numberOfTiers, setNumberOfTiers] = useState(0)
   const [maxNumberOfOffers, setMaxNumberOfOffers] = useState(0)
-  const [minCTCT1, setMinCTCT1] = useState(0.0)
-  const [maxCTCT1, setMaxCTCT1] = useState(0.0)
-  const [minCTCT2, setMinCTCT2] = useState(0.0)
-  const [maxCTCT2, setMaxCTCT2] = useState(0.0)
-  const [minCTCT3, setMinCTCT3] = useState(0.0)
-  const [maxCTCT3, setMaxCTCT3] = useState(0.0)
+  const [placementPolicyList, setPlacementTierList] = useState([])
 
   useEffect(() => {
-    // make sure user entered proper values in field
-    if (numberOfTiers > 0 && maxNumberOfOffers > 0 && minCTCT1 > 0.0 && maxCTCT1 > 0.0 && minCTCT2 > 0.0 && maxCTCT2 > 0.0 && minCTCT3 > 0.0 && maxCTCT3 > 0.0) {
-      setIsBtnDisabled(false)
+    if ((numberOfTiers > 0 && maxNumberOfOffers > 0 && placementPolicyList.length > 0) == true) {
+      setIsBtnDisabled(!isBtnDisabled)
     }
-  }, [numberOfTiers, maxNumberOfOffers, minCTCT1, maxCTCT1, minCTCT2, maxCTCT2, minCTCT3, maxCTCT3])
+  }, [numberOfTiers, maxNumberOfOffers, placementPolicyList])
 
   useEffect(() => {
     if (user === null) {
@@ -47,16 +44,35 @@ export default function placementPolicy () {
     }
   }, [user])
 
+  const handleDeleteTier = (index) => {
+    const updatedList = [...placementPolicyList];
+  
+    updatedList.splice(index, 1);
+  
+    setPlacementTierList(updatedList);
+  };
+
+  const handleAddTier = () => {
+    if (placementPolicyList.length < numberOfTiers) {
+      setShowTierModal(true)
+    }
+  }
+  
+
+  const handleCTCChange = (index, field, value) => {
+    const updatedList = [...placementPolicyList];
+    updatedList[index] = {
+      ...updatedList[index],
+      [field]: parseFloat(value)
+    };
+    setPlacementTierList(updatedList);
+  }
+
   const handlePlacementPolicy = () => {
     const Data = {
       noOfTiers: numberOfTiers,
       maxOffers: maxNumberOfOffers,
-      minCTCT1,
-      maxCTCT1,
-      minCTCT2,
-      maxCTCT2,
-      minCTCT3,
-      maxCTCT3
+      tiers: placementPolicyList
     }
     setBtnText('Saving...')
     dispatch(addPlacementPolicy(Data))
@@ -89,54 +105,77 @@ export default function placementPolicy () {
                 onChangeHandler={e => setMaxNumberOfOffers(e.target.value)}
               />
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-              <TextField
-                label='Minimum CTC of tier 1'
-                placeholder='75,0000.00'
-                type='text'
-                value={minCTCT1}
-                onChangeHandler={e => setMinCTCT1(e.target.value)}
-              />
-              <TextField
-                label='Maximum CTC of tier 1'
-                placeholder='85,0000.00'
-                type='text'
-                value={maxCTCT1}
-                onChangeHandler={e => setMaxCTCT1(e.target.value)}
-              />
-              <TextField
-                label='Minimum CTC of tier 2'
-                placeholder='75,0000.00'
-                type='text'
-                value={minCTCT2}
-                onChangeHandler={e => setMinCTCT2(e.target.value)}
-              />
-              <TextField
-                label='Maximum CTC of tier 2'
-                placeholder='85,0000.00'
-                type='text'
-                value={maxCTCT2}
-                onChangeHandler={e => setMaxCTCT2(e.target.value)}
-              />
-              <TextField
-                label='Minimum CTC of tier 3'
-                placeholder='75,0000.00'
-                type='text'
-                value={minCTCT3}
-                onChangeHandler={e => setMinCTCT3(e.target.value)}
-              />
-              <TextField
-                label='Maximum CTC of tier 3'
-                placeholder='85,0000.00'
-                type='text'
-                value={maxCTCT3}
-                onChangeHandler={e => setMaxCTCT3(e.target.value)}
-              />
+            <div className='grid grid-cols-1 md:grid-cols-7 gap-4'>
+              {
+                placementPolicyList.map((item, index) =>
+                  <Fragment key={index}>
+                    <div className="col-span-3">
+                      <TextField
+                        label={`Minimum CTC of ${item.name}`}
+                        placeholder='75,0000.00'
+                        type='text'
+                        value={item.minCTC}
+                        onChangeHandler={(e) =>
+                          handleCTCChange(index, 'minCTC', e.target.value)
+                        }
+                      />
+                    </div>
+                    <div className="col-span-3">
+                      <TextField
+                        label={`Maximum CTC of ${item.name}`}
+                        placeholder='85,0000.00'
+                        type='text'
+                        value={item.maxCTC}
+                        onChangeHandler={(e) =>
+                          handleCTCChange(index, 'maxCTC', e.target.value)
+                        }
+                      />
+                    </div>
+                    <div className="flex col-span-1">
+                      <button
+                        className='my-auto'
+                        onClick={() => handleDeleteTier(index)}
+                      >
+                        <CloseCircleOutlined style={{ fontSize: '24px' }} />
+                      </button>
+                    </div>
+                  </Fragment>
+                )
+              }
             </div>
+            {
+              placementPolicyList.length < numberOfTiers 
+              ?
+              <div className="flex">
+                <button
+                  className='cursor-pointer ml-auto bg-green-500 text-white font-bold rounded-lg py-2 px-4'
+                  onClick={handleAddTier}>
+                  Add Tier
+                </button>
+              </div>
+              :
+              numberOfTiers === 0
+              ?
+              <div className="flex">
+                <button
+                  className='cursor-not-allowed ml-auto bg-gray-500 text-white font-bold rounded-lg py-2 px-4'
+                >
+                  No Tiers Added
+                </button>
+              </div>
+              :
+              <div className="flex">
+                <button
+                  className='ml-auto bg-gray-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'
+                >
+                  Max Tiers Added
+                </button>
+              </div>
+            }
             <div class='mt-6 mb-6'>
               <Button
                 btnText={btnText}
-                isBtnDisabled={isBtnDisabled}
+                disabled={isBtnDisabled}
                 onClickHandler={handlePlacementPolicy}
               />
             </div>
@@ -146,6 +185,11 @@ export default function placementPolicy () {
           <Image className='h-full w-full' src={photo} alt='students' />
         </div>
       </div>
+      <AddTierModal
+        showModal={showTierModal}
+        setShowModal={setShowTierModal}
+        setPlacementTierList={setPlacementTierList}
+      />
     </div>
   )
 }

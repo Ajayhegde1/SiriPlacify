@@ -47,7 +47,7 @@ export default function EditPlacementPolicy() {
 
   useEffect(() => {
     if (placementPolicy !== null) {
-      if (Object.keys(placementPolicy) !== 0) {
+      if (Object.keys(placementPolicy.placementPolicyData) !== 0 && placementPolicy.placementPolicyList.length !== 0) {
         setNoOfTiers(placementPolicy.placementPolicyData.noOfTiers)
         setMaxOffers(placementPolicy.placementPolicyData.maxOffers)
         const formattedPlacementPolicyList = placementPolicy.placementPolicyList.map(item => ({
