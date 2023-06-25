@@ -29,6 +29,7 @@ export default function BasicJobInfo({
   const [showWithdrawModal, setShowWithdrawModal] = useState(false)
   const [isApplied, setIsApplied] = useState(false)
   const [message, setMessage] = useState('')
+  const [isHired, setIsHired] = useState(false)
 
   const user = useSelector(state => state.user)
 
@@ -39,6 +40,7 @@ export default function BasicJobInfo({
           .then((res) => {
             if (res.data.status === 200) {
               setIsApplied(res.data.jobStatus)
+              setIsHired(res.data.isHired)
               setMessage(res.data.message)
             } else if (res.data.status === 423) {
               openNotification(
@@ -257,33 +259,30 @@ export default function BasicJobInfo({
                   </>
                   :
                   isApplied
-                    ? <div className='mt-6 lg:mt-20 grid grid-cols-3 gap-2'>
-                      {
-                      message === 'Job application status checked successfully' && new Date().getTime() < date.getTime() ?
-                      <>
-                      <div />
-                      <div
-                        onClick={() => setShowWithdrawModal(!showModal)}
-                        className='cursor-pointer rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
-                      >
-                        Withdraw
-                      </div>
-                      </>
-                        :
-                        <div>
-                        </div>
-                      }
-                      {
-                        message !== 'Job application status checked successfully' ?
-                          <div className='flex my-auto col-span-2 text-red-500 font-bold'>
-                            {message}
+                    ? <div className='mt-6 lg:mt-20 grid grid-cols-1 md:grid-cols-5 gap-2'>
+                      {message === 'Job application status checked successfully' && new Date().getTime() < date.getTime() && !isHired ? (
+                        <>
+                          <div />
+                          <div
+                            onClick={() => setShowWithdrawModal(!showModal)}
+                            className='cursor-pointer rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+                          >
+                            Withdraw
                           </div>
-                          :
-                          ''
-                        }
-                      <div
-                        className='col-span-1 rounded-lg text-base md:text-lg 2xl:text-xl bg-green-600 text-white font-bold text-center p-2'
-                      >
+                        </>
+                      ) : (
+                        <div className='hidden md:block'></div>
+                      )}
+
+                      {message !== 'Job application status checked successfully' ? (
+                        <div className='my-auto col-span-2 rounded-lg text-md md:text-base bg-red-600 text-white font-bold text-center p-2'>
+                          <span className='py-auto'>{message}</span>
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
+
+                      <div className='col-span-2 rounded-lg text-base text-md md:text-base bg-green-600 text-white font-bold text-center p-2'>
                         <span>{message === 'Job application status checked successfully' ? 'Applied' : 'Not Eligible'}</span>
                       </div>
                     </div>
