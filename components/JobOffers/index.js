@@ -1,4 +1,6 @@
 import JobItem from '../JobItem'
+import { Spin } from 'antd'
+
 export default function JobOffers ({ jobs }) {
   return (
     <div className='mt-10 mr-2 md:mr-6'>
@@ -6,7 +8,7 @@ export default function JobOffers ({ jobs }) {
         {
           jobs === null
             ? <div>
-              Loading...
+              <Spin size='large' />
               </div>
             : jobs.length === 0
               ? <div className='text-2xl font-Heading font-bold text-gray-500'>

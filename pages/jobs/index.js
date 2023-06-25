@@ -18,6 +18,7 @@ import { getClosedJob } from '@/redux/Slices/closedJobsSlice'
 import { getClosedJobForCollege } from '@/redux/Slices/closedJobsCollegeSlice'
 
 import { routes } from '@/constants/routes'
+import { Spin } from 'antd'
 
 export default function Jobs() {
   const dispatch = useDispatch()
@@ -95,8 +96,8 @@ export default function Jobs() {
             <h1 className='text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>Jobs</h1>
             {
               user === null
-                ? <>
-                </>
+                ? 
+                <Spin size='large' />
                 : user.accType === '0'
                   ? <JobSection
                     jobSection={jobSection}

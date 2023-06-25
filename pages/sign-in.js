@@ -10,6 +10,7 @@ import Button from '@/components/Buttons'
 
 import { signIn } from '@/redux/Slices/userSlice'
 import { useRouter } from 'next/router'
+import { Spin } from 'antd'
 
 export default function CollegeProfile () {
   const dispatch = useDispatch()
@@ -21,6 +22,7 @@ export default function CollegeProfile () {
   const [password, setPassword] = useState('')
   const [isBtnDisabled, setIsBtnDisabled] = useState(true)
   const [btnText, setBtnText] = useState('Sign In')
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     if (email.length > 0 && password.length > 0) {
@@ -38,6 +40,7 @@ export default function CollegeProfile () {
 
   const handleLogin = (e) => {
     e.preventDefault()
+    setLoading(true);
     dispatch(signIn({ email, password }))
   }
 
@@ -69,13 +72,18 @@ export default function CollegeProfile () {
             onChangeHandler={(e) => setPassword(e.target.value)}
             required
           />
-          <div>
+          <div className='flex gap-2'> 
             <Button
               type='submit'
               onClickHandler={handleLogin}
               disabled={isBtnDisabled}
               btnText={btnText}
             />
+            <div className='mt-1 ml-4'>
+                {
+                    isLoading && <Spin size='large' />
+                }
+            </div>
           </div>
         </form>
           <div className='border-2 border-gray-300 shadow-lg rounded-lg mt-6 p-8'>
