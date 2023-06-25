@@ -9,12 +9,14 @@ import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea'
 import DocHeader from '@/components/DocHeader'
 import Button from '@/components/Buttons'
+import SingleSelectComponent from '@/components/InputComponents/SingleSelectComponent'
 
 import student from '../public/students.png'
 import photo from '../public/photoupload.png'
 
 import { addStudentProfile } from '@/redux/Slices/studentSlice'
 import { routes } from '@/constants/routes'
+import { genderList } from '@/constants/addJobDropDowns'
 
 import { getDepartment } from '@/redux/Sagas/requests/features'
 
@@ -29,6 +31,7 @@ export default function studentProfile() {
   const [btnText, setBtnText] = useState('Add Profile')
   const [username, setUsername] = useState('')
   const [emailID, setEmail] = useState('')
+  const [gender, setGender] = useState(genderList[0].value)
   const [contactNo, setContactNo] = useState('')
   const [studentTenthMarks, setStudentTenthMarks] = useState('')
   const [studentTwelthMarks, setStudentTwelthMarks] = useState('')
@@ -40,10 +43,10 @@ export default function studentProfile() {
   const [departmentList, setDepartmentList] = useState([])
 
   useEffect(() => {
-    if (contactNo.length > 0 && studentID.length > 0) {
+    if (contactNo.length > 0 && studentID.length > 0 && gender !== 'Gender') {
       setIsBtnDisabled(false)
     }
-  }, [username, emailID, contactNo, studentID])
+  }, [contactNo, studentID,gender])
 
   useEffect(() => {
     if (user === null) {
@@ -101,7 +104,8 @@ export default function studentProfile() {
       studentTwelthMarks,
       studentUGMarks: studentGraduationMarks,
       userDescription,
-      dept
+      dept,
+      gender
     }
     dispatch(addStudentProfile(data))
     setBtnText('Adding Profile...')
@@ -188,6 +192,12 @@ export default function studentProfile() {
                 />
               </div>
             </div>
+            <SingleSelectComponent
+              value={gender}
+              onChangeHandler={(e) => setGender(e.target.value)}
+              options={genderList}
+              label="Select Gender"
+            />
             {
               departmentList === null
                 ?
@@ -204,7 +214,7 @@ export default function studentProfile() {
                     </label>
                     <Select
                       options={departmentList}
-                      placeholder="Select Streams"
+                      placeholder="Select Stream"
                       value={stream}
                       onChange={handleSelect}
                       isSearchable={true}

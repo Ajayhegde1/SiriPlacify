@@ -60,7 +60,7 @@ export default function editStudentProfile() {
                 setTimeout(() => {
                   window.location.reload();
                 }
-                , 2000);
+                  , 2000);
               })
               .catch((err) => {
                 console.log(err);
@@ -248,15 +248,15 @@ export default function editStudentProfile() {
                         disabled
                       />
                       <TextField
-                        label='Contact Number'
-                        placeholder='pes.edu'
+                        label='Department'
+                        placeholder='CSE'
                         type='text'
-                        value={profile.contactNo}
+                        value={profile.dept}
                         disabled
                       />
                     </div>
                   </div>
-                  <div className='grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-8'>
+                  <div className='mt-4 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-0 md:gap-4 2xl:gap-8'>
                     <div className='col-span-1'>
                       <TextField
                         label='10th Standard Marks'
@@ -288,27 +288,31 @@ export default function editStudentProfile() {
                 </div>
                 <div className='mr-0 md:mr-4'>
                   <TextField
-                    label='Department'
-                    placeholder='CSE'
+                    label='Gender'
+                    placeholder='Unisex'
                     type='text'
-                    value={profile.dept}
+                    value={profile.gender}
                     disabled
                   />
-                  <TextField
-                    label='student ID'
-                    placeholder='ABCUG123'
-                    type='text'
-                    value={profile.studentId}
-                    disabled
-                  />
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <TextField
+                      label='student ID'
+                      placeholder='ABCUG123'
+                      type='text'
+                      value={profile.studentId}
+                      disabled
+                    />
+                    <TextField
+                      label='Contact Number'
+                      placeholder='pes.edu'
+                      type='text'
+                      value={profile.contactNo}
+                      disabled
+                    />
+                  </div>
                   <TextArea
                     label='About the universities / colleges'
-                    placeholder='PES University, located in Bangalore, India is one of the country’s leading teaching and research universities.
-                            The University is committed to providing “navigation for the real world” that inspires students to find their
-                            true north.
-                            Our students graduate with the ability to adapt to an intellectually and technologically changing
-                            environment. Over the years, we have accomplished this with the participative efforts of the management,
-                            staff, students and parents.'
+                    placeholder='studentdescription'
                     rows='6'
                     disabled
                     value={profile.studentDescription}
