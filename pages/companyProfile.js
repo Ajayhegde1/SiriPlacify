@@ -59,6 +59,11 @@ export default function CompanyProfile () {
       if (user.accType !== '2') {
         router.push(routes.NOTFOUND)
       }
+      else{
+        if (user.signUpStatus === '1') {
+          router.push(routes.COMPANYDASHBOARD)
+        }
+      }
     }
   }, [user])
 

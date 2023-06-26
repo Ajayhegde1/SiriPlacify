@@ -8,6 +8,7 @@ import { useEffect, useState, Fragment } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { CloseCircleOutlined } from '@ant-design/icons'
+import { Spin } from 'antd'
 
 import pp from '@/public/pp1.png'
 
@@ -149,7 +150,7 @@ export default function EditPlacementPolicy() {
                     {
                       placementPolicy === null
                         ? <div>
-                          Loading...
+                          <Spin size='large' />
                         </div>
                         : Object.keys(placementPolicy).length === 0
                           ? <div>
@@ -185,7 +186,7 @@ export default function EditPlacementPolicy() {
                                   <Fragment key={index}>
                                     <div className="col-span-3">
                                       <TextField
-                                        label={`Minimum CTC of ${item.name}`}
+                                        label={`Minimum CTC of ${item.name} (in Rs.)`}
                                         placeholder='75,0000.00'
                                         type='text'
                                         value={item.minCTC}
@@ -196,7 +197,7 @@ export default function EditPlacementPolicy() {
                                     </div>
                                     <div className="col-span-3">
                                       <TextField
-                                        label={`Maximum CTC of ${item.name}`}
+                                        label={`Maximum CTC of ${item.name} (in Rs.)`}
                                         placeholder='85,0000.00'
                                         type='text'
                                         value={item.maxCTC}

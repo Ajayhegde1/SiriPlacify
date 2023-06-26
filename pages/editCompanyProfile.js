@@ -2,6 +2,7 @@ import photo from '../public/photoupload.png'
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { Spin } from 'antd'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -133,7 +134,7 @@ export default function EditCompanyProfile () {
         {
           profile === null
             ? <div>
-              loading...
+            <Spin size='large' />
             </div>
             : Object.keys(profile).length === 0
               ? <div>

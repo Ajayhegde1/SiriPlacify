@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
 import axios from 'axios'
+import { Spin } from 'antd'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -136,7 +137,7 @@ export default function CandidatesPage() {
                     {
                         profile === null
                             ? <div>
-                                loading...
+                               <Spin size='large' />
                             </div>
                             : Object.keys(profile).length === 0
                                 ? <div>

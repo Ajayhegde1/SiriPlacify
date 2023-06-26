@@ -98,6 +98,14 @@ export default function CollegeProfile() {
       if (user.accType !== '0') {
         router.push(routes.NOTFOUND)
       }
+      else{
+        if (user.signUpStatus === '1'){
+          router.push(routes.PLACEMENTPROFILE)
+        }
+        else if (user.signUpStatus === '2'){
+          router.push(routes.TPODASHBOARD)
+        }
+      }
     }
   }, [user])
 

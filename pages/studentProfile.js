@@ -46,7 +46,7 @@ export default function studentProfile() {
     if (contactNo.length > 0 && studentID.length > 0 && gender !== 'Gender') {
       setIsBtnDisabled(false)
     }
-  }, [contactNo, studentID,gender])
+  }, [contactNo, studentID, gender])
 
   useEffect(() => {
     if (user === null) {
@@ -54,6 +54,11 @@ export default function studentProfile() {
     } else if (user !== null) {
       if (user.accType !== '1') {
         router.push(routes.NOTFOUND)
+      }
+      else{
+        if (user.signUpStatus === '1') {
+          router.push(routes.JOBS)
+        }
       }
     }
   }, [user])
@@ -154,7 +159,7 @@ export default function studentProfile() {
             </div>
           </div>
           <div className='ml-6'>
-            <div className='grid grid-cols-1 md:grid-cols-5 gap-0 md:gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-4'>
               <div className='col-span-1'>
                 <TextField
                   label='Class X%'
@@ -173,25 +178,23 @@ export default function studentProfile() {
                   onChangeHandler={(e) => setStudentTwelthMarks(e.target.value)}
                 />
               </div>
-              <div className='col-span-1'>
+              <div className='col-span-2'>
                 <TextField
-                  label='CGPA'
+                  label='UG CGPA (on a scale of 10)'
                   placeholder='93%'
                   type='text'
                   value={studentGraduationMarks}
                   onChangeHandler={(e) => setStudentGraduationMarks(e.target.value)}
                 />
               </div>
-              <div className='col-span-1 lg:col-span-2'>
-                <TextField
-                  label='Student ID'
-                  placeholder='ABCUG123'
-                  type='text'
-                  value={studentID}
-                  onChangeHandler={(e) => setStudentID(e.target.value)}
-                />
-              </div>
             </div>
+            <TextField
+              label='Student ID'
+              placeholder='ABCUG123'
+              type='text'
+              value={studentID}
+              onChangeHandler={(e) => setStudentID(e.target.value)}
+            />
             <SingleSelectComponent
               value={gender}
               onChangeHandler={(e) => setGender(e.target.value)}

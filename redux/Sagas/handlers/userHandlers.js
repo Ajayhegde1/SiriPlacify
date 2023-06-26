@@ -30,7 +30,8 @@ export function * handleSignIn (action) {
         email: action.payload.email,
         username: response.data.username,
         sessionId: response.data.sessionid,
-        accType: response.data.accType
+        accType: response.data.accType,
+        signUpStatus: response.data.signUpStatus
       }
 
       yield put(setUser(data))

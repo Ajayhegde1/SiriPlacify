@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { Spin } from 'antd'
 import { utils, writeFile } from 'xlsx'
 
 import { getStudents } from '@/redux/Sagas/requests/features'
@@ -14,12 +15,12 @@ import Candidates from '@/components/Candidates'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
-export default function UserList () {
+export default function UserList() {
   const router = useRouter()
 
   const user = useSelector((state) => state.user)
 
-  const [students, setStudents] = useState([])
+  const [students, setStudents] = useState(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const handleExport = () => {
@@ -137,22 +138,23 @@ export default function UserList () {
               Add User
             </button>
           </div>
-          <div className='bg-white rounded-xl'>
-            {
-                            students === null
-                              ? <div className='flex justify-center items-center'>
-                                <h1 className='text-2xl font-Heading font-bold text-black'>Loading</h1>
-                              </div>
-                              : students.length === 0
-                                ? <div className='flex justify-center items-center'>
-                                  <h1 className='text-2xl font-Heading font-bold text-black'>No Students</h1>
-                                </div>
-                                : <Candidates
-                                    students={students}
-                                    isStudentsList={true}
-                                  />
-                        }
-          </div>
+          {
+            students === null
+              ? <div className='flex justify-center items-center p-4'>
+                <Spin size='large' />
+              </div>
+              : students.length === 0
+                ? <div className='flex justify-center items-center'>
+                  <h1 className='text-2xl font-Heading font-bold text-black'>No Students</h1>
+                </div>
+                :
+                <div className='bg-white rounded-xl'>
+                  <Candidates
+                  students={students}
+                  isStudentsList={true}
+                />
+                </div>
+          }
         </div>
       </main>
     </div>

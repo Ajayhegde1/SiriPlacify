@@ -12,6 +12,7 @@ export const routes = {
   EDITCOMPANYPROFILE: '/editCompanyProfile',
   NOTFOUND: '/404',
   USERMANAGEMENT: '/userManagement',
+  STUDENTLIST: '/studentList',
   TPODASHBOARD: '/dashboard/College',
   COMPANYDASHBOARD: '/dashboard/Company',
   UPLOADSTUDENTRESUME: '/uploadStudentResume',

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Spin } from 'antd'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -49,7 +50,7 @@ export default function Notifications () {
               {
                             Notifications === null
                               ? <div className='w-full p-4 bg-white rounded-lg shadow-xs'>
-                                Loading...
+                              <Spin size='large' />
                                 </div>
                               : Notifications.length === 0
                                 ? <div className='w-full p-4 bg-white rounded-lg shadow-xs'>

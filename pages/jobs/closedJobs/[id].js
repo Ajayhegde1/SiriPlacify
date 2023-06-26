@@ -9,6 +9,7 @@ import CompanyContact from '@/components/CompanyContact'
 // import ApplicableCourses from '@/components/ApplicableCourses'
 import BasicJobInfo from '@/components/BasicJobInfo'
 import Sidebar from '@/components/SideBar'
+import { Spin } from 'antd'
 import DocHeader from '@/components/DocHeader'
 
 import { openNotification, notificationTypes } from '@/utils/notifications'
@@ -94,7 +95,7 @@ export default function getClosedJobs () {
             {
                         job === null
                           ? <div>
-                            Loading...
+                          <Spin size='large' />
                             </div>
                           : Object.keys(job).length === 0
                             ? <div>

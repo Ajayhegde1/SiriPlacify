@@ -14,6 +14,7 @@ import ModeOfSelection from '@/components/ModeOfSelection'
 import CompanyContact from '@/components/CompanyContact'
 import OfferedCollegesList from '@/components/OfferedCollegesList'
 import ApplicableCourses from '@/components/ApplicableCoursesSelector'
+import { Spin } from 'antd'
 
 import { getJob, closeJob, updateJob } from '@/redux/Sagas/requests/features'
 import { openNotification, notificationTypes } from '@/utils/notifications'
@@ -264,7 +265,8 @@ export default function CompanyJobs () {
           </Link>
           {
             job === null
-              ? <div />
+              ? 
+              <Spin size='large' />
               : Object.keys(job).length === 0
                 ? <div>
                   No Data Found
@@ -329,7 +331,7 @@ export default function CompanyJobs () {
                     />
               : job === null
                 ? <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
-                  Loading ...
+                <Spin size='large' />
                 </div>
                 : Object.keys(job).length === 0
                   ? <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>

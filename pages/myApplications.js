@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
+import { Spin } from 'antd'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -56,7 +57,7 @@ export default function myApplications () {
               {
                 jobApplication === null
                   ? <div className='mt-4'>
-                    Loading...
+                  <Spin size='large' />
                   </div>
                   : jobApplication.length === 0
                     ? <div className='mt-4'>

@@ -250,7 +250,7 @@ export default function JobDesc({
           </div>
           <div className='text-gray-700 text-2xl font-bold font-Heading col-span-1 mt-8 pb-5'>CTC Breakdown</div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
-            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>CTC</div>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>CTC (in Rs.)</div>
             <input
               className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
               type='text'
@@ -258,7 +258,7 @@ export default function JobDesc({
               onChange={(e) => setJobCTC(e.target.value)}
               disabled={!(isEdit && user.accType === '2')}
             />
-            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Base Pay</div>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Base Pay (in Rs.)</div>
             <input
               className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
               type='text'
@@ -266,7 +266,7 @@ export default function JobDesc({
               onChange={(e) => setBasePay(e.target.value)}
               disabled={!(isEdit && user.accType === '2')}
             />
-            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Variable Pay</div>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Variable Pay (in Rs.)</div>
             <input
               className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
               type='text'
@@ -274,7 +274,7 @@ export default function JobDesc({
               onChange={(e) => setVariablePay(e.target.value)}
               disabled={!(isEdit && user.accType === '2')}
             />
-            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>RSU</div>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>RSU (in Rs.)</div>
             <input
               className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
               type='text'
@@ -381,7 +381,7 @@ export default function JobDesc({
 
           }
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
-            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>10th Marks</div>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>10th Marks (in %)</div>
             <input
               className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
               type='text'
@@ -391,7 +391,7 @@ export default function JobDesc({
             />
           </div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
-            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>12th Marks</div>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>12th Marks (in %)</div>
             <input
               className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
               type='text'
@@ -401,7 +401,7 @@ export default function JobDesc({
             />
           </div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
-            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>UG Marks</div>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>UG Marks (/10)</div>
             <input
               className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
               type='text'

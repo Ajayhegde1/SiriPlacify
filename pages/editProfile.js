@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
+import { Spin } from 'antd'
 
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
@@ -182,7 +183,7 @@ export default function EditProfile() {
         {
           profile === null
             ? <div>
-              loading...
+              <Spin size='large' />
             </div>
             : Object.keys(profile).length === 0
               ? <div>

@@ -265,21 +265,21 @@ export default function AddJob() {
             <h1 className='text-center md:text-left pb-6 mt-10 text-xl md:text-2xl font-Heading font-bold text-gray-800'>Marks Requirement</h1>
             <div className='grid grid-cols-3 gap-4'>
               <TextField
-                label='10th Marks'
+                label='10th Marks (in %)'
                 placeholder='95.00'
                 type='text'
                 value={tenthMarks}
                 onChangeHandler={(e) => setTenthMarks(e.target.value)}
               />
               <TextField
-                label='12th Marks'
+                label='12th Marks (in %)'
                 placeholder='95.00'
                 type='text'
                 value={twelfthMarks}
                 onChangeHandler={(e) => setTwelfthMarks(e.target.value)}
               />
               <TextField
-                label='UG Cgpa'
+                label='UG Cgpa (on a scale of 10)'
                 placeholder='0.0'
                 type='text'
                 value={UGCgpa}
@@ -390,21 +390,21 @@ export default function AddJob() {
           <h1 className='text-center md:text-left pb-4 mt-3 md:mt-6 text-xl md:text-2xl font-Heading font-bold text-gray-800'>CTC Breakdown</h1>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
             <TextField
-              label='Base Pay'
+              label='Base Pay (in Rs.)'
               placeholder='75,0000.00'
               type='text'
               value={basePay}
               onChangeHandler={(e) => setBasePay(e.target.value)}
             />
             <TextField
-              label='Variable Pay'
+              label='Variable Pay (in Rs.)'
               placeholder='75,0000.00'
               type='text'
               value={variablePay}
               onChangeHandler={(e) => setVariablePay(e.target.value)}
             />
             <TextField
-              label='RSU'
+              label='RSU (in Rs.)'
               placeholder='75,0000.00'
               type='text'
               value={RSU}
@@ -413,7 +413,7 @@ export default function AddJob() {
           </div>
           <div className='w-1/3'>
             <TextField
-              label='CTC'
+              label='CTC (in Rs.)'
               placeholder='75,0000.00'
               type='text'
               value={ctc}

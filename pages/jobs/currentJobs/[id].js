@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import { Spin } from 'antd'
 import { read, utils, writeFile } from 'xlsx'
 
 import Sidebar from '@/components/SideBar'
@@ -250,7 +251,7 @@ export default function CurrentJobs () {
                             />
                       : job === null
                         ? <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
-                          Loading ...
+                          <Spin size='large' />
                           </div>
                         : Object.keys(job).length === 0
                           ? <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>

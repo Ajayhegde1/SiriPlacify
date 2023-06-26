@@ -3,11 +3,15 @@ import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
+import { Spin } from 'antd'
 
 import UserAdditionModal from '@/components/Modal/userAdditionModal'
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
+import TextArea from '@/components/InputComponents/TextArea'
 import SingleSelectComponent from '@/components/InputComponents/SingleSelectComponent'
 import Button from '@/components/Buttons'
 
@@ -16,19 +20,75 @@ import { accountType } from '@/constants/users'
 import { routes } from '@/constants/routes'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 import { POST } from '@/config/api'
-import { getStudents } from '@/redux/Sagas/requests/features'
+import { genderList } from '@/constants/addJobDropDowns'
+import { getDepartment } from '@/redux/Sagas/requests/features'
 
-export default function UserManagement () {
+export default function UserManagement() {
   const router = useRouter()
+  const animatedComponents = makeAnimated();
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
   const user = useSelector((state) => state.user)
 
+  const [departmentList, setDepartmentList] = useState([])
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
+  const [studentTenthMarks, setStudentTenthMarks] = useState(0)
+  const [studentTwelthMarks, setStudentTwelthMarks] = useState(0)
+  const [studentGraduationMarks, setStudentGraduationMarks] = useState(0)
+  const [studentPGMarks, setStudentPGMarks] = useState(0)
+  const [studentID, setStudentID] = useState('')
+  const [userDescription, setUserDescription] = useState('')
+  const [gender, setGender] = useState(genderList[0].value)
+  const [contactNo, setContactNo] = useState('')
   const [accType, setAccType] = useState(accountType[0].value)
+  const [stream, setStream] = useState({})
+
+  useEffect(() => {
+    getDepartment()
+      .then((res) => {
+        if (res.data.status === 200) {
+          let departments = res.data.data
+          departments = departments.map((department) => {
+            return {
+              value: department.id,
+              label: department.depName
+            }
+          })
+          setDepartmentList(departments)
+        }
+        else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            res.data.message
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          err.message
+        )
+      })
+  }, [])
+
+  function handleSelect(data) {
+    setStream(data);
+  }
+
+  function validateGender(input) {
+    input = input.trim();
+    input = input.toLowerCase();
+    if (input === 'Male' || input === 'Female' || input === 'LGBTQ+') {
+      return input;
+    } else {
+      return null;
+    }
+  }
 
   const handleImport = ($event) => {
     const files = $event.target.files
@@ -42,11 +102,20 @@ export default function UserManagement () {
         if (sheets.length) {
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]])
           const updatedData = rows
-          // replace studentName with username in updatedData
+
           updatedData.forEach((element) => {
-            element.username = element.studentName
-            delete element.studentName
-          })
+            element.username = element.studentName;
+            delete element.studentName;
+
+            const validatedGender = validateGender(element.gender);
+
+            if (validatedGender) {
+              element.gender = validatedGender;
+            } else {
+              element.gender = 'Male';
+            }
+          });
+
 
           POST('/addStudents', updatedData, { sessionID: user.sessionId })
             .then((res) => {
@@ -56,12 +125,12 @@ export default function UserManagement () {
                   notificationTypes.SUCCESS,
                   'Success'
                 )
+                router.push(routes.STUDENTLIST)
               } else {
                 openNotification(
                   notificationTypes.ERROR,
                   'Please check your data. It is not in the correct format.'
                 )
-                window.location.reload()
               }
             }
             )
@@ -84,7 +153,16 @@ export default function UserManagement () {
       {
         email,
         accountType: accType,
-        username
+        username,
+        contactNo,
+        studentTenthMarks,
+        studentTwelthMarks,
+        studentUGMarks: studentGraduationMarks,
+        studentPGMarks,
+        studentId: studentID,
+        userDescription,
+        dept: stream.value,
+        gender
       }
     ]
     POST('/addStudents', Data, { sessionID: user.sessionId })
@@ -96,7 +174,7 @@ export default function UserManagement () {
             'Sucess',
             'Student Added'
           )
-          window.location.reload()
+          router.push(routes.STUDENTLIST)
         } else {
           openNotification(
             notificationTypes.ERROR,
@@ -160,12 +238,111 @@ export default function UserManagement () {
               onChangeHandler={e => setUsername(e.target.value)}
             />
             <div className='mt-8'>
-            <SingleSelectComponent
-              value={accType}
-              onChangeHandler={(e) => setAccType(e.target.value)}
-              options={accountType}
-              label='Type of the User'
+              <SingleSelectComponent
+                value={accType}
+                onChangeHandler={(e) => setAccType(e.target.value)}
+                options={accountType}
+                label='Type of the User'
+              />
+            </div>
+          </div>
+          <div className='ml-2 md:ml-6 grid grid-cols-1 gap-4'>
+            {
+              departmentList === null
+                ?
+                <Spin size='large' />
+                :
+                departmentList.length === 0
+                  ?
+                  <div>
+                  </div>
+                  :
+                  <div class='mt-2 mb-6'>
+                    <label class='block font-Poppins text-black text-md font-bold mb-2' for='username'>
+                      Select Stream
+                    </label>
+                    <Select
+                      options={departmentList}
+                      placeholder="Select Stream"
+                      value={stream}
+                      onChange={handleSelect}
+                      isSearchable={true}
+                      components={animatedComponents}
+                      closeMenuOnSelect={false}
+                      isMulti={false}
+                    />
+                  </div>
+            }
+            <div>
+              <TextArea
+                label='student description'
+                placeholder='Your message...'
+                rows='4'
+                value={userDescription}
+                onChangeHandler={(e) => setUserDescription(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className='ml-2 md:ml-6 grid grid-cols-1 lg:grid-cols-3 gap-4'>
+            <TextField
+              label='Contact No'
+              placeholder='9123123123'
+              type='text'
+              value={contactNo}
+              onChangeHandler={(e) => setContactNo(e.target.value)}
             />
+            <TextField
+              label='Student ID'
+              placeholder='ABCUG123'
+              type='text'
+              value={studentID}
+              onChangeHandler={(e) => setStudentID(e.target.value)}
+            />
+            <div className='mt-8'>
+              <SingleSelectComponent
+                value={gender}
+                onChangeHandler={(e) => setGender(e.target.value)}
+                options={genderList}
+                label="Select Gender"
+              />
+            </div>
+          </div>
+          <div className='ml-2 md:ml-6 grid grid-cols-1 lg:grid-cols-4 gap-4'>
+            <div className='col-span-1'>
+              <TextField
+                label='Class X%'
+                placeholder='93%'
+                type='text'
+                value={studentTenthMarks}
+                onChangeHandler={(e) => setStudentTenthMarks(e.target.value)}
+              />
+            </div>
+            <div className='col-span-1'>
+              <TextField
+                label='Class XII%'
+                placeholder='93%'
+                type='93%'
+                value={studentTwelthMarks}
+                onChangeHandler={(e) => setStudentTwelthMarks(e.target.value)}
+              />
+            </div>
+            <div className='col-span-1'>
+              <TextField
+                label='UG CGPA'
+                placeholder='93%'
+                type='text'
+                value={studentGraduationMarks}
+                onChangeHandler={(e) => setStudentGraduationMarks(e.target.value)}
+              />
+            </div>
+            <div className='col-span-1'>
+              <TextField
+                label='PG CGPA'
+                placeholder='93%'
+                type='text'
+                value={studentPGMarks}
+                onChangeHandler={(e) => setStudentPGMarks(e.target.value)}
+              />
             </div>
           </div>
           <div className='mt-8 ml-2 md:ml-6'>

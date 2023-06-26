@@ -63,7 +63,7 @@ export default function Candidates({
           <th className='px-6 py-4 text-gray-600'>Mobile</th>
           <th className='px-6 py-4 text-gray-600'>Class X%</th>
           <th className='px-6 py-4 text-gray-600'>Class XII%</th>
-          <th className='px-6 py-4 text-gray-600'>CGPA</th>
+          <th className='px-6 py-4 text-gray-600'>CGPA (/10)</th>
           {
             user === null
               ?

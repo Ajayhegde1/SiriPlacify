@@ -3,6 +3,7 @@ import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
 import axios from 'axios'
+import { Spin } from 'antd'
 import Image from 'next/image'
 import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
@@ -140,7 +141,7 @@ export default function editStudentProfile() {
           {
             profile === null
               ? <div>
-                loading...
+              <Spin size='large' />
               </div>
               : Object.keys(profile).length === 0
                 ? <div>
@@ -259,7 +260,7 @@ export default function editStudentProfile() {
                   <div className='mt-4 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-0 md:gap-4 2xl:gap-8'>
                     <div className='col-span-1'>
                       <TextField
-                        label='10th Standard Marks'
+                        label='10th Standard Marks (in %)'
                         placeholder='xyz.@gmail.com'
                         type='text'
                         value={profile.studentTenthMarks}
@@ -268,7 +269,7 @@ export default function editStudentProfile() {
                     </div>
                     <div className='col-span-1'>
                       <TextField
-                        label='12th Standard Marks'
+                        label='12th Standard Marks (in %)'
                         placeholder='9090909090'
                         type='text'
                         value={profile.studentTwelthMarks}
@@ -277,7 +278,7 @@ export default function editStudentProfile() {
                     </div>
                     <div className='col-span-1'>
                       <TextField
-                        label='UG CGPA'
+                        label='UG CGPA (on a scale of 10)'
                         placeholder='9090909090'
                         type='text'
                         value={profile.studentUGMarks}

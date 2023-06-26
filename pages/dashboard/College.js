@@ -72,7 +72,8 @@ export default function College () {
                 </div>
                 <div>
                   <h1 className='mt-1 font-DMSANS font-bold text-customGreenTwo text-center xl:text-4xl'>
-                    {data === null ? 0 : Object.keys(data) === 0 ? 0 : data.noOfStudents}
+                    {data === null ? 
+                               <Spin size='large' /> : Object.keys(data) === 0 ? 0 : data.noOfStudents}
                   </h1>
                 </div>
               </div>
@@ -86,7 +87,8 @@ export default function College () {
                 </div>
                 <div>
                   <h1 className='mt-1 font-DMSANS font-bold text-customGreenTwo text-center xl:text-4xl'>
-                    {data === null ? 0 : Object.keys(data) === 0 ? 0 : data.noOfCompanies}
+                    {data === null ? 
+                               <Spin size='large' /> : Object.keys(data) === 0 ? 0 : data.noOfCompanies}
                   </h1>
                 </div>
               </div>
@@ -100,7 +102,8 @@ export default function College () {
                 </div>
                 <div>
                   <h1 className='mt-1 font-DMSANS font-bold text-customGreenTwo text-center xl:text-4xl'>
-                    {data === null ? 0 : Object.keys(data) === 0 ? 0 : data.noOfStudentsPlaced}
+                    {data === null ? 
+                               <Spin size='large' /> : Object.keys(data) === 0 ? 0 : data.noOfStudentsPlaced}
                   </h1>
                 </div>
               </div>
@@ -114,7 +117,8 @@ export default function College () {
                 </div>
                 <div>
                   <h1 className='mt-1 font-DMSANS font-bold text-customGreenTwo text-center xl:text-4xl'>
-                    {data === null ? 0 : Object.keys(data) === 0 ? 0 : data.noOfOffers}
+                    {data === null ? 
+                               <Spin size='large' /> : Object.keys(data) === 0 ? 0 : data.noOfOffers}
                   </h1>
                 </div>
               </div>
@@ -133,7 +137,8 @@ export default function College () {
                       </div>
                     <div>
                         <h1 className='mt-1 font-DMSANS font-bold text-customGreenTwo text-center xl:text-4xl'>
-                            {data === null ? 0 : Object.keys(data) === 0 ? 0 : data.noOfT1Offers}
+                            {data === null ? 
+                               <Spin size='large' /> : Object.keys(data) === 0 ? 0 : data.noOfT1Offers}
                           </h1>
                       </div>
                   </div>
@@ -147,7 +152,8 @@ export default function College () {
                       </div>
                     <div>
                         <h1 className='mt-1 font-DMSANS font-bold text-customGreenTwo text-center xl:text-4xl'>
-                            {data === null ? 0 : Object.keys(data) === 0 ? 0 : data.noOfT2Offers}
+                            {data === null ? 
+                               <Spin size='large' /> : Object.keys(data) === 0 ? 0 : data.noOfT2Offers}
                           </h1>
                       </div>
                   </div>
@@ -161,7 +167,8 @@ export default function College () {
                       </div>
                     <div>
                         <h1 className='mt-1 font-DMSANS font-bold text-customGreenTwo text-center xl:text-4xl'>
-                            {data === null ? 0 : Object.keys(data) === 0 ? 0 : data.noOfT3Offers}
+                            {data === null ? 
+                               <Spin size='large' /> : Object.keys(data) === 0 ? 0 : data.noOfT3Offers}
                           </h1>
                       </div>
                   </div>
@@ -182,7 +189,8 @@ export default function College () {
                       </div>
                     <div>
                         <h1 className='mt-1 font-DMSANS font-bold text-customGreenTwo text-center xl:text-2xl'>
-                            {data === null ? 0 : Object.keys(data) === 0 ? 0 : data.meanPackage}
+                            {data === null ? 
+                               <Spin size='large' /> : Object.keys(data) === 0 ? 0 : data.meanPackage}
                           </h1>
                       </div>
                   </div>
@@ -196,7 +204,8 @@ export default function College () {
                       </div>
                     <div>
                         <h1 className='mt-1 font-DMSANS font-bold text-customGreenTwo text-center xl:text-2xl'>
-                            {data === null ? 0 : Object.keys(data) === 0 ? 0 : data.medianPackage}
+                            {data === null ? 
+                               <Spin size='large' /> : Object.keys(data) === 0 ? 0 : data.medianPackage}
                           </h1>
                       </div>
                   </div>
@@ -210,7 +219,8 @@ export default function College () {
                       </div>
                     <div>
                         <h1 className='mt-1 font-DMSANS font-bold text-customGreenTwo text-center xl:text-2xl'>
-                            {data === null ? 0 : Object.keys(data) === 0 ? 0 : data.highestPackage}
+                            {data === null ? 
+                               <Spin size='large' /> : Object.keys(data) === 0 ? 0 : data.highestPackage}
                           </h1>
                       </div>
                   </div>

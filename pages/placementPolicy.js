@@ -41,6 +41,11 @@ export default function placementPolicy() {
       if (user.accType !== '0') {
         router.push(routes.NOTFOUND)
       }
+      else{
+        if (user.signUpStatus === '2'){
+          router.push(routes.TPODASHBOARD)
+        }
+      }
     }
   }, [user])
 

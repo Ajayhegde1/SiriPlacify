@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
 import { read, utils, writeFile } from 'xlsx'
+import { Spin } from 'antd'
 
 import sheet from '../../../../public/sheets.png'
 import exportIMG from '../../../../public/export.png'
@@ -742,8 +743,8 @@ export default function College() {
           </Link>
           {
             collegeName === null
-              ? <>
-              </>
+              ? 
+              <Spin size='large' />
               : collegeName === ''
                 ? <div>
                   undefined colleges
@@ -886,7 +887,8 @@ export default function College() {
           <div className='mt-4 ml-3 md:ml-6 bg-white mr-10 rounded-xl p-6'>
             {
               candidates === null || typeof candidates === 'undefined'
-                ? <div />
+                ? 
+                <Spin size='large' />
                 : candidates.length === 0
                   ? <>
                   </>
@@ -905,7 +907,7 @@ export default function College() {
             {
               candidates === null || typeof candidates === 'undefined'
                 ? <div>
-                  Loading...
+                <Spin size='large' />
                 </div>
                 : candidates.length === 0
                   ? <div className='mt-6 mb-3 ml-6 font-medium'>
