@@ -4,11 +4,12 @@ import axios from 'axios'
 import Image from 'next/image'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
-
+import { jobSectorList } from '@/constants/addJobDropDowns'
 import edit from '../../public/edit.png'
 import { getJobDescFile, uploadJobDescFile } from '@/redux/Sagas/requests/features'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 import { getDepartment } from '@/redux/Sagas/requests/features'
+import SingleSelectComponent from '../InputComponents/SingleSelectComponent'
 
 export default function JobDesc({
   jobID,
@@ -215,7 +216,17 @@ export default function JobDesc({
               type='text'
               value={jobTitle}
               onChange={(e) => setJobTitle(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              disabled={!(isEdit)}
+            />
+          </div>
+          <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
+            <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Company Name</div>
+            <input
+              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              type='text'
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              disabled={!(isEdit)}
             />
           </div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
@@ -225,7 +236,7 @@ export default function JobDesc({
               type='text'
               value={jobLocation}
               onChange={(e) => setJobLocation(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              disabled={!(isEdit)}
             />
           </div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
@@ -235,17 +246,16 @@ export default function JobDesc({
               type='text'
               value={jobPosition}
               onChange={(e) => setJobPosition(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              disabled={!(isEdit)}
             />
           </div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Sector</div>
-            <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
-              type='text'
+            <SingleSelectComponent
               value={jobSector}
-              onChange={(e) => setJobSector(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              onChangeHandler={(e) => setJobSector(e.target.value)}
+              options={jobSectorList}
+              isDisabled={!(isEdit)}
             />
           </div>
           <div className='text-gray-700 text-2xl font-bold font-Heading col-span-1 mt-8 pb-5'>CTC Breakdown</div>
@@ -256,7 +266,7 @@ export default function JobDesc({
               type='text'
               value={jobCTC}
               onChange={(e) => setJobCTC(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              disabled={!(isEdit)}
             />
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Base Pay (in Rs.)</div>
             <input
@@ -264,7 +274,7 @@ export default function JobDesc({
               type='text'
               value={basePay}
               onChange={(e) => setBasePay(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              disabled={!(isEdit)}
             />
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Variable Pay (in Rs.)</div>
             <input
@@ -272,7 +282,7 @@ export default function JobDesc({
               type='text'
               value={variablePay}
               onChange={(e) => setVariablePay(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              disabled={!(isEdit)}
             />
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>RSU (in Rs.)</div>
             <input
@@ -280,7 +290,7 @@ export default function JobDesc({
               type='text'
               value={RSU}
               onChange={(e) => setRSU(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              disabled={!(isEdit)}
             />
           </div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
@@ -291,7 +301,7 @@ export default function JobDesc({
                 type='text'
                 value={jobDesc}
                 onChange={(e) => setJobDesc(e.target.value)}
-                disabled={!(isEdit && user.accType === '2')}
+                disabled={!(isEdit)}
                 rows='4'
               />
               <button
@@ -334,7 +344,7 @@ export default function JobDesc({
               type='text'
               value={jobBond}
               onChange={(e) => setJobBond(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              disabled={!(isEdit)}
             />
           </div>
           <div className='text-gray-700 text-2xl font-bold font-Heading col-span-1 mt-8 pb-5'>Criteria</div>
@@ -345,7 +355,7 @@ export default function JobDesc({
               type='text'
               value={jobCriteria}
               onChange={(e) => setJobCriteria(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              disabled={!(isEdit)}
             />
           </div>
           {
@@ -353,32 +363,26 @@ export default function JobDesc({
               ?
               <></>
               :
-              jobDept.length === 0
-                ?
-                <div>
+              <div class="py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200">
+                <div className='col-span-1'>
+                  <label class='block font-Poppins text-black text-md font-bold mb-2' for='username'>
+                    Streams
+                  </label>
                 </div>
-                :
-                <div class="py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200">
-                  <div className='col-span-1'>
-                    <label class='block font-Poppins text-black text-md font-bold mb-2' for='username'>
-                      Streams
-                    </label>
-                  </div>
-                  <div className='col-span-1 lg:col-span-5'>
-                    <Select
-                      options={departmentList}
-                      placeholder="Select Streams"
-                      value={jobDept}
-                      onChange={handleSelect}
-                      isSearchable={true}
-                      components={animatedComponents}
-                      isDisabled={!(isEdit && user.accType === '2')}
-                      closeMenuOnSelect={false}
-                      isMulti
-                    />
-                  </div>
+                <div className='col-span-1 lg:col-span-5'>
+                  <Select
+                    options={departmentList}
+                    placeholder="Select Streams"
+                    value={jobDept}
+                    onChange={handleSelect}
+                    isSearchable={true}
+                    components={animatedComponents}
+                    isDisabled={!(isEdit)}
+                    closeMenuOnSelect={false}
+                    isMulti
+                  />
                 </div>
-
+              </div>
           }
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>10th Marks (in %)</div>
@@ -387,7 +391,7 @@ export default function JobDesc({
               type='text'
               value={tenthMarks}
               onChange={(e) => setTenthMarks(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              disabled={!(isEdit)}
             />
           </div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
@@ -397,7 +401,7 @@ export default function JobDesc({
               type='text'
               value={twelfthMarks}
               onChange={(e) => setTwelfthMarks(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              disabled={!(isEdit)}
             />
           </div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
@@ -407,7 +411,7 @@ export default function JobDesc({
               type='text'
               value={UGCgpa}
               onChange={(e) => setUGCgpa(e.target.value)}
-              disabled={!(isEdit && user.accType === '2')}
+              disabled={!(isEdit)}
             />
           </div>
         </div>

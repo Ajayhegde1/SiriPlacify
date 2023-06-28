@@ -837,7 +837,7 @@ export default function College() {
                       Schedule Interview
                     </span>
                     :
-                    Object.keys(testData).length === 0
+                    Object.keys(intData).length === 0
                       ?
                       <span>
                         Schedule Interview

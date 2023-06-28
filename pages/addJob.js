@@ -14,7 +14,7 @@ import DocHeader from '@/components/DocHeader'
 import { addJob, addJobByCompany } from '@/redux/Slices/jobSlice'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
-import { jobStatusList, modeOfSelectionList, finalSelection, jobSector, genderList } from '@/constants/addJobDropDowns'
+import { jobStatusList, modeOfSelectionList, finalSelection, jobSectorList, genderList } from '@/constants/addJobDropDowns'
 import { routes } from '@/constants/routes'
 
 import { getDepartment } from '@/redux/Sagas/requests/features';
@@ -49,7 +49,7 @@ export default function AddJob() {
   const [contactPersonPhoneNumber, setContactPersonPhoneNumber] = useState('')
   const [contactPersonEmail, setContactPersonEmail] = useState('')
   const [jobStatus, setJobStatus] = useState(jobStatusList[0].value)
-  const [sector, setSector] = useState(jobSector[0].value)
+  const [sector, setSector] = useState(jobSectorList[0].value)
   const [modeOfSelection, setModeOfSelection] = useState(modeOfSelectionList[0].value)
   const [gender, setGender] = useState(genderList[0].value)
   const [finalMode, setFinalMode] = useState(finalSelection[0].value)
@@ -292,7 +292,7 @@ export default function AddJob() {
               <SingleSelectComponent
                 value={sector}
                 onChangeHandler={(e) => setSector(e.target.value)}
-                options={jobSector}
+                options={jobSectorList}
               />
             </div>
             <TextField

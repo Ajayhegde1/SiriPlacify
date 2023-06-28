@@ -45,8 +45,20 @@ export default function SetTestLinkModal({
         }
     }, [platform, url, value])
 
+    const validateURL = (inputURL) => {
+        const domainPattern = new RegExp('^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6}(\/[A-Za-z0-9-]+)?$');
+        return domainPattern.test(inputURL);
+    };  
+
     const handleChangePassword = () => {
         setBtnText('Scheduling')
+
+        if (url!=="" && !validateURL(url)) {
+            openNotification(notificationTypes.ERROR, 'Error', 'Invalid URL');
+            setBtnText('Schedule');
+            return;
+        }
+        
         const data = {
             collegeID,
             jobID,

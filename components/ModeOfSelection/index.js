@@ -22,7 +22,7 @@ export default function ModeOfSelection ({
             type='text'
             value={modeOfSelection}
             onChange={(e) => setModeOfSelection(e.target.value)}
-            disabled={!(isEdit && user.accType === '2')}
+            disabled={!(isEdit)}
           />
         </div>
         <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
@@ -32,7 +32,7 @@ export default function ModeOfSelection ({
             type='text'
             value={finalDesc}
             onChange={(e) => setFinalDesc(e.target.value)}
-            disabled={!(isEdit && user.accType === '2')}
+            disabled={!(isEdit)}
           />
         </div>
       </div>

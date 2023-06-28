@@ -8,7 +8,8 @@ const SingleSelectComponent = ({
   options = [],
   onChangeHandler,
   margin = defaultInputMargin,
-  required = false
+  required = false,
+  isDisabled = false
 }) => {
   return (
     <div
@@ -19,9 +20,10 @@ const SingleSelectComponent = ({
     >
 
       <select
-        className={inputStyles.container1}
+        className={isDisabled === true ? 'cursor-not-allowed bg-gray-300 border-2 border-gray-400 rounded w-full p-4 text-black leading-tight focus:outline-none focus:shadow-outline' : 'border-2 border-gray-400 rounded w-full p-4 text-black leading-tight focus:outline-none focus:shadow-outline'}
         onChange={onChangeHandler}
         value={value}
+        disabled={isDisabled}
       >
         {options.map((option) => (
           <option

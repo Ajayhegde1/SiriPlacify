@@ -24,7 +24,7 @@ export default function CompanyContact ({
             type='text'
             value={contactName}
             onChange={(e) => setJobContactName(e.target.value)}
-            disabled={!(isEdit && user.accType === '2')}
+            disabled={!(isEdit)}
           />
         </div>
         <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
@@ -34,7 +34,7 @@ export default function CompanyContact ({
             type='text'
             value={contactPhone}
             onChange={(e) => setContactPhone(e.target.value)}
-            disabled={!(isEdit && user.accType === '2')}
+            disabled={!(isEdit)}
           />
         </div>
         <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
@@ -44,7 +44,7 @@ export default function CompanyContact ({
             type='text'
             value={contactEmail}
             onChange={(e) => setContactEmail(e.target.value)}
-            disabled={!(isEdit && user.accType === '2')}
+            disabled={!(isEdit)}
           />
         </div>
       </div>

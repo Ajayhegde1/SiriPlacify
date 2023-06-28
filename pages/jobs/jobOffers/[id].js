@@ -144,7 +144,7 @@ export default function JobOffers () {
                   RSU={job.RSU}
                   tenthMarks={job.tenthMarks}
                   twelfthMarks={job.twelfthMarks}
-                  UGCgpa={job.ugCGPA}
+                  UGCgpa={job.UGCgpa}
                   jobSection={2}
                 />
           }

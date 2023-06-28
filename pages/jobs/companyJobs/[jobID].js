@@ -49,7 +49,7 @@ export default function CompanyJobs () {
   const [tenthMarks, setTenthMarks] = useState(0.0)
   const [twelfthMarks, setTwelfthMarks] = useState(0.0)
   const [UGCgpa, setUGCgpa] = useState(0.0)
-  const [jobDept, setjobDept] = useState([])
+  const [jobDept, setDept] = useState([])
   const [isEdit, setIsEdit] = useState(false)
 
   const { jobID } = router.query
@@ -136,15 +136,17 @@ export default function CompanyJobs () {
                 setJobFinalSelection(res.data.data.jobFinalSelection)
                 setTenthMarks(res.data.data.tenthMarks)
                 setTwelfthMarks(res.data.data.twelfthMarks)
-                setUGCgpa(res.data.data.ugCGPA)
-                let deet = res.data.data.jobDept
-                deet = deet.map((department) => {
-                  return {
-                    value: department.id,
-                    label: department.depName
-                  }
-                })
-                setjobDept(deet)
+                setUGCgpa(res.data.data.UGCgpa)
+                if (typeof res.data.data.jobDept !== 'undefined' && res.data.data.jobDept !== null && res.data.data.jobDept.length > 0) {
+                  let deet = res.data.data.jobDept
+                  deet = deet.map((department) => {
+                    return {
+                      value: department.id,
+                      label: department.depName
+                    }
+                  })
+                  setDept(deet)
+                }
               } else if (res.data.status === 423) {
                 openNotification(
                   notificationTypes.ERROR,
@@ -168,7 +170,8 @@ export default function CompanyJobs () {
             .catch((err) => {
               openNotification(
                 notificationTypes.ERROR,
-                'Error'
+                'Error',
+                err.message
               )
             })
         }
@@ -196,7 +199,8 @@ export default function CompanyJobs () {
       jobFinalSelection,
       tenthMarks,
       twelfthMarks,
-      UGCgpa
+      UGCgpa,
+      jobDept
     }
     updateJob(jobID, data)
       .then((res) => {
@@ -365,7 +369,7 @@ export default function CompanyJobs () {
                       setBasePay={setJobBasePay}
                       variablePay={jobVariablePay}
                       jobDept={jobDept}
-                      setJobDept={setjobDept}
+                      setJobDept={setDept}
                       setVariablePay={setJobVariablePay}
                       RSU={jobRSU}
                       setRSU={setJobRSU}

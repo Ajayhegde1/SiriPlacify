@@ -95,7 +95,7 @@ export const finalSelection = [
   }
 ]
 
-export const jobSector = [
+export const jobSectorList = [
   {
     id: 0,
     value: 'Sector',
