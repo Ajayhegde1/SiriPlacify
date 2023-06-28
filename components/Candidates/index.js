@@ -53,7 +53,7 @@ export default function Candidates({
           {
             user === null
               ? <></>
-              : user.accType === '2'
+              : user.accType !== '1'
                 ? <th />
                 : <></>
           }
@@ -91,11 +91,11 @@ export default function Candidates({
                     {
                       user === null
                         ? <></>
-                        : user.accType === '2'
+                        : user.accType !== '1'
                           ? <td>
                             <input
                               type='checkbox'
-                              className='h-6 w-6'
+                              className={user === null ? "" : user.accType === '0' ? 'mx-5 h-6 w-6' : user.accType === '2' ? 'h-6 w-6' : ""}
                               onChange={(event) => addPromoteStudent(event, student)}
                             />
                           </td>

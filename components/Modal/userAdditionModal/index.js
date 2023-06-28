@@ -64,12 +64,12 @@ export default function UserAdditionModal ({
           </div>
         </div>
         <div className='pt-5 pl-5 rounded-3xl'>
-          <div className='grid grid-cols-2 gap-4'>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-4'>
             <div className='mt-4'>
               <a
                 href='/sample.xlsx'
                 download='sample.xlsx'
-                className='ml-10 mt-1 bg-blue-300 hover:bg-green-300 border-2 text-black font-bold py-5 px-4 text-base rounded-xl focus:outline-none focus:shadow-outline'
+                className='ml-0 md:ml-10 mt-1 bg-blue-300 hover:bg-green-300 border-2 text-black font-bold py-5 px-4 text-base rounded-xl focus:outline-none focus:shadow-outline'
               >
                 Download Sample sheet
               </a>

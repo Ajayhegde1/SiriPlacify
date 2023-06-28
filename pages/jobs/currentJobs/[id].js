@@ -101,7 +101,7 @@ export default function CurrentJobs() {
     utils.sheet_add_aoa(ws, headings)
     const outdata = JSON.stringify(studentList, [
       'uid',
-      'studentID',
+      'studentId',
       'username',
       'email',
       'contactNo',
@@ -488,6 +488,7 @@ export default function CurrentJobs() {
                 ? <></>
                 : <AppliedStudents
                   jobID={id}
+                  collegeID={college === null ? '' : college.uid}
                   studentList={studentList}
                   setStudentList={setStudentList}
                 />

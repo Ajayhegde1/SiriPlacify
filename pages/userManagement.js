@@ -35,10 +35,10 @@ export default function UserManagement() {
   const [departmentList, setDepartmentList] = useState([])
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
-  const [studentTenthMarks, setStudentTenthMarks] = useState(0)
-  const [studentTwelthMarks, setStudentTwelthMarks] = useState(0)
-  const [studentGraduationMarks, setStudentGraduationMarks] = useState(0)
-  const [studentPGMarks, setStudentPGMarks] = useState(0)
+  const [studentTenthMarks, setStudentTenthMarks] = useState()
+  const [studentTwelthMarks, setStudentTwelthMarks] = useState()
+  const [studentGraduationMarks, setStudentGraduationMarks] = useState()
+  const [studentPGMarks, setStudentPGMarks] = useState()
   const [studentID, setStudentID] = useState('')
   const [userDescription, setUserDescription] = useState('')
   const [gender, setGender] = useState(genderList[0].value)
@@ -76,6 +76,10 @@ export default function UserManagement() {
       })
   }, [])
 
+  function sanitizeCTCInput(inputValue) {
+    return inputValue.replace(/[^0-9.]/g, '');
+  }
+
   function handleSelect(data) {
     setStream(data);
   }
@@ -98,48 +102,71 @@ export default function UserManagement() {
       reader.onload = (event) => {
         const wb = read(event.target.result)
         const sheets = wb.SheetNames
-
+  
         if (sheets.length) {
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]])
           const updatedData = rows
-
+  
+          let isValidData = true; // Flag variable to track validation status
+  
           updatedData.forEach((element) => {
             element.username = element.studentName;
             delete element.studentName;
-
+          
             const validatedGender = validateGender(element.gender);
-
+          
             if (validatedGender) {
               element.gender = validatedGender;
             } else {
               element.gender = 'Male';
             }
+          
+            const marksFields = ['studentTenthMarks', 'studentTwelthMarks', 'studentUGMarks', 'studentPGMarks'];
+          
+            for (const field of marksFields) {
+              const marksValue = parseFloat(element[field]);
+              if (field === 'studentPGMarks' && (marksValue === null || marksValue === '' || isNaN(marksValue))) {
+                continue; // Skip validation for studentPGMarks if it's null or empty string
+              }
+              if (isNaN(marksValue) || !Number.isInteger(marksValue)) {
+                console.log('Invalid marks value', field, marksValue);
+                openNotification(notificationTypes.ERROR, 'Error', 'Please check your data. It is not in the correct format.')
+                isValidData = false; // Set isValidData flag to false
+                break; // Exit the loop
+              }
+            }
+  
+            if (!isValidData) {
+              return; // Exit the forEach loop if isValidData flag is false
+            }
           });
-
-
-          POST('/addStudents', updatedData, { sessionID: user.sessionId })
-            .then((res) => {
-              const status = parseInt(res.data.status)
-              if (status === 200 || status === 304 || status === 'ok') {
-                openNotification(
-                  notificationTypes.SUCCESS,
-                  'Success'
-                )
-                router.push(routes.STUDENTLIST)
-              } else {
+  
+          if (isValidData) {
+            POST('/addStudents', updatedData, { sessionID: user.sessionId })
+              .then((res) => {
+                const status = parseInt(res.data.status)
+                if (status === 200 || status === 304 || status === 'ok') {
+                  openNotification(
+                    notificationTypes.SUCCESS,
+                    'Success'
+                  )
+                  router.push(routes.STUDENTLIST)
+                } else {
+                  openNotification(
+                    notificationTypes.ERROR,
+                    'Please check your data. It is not in the correct format.'
+                  )
+                }
+              }
+              )
+              .catch((err) => {
                 openNotification(
                   notificationTypes.ERROR,
                   'Please check your data. It is not in the correct format.'
                 )
-              }
-            }
-            )
-            .catch((err) => {
-              openNotification(
-                notificationTypes.ERROR,
-                'Please check your data. It is not in the correct format.'
-              )
-            })
+              })
+          }
+  
           setShowModal(!showModal)
           openNotification(notificationTypes.SUCCESS, 'Sucess', 'File Uploaded Sucessfully')
         }
@@ -226,7 +253,7 @@ export default function UserManagement() {
             <TextField
               label='Email ID'
               placeholder='abc@gmail.com'
-              type='text'
+              type='email'
               value={email}
               onChangeHandler={e => setEmail(e.target.value)}
             />
@@ -314,7 +341,7 @@ export default function UserManagement() {
                 placeholder='93%'
                 type='text'
                 value={studentTenthMarks}
-                onChangeHandler={(e) => setStudentTenthMarks(e.target.value)}
+                onChangeHandler={(e) => setStudentTenthMarks(sanitizeCTCInput(e.target.value))}
               />
             </div>
             <div className='col-span-1'>
@@ -323,7 +350,7 @@ export default function UserManagement() {
                 placeholder='93%'
                 type='93%'
                 value={studentTwelthMarks}
-                onChangeHandler={(e) => setStudentTwelthMarks(e.target.value)}
+                onChangeHandler={(e) => setStudentTwelthMarks(sanitizeCTCInput(e.target.value))}
               />
             </div>
             <div className='col-span-1'>
@@ -332,7 +359,7 @@ export default function UserManagement() {
                 placeholder='93%'
                 type='text'
                 value={studentGraduationMarks}
-                onChangeHandler={(e) => setStudentGraduationMarks(e.target.value)}
+                onChangeHandler={(e) => setStudentGraduationMarks(sanitizeCTCInput(e.target.value))}
               />
             </div>
             <div className='col-span-1'>
@@ -341,7 +368,7 @@ export default function UserManagement() {
                 placeholder='93%'
                 type='text'
                 value={studentPGMarks}
-                onChangeHandler={(e) => setStudentPGMarks(e.target.value)}
+                onChangeHandler={(e) => setStudentPGMarks(sanitizeCTCInput(e.target.value))}
               />
             </div>
           </div>

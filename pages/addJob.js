@@ -35,13 +35,13 @@ export default function AddJob() {
   const [designation, setDesignation] = useState('')
   const [locationOfWork, setLocationOfWork] = useState('')
   const [selectedDate, setSelectedDate] = useState(null)
-  const [ctc, setCtc] = useState('')
-  const [basePay, setBasePay] = useState(0.0)
-  const [variablePay, setVariablePay] = useState(0.0)
-  const [RSU, setRSU] = useState(0.0)
-  const [tenthMarks, setTenthMarks] = useState(0.0)
-  const [twelfthMarks, setTwelfthMarks] = useState(0.0)
-  const [UGCgpa, setUGCgpa] = useState(0.0)
+  const [ctc, setCtc] = useState()
+  const [basePay, setBasePay] = useState()
+  const [variablePay, setVariablePay] = useState()
+  const [RSU, setRSU] = useState()
+  const [tenthMarks, setTenthMarks] = useState()
+  const [twelfthMarks, setTwelfthMarks] = useState()
+  const [UGCgpa, setUGCgpa] = useState()
   const [applicableCourses, setApplicableCourses] = useState('')
   const [briefJobDescription, setBriefJobDescription] = useState('')
   const [bondDetails, setBondDetails] = useState('')
@@ -113,6 +113,10 @@ export default function AddJob() {
 
   function handleSelect(data) {
     setSelectedOptions(data);
+  }
+
+  function sanitizeCTCInput(inputValue) {
+    return inputValue.replace(/[^0-9.]/g, '');
   }
 
   const addJobHandler = () => {
@@ -269,21 +273,21 @@ export default function AddJob() {
                 placeholder='95.00'
                 type='text'
                 value={tenthMarks}
-                onChangeHandler={(e) => setTenthMarks(e.target.value)}
+                onChangeHandler={(e) => setTenthMarks(sanitizeCTCInput(e.target.value))}
               />
               <TextField
                 label='12th Marks (in %)'
                 placeholder='95.00'
                 type='text'
                 value={twelfthMarks}
-                onChangeHandler={(e) => setTwelfthMarks(e.target.value)}
+                onChangeHandler={(e) => setTwelfthMarks(sanitizeCTCInput(e.target.value))}
               />
               <TextField
                 label='UG Cgpa (on a scale of 10)'
                 placeholder='0.0'
                 type='text'
                 value={UGCgpa}
-                onChangeHandler={(e) => setUGCgpa(e.target.value)}
+                onChangeHandler={(e) => setUGCgpa(sanitizeCTCInput(e.target.value))}
               />
             </div>
           </div>
@@ -394,21 +398,21 @@ export default function AddJob() {
               placeholder='75,0000.00'
               type='text'
               value={basePay}
-              onChangeHandler={(e) => setBasePay(e.target.value)}
+              onChangeHandler={(e) => setBasePay(sanitizeCTCInput(e.target.value))}
             />
             <TextField
               label='Variable Pay (in Rs.)'
               placeholder='75,0000.00'
               type='text'
               value={variablePay}
-              onChangeHandler={(e) => setVariablePay(e.target.value)}
+              onChangeHandler={(e) => setVariablePay(sanitizeCTCInput(e.target.value))}
             />
             <TextField
               label='RSU (in Rs.)'
               placeholder='75,0000.00'
               type='text'
               value={RSU}
-              onChangeHandler={(e) => setRSU(e.target.value)}
+              onChangeHandler={(e) => setRSU(sanitizeCTCInput(e.target.value))}
             />
           </div>
           <div className='w-1/3'>
@@ -417,7 +421,7 @@ export default function AddJob() {
               placeholder='75,0000.00'
               type='text'
               value={ctc}
-              onChangeHandler={(e) => setCtc(e.target.value)}
+              onChangeHandler={(e) => setCtc(sanitizeCTCInput(e.target.value))}
             />
           </div>
         </div>
@@ -451,7 +455,7 @@ export default function AddJob() {
             <TextField
               label='Email ID of the contact person'
               placeholder='Btech@gmail.com'
-              type='text'
+              type='email'
               value={contactPersonEmail}
               onChangeHandler={(e) => setContactPersonEmail(e.target.value)}
             />
