@@ -136,6 +136,7 @@ export default function CurrentJobs () {
                   let deet = res.data.data.jobDept
                   deet = deet.map((department) => {
                     return {
+                      ...department, 
                       value: department.id,
                       label: department.depName
                     }

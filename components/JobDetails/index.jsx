@@ -7,7 +7,7 @@ import { useState } from 'react'
 
 import { updateJobTPO } from '@/redux/Sagas/requests/features'
 
-export default function JobDetails ({
+export default function JobDetails({
   jobID,
   companyName,
   setCompanyName,
@@ -59,8 +59,8 @@ export default function JobDetails ({
     const data = {
       companyName,
       jobTitle,
-      jobBasePay,
-      jobVariablePay,
+      basePay,
+      variablePay,
       jobRSU,
       jobLocation,
       jobPositionType: jobPosition,
@@ -70,9 +70,9 @@ export default function JobDetails ({
       jobBond,
       jobCriteria,
       jobTestMode: jobModeOfSelection,
-      jobContactName,
-      jobContactPhoneNo,
-      jobContactEmail,
+      contactName,
+      contactPhone,
+      contactEmail,
       jobFinalSelection,
       tenthMarks,
       twelfthMarks,
@@ -184,7 +184,10 @@ export default function JobDetails ({
         isEdit={isEdit}
       />
       <div className='mt-12'>
-        <ApplicableCourses />
+        <ApplicableCourses
+          jobDept={jobDept}
+          setJobDept={setJobDept}
+        />
       </div>
     </div>
   )

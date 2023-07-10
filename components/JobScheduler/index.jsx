@@ -7,6 +7,7 @@ import SetTestLinkModal from '@/components/Modal/SetTestLinkModal'
 import SetInterviewModal from '@/components/Modal/SetInterviewModal'
 import UpdatePPTModal from '@/components/Modal/UpdatePPTModal'
 import UpdateTestLinkModal from '@/components/Modal/UpdateTestLinkModal'
+import UpdateInterviewModal from '../Modal/UpdateInterviewModal'
 
 import ppt from '@/public/pptIcon.png'
 import test from '@/public/testIcon.png'
@@ -15,7 +16,7 @@ import interview from '@/public/interviewIcon.png'
 import { getProfile } from '@/redux/Slices/profile'
 import { getJobData } from '@/redux/Sagas/requests/features'
 
-export default function JobScheduler ({
+export default function JobScheduler({
   jobID
 }) {
   const dispatch = useDispatch()
@@ -27,6 +28,7 @@ export default function JobScheduler ({
   const [showIntModal, setShowIntModal] = useState(false)
   const [showUpdatePPTModal, setShowUpdatePPTModal] = useState(false)
   const [showUpdateTestModal, setShowUpdateTestModal] = useState(false)
+  const [showUpdateIntModal, setShowUpdateIntModal] = useState(false)
   const [pptData, setPptData] = useState(null)
   const [testData, setTestData] = useState(null)
   const [intData, setIntData] = useState(null)
@@ -62,132 +64,156 @@ export default function JobScheduler ({
     <div className='ml-3 md:ml-6 mt-10 flex flex-col xl:flex-row gap-4 justify-start mr-3 md:mr-12'>
       <div>
         {
-                    pptData === null
-                      ? <button
-                          onClick={() => setShowPPTModal(true)}
-                          className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-                        >
-                        <Image
-                          src={ppt}
-                          alt='ppt'
-                          className='h-6 w-6 mr-2'
-                          width={20}
-                          height={20}
-                        />
-                        <span>
-                          Schedule PPT
-                        </span>
-                      </button>
-                      : Object.keys(pptData).length === 0
-                        ? <button
-                            onClick={() => setShowPPTModal(true)}
-                            className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-                          >
-                          <Image
-                            src={ppt}
-                            alt='ppt'
-                            className='h-6 w-6 mr-2'
-                            width={20}
-                            height={20}
-                          />
-                          <span>
-                            Schedule PPT
-                          </span>
-                        </button>
-                        : <button
-                            onClick={() => setShowUpdatePPTModal(true)}
-                            className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-                          >
-                          <Image
-                            src={ppt}
-                            alt='ppt'
-                            className='h-6 w-6 mr-2'
-                            width={20}
-                            height={20}
-                          />
-                          <span>
-                            View PPT
-                          </span>
-                        </button>
-                }
+          pptData === null
+            ? <button
+              onClick={() => setShowPPTModal(true)}
+              className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+            >
+              <Image
+                src={ppt}
+                alt='ppt'
+                className='h-6 w-6 mr-2'
+                width={20}
+                height={20}
+              />
+              <span>
+                Schedule PPT
+              </span>
+            </button>
+            : Object.keys(pptData).length === 0
+              ? <button
+                onClick={() => setShowPPTModal(true)}
+                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={ppt}
+                  alt='ppt'
+                  className='h-6 w-6 mr-2'
+                  width={20}
+                  height={20}
+                />
+                <span>
+                  Schedule PPT
+                </span>
+              </button>
+              : <button
+                onClick={() => setShowUpdatePPTModal(true)}
+                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={ppt}
+                  alt='ppt'
+                  className='h-6 w-6 mr-2'
+                  width={20}
+                  height={20}
+                />
+                <span>
+                  View PPT
+                </span>
+              </button>
+        }
       </div>
       <div>
         {
-                    testData === null
-                      ? <button
-                          onClick={() => setShowTestModal(true)}
-                          className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-                        >
-                        <Image
-                          src={test}
-                          alt='Test'
-                          className='h-6 w-6 mr-2'
-                          width={20}
-                          height={20}
-                        />
-                        <span>
-                          Schedule Test
-                        </span>
-                      </button>
-                      : Object.keys(testData).length === 0
-                        ? <button
-                            onClick={() => setShowTestModal(true)}
-                            className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-                          >
-                          <Image
-                            src={test}
-                            alt='Test'
-                            className='h-6 w-6 mr-2'
-                            width={20}
-                            height={20}
-                          />
-                          <span>
-                            Schedule Test
-                          </span>
-                        </button>
-                        : <button
-                            onClick={() => setShowUpdateTestModal(true)}
-                            className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-                          >
-                          <Image
-                            src={test}
-                            alt='Test'
-                            className='h-6 w-6 mr-2'
-                            width={20}
-                            height={20}
-                          />
-                          <span>
-                            View Test
-                          </span>
-                        </button>
-                }
+          testData === null
+            ? <button
+              onClick={() => setShowTestModal(true)}
+              className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+            >
+              <Image
+                src={test}
+                alt='Test'
+                className='h-6 w-6 mr-2'
+                width={20}
+                height={20}
+              />
+              <span>
+                Schedule Test
+              </span>
+            </button>
+            : Object.keys(testData).length === 0
+              ? <button
+                onClick={() => setShowTestModal(true)}
+                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={test}
+                  alt='Test'
+                  className='h-6 w-6 mr-2'
+                  width={20}
+                  height={20}
+                />
+                <span>
+                  Schedule Test
+                </span>
+              </button>
+              : <button
+                onClick={() => setShowUpdateTestModal(true)}
+                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={test}
+                  alt='Test'
+                  className='h-6 w-6 mr-2'
+                  width={20}
+                  height={20}
+                />
+                <span>
+                  View Test
+                </span>
+              </button>
+        }
       </div>
       <div>
-        <button
-          onClick={() => setShowIntModal(true)}
-          className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-        >
-          <Image
-            src={interview}
-            alt='Interview'
-            className='h-6 w-6 mr-2'
-            width={20}
-            height={20}
-          />
-          {
-                        intData === null
-                          ? <span>
-                            Schedule Interview
-                            </span>
-                          : Object.keys(intData).length === 0
-                            ? <span>
-                              Schedule Interview
-                              </span>
-                            : <span>
-                              View Interview
-                              </span>
-                    }
-        </button>
+        {
+          intData === null
+            ? <button
+              onClick={() => setShowIntModal(true)}
+              className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+            >
+              <Image
+                src={test}
+                alt='Test'
+                className='h-6 w-6 mr-2'
+                width={20}
+                height={20}
+              />
+              <span>
+                Schedule Interview
+              </span>
+            </button>
+            : Object.keys(intData).length === 0
+              ? <button
+                onClick={() => setShowIntModal(true)}
+                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={interview}
+                  alt='Interview'
+                  className='h-6 w-6 mr-2'
+                  width={20}
+                  height={20}
+                />
+                <span>
+                  Schedule Interview
+                </span>
+              </button>
+              : <button
+                onClick={() => setShowUpdateIntModal(true)}
+                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+              >
+                <Image
+                  src={interview}
+                  alt='Interview'
+                  className='h-6 w-6 mr-2'
+                  width={20}
+                  height={20}
+                />
+                <span>
+                  View Interview
+                </span>
+              </button>
+        }
       </div>
       <SetPPTModal
         showModal={showPPTModal}
@@ -224,6 +250,14 @@ export default function JobScheduler ({
       <SetInterviewModal
         showModal={showIntModal}
         setShowModal={setShowIntModal}
+        jobID={jobID}
+        collegeID={college === null ? '' : college.uid}
+        data={intData}
+        setData={setIntData}
+      />
+      <UpdateInterviewModal
+        showModal={showUpdateIntModal}
+        setShowModal={setShowUpdateIntModal}
         jobID={jobID}
         collegeID={college === null ? '' : college.uid}
         data={intData}
