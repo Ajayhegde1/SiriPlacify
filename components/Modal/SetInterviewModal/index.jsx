@@ -1,5 +1,4 @@
 import { useRef, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import Image from 'next/image'
 import DateTimePicker from 'react-datetime-picker'
 
@@ -10,18 +9,21 @@ import 'react-calendar/dist/Calendar.css'
 import 'react-clock/dist/Clock.css'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
+import { validateURL } from '@/utils/validators' 
+
 import { scheduleInterview } from '@/redux/Sagas/requests/features'
 
 import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea'
 import Label from '@/components/InputComponents/Label'
 
-export default function SetInterviewModal ({
+export default function SetInterviewModal({
   showModal,
   setShowModal,
   jobID,
   collegeID,
-  data
+  data,
+  setData
 }) {
   const modalRef = useRef(null)
 
@@ -29,6 +31,7 @@ export default function SetInterviewModal ({
   const [url, setURL] = useState('')
   const [platform, setPlatform] = useState('')
   const [prerequisties, setPrerequistes] = useState('')
+  const [venue, setVenue] = useState('')
   const [value, onChange] = useState(new Date())
   const [isDisabled, setIsDisabled] = useState(true)
 
@@ -42,11 +45,6 @@ export default function SetInterviewModal ({
       setIsDisabled(false)
     }
   }, [platform, url, value])
-
-  const validateURL = (inputURL) => {
-    const domainPattern = new RegExp('^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6}(\/[A-Za-z0-9-]+)?$')
-    return domainPattern.test(inputURL)
-  }
 
   const handleChangePassword = () => {
     setBtnText('Scheduling')
@@ -63,14 +61,21 @@ export default function SetInterviewModal ({
       platform,
       url,
       date: value,
-      prerequistes: prerequisties
+      prerequistes: prerequisties,
+      venue: venue
     }
     scheduleInterview(data)
       .then((res) => {
         if (res.data.status === 200) {
           openNotification(notificationTypes.SUCCESS, 'Success', 'Interview Scheduled Successfully')
           setShowModal(!showModal)
-          window.location.reload()
+          setData({
+            platform: platform,
+            url: url,
+            venue: venue,
+            interviewDateTime: value,
+            prerequistes: prerequisties,
+          })
         } else if (res.data.status === 423) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
         } else if (res.data.status === 424) {
@@ -124,149 +129,59 @@ export default function SetInterviewModal ({
             </a>
           </div>
         </div>
-        {
-                    data === null
-                      ? <div className={styles.modalBody}>
-                        <div className='mt-4 ml-4 mr-10'>
-                          <div className='grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 xl:gap-8'>
-                            <TextField
-                              label='Platform'
-                              type='text'
-                              placeholder='Zoom, Google Meet, etc.'
-                              value={platform}
-                              onChangeHandler={(e) => setPlatform(e.target.value)}
-                            />
-                            <div className='mb-6'>
-                              <Label
-                                label='Date and Time'
-                              />
-                              <div className='mt-4'>
-                                <DateTimePicker
-                                  onChange={onChange}
-                                  value={value}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <TextField
-                            label='Meeting Link'
-                            type='text'
-                            placeholder='meet.google.com/abc-xyz'
-                            value={url}
-                            onChangeHandler={(e) => setURL(e.target.value)}
-                          />
-                          <TextArea
-                            label='Prerequisties'
-                            placeholder='Enter prerequisties for the students'
-                            value={prerequisties}
-                            onChangeHandler={(e) => setPrerequistes(e.target.value)}
-                          />
-                        </div>
-                        <div className='mt-6 ml-4 mr-10'>
-                          <button
-                            onClick={handleChangePassword}
-                            className={isDisabled ? 'flex ml-auto h-10 bg-gray-500 text-white font-bold rounded-lg py-2 px-4' : 'flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'}
-                            disabled={isDisabled}
-                          >
-                            {btnText}
-                          </button>
-                        </div>
-                        </div>
-                      : Object.keys(data).length === 0
-                        ? <div className={styles.modalBody}>
-                          <div className='mt-4 ml-4 mr-10'>
-                            <div className='grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 xl:gap-8'>
-                              <TextField
-                                label='Platform'
-                                type='text'
-                                placeholder='Zoom, Google Meet, etc.'
-                                value={platform}
-                                onChangeHandler={(e) => setPlatform(e.target.value)}
-                              />
-                              <div className='mb-6'>
-                                <Label
-                                  label='Date and Time'
-                                />
-                                <div className='mt-4'>
-                                  <DateTimePicker
-                                    onChange={onChange}
-                                    value={value}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                            <TextField
-                              label='Meeting Link'
-                              type='text'
-                              placeholder='meet.google.com/abc-xyz'
-                              value={url}
-                              onChangeHandler={(e) => setURL(e.target.value)}
-                            />
-                            <TextArea
-                              label='Prerequisties'
-                              placeholder='Enter prerequisties for the students'
-                              value={prerequisties}
-                              onChangeHandler={(e) => setPrerequistes(e.target.value)}
-                            />
-                          </div>
-                          <div className='mt-6 ml-4 mr-10'>
-                            <button
-                              onClick={handleChangePassword}
-                              className={isDisabled ? 'flex ml-auto h-10 bg-gray-500 text-white font-bold rounded-lg py-2 px-4' : 'flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'}
-                              disabled={isDisabled}
-                            >
-                              {btnText}
-                            </button>
-                          </div>
-                        </div>
-                        : <div className={styles.modalBody}>
-                          <div className='mt-4 ml-4 mr-10'>
-                            <div className='grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 xl:gap-8'>
-                              <TextField
-                                label='Platform'
-                                type='text'
-                                placeholder='Zoom, Google Meet, etc.'
-                                value={data.platform}
-                                disabled
-                              />
-                              <div className='mb-6'>
-                                <Label
-                                  label='Date and Time'
-                                />
-                                <div className='mt-4'>
-                                  <DateTimePicker
-                                    onChange={onChange}
-                                    value={data.interviewDateTime}
-                                    disabled
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                            <TextField
-                              label='Meeting Link'
-                              type='text'
-                              placeholder='meet.google.com/abc-xyz'
-                              value={data.url}
-                              disabled
-                            />
-                            <TextArea
-                              label='Prerequisties'
-                              placeholder='Enter prerequisties for the students'
-                              value={data.prerequistes}
-                              disabled
-                            />
-                          </div>
-                          <div className='mt-6 ml-4 mr-10'>
-                            <button
-                              onClick={handleChangePassword}
-                              className={isDisabled ? 'flex ml-auto h-10 bg-gray-500 text-white font-bold rounded-lg py-2 px-4' : 'flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'}
-                              disabled={isDisabled}
-                            >
-                              {btnText}
-                            </button>
-                          </div>
-                        </div>
-                }
+        <div className={styles.modalBody}>
+          <div className='mt-4 ml-4 mr-10'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-4 xl:gap-8'>
+              <TextField
+                label='Platform'
+                type='text'
+                placeholder='Zoom, Google Meet, etc.'
+                value={platform}
+                onChangeHandler={(e) => setPlatform(e.target.value)}
+              />
+              <div className='mb-6'>
+                <Label
+                  label='Date and Time'
+                />
+                <div className='mt-4'>
+                  <DateTimePicker
+                    onChange={onChange}
+                    value={value}
+                  />
+                </div>
+              </div>
+            </div>
+            <TextField
+              label='Meeting Link'
+              type='text'
+              placeholder='meet.google.com/abc-xyz'
+              value={url}
+              onChangeHandler={(e) => setURL(e.target.value)}
+            />
+            <TextField
+              label='Venue'
+              type='text'
+              placeholder='Auditorium'
+              value={venue}
+              onChangeHandler={(e) => setVenue(e.target.value)}
+            />
+            <TextArea
+              label='Prerequisties'
+              placeholder='Enter prerequisties for the students'
+              value={prerequisties}
+              onChangeHandler={(e) => setPrerequistes(e.target.value)}
+            />
+          </div>
+          <div className='mt-6 ml-4 mr-10'>
+            <button
+              onClick={handleChangePassword}
+              className={isDisabled ? 'flex ml-auto h-10 bg-gray-500 text-white font-bold rounded-lg py-2 px-4' : 'flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'}
+              disabled={isDisabled}
+            >
+              {btnText}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   )

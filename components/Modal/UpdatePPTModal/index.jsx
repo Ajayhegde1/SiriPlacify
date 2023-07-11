@@ -10,6 +10,8 @@ import 'react-calendar/dist/Calendar.css'
 import 'react-clock/dist/Clock.css'
 
 import { openNotification } from '@/utils/notifications'
+import { validateURL } from '@/utils/validators' 
+
 import { schedulePPT } from '@/redux/Sagas/requests/features'
 
 import TextField from '@/components/InputComponents/TextField'
@@ -28,15 +30,6 @@ export default function UpdatePPTModal({
 
   const closeModal = () => {
     setShowModal(false)
-  }
-
-  const validateURL = (inputURL) => {
-    try {
-      new URL(inputURL)
-      return true
-    } catch (_) {
-      return false
-    }
   }
 
   const displayNotification = (type, message) => {

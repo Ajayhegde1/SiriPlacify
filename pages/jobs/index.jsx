@@ -41,7 +41,12 @@ export default function Jobs () {
         dispatch(getOfferJob())
         dispatch(getClosedJobForCollege())
         dispatch(getDeclinedJob())
-      } else if (user.accType === '2') {
+      } 
+      else if (user.accType === '1'){
+        dispatch(getJobs())
+        dispatch(getClosedJobForCollege())
+      }
+      else if (user.accType === '2') {
         dispatch(getJobs())
         dispatch(getClosedJob())
       }

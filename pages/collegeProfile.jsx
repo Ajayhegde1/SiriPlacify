@@ -18,7 +18,7 @@ import { addProfile } from '@/redux/Slices/profile'
 import { routes } from '@/constants/routes'
 import { getDepartment } from '@/redux/Sagas/requests/features'
 
-export default function CollegeProfile () {
+export default function CollegeProfile() {
   const dispatch = useDispatch()
   const router = useRouter()
   const animatedComponents = makeAnimated()
@@ -33,6 +33,7 @@ export default function CollegeProfile () {
   const [location, setLocation] = useState('')
   const [emailID, setEmailID] = useState('')
   const [contactNo, setContactNo] = useState('')
+  const [noOfGradStudents, setNoOfGradStudents] = useState(0)
   const [departmentList, setDepartmentList] = useState([])
   const [collegeDescription, setCollegeDescription] = useState('')
   const [stream, setStream] = useState([])
@@ -46,13 +47,14 @@ export default function CollegeProfile () {
       emailID: user.email,
       contactNo,
       collegeDescription,
-      stream
+      stream,
+      noOfGradStudents
     }
     setBtnText('Saving...')
     dispatch(addProfile(Data))
   }
 
-  function handleSelect (data) {
+  function handleSelect(data) {
     setStream(data)
   }
 
@@ -176,6 +178,13 @@ export default function CollegeProfile () {
                 />
               </div>
             </div>
+            <TextField
+              label='No of Students graduating'
+              placeholder='40'
+              type='text'
+              value={noOfGradStudents}
+              onChangeHandler={(e) => setNoOfGradStudents(e.target.value)}
+            />
             <div className='mt-3 mb-6'>
               <Select
                 options={departmentList}

@@ -10,6 +10,8 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
 import { notificationTypes, openNotification } from '@/utils/notifications';
+import { validateURL } from '@/utils/validators';
+
 import { scheduleInterview } from '@/redux/Sagas/requests/features';
 
 import TextField from '@/components/InputComponents/TextField';
@@ -30,14 +32,6 @@ export default function UpdateInterviewModal({
   
   const closeModal = () => {
     setShowModal(!showModal);
-  };
-
-  const validateURL = (inputURL) => {
-    const urlPattern = new RegExp(
-      '^(https?:\\/\\/)?' + // Protocol (optional)
-      '((([a-zA-Z\\d][a-zA-Z\\d-]*[a-zA-Z\\d])|([a-zA-Z\\d]))\\.?)+[a-zA-Z]{2,6}(\\/.*)?$' // Domain name with valid extensions and optional path
-    );
-    return urlPattern.test(inputURL);
   };
 
   const updateInterviewHandler = () => {

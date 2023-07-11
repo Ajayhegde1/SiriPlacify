@@ -60,6 +60,9 @@ export default function Candidates ({
           <th className='px-6 py-4 text-gray-600'>Student Name</th>
           <th className='px-6 py-4 text-gray-600'>Email</th>
           <th className='px-6 py-4 text-gray-600'>Mobile</th>
+          <th className='px-6 py-4 text-gray-600'>Gender</th>
+          <th className='px-6 py-4 text-gray-600'>Stream</th>
+          <th className='px-6 py-4 text-gray-600'>Degree</th>
           <th className='px-6 py-4 text-gray-600'>Class X%</th>
           <th className='px-6 py-4 text-gray-600'>Class XII%</th>
           <th className='px-6 py-4 text-gray-600'>CGPA (/10)</th>
@@ -100,6 +103,9 @@ export default function Candidates ({
                     <td className='whitespace-nowrap px-6 py-4'>{student.username}</td>
                     <td className='whitespace-nowrap px-6 py-4'>{student.email}</td>
                     <td className='whitespace-nowrap px-6 py-4'>{student.contactNo}</td>
+                    <td className='whitespace-nowrap px-6 py-4'>{student.gender}</td>
+                    <td className='whitespace-nowrap px-6 py-4'>{student.stream}</td>
+                    <td className='whitespace-nowrap px-6 py-4'>{student.degree}</td>
                     <td className='whitespace-nowrap px-6 py-4'>{student.tenthMarks}</td>
                     <td className='whitespace-nowrap px-6 py-4'>{student.twelthMarks}</td>
                     <td className='whitespace-nowrap px-6 py-4'>{student.studentUGMarks}</td>

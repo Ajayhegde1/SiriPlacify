@@ -10,6 +10,7 @@ import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
 import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
+import Sidebar from '@/components/SideBar'
 
 import { getCompanyProfile } from '@/redux/Slices/companySlice'
 import { routes } from '@/constants/routes'
@@ -32,6 +33,7 @@ export default function EditCompanyProfile () {
   const [plannedHires, setPlannedHires] = useState(0)
   const [isDisabled, setIsDisabled] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const profile = useSelector((state) => state.companyProfile)
   const user = useSelector((state) => state.user)
@@ -112,7 +114,13 @@ export default function EditCompanyProfile () {
       <DocHeader
         DocTitle='Edit Profile'
       />
-      <div className='mx-8 md:mx-20 mt-16'>
+      <Sidebar
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        activePage={7}
+      />
+      <main class={`dashboard ${sidebarOpen ? 'active' : ''}`}>
+        <div className='ml-10 mr-8 md:mr-20 pt-10'>
         <p
           className='ml-3 md:ml-6 mb-4 font-SubHeading text-base font-normal'
         >
@@ -234,6 +242,7 @@ export default function EditCompanyProfile () {
               </div>
         }
       </div>
+      </main>
       <ChangePasswordModal
         showModal={showModal}
         setShowModal={setShowModal}

@@ -63,7 +63,23 @@ export default function College () {
           <div className='pb-4'>
             <h1 className='text-center md:text-left pt-6 md:pt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>Dashboard</h1>
           </div>
-          <div className='mt-6 mb-6 lg:mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-8'>
+          <div className='mt-6 mb-6 lg:mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 lg:gap-4'>
+            <div className='py-2 bg-white rounded-xl'>
+              <div className='flex flex-col justify-center'>
+                <div>
+                  <h1 className='font-DMSANS text-center font-bold mt-2'>
+                    Number of Graduating Students
+                  </h1>
+                </div>
+                <div>
+                  <h1 className='mt-1 font-DMSANS font-bold text-customGreenTwo text-center xl:text-4xl'>
+                    {data === null
+                      ? <Spin size='large' />
+                      : Object.keys(data) === 0 ? 0 : data.noOfStudentsGraduated}
+                  </h1>
+                </div>
+              </div>
+            </div>
             <div className='py-2 bg-white rounded-xl'>
               <div className='flex flex-col justify-center'>
                 <div>

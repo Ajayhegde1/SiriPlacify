@@ -11,6 +11,7 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
 import { notificationTypes, openNotification } from '@/utils/notifications';
+import { validateURL } from '@/utils/validators' 
 
 import TextField from '@/components/InputComponents/TextField';
 import TextArea from '@/components/InputComponents/TextArea';
@@ -32,14 +33,6 @@ export default function UpdateTestLinkModal({
 
   const closeModal = () => {
     setShowModal(!showModal);
-  };
-
-  const validateURL = (inputURL) => {
-    const urlPattern = new RegExp(
-      '^(https?:\\/\\/)?' + // Protocol (optional)
-      '((([a-zA-Z\\d][a-zA-Z\\d-]*[a-zA-Z\\d])|([a-zA-Z\\d]))\\.?)+[a-zA-Z]{2,6}(\\/.*)?$' // Domain name with valid extensions and optional path
-    );
-    return urlPattern.test(inputURL);
   };
 
   const handleUpdateTestModal = () => {
