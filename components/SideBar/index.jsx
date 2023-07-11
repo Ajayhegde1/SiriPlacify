@@ -237,6 +237,18 @@ const Sidebar = ({
                         </a>
                       </li>
                     </Tooltip>
+                  <Tooltip title='Placement Policy' placement='right'>
+                    <li className={`menu-item ${parseInt(activePage) === 4 ? 'current' : ''}`}>
+                      <a className='menu-link' href='/editPlacementPolicy'>
+                        <Image
+                          src={pp}
+                          className={sidebarOpen ? 'ml-3' : 'ml-1'}
+                          alt='logo for placement policy'
+                        />
+                        <span className='menu-link-text'>Placement Policy</span>
+                      </a>
+                    </li>
+                  </Tooltip>
                     <Tooltip title='Profile' placement='right'>
                       <li className={`menu-item ${parseInt(activePage) === 7 ? 'current' : ''}`}>
                         <a className='menu-link' href='/editStudentProfile'>

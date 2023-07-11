@@ -208,3 +208,7 @@ export const getDegrees = () => {
 export const getJobData = (jobID, collegeID) => {
   return GET(`/getJobData?jobID=${jobID}&collegeID=${collegeID}`, { sessionID: store.getState().user.sessionId })
 }
+
+export const reopenJobs = (data) => {
+  return POST('/reopenJob', data, { sessionID: store.getState().user.sessionId })
+}

@@ -1,18 +1,15 @@
-import Image from 'next/image'
-import { useRouter } from 'next/router'
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import moment from 'moment';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { notificationTypes, openNotification } from '@/utils/notifications';
+import { GET, POST } from '@/config/api';
+import JobApplicationModal from '@/components/Modal/jobApplicationModal';
+import WithdrawApplicationModal from '../Modal/WithdrawApplicationModal';
+import { reopenJobs } from '@/redux/Sagas/requests/features';
 
-import moment from 'moment'
-
-import JobApplicationModal from '@/components/Modal/jobApplicationModal'
-
-import { useState, useEffect } from 'react'
-import { GET, POST } from '@/config/api'
-
-import { useSelector } from 'react-redux'
-import { notificationTypes, openNotification } from '@/utils/notifications'
-import WithdrawApplicationModal from '../Modal/WithdrawApplicationModal'
-
-export default function BasicJobInfo ({
+export default function BasicJobInfo({
   uid,
   logo,
   jobTitle,
@@ -21,226 +18,221 @@ export default function BasicJobInfo ({
   dueDate,
   jobID,
   isClosedTPO = false,
+  isDeclinedJob = false,
   isClosedStudent = false
 }) {
-  const date = new Date(dueDate)
-  const router = useRouter()
-  const [showModal, setShowModal] = useState(false)
-  const [showWithdrawModal, setShowWithdrawModal] = useState(false)
-  const [isApplied, setIsApplied] = useState(false)
-  const [message, setMessage] = useState('')
-  const [isHired, setIsHired] = useState(false)
-
-  const user = useSelector(state => state.user)
+  const date = new Date(dueDate);
+  const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [isApplied, setIsApplied] = useState(false);
+  const [message, setMessage] = useState('');
+  const [isHired, setIsHired] = useState(false);
+  const user = useSelector(state => state.user);
 
   useEffect(() => {
-    if (user !== null) {
-      if (parseInt(user.accType) === 1) {
-        GET(`/checkJobApplication?jobID=${jobID}`, { sessionID: user.sessionId })
-          .then((res) => {
-            if (res.data.status === 200) {
-              setIsApplied(res.data.jobStatus)
-              setIsHired(res.data.isHired)
-              setMessage(res.data.message)
-            } else if (res.data.status === 423) {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'Unable to get Job'
-              )
-              setMessage(res.data.message)
-            } else if (res.data.status === 424) {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'Unable to retrieve Job'
-              )
-              setMessage(res.data.message)
-            } else if (res.data.status === 425) {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'Unable to get college'
-              )
-              setMessage(res.data.message)
-            } else if (res.data.status === 426) {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'Unable to get college or Job'
-              )
-              setMessage(res.data.message)
-            } else if (res.data.status === 500) {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'Error in retrieving Data'
-              )
-            } else {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'Something went wrong, please try again later'
-              )
-            }
-          })
-      }
+    if (user && parseInt(user.accType) === 1) {
+      GET(`/checkJobApplication?jobID=${jobID}`, { sessionID: user.sessionId })
+        .then((res) => {
+          if (res.data.status === 200) {
+            setIsApplied(res.data.jobStatus);
+            setIsHired(res.data.isHired);
+            setMessage(res.data.message);
+          } else if (res.data.status >= 423 && res.data.status <= 426) {
+            openNotification(notificationTypes.ERROR, 'Error', res.data.message);
+          } else if (res.data.status === 500) {
+            openNotification(notificationTypes.ERROR, 'Error', 'Error in retrieving Data');
+          } else {
+            openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong, please try again later');
+          }
+        })
+        .catch(() => {
+          openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong, please try again later');
+        });
     }
-  }, [jobID])
+  }, [user, jobID]);
 
   const handleAcceptOffer = () => {
-    const data = {
-      jobID: uid
-    }
+    const data = { jobID: uid };
     POST('/acceptJob?status=accept', data, { sessionID: user.sessionId })
       .then((res) => {
         if (res.data.status === 200) {
-          openNotification(
-            notificationTypes.SUCCESS,
-            'Success',
-            'Job offer accepted successfully'
-          )
-          router.push('/jobs')
+          openNotification(notificationTypes.SUCCESS, 'Success', 'Job offer accepted successfully');
+          router.push('/jobs');
         } else if (res.data.status === 401) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Session ID is invalid or not present'
-          )
-        } else if (res.data.status === 423) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Unable to retrieve college'
-          )
-        } else if (res.data.status === 424) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Status is null'
-          )
-        } else if (res.data.status === 425) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Job is undefined'
-          )
-        } else if (res.data.status === 426) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'invalid option'
-          )
+          openNotification(notificationTypes.ERROR, 'Error', 'Session ID is invalid or not present');
+        } else if (res.data.status >= 423 && res.data.status <= 426) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message);
         } else if (res.data.status === 500) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'unable to approve job'
-          )
+          openNotification(notificationTypes.ERROR, 'Error', 'Unable to approve job');
         } else {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Something went wrong, please try again later'
-          )
+          openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong, please try again later');
         }
       })
-      .catch((err) => {
-        openNotification(
-          notificationTypes.ERROR,
-          'Error',
-          'Something went wrong, please try again later'
-        )
-      })
-  }
+      .catch(() => {
+        openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong, please try again later');
+      });
+  };
 
   const handleDeclineOffer = () => {
-    const data = {
-      jobID: uid
-    }
+    const data = { jobID: uid };
     POST('/acceptJob?status=decline', data, { sessionID: user.sessionId })
       .then((res) => {
         if (res.data.status === 200) {
-          openNotification(
-            notificationTypes.SUCCESS,
-            'Success',
-            'Job offer accepted successfully'
-          )
-          router.push('/jobs')
+          openNotification(notificationTypes.SUCCESS, 'Success', 'Job offer declined successfully');
+          router.push('/jobs');
         } else if (res.data.status === 401) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Session ID is invalid or not present'
-          )
-        } else if (res.data.status === 423) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Unable to retrieve college'
-          )
-        } else if (res.data.status === 424) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Status is null'
-          )
-        } else if (res.data.status === 425) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Job is undefined'
-          )
-        } else if (res.data.status === 426) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'invalid option'
-          )
+          openNotification(notificationTypes.ERROR, 'Error', 'Session ID is invalid or not present');
+        } else if (res.data.status >= 423 && res.data.status <= 426) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message);
         } else if (res.data.status === 500) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'unable to approve job'
-          )
+          openNotification(notificationTypes.ERROR, 'Error', 'Unable to decline job');
         } else {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Something went wrong, please try again later'
-          )
+          openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong, please try again later');
         }
       })
-      .catch((err) => {
-        openNotification(
-          notificationTypes.ERROR,
-          'Error',
-          'Something went wrong, please try again later'
-        )
+      .catch(() => {
+        openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong, please try again later');
+      });
+  };
+
+  const handleReOpenJob = () => {
+    const data = { jobID };
+    reopenJobs(data)
+      .then((res) => {
+        if (res.data.status === 200) {
+          openNotification(notificationTypes.SUCCESS, 'Success', 'Job offer accepted successfully');
+          router.push('/jobs');
+        } else if (res.data.status === 401) {
+          openNotification(notificationTypes.ERROR, 'Error', 'Session ID is invalid or not present');
+        } else if (res.data.status >= 423 && res.data.status <= 426) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message);
+        } else if (res.data.status === 500) {
+          openNotification(notificationTypes.ERROR, 'Error', 'Unable to approve job');
+        } else {
+          openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong, please try again later');
+        }
       })
-  }
+      .catch(() => {
+        openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong, please try again later');
+      });
+  };
+
+  const handleReAcceptJob = () => {
+    const data = { jobID };
+    POST('/acceptJob?status=accept', data, { sessionID: user.sessionId })
+      .then((res) => {
+        if (res.data.status === 200) {
+          openNotification(notificationTypes.SUCCESS, 'Success', 'Job offer accepted successfully');
+          router.push('/jobs');
+        } else if (res.data.status === 401) {
+          openNotification(notificationTypes.ERROR, 'Error', 'Session ID is invalid or not present');
+        } else if (res.data.status >= 423 && res.data.status <= 426) {
+          openNotification(notificationTypes.ERROR, 'Error', res.data.message);
+        } else if (res.data.status === 500) {
+          openNotification(notificationTypes.ERROR, 'Error', 'Unable to approve job');
+        } else {
+          openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong, please try again later');
+        }
+      })
+      .catch(() => {
+        openNotification(notificationTypes.ERROR, 'Error', 'Something went wrong, please try again later');
+      });
+  };
+
+  const renderStudentActions = () => {
+    if (!isClosedStudent) {
+      if (isApplied) {
+        if (message === 'Job application status checked successfully' && new Date().getTime() < date.getTime() && !isHired) {
+          return (
+            <>
+              <div />
+              <div
+                onClick={() => setShowWithdrawModal(!showModal)}
+                className='cursor-pointer rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+              >
+                Withdraw
+              </div>
+            </>
+          );
+        }
+        return (
+          <div className='hidden md:block' />
+        );
+      }
+      return (
+        <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
+          <div />
+          <div
+            onClick={() => setShowModal(!showModal)}
+            className='cursor-pointer rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+          >
+            Apply Now
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const renderTPOActions = () => {
+    if (user && user.accType === '0') {
+      if (!isClosedTPO) {
+        if (isDeclinedJob) {
+          return (
+            <div className='mt-6 lg:mt-20 flex'>
+              <button
+                onClick={handleReAcceptJob}
+                className='ml-auto rounded-lg text-base md:text-lg 2xl:text-xl bg-red-500 text-white font-bold text-center p-2'
+              >
+                Accept Offer
+              </button>
+            </div>
+          );
+        }
+        return (
+          <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
+            <button
+              onClick={handleDeclineOffer}
+              className='rounded-lg text-base md:text-lg 2xl:text-xl bg-red-500 text-white font-bold text-center p-2'
+            >
+              X    Decline For Now
+            </button>
+            <button
+              onClick={handleAcceptOffer}
+              className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+            >
+              + Accept Offer
+            </button>
+          </div>
+        );
+      }
+      return (
+        <div className='mt-6 lg:mt-20 flex'>
+          <button
+            onClick={handleReOpenJob}
+            className='ml-auto rounded-lg text-base md:text-lg 2xl:text-xl bg-red-500 text-white font-bold text-center p-2'
+          >
+            Re-Open Job
+          </button>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-5 rounded-lg'>
       <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2'>
         <div className='col-span-1 2xl:col-span-2'>
           <div className='flex flex-col md:flex-row gap-2 md:gap-8'>
-            <Image
-              src={logo}
-              alt='apple logo'
-            />
+            <Image src={logo} alt='apple logo' />
             <div className='mt-3'>
               <p className='mt-5'>
-                <span className='bg-black py-1 px-4 text-white rounded-2xl font-bold'>
-                  {jobCategory}
-                </span>
+                <span className='bg-black py-1 px-4 text-white rounded-2xl font-bold'>{jobCategory}</span>
               </p>
-              <h1 className='mt-3 text-2xl xl:text-3xl 2xl:text-4xl font-bold font-Heading font-bold text-black'>
-                {jobTitle}
-              </h1>
-              <h1 className='my-2 text-sm text-medium font-Heading'>
-                {jobLocation}
-              </h1>
+              <h1 className='mt-3 text-2xl xl:text-3xl 2xl:text-4xl font-bold font-Heading font-bold text-black'>{jobTitle}</h1>
+              <h1 className='my-2 text-sm text-medium font-Heading'>{jobLocation}</h1>
             </div>
           </div>
         </div>
@@ -248,85 +240,16 @@ export default function BasicJobInfo ({
           <div className='ml-auto w-40 p-3 bg-rose-100 rounded-2xl text-sm'>
             <p className='text-gray-700 text-center'>DUE DATE - {moment(dueDate).format('DD MMM')}</p>
           </div>
-          {
-            user === null
-              ? <></>
-              : user.accType === '1'
-                ? isClosedStudent
-                  ? <>
-                  </>
-                  : isApplied
-                    ? <div className='mt-6 lg:mt-20 grid grid-cols-1 md:grid-cols-5 gap-2'>
-                      {message === 'Job application status checked successfully' && new Date().getTime() < date.getTime() && !isHired
-                        ? (
-                          <>
-                            <div />
-                            <div
-                              onClick={() => setShowWithdrawModal(!showModal)}
-                              className='cursor-pointer rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
-                            >
-                              Withdraw
-                            </div>
-                          </>
-                          )
-                        : (
-                          <div className='hidden md:block' />
-                          )}
-
-                      {message !== 'Job application status checked successfully'
-                        ? (
-                          <div className='my-auto col-span-2 rounded-lg text-md md:text-base bg-red-600 text-white font-bold text-center p-2'>
-                            <span className='py-auto'>{message}</span>
-                          </div>
-                          )
-                        : (
-                          <div />
-                          )}
-
-                      <div className='col-span-2 rounded-lg text-base text-md md:text-base bg-green-600 text-white font-bold text-center p-2'>
-                        <span>{message === 'Job application status checked successfully' ? 'Applied' : 'Not Eligible'}</span>
-                      </div>
-                    </div>
-                    : <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
-                      <div />
-                      <div
-                        onClick={() => setShowModal(!showModal)}
-                        className='cursor-pointer rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
-                      >
-                        Apply Now
-                      </div>
-                    </div>
-                : user.accType === '0'
-                  ? !isClosedTPO
-                      ? <div className='mt-6 lg:mt-20 grid grid-cols-2 gap-8'>
-                        <button
-                          onClick={handleDeclineOffer}
-                          className='rounded-lg text-base md:text-lg 2xl:text-xl bg-red-500 text-white font-bold text-center p-2'
-                        >
-                          X    Decline For Now
-                        </button>
-                        <button
-                          onClick={handleAcceptOffer}
-                          className='rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
-                        >
-                          + Accept Offer
-                        </button>
-                      </div>
-                      : <></>
-                  : <></>
-          }
+          {user && (
+            <>
+              {user.accType === '1' && renderStudentActions()}
+              {user.accType === '0' && renderTPOActions()}
+            </>
+          )}
         </div>
       </div>
-      <JobApplicationModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        jobID={jobID}
-      />
-      <WithdrawApplicationModal
-        showModal={showWithdrawModal}
-        setShowModal={setShowWithdrawModal}
-        jobID={jobID}
-      />
+      <JobApplicationModal showModal={showModal} setShowModal={setShowModal} jobID={jobID} />
+      <WithdrawApplicationModal showModal={showWithdrawModal} setShowModal={setShowWithdrawModal} jobID={jobID} />
     </div>
-  )
+  );
 }

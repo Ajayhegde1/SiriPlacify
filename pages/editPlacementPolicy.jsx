@@ -19,7 +19,7 @@ import { openNotification, notificationTypes } from '@/utils/notifications'
 
 import AddTierModal from '@/components/Modal/AddTierModal'
 
-export default function EditPlacementPolicy () {
+export default function EditPlacementPolicy() {
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -38,7 +38,7 @@ export default function EditPlacementPolicy () {
     if (user === null) {
       router.push(routes.NOTFOUND)
     } else if (user !== null) {
-      if (user.accType !== '0') {
+      if (parseInt(user.accType) > 1) {
         router.push(routes.NOTFOUND)
       } else {
         dispatch(getPlacementPolicy())
@@ -162,6 +162,7 @@ export default function EditPlacementPolicy () {
                                 type='text'
                                 value={noOfTiers}
                                 onChangeHandler={(e) => setNoOfTiers(e.target.value)}
+                                disabled={user === null ? true : user.accType === "0" ? false : true}
                               />
                             </div>
                             <div className='mb-3'>
@@ -171,19 +172,20 @@ export default function EditPlacementPolicy () {
                                 type='text'
                                 value={maxOffers}
                                 onChangeHandler={(e) => setMaxOffers(e.target.value)}
+                                disabled={user === null ? true : user.accType === "0" ? false : true}
                               />
                             </div>
                             <div className='grid grid-cols-1 md:grid-cols-7 gap-4 mb-6'>
                               {
-                              placementPolicyList === null
-                                ? (
-                                  <div>Loading...</div>
-                                  )
-                                : placementPolicyList.length === 0
+                                placementPolicyList === null
                                   ? (
-                                    <div>No Tier List found</div>
+                                    <div>Loading...</div>
+                                  )
+                                  : placementPolicyList.length === 0
+                                    ? (
+                                      <div>No Tier List found</div>
                                     )
-                                  : (
+                                    : (
                                       placementPolicyList.map((item, index) => (
                                         <Fragment key={index}>
                                           <div className='col-span-3'>
@@ -194,6 +196,7 @@ export default function EditPlacementPolicy () {
                                               value={item.minCTC}
                                               onChangeHandler={(e) =>
                                                 handleCTCChange(index, 'minCTC', e.target.value)}
+                                              disabled={user === null ? true : user.accType === "0" ? false : true}
                                             />
                                           </div>
                                           <div className='col-span-3'>
@@ -204,30 +207,51 @@ export default function EditPlacementPolicy () {
                                               value={item.maxCTC}
                                               onChangeHandler={(e) =>
                                                 handleCTCChange(index, 'maxCTC', e.target.value)}
+                                              disabled={user === null ? true : user.accType === "0" ? false : true}
                                             />
                                           </div>
-                                          <div className='flex col-span-1'>
-                                            <button
-                                              className='my-auto'
-                                              onClick={() => handleDeleteTier(index)}
-                                            >
-                                              <CloseCircleOutlined style={{ fontSize: '24px' }} />
-                                            </button>
-                                          </div>
+                                          {
+                                            user === null
+                                              ?
+                                              <div></div>
+                                              :
+                                              user.accType === "0"
+                                                ?
+                                                <div className='flex col-span-1'>
+                                                  <button
+                                                    className='my-auto'
+                                                    onClick={() => handleDeleteTier(index)}
+                                                  >
+                                                    <CloseCircleOutlined style={{ fontSize: '24px' }} />
+                                                  </button>
+                                                </div>
+                                                :
+                                                <div></div>
+                                          }
                                         </Fragment>
                                       ))
                                     )
-}
+                              }
                             </div>
 
                           </>
                     }
-                    <button
-                      className='flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'
-                      onClick={() => setShowTierModal(true)}
-                    >
-                      Add Tier
-                    </button>
+                    {
+                      user === null
+                        ?
+                        <div></div>
+                        :
+                        user.accType === "0"
+                          ?
+                          <button
+                            className='flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'
+                            onClick={() => setShowTierModal(true)}
+                          >
+                            Add Tier
+                          </button>
+                          :
+                          <div></div>
+                    }
                     <div class='mt-6 mb-6'>
                       <Button
                         btnText={update}
