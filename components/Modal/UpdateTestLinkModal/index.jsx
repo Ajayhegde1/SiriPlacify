@@ -58,7 +58,13 @@ export default function UpdateTestLinkModal({
         if (res.data.status === 200) {
           openNotification(notificationTypes.SUCCESS, 'Success', 'PPT Scheduled Successfully')
           setShowModal(!showModal)
-          window.location.reload()
+          setData({
+            platform: deets.platform,
+            url: deets.url,
+            testDateTime: deets.date,
+            venue: deets.venue,
+            prerequistes: deets.prerequistes
+          })
         } else if (res.data.status === 424) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
         } else if (res.data.status === 425) {

@@ -1,12 +1,10 @@
 import { useSelector } from 'react-redux'
-import { useRef, useState, useEffect } from 'react'
+import { useRef} from 'react'
 import axios from 'axios'
 import Image from 'next/image'
-import Select from 'react-select'
-import makeAnimated from 'react-select/animated'
 import { jobSectorList } from '@/constants/addJobDropDowns'
 import edit from '../../public/edit.png'
-import { getJobDescFile, uploadJobDescFile, getDepartment } from '@/redux/Sagas/requests/features'
+import { getJobDescFile, uploadJobDescFile } from '@/redux/Sagas/requests/features'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 import SingleSelectComponent from '../InputComponents/SingleSelectComponent'
 
@@ -45,17 +43,12 @@ export default function JobDesc ({
   UGCgpa,
   setUGCgpa,
   jobSection,
-  jobDept,
-  setJobDept,
   isEdit,
   setIsEdit,
   handleEditFunction
 }) {
   const user = useSelector((state) => state.user)
   const fileInputRef = useRef(null)
-  const animatedComponents = makeAnimated()
-
-  const [departmentList, setDepartmentList] = useState([])
 
   const handleEdit = () => {
     setIsEdit(!isEdit)
@@ -99,10 +92,6 @@ export default function JobDesc ({
       })
   }
 
-  function handleSelect (data) {
-    setJobDept(data)
-  }
-
   const handleJDUpload = async () => {
     fileInputRef.current.click()
   }
@@ -133,35 +122,6 @@ export default function JobDesc ({
     }
   }
 
-  useEffect(() => {
-    getDepartment()
-      .then((res) => {
-        if (res.data.status === 200) {
-          let departments = res.data.data
-          departments = departments.map((department) => {
-            return {
-              value: department.id,
-              label: department.depName
-            }
-          })
-          setDepartmentList(departments)
-        } else {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            res.data.message
-          )
-        }
-      })
-      .catch((err) => {
-        openNotification(
-          notificationTypes.ERROR,
-          'Error',
-          err.message
-        )
-      })
-  }, [])
-
   return (
     <div>
       {
@@ -176,7 +136,7 @@ export default function JobDesc ({
         isEdit
           ? <div>
             <button
-              className='mt-12 flex ml-auto mr-5 bg-green-900 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg'
+              className='cursor pointer mt-12 flex ml-auto mr-5 bg-green-900 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg'
               onClick={handleEditFunction}
             >
               Save Changes
@@ -191,12 +151,14 @@ export default function JobDesc ({
               <h1 className='pb-4 border-b-2 border-gray-300 text-3xl font-bold font-Heading font-bold text-black'>
                 {jobTitle}
               </h1>
+              <div className='cursor-pointer'>
               <Image
                 src={edit}
                 alt='edit'
                 className='mt-1 h-6 w-6'
                 onClick={handleEdit}
               />
+              </div>
             </div>
             : <h1 className='pb-4 border-b-2 border-gray-300 text-lg font-bold font-Heading font-bold text-black'>
               Job details
@@ -350,30 +312,6 @@ export default function JobDesc ({
               disabled={!(isEdit)}
             />
           </div>
-          {
-            typeof jobDept === 'undefined' || jobDept === null
-              ? <></>
-              : <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
-                <div className='col-span-1'>
-                  <label class='block font-Poppins text-black text-md font-bold mb-2' for='username'>
-                    Streams
-                  </label>
-                </div>
-                <div className='col-span-1 lg:col-span-5'>
-                  <Select
-                    options={departmentList}
-                    placeholder='Select Streams'
-                    value={jobDept}
-                    onChange={handleSelect}
-                    isSearchable
-                    components={animatedComponents}
-                    isDisabled={!(isEdit)}
-                    closeMenuOnSelect={false}
-                    isMulti
-                  />
-                </div>
-              </div>
-          }
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>10th Marks (in %)</div>
             <input

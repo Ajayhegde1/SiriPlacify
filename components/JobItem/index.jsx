@@ -59,11 +59,12 @@ export default function JobItem({ job, isCurrentJobs = false, jobSection = 1 }) 
       case '2':
         return (
           <Link href={jobSection === 1 ? `/jobs/companyJobs/${jobID}` : `/jobs/closedJobs/${jobID}`}>
-            <div className='h-[400px] bg-white rounded-xl p-3 md:p-5'>
-              <div className='flex flex-col justify-between h-full'>
+            <div className='h-[300px] 2xl:h-[280px] bg-white rounded-xl p-3 md:px-5 md:py-3 flex flex-col gap-4'>
+              <h1 className='text-right text-base text-black font-medium'>{formattedDueDate}</h1>
+              <div className='flex flex-col gap-4'>
                 <div>
                   <span className='bg-yellow-500 py-1 px-4 text-white rounded-2xl font-bold text-sm mb-2'>{jobSector}</span>
-                  <h1 className='text-xl font-bold text-black mb-2'>{jobTitle}</h1>
+                  <h1 className='text-xl font-bold text-black mt-6 mb-2'>{jobTitle}</h1>
                   <p className='text-sm text-medium text-gray-500 mb-2'>{jobLocation}</p>
                   <p className='text-base text-gray-500 overflow-hidden overflow-ellipsis line-clamp-2'>{jobDescription}</p>
                 </div>

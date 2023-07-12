@@ -1,5 +1,5 @@
 export default function ApplicableCoursesSelector({
-  departmentsByDegree,
+  departmentsByDegree = [],
   jobSection,
   setJobSection
 }) {
@@ -13,13 +13,10 @@ export default function ApplicableCoursesSelector({
         <div
           key={degree}
           onClick={() => setDegreeSection(degree)}
-          className={jobSection === degree ? 'pb-1 border-b-4 border-green-900' : ''}
+          className={jobSection === degree ? 'cursor-pointer pb-1 border-b-4 border-green-900' : 'cursor-pointer'}
         >
           <span className='text-lg font-Heading font-semibold text-black pr-2'>
             {degree}
-          </span>
-          <span className='p-1 bg-gray-300 rounded-2xl text-green-500 font-medium'>
-            {departmentsByDegree[degree].length}
           </span>
         </div>
       ))}

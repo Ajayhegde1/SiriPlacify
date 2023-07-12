@@ -243,22 +243,24 @@ export default function EditPlacementPolicy() {
                         :
                         user.accType === "0"
                           ?
-                          <button
-                            className='flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'
-                            onClick={() => setShowTierModal(true)}
-                          >
-                            Add Tier
-                          </button>
+                          <>
+                            <button
+                              className='flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'
+                              onClick={() => setShowTierModal(true)}
+                            >
+                              Add Tier
+                            </button>
+                            <div class='mt-6 mb-6'>
+                              <Button
+                                btnText={update}
+                                disabled={isDisabled}
+                                onClickHandler={updatePlacementPolicyHandler}
+                              />
+                            </div>
+                          </>
                           :
                           <div></div>
                     }
-                    <div class='mt-6 mb-6'>
-                      <Button
-                        btnText={update}
-                        disabled={isDisabled}
-                        onClickHandler={updatePlacementPolicyHandler}
-                      />
-                    </div>
                   </div>
                 </div>
               </div>

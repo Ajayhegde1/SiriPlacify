@@ -173,7 +173,7 @@ const Sidebar = ({
                       <a className='menu-link'>
                         <Image
                           src={logout}
-                          className={sidebarOpen ? 'ml-3' : 'ml-1'}
+                          className={sidebarOpen ? 'ml-3 cursor-pointer' : 'ml-1 cursor-pointer'}
                           alt='logo for placement policy'
                         />
                         <span className='menu-link-text'>Logout</span>
@@ -269,7 +269,7 @@ const Sidebar = ({
                         <a className='menu-link'>
                           <Image
                             src={logout}
-                            className={sidebarOpen ? 'ml-3' : 'ml-1'}
+                            className={sidebarOpen ? 'ml-3 cursor-pointer' : 'ml-1 cursor-pointer'}
                             alt='logo for placement policy'
                           />
                           <span className='menu-link-text'>Logout</span>
@@ -364,7 +364,7 @@ const Sidebar = ({
                         <a className='menu-link'>
                           <Image
                             src={logout}
-                            className={sidebarOpen ? 'ml-3' : 'ml-1'}
+                            className={sidebarOpen ? 'ml-3 cursor-pointer' : 'ml-1 cursor-pointer'}
                             alt='logo for placement policy'
                           />
                           <span className='menu-link-text'>Logout</span>

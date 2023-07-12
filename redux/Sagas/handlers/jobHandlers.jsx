@@ -78,13 +78,12 @@ export function * handleADDJob (action) {
               }
             })
               .then((res) => {
-                openNotification('success', 'Resume uploaded successfully')
                 window.history.replaceState({}, 'Jobs', routes.JOBS)
                 window.location.reload()
               })
               .catch((err) => {
                 console.log(err)
-                openNotification('error', 'Error uploading resume')
+                openNotification('error', 'Error uploading file')
               })
           })
           .catch((err) => {
@@ -93,10 +92,8 @@ export function * handleADDJob (action) {
 
         yield put(updateJob(response.data.data))
       } else {
-        openNotification(
-          notificationTypes.ERROR,
-          'File not found'
-        )
+        window.history.replaceState({}, 'Jobs', routes.JOBS)
+        window.location.reload()
       }
     } else if (response.data.status === 401) {
       openNotification(
@@ -158,15 +155,12 @@ export function * handleADDJobByCompany (action) {
         uploadJobDescFile(action.payload.file.name, response.data.data.uid)
           .then((res) => {
             const url = res.data.url
-
-            console.log(res)
             axios.put(url, action.payload.file, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
             })
               .then((res) => {
-                openNotification('success', 'Resume uploaded successfully')
                 window.history.replaceState({}, 'Jobs', routes.JOBS)
                 window.location.reload()
               })

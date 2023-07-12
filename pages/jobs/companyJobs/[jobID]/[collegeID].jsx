@@ -7,10 +7,6 @@ import { read, utils, writeFile } from 'xlsx'
 import { Spin } from 'antd'
 
 import sheet from '../../../../public/sheets.png'
-import exportIMG from '../../../../public/export.png'
-import ppt from '../../../../public/pptIcon.png'
-import test from '../../../../public/testIcon.png'
-import interview from '../../../../public/interviewIcon.png'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -21,12 +17,14 @@ import SetPPTModal from '@/components/Modal/SetPPTModal'
 import SetTestLinkModal from '@/components/Modal/SetTestLinkModal'
 import SetInterviewModal from '@/components/Modal/SetInterviewModal'
 import LastRoundInterviewModal from '@/components/Modal/LastRoundInterviewModal'
+import DownloadApplicants from '@/components/DownloadApplicants'
 
 import { getCandidates, UpdateStatus, getJobData } from '@/redux/Sagas/requests/features'
 
 import arrow from '@/public/arrow.png'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
+import JobScheduler from '@/components/JobScheduler'
 
 export default function College () {
   const router = useRouter()
@@ -34,17 +32,11 @@ export default function College () {
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const [showPPTModal, setShowPPTModal] = useState(false)
-  const [showTestModal, setShowTestModal] = useState(false)
-  const [showIntModal, setShowIntModal] = useState(false)
   const [showLastRoundModal, setShowLastRoundModal] = useState(false)
 
   const [candidates, setCandidates] = useState([])
   const [filteredStudentList, setFilteredStudentList] = useState([])
   const [promoteStudents, setPromoteStudents] = useState([])
-  const [pptData, setPptData] = useState({})
-  const [testData, setTestData] = useState({})
-  const [intData, setIntData] = useState({})
   const [isLastRound, setLastRound] = useState(false)
 
   const [collegeName, setCollegeName] = useState('')
@@ -108,27 +100,6 @@ export default function College () {
               openNotification(
                 notificationTypes.ERROR,
                 'Error'
-              )
-            })
-          getJobData(jobID, collegeID)
-            .then((res) => {
-              if (res.data.status === 200) {
-                setPptData(res.data.data.pptData)
-                setTestData(res.data.data.testData)
-                setIntData(res.data.data.interviewData)
-              } else {
-                openNotification(
-                  notificationTypes.ERROR,
-                  'Error',
-                  'Unable to retrieve job data'
-                )
-              }
-            })
-            .catch((err) => {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error',
-                'Unable to retrieve job data'
               )
             })
         }
@@ -751,105 +722,11 @@ export default function College () {
           }
         </div>
         <div className='flex flex-col md:flex-row gap-0 md:gap-2 mb-6'>
-          <div className='ml-3 md:ml-6 mt-10 flex flex-col xl:flex-row gap-4 justify-start mr-3 md:mr-12'>
-            <div>
-              <button
-                onClick={() => setShowPPTModal(true)}
-                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-              >
-                <Image
-                  src={ppt}
-                  alt='ppt'
-                  className='h-6 w-6 mr-2'
-                  width={20}
-                  height={20}
-                />
-                {
-                  pptData === null
-                    ? <span>
-                      Schedule PPT
-                    </span>
-                    : Object.keys(pptData).length === 0
-                      ? <span>
-                        Schedule PPT
-                      </span>
-                      : <span>
-                        View PPT
-                      </span>
-                }
-              </button>
-            </div>
-            <div>
-              <button
-                onClick={() => setShowTestModal(true)}
-                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-              >
-                <Image
-                  src={test}
-                  alt='Test'
-                  className='h-6 w-6 mr-2'
-                  width={20}
-                  height={20}
-                />
-                {
-                  testData === null
-                    ? <span>
-                      Schedule Test
-                    </span>
-                    : Object.keys(testData).length === 0
-                      ? <span>
-                        Schedule Test
-                      </span>
-                      : <span>
-                        View Test
-                      </span>
-                }
-              </button>
-            </div>
-            <div>
-              <button
-                onClick={() => setShowIntModal(true)}
-                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-              >
-                <Image
-                  src={interview}
-                  alt='Interview'
-                  className='h-6 w-6 mr-2'
-                  width={20}
-                  height={20}
-                />
-                {
-                  testData === null
-                    ? <span>
-                      Schedule Interview
-                    </span>
-                    : Object.keys(intData).length === 0
-                      ? <span>
-                        Schedule Interview
-                      </span>
-                      : <span>
-                        View Interview
-                      </span>
-                }
-              </button>
-            </div>
-          </div>
+          <JobScheduler
+            jobID={jobID}
+            collegeID={collegeID}
+          />
           <div className='mt-4 md:mt-10 flex flex-col xl:flex-row gap-4 ml-3 md:ml-auto mr-3 md:mr-12'>
-            <div>
-              <button
-                onClick={handleExport}
-                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
-              >
-                <Image
-                  src={exportIMG}
-                  alt='Export Students Data to excel'
-                  className='h-5 w-5 mt-1 mr-2'
-                  width={20}
-                  height={20}
-                />
-                Export Students Data to excel
-              </button>
-            </div>
             <div>
               <button
                 onClick={() => setShowModal(true)}
@@ -865,6 +742,9 @@ export default function College () {
                 Import from excel
               </button>
             </div>
+            <DownloadApplicants
+              studentList={candidates}
+            />
           </div>
         </div>
         <div className='pb-10'>
@@ -961,27 +841,6 @@ export default function College () {
         showModal={showModal}
         setShowModal={setShowModal}
         ImportExcel={handleImport}
-      />
-      <SetPPTModal
-        showModal={showPPTModal}
-        setShowModal={setShowPPTModal}
-        jobID={jobID}
-        collegeID={collegeID}
-        data={pptData}
-      />
-      <SetTestLinkModal
-        showModal={showTestModal}
-        setShowModal={setShowTestModal}
-        jobID={jobID}
-        collegeID={collegeID}
-        data={testData}
-      />
-      <SetInterviewModal
-        showModal={showIntModal}
-        setShowModal={setShowIntModal}
-        jobID={jobID}
-        collegeID={collegeID}
-        data={intData}
       />
       <LastRoundInterviewModal
         showModal={showLastRoundModal}

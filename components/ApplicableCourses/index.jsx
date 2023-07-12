@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import ApplicableCoursesSelector from '../ApplicableCoursesSelector';
-import Button from '../Buttons';
 import { getDepartment } from '@/redux/Sagas/requests/features';
 import { Spin } from 'antd';
 
 export default function ApplicableCourses({
   jobDept,
-  setJobDept
+  setJobDept,
+  isEdit = false
 }) {
   const [jobSection, setJobSection] = useState(null);
   const [departmentList, setDepartmentList] = useState([]);
@@ -72,7 +72,7 @@ export default function ApplicableCourses({
                       key={department.id}
                     >
                       <input
-                        className='relative float-left -ml-[1.5rem] mr-[6px] mt-[0.15rem] h-[1.5rem] md:h-[2rem] w-[1.5rem] md:w-[2rem] rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300'
+                        className={isEdit ? "relative float-left accent-green-700 -ml-[1.5rem] mr-[6px] mt-[0.15rem] h-[1.5rem] md:h-[2rem] w-[1.5rem] md:w-[2rem] rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300" : "cursor-not-allowed relative float-left -ml-[1.5rem] mr-[6px] mt-[0.15rem] h-[1.5rem] md:h-[2rem] w-[1.5rem] md:w-[2rem] rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300"}
                         type='checkbox'
                         id={`inlineCheckbox_${department.id}`}
                         value={department.id}
@@ -85,6 +85,7 @@ export default function ApplicableCourses({
                             setJobDept(jobDept.filter((dept) => dept.id !== department.id));
                           }
                         }}
+                        disabled={!isEdit}
                       />
                       <label
                         className='mt-1 md:mt-2 text-base md:text-lg inline-block pl-[0.75rem] md:pl-[2rem] text-gray-500 font-Heading'
@@ -98,9 +99,6 @@ export default function ApplicableCourses({
               )}
             </div>
           </div>
-        </div>
-        <div className='pb-8 ml-auto mr-10 w-1/6'>
-          <Button btnText='Save' />
         </div>
       </div>
     </>

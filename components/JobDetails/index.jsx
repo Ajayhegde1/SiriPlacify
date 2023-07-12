@@ -6,6 +6,7 @@ import ApplicableCourses from '../ApplicableCourses'
 import { useState } from 'react'
 
 import { updateJobTPO } from '@/redux/Sagas/requests/features'
+import { openNotification, notificationTypes } from '@/utils/notifications'
 
 export default function JobDetails({
   jobID,
@@ -59,27 +60,27 @@ export default function JobDetails({
     const data = {
       companyName,
       jobTitle,
-      basePay,
-      variablePay,
-      jobRSU,
+      jobBasePay: basePay,
+      jobVariablePay: variablePay,
+      jobRSU: RSU,
       jobLocation,
-      jobPositionType: jobPosition,
+      jobPositionType: jobPositionType,
       jobSector,
       jobCTC,
       jobDescription: jobDesc,
       jobBond,
       jobCriteria,
-      jobTestMode: jobModeOfSelection,
-      contactName,
-      contactPhone,
-      contactEmail,
-      jobFinalSelection,
+      jobTestMode: modeOfSelection,
+      jobContactName: contactName,
+      jobContactPhoneNo: contactPhone,
+      jobContactEmail: contactEmail,
+      jobFinalSelection: finalDesc,
       tenthMarks,
       twelfthMarks,
       UGCgpa,
       dept: jobDept
     }
-    updateJobTPO(id, data)
+    updateJobTPO(jobID, data)
       .then((res) => {
         if (res.data.status === 200) {
           openNotification(
@@ -185,6 +186,7 @@ export default function JobDetails({
       />
       <div className='mt-12'>
         <ApplicableCourses
+          isEdit={isEdit}
           jobDept={jobDept}
           setJobDept={setJobDept}
         />

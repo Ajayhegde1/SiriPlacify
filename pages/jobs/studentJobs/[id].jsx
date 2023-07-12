@@ -6,7 +6,7 @@ import appleLogo from '@/public/appleLogo.png'
 import JobDesc from '@/components/JobDesc'
 import ModeOfSelection from '@/components/ModeOfSelection'
 import CompanyContact from '@/components/CompanyContact'
-// import ApplicableCourses from '@/components/ApplicableCourses'
+import ApplicableCourses from '@/components/ApplicableCourses'
 import BasicJobInfo from '@/components/BasicJobInfo'
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -144,6 +144,11 @@ export default function getStudentJobs () {
                               contactEmail={job.jobContactEmail}
                               contactPhone={job.jobContactNumber}
                             />
+                            <div className='mt-12'>
+                              <ApplicableCourses
+                                jobDept={job.jobDept}
+                              />
+                            </div>
                           </div>
                           <br />
                           <br />

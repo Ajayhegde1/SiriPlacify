@@ -68,7 +68,7 @@ export default function AddJob () {
     } else {
       setIsBtnDisabled(true)
     }
-  }, [finalMode, designation, jobStatus, selectedOptions, locationOfWork, ctc, sector, selectedDate, modeOfSelection, bondDetails, contactPersonName, contactPersonPhoneNumber, contactPersonEmail])
+  }, [finalMode, designation, jobStatus, selectedOptions, locationOfWork,applicableCourses, ctc, sector, selectedDate, modeOfSelection, bondDetails, contactPersonName, contactPersonPhoneNumber, contactPersonEmail])
 
   useEffect(() => {
     if (user === null) {
@@ -289,6 +289,41 @@ export default function AddJob () {
                 onChangeHandler={(e) => setUGCgpa(sanitizeCTCInput(e.target.value))}
               />
             </div>
+                <h1 className='text-center md:text-left pb-4 mt-3 text-xl md:text-2xl font-Heading font-bold text-gray-800'>CTC Breakdown</h1>
+                <div>
+                <div>
+                  <TextField
+                    label='CTC (in Rs.)'
+                    placeholder='75,0000.00'
+                    type='text'
+                    value={ctc}
+                    onChangeHandler={(e) => setCtc(sanitizeCTCInput(e.target.value))}
+                  />
+                </div>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+                  <TextField
+                    label='Base Pay (in Rs.)'
+                    placeholder='75,0000.00'
+                    type='text'
+                    value={basePay}
+                    onChangeHandler={(e) => setBasePay(sanitizeCTCInput(e.target.value))}
+                  />
+                  <TextField
+                    label='Variable Pay (in Rs.)'
+                    placeholder='75,0000.00'
+                    type='text'
+                    value={variablePay}
+                    onChangeHandler={(e) => setVariablePay(sanitizeCTCInput(e.target.value))}
+                  />
+                  <TextField
+                    label='RSU (in Rs.)'
+                    placeholder='75,0000.00'
+                    type='text'
+                    value={RSU}
+                    onChangeHandler={(e) => setRSU(sanitizeCTCInput(e.target.value))}
+                  />
+                </div>
+              </div>
           </div>
           <div>
             <div className='mt-8 mb-6'>
@@ -312,7 +347,7 @@ export default function AddJob () {
                   ? <div>
                     No departments found
                     </div>
-                  : <div class='mt-12 mb-8'>
+                  : <div class='my-6'>
                     <label class='block font-Poppins text-black text-md font-bold mb-2' for='username'>
                       Select Streams
                     </label>
@@ -381,41 +416,6 @@ export default function AddJob () {
                 </div>
             }
             </div>
-          </div>
-        </div>
-        <div className='ml-3 md:ml-6 mr-12'>
-          <h1 className='text-center md:text-left pb-4 mt-3 md:mt-6 text-xl md:text-2xl font-Heading font-bold text-gray-800'>CTC Breakdown</h1>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-            <TextField
-              label='Base Pay (in Rs.)'
-              placeholder='75,0000.00'
-              type='text'
-              value={basePay}
-              onChangeHandler={(e) => setBasePay(sanitizeCTCInput(e.target.value))}
-            />
-            <TextField
-              label='Variable Pay (in Rs.)'
-              placeholder='75,0000.00'
-              type='text'
-              value={variablePay}
-              onChangeHandler={(e) => setVariablePay(sanitizeCTCInput(e.target.value))}
-            />
-            <TextField
-              label='RSU (in Rs.)'
-              placeholder='75,0000.00'
-              type='text'
-              value={RSU}
-              onChangeHandler={(e) => setRSU(sanitizeCTCInput(e.target.value))}
-            />
-          </div>
-          <div className='w-1/3'>
-            <TextField
-              label='CTC (in Rs.)'
-              placeholder='75,0000.00'
-              type='text'
-              value={ctc}
-              onChangeHandler={(e) => setCtc(sanitizeCTCInput(e.target.value))}
-            />
           </div>
         </div>
         <div className='ml-3 md:ml-6 mr-12'>

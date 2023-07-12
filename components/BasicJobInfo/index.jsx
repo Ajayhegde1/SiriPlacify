@@ -221,6 +221,24 @@ export default function BasicJobInfo({
     return null;
   };
 
+  const renderCompanyActions = () => {
+    if (user && user.accType === '2') {
+      if (isClosedTPO){
+        return (
+          <div className='mt-6 lg:mt-20 flex'>
+            <button
+              onClick={handleReOpenJob}
+              className='ml-auto rounded-lg text-base md:text-lg 2xl:text-xl bg-red-500 text-white font-bold text-center p-2'
+            >
+              Re-Open Job
+            </button>
+          </div>
+        );
+      }
+    }
+    return null;
+  }
+
   return (
     <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-5 rounded-lg'>
       <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2'>
@@ -242,8 +260,9 @@ export default function BasicJobInfo({
           </div>
           {user && (
             <>
-              {user.accType === '1' && renderStudentActions()}
               {user.accType === '0' && renderTPOActions()}
+              {user.accType === '1' && renderStudentActions()}
+              {user.accType === '2' && renderCompanyActions()}
             </>
           )}
         </div>

@@ -90,14 +90,20 @@ export default function Candidates ({
                       user === null
                         ? <></>
                         : user.accType !== '1'
-                          ? <td>
+                          ? 
+                          isStudentsList 
+                          ?
+                          <td></td>
+                          :
+                          <td>
                             <input
                               type='checkbox'
                               className={user === null ? '' : user.accType === '0' ? 'mx-5 h-6 w-6' : user.accType === '2' ? 'h-6 w-6' : ''}
                               onChange={(event) => addPromoteStudent(event, student)}
                             />
                           </td>
-                          : <></>
+                          : 
+                          <></>
                     }
                     <td className='whitespace-nowrap px-6 py-4'>{student.studentId}</td>
                     <td className='whitespace-nowrap px-6 py-4'>{student.username}</td>
@@ -126,7 +132,18 @@ export default function Candidates ({
                     {
                       user !== null
                         ? user.accType === '0'
-                          ? <td className='whitespace-nowrap px-6 py-4'>
+                          ? 
+                          isStudentsList ? 
+                          <td className='whitespace-nowrap px-6 py-4'>
+                            <button
+                              onClick={() => router.push(`/students/${student.uid}`)}
+                              className='font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded'
+                            >
+                              View Profile
+                            </button>
+                          </td>
+                          :
+                          <td className='whitespace-nowrap px-6 py-4'>
                             <button
                               onClick={() => router.push(`/jobs/currentJobs/${jobID}/candidates/${student.uid}`)}
                               className='font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded'

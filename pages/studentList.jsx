@@ -150,7 +150,7 @@ export default function UserList () {
                 : <div className='bg-white rounded-xl'>
                   <Candidates
                     students={students}
-                    isStudentsList
+                    isStudentsList={true}
                   />
                 </div>
           }

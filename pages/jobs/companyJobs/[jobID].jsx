@@ -13,7 +13,7 @@ import JobDesc from '@/components/JobDesc'
 import ModeOfSelection from '@/components/ModeOfSelection'
 import CompanyContact from '@/components/CompanyContact'
 import OfferedCollegesList from '@/components/OfferedCollegesList'
-import ApplicableCourses from '@/components/ApplicableCoursesSelector'
+import ApplicableCourses from '@/components/ApplicableCourses'
 import { Spin } from 'antd'
 
 import { getJob, closeJob, updateJob } from '@/redux/Sagas/requests/features'
@@ -137,16 +137,7 @@ export default function CompanyJobs () {
                 setTenthMarks(res.data.data.tenthMarks)
                 setTwelfthMarks(res.data.data.twelfthMarks)
                 setUGCgpa(res.data.data.UGCgpa)
-                if (typeof res.data.data.jobDept !== 'undefined' && res.data.data.jobDept !== null && res.data.data.jobDept.length > 0) {
-                  let deet = res.data.data.jobDept
-                  deet = deet.map((department) => {
-                    return {
-                      value: department.id,
-                      label: department.depName
-                    }
-                  })
-                  setDept(deet)
-                }
+                setDept(res.data.data.jobDept)
               } else if (res.data.status === 423) {
                 openNotification(
                   notificationTypes.ERROR,
@@ -294,19 +285,19 @@ export default function CompanyJobs () {
         <div className='mt-10 ml-2 md:ml-10 pr-20 flex flex-row border-b-2 border-gray-300'>
           <div className='flex flex-col md:flex-row gap-4 md:gap-8'>
             <div
-              className={jobSection === 1 ? 'pb-1 border-b-4 border-green-900' : ''}
+              className={jobSection === 1 ? 'pb-1 border-b-4 border-green-900 cursor-pointer' : 'cursor-pointer'}
               onClick={setCollegesSection}
             >
               <span className='text-lg font-Heading font-semibold text-black pr-2'>List of colleges</span>
             </div>
             <div
-              className={jobSection === 2 ? 'pb-1 border-b-4 border-green-900' : ''}
+              className={jobSection === 2 ? 'pb-1 border-b-4 border-green-900 cursor-pointer' : 'cursor-pointer'}
               onClick={setOfferedCollegesSection}
             >
               <span className='text-lg font-Heading font-semibold text-black pr-2'>List of offered colleges</span>
             </div>
             <div
-              className={jobSection === 3 ? 'pb-1 border-b-4 border-green-900' : ''}
+              className={jobSection === 3 ? 'pb-1 border-b-4 border-green-900 cursor-pointer' : 'cursor-pointer'}
               onClick={setDegree}
             >
               <span className='text-lg font-Heading font-semibold text-black pr-2'>Job Details</span>
@@ -405,6 +396,13 @@ export default function CompanyJobs () {
                       setContactPhone={setJobContactPhoneNo}
                       isEdit={isEdit}
                     />
+                    <div className='mt-12'>
+                      <ApplicableCourses
+                        jobDept={jobDept}
+                        setJobDept={setDept}
+                        isEdit={isEdit}
+                      />
+                    </div>
                   </div>
         }
         <br />

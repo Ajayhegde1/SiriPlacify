@@ -12,14 +12,14 @@ import appleLogo from '@/public/appleLogo.png'
 import JobDesc from '@/components/JobDesc'
 import ModeOfSelection from '@/components/ModeOfSelection'
 import CompanyContact from '@/components/CompanyContact'
-// import ApplicableCourses from '@/components/ApplicableCourses'
+import ApplicableCourses from '@/components/ApplicableCourses'
 
 import { getJob } from '@/redux/Sagas/requests/features'
 import { routes } from '@/constants/routes'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
-export default function JobOffers () {
+export default function JobOffers() {
   const router = useRouter()
 
   const user = useSelector((state) => state.user)
@@ -109,25 +109,25 @@ export default function JobOffers () {
                 No job found
               </div>
               : <BasicJobInfo
-                  uid={job.uid}
-                  logo={appleLogo}
-                  jobTitle={job.jobTitle}
-                  jobLocation={job.jobLocation}
-                  jobCategory={job.jobSector}
-                  dueDate={job.dueDate}
-                />
+                uid={job.uid}
+                logo={appleLogo}
+                jobTitle={job.jobTitle}
+                jobLocation={job.jobLocation}
+                jobCategory={job.jobSector}
+                dueDate={job.dueDate}
+              />
         }
         <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-4 md:p-10 rounded-lg'>
           {
-          job === null
-            ? <div>
-              Loading
-            </div>
-            : Object.keys(job).length === 0
+            job === null
               ? <div>
-                No job found
+                Loading
               </div>
-              : <JobDesc
+              : Object.keys(job).length === 0
+                ? <div>
+                  No job found
+                </div>
+                : <JobDesc
                   jobID={job.uid}
                   companyName={job.companyName}
                   jobTitle={job.jobTitle}
@@ -149,36 +149,55 @@ export default function JobOffers () {
                 />
           }
           {
-          job === null
-            ? <div>
-              Loading
-            </div>
-            : Object.keys(job).length === 0
+            job === null
               ? <div>
-                No job found
+                Loading
               </div>
-              : <ModeOfSelection
+              : Object.keys(job).length === 0
+                ? <div>
+                  No job found
+                </div>
+                : <ModeOfSelection
                   modeOfSelection={job.jobTestMode}
                   finalDesc={job.jobFinalSelection}
                 />
           }
           {
-          job === null
-            ? <div>
-              Loading
-            </div>
-            : Object.keys(job).length === 0
+            job === null
               ? <div>
-                No job found
+                Loading
               </div>
-              : <CompanyContact
+              : Object.keys(job).length === 0
+                ? <div>
+                  No job found
+                </div>
+                : <CompanyContact
                   contactName={job.jobContactName}
                   contactEmail={job.jobContactEmail}
                   contactPhone={job.jobContactNumber}
                 />
           }
+          {
+            job === null
+              ?
+              <>
+              </>
+              :
+              Object.keys(job).length === 0
+                ?
+                <div className='mt-12'>
+                  <ApplicableCourses
+                    jobDept={[]}
+                  />
+                </div>
+                :
+                <div className='mt-12'>
+                  <ApplicableCourses
+                    jobDept={dept}
+                  />
+                </div>
+          }
         </div>
-        {/* <ApplicableCourses /> */}
         <br />
         <br />
       </main>

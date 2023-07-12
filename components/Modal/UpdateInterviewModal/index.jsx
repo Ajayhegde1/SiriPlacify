@@ -58,7 +58,13 @@ export default function UpdateInterviewModal({
         if (res.data.status === 200) {
           openNotification(notificationTypes.SUCCESS, 'Success', 'Interview Scheduled Successfully')
           setShowModal(!showModal)
-          window.location.reload()
+          setData({
+            platform: deets.platform,
+            url: deets.url,
+            venue: deets.venue,
+            interviewDateTime: deets.value,
+            prerequistes: deets.prerequistes,
+          })
         } else if (res.data.status === 423) {
           openNotification(notificationTypes.ERROR, 'Error', res.data.message)
         } else if (res.data.status === 424) {
@@ -130,7 +136,7 @@ export default function UpdateInterviewModal({
             label='Prerequisites'
             placeholder='Enter prerequisites for the students'
             value={data.prerequistes}
-            onChangeHandler={(e) => setData({ ...data, prerequisites: e.target.value })}
+            onChangeHandler={(e) => setData({ ...data, prerequistes: e.target.value })}
           />
         </div>
         <div className='mt-6 ml-4 mr-10'>

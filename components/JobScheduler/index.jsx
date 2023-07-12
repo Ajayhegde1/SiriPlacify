@@ -15,12 +15,15 @@ import interview from '@/public/interviewIcon.png'
 
 import { getProfile } from '@/redux/Slices/profile'
 import { getJobData } from '@/redux/Sagas/requests/features'
+import { notificationTypes, openNotification } from '@/utils/notifications'
 
 export default function JobScheduler({
-  jobID
+  jobID,
+  collegeID = ''
 }) {
   const dispatch = useDispatch()
 
+  const user = useSelector((state) => state.user)
   const college = useSelector((state) => state.profile)
 
   const [showPPTModal, setShowPPTModal] = useState(false)
@@ -34,34 +37,70 @@ export default function JobScheduler({
   const [intData, setIntData] = useState(null)
 
   useEffect(() => {
-    dispatch(getProfile())
-    if (typeof jobID !== 'undefined' && college !== null) {
-      getJobData(jobID, college.uid)
-        .then((res) => {
-          if (res.data.status === 200) {
-            setPptData(res.data.data.pptData)
-            setTestData(res.data.data.testData)
-            setIntData(res.data.data.interviewData)
-          } else {
-            openNotification(
-              notificationTypes.ERROR,
-              'Error',
-              'Unable to retrieve job data'
-            )
-          }
-        })
-        .catch((err) => {
+    if (user !== null) {
+      if (user.accType === '0') {
+        dispatch(getProfile())
+        if (typeof jobID !== 'undefined' && college !== null) {
+          getJobData(jobID, college.uid)
+            .then((res) => {
+              if (res.data.status === 200) {
+                setPptData(res.data.data.pptData)
+                setTestData(res.data.data.testData)
+                setIntData(res.data.data.interviewData)
+              } else {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Unable to retrieve job data'
+                )
+              }
+            })
+            .catch(() => {
+              openNotification(
+                notificationTypes.ERROR,
+                'Error',
+                'Unable to retrieve job data'
+              )
+            })
+        }
+      }
+        else if (user.accType === '2') {
+          if (typeof jobID !== 'undefined' && collegeID !== "") {
+            getJobData(jobID, collegeID)
+              .then((res) => {
+                if (res.data.status === 200) {
+                  setPptData(res.data.data.pptData)
+                  setTestData(res.data.data.testData)
+                  setIntData(res.data.data.interviewData)
+                } else {
+                  openNotification(
+                    notificationTypes.ERROR,
+                    'Error',
+                    'Unable to retrieve job data'
+                  )
+                }
+              })
+              .catch(() => {
+                openNotification(
+                  notificationTypes.ERROR,
+                  'Error',
+                  'Unable to retrieve job data'
+                )
+              })
+            }
+        }
+        else {
           openNotification(
             notificationTypes.ERROR,
             'Error',
             'Unable to retrieve job data'
           )
-        })
+        }
     }
   }, [jobID, dispatch])
 
   return (
-    <div className='ml-3 md:ml-6 mt-10 flex flex-col xl:flex-row gap-4 justify-start mr-3 md:mr-12'>
+    <div className='ml-3 md:ml-6 mt-10 flex flex-col md:flex-row gap-4 justify-start mr-3 md:mr-12'>
       <div>
         {
           pptData === null
@@ -215,54 +254,116 @@ export default function JobScheduler({
               </button>
         }
       </div>
-      <SetPPTModal
-        showModal={showPPTModal}
-        setShowModal={setShowPPTModal}
-        jobID={jobID}
-        collegeID={college === null ? '' : college.uid}
-        data={pptData}
-        setData={setPptData}
-      />
-      <UpdatePPTModal
-        showModal={showUpdatePPTModal}
-        setShowModal={setShowUpdatePPTModal}
-        jobID={jobID}
-        collegeID={college === null ? '' : college.uid}
-        data={pptData}
-        setData={setPptData}
-      />
-      <SetTestLinkModal
-        showModal={showTestModal}
-        setShowModal={setShowTestModal}
-        jobID={jobID}
-        collegeID={college === null ? '' : college.uid}
-        data={testData}
-        setData={setTestData}
-      />
-      <UpdateTestLinkModal
-        showModal={showUpdateTestModal}
-        setShowModal={setShowUpdateTestModal}
-        jobID={jobID}
-        collegeID={college === null ? '' : college.uid}
-        data={testData}
-        setData={setTestData}
-      />
-      <SetInterviewModal
-        showModal={showIntModal}
-        setShowModal={setShowIntModal}
-        jobID={jobID}
-        collegeID={college === null ? '' : college.uid}
-        data={intData}
-        setData={setIntData}
-      />
-      <UpdateInterviewModal
-        showModal={showUpdateIntModal}
-        setShowModal={setShowUpdateIntModal}
-        jobID={jobID}
-        collegeID={college === null ? '' : college.uid}
-        data={intData}
-        setData={setIntData}
-      />
+      {
+        user === null
+        ?
+        <>
+        </>
+        :
+        user.accType === '0'
+        ?
+        <>
+        <SetPPTModal
+          showModal={showPPTModal}
+          setShowModal={setShowPPTModal}
+          jobID={jobID}
+          collegeID={college === null ? '' : college.uid}
+          data={pptData}
+          setData={setPptData}
+        />
+        <UpdatePPTModal
+          showModal={showUpdatePPTModal}
+          setShowModal={setShowUpdatePPTModal}
+          jobID={jobID}
+          collegeID={college === null ? '' : college.uid}
+          data={pptData}
+          setData={setPptData}
+        />
+        <SetTestLinkModal
+          showModal={showTestModal}
+          setShowModal={setShowTestModal}
+          jobID={jobID}
+          collegeID={college === null ? '' : college.uid}
+          data={testData}
+          setData={setTestData}
+        />
+        <UpdateTestLinkModal
+          showModal={showUpdateTestModal}
+          setShowModal={setShowUpdateTestModal}
+          jobID={jobID}
+          collegeID={college === null ? '' : college.uid}
+          data={testData}
+          setData={setTestData}
+        />
+        <SetInterviewModal
+          showModal={showIntModal}
+          setShowModal={setShowIntModal}
+          jobID={jobID}
+          collegeID={college === null ? '' : college.uid}
+          data={intData}
+          setData={setIntData}
+        />
+        <UpdateInterviewModal
+          showModal={showUpdateIntModal}
+          setShowModal={setShowUpdateIntModal}
+          jobID={jobID}
+          collegeID={college === null ? '' : college.uid}
+          data={intData}
+          setData={setIntData}
+        />
+        </>
+        :
+        <>
+        <SetPPTModal
+          showModal={showPPTModal}
+          setShowModal={setShowPPTModal}
+          jobID={jobID}
+          collegeID={collegeID}
+          data={pptData}
+          setData={setPptData}
+        />
+        <UpdatePPTModal
+          showModal={showUpdatePPTModal}
+          setShowModal={setShowUpdatePPTModal}
+          jobID={jobID}
+          collegeID={collegeID}
+          data={pptData}
+          setData={setPptData}
+        />
+        <SetTestLinkModal
+          showModal={showTestModal}
+          setShowModal={setShowTestModal}
+          jobID={jobID}
+          collegeID={collegeID}
+          data={testData}
+          setData={setTestData}
+        />
+        <UpdateTestLinkModal
+          showModal={showUpdateTestModal}
+          setShowModal={setShowUpdateTestModal}
+          jobID={jobID}
+          collegeID={collegeID}
+          data={testData}
+          setData={setTestData}
+        />
+        <SetInterviewModal
+          showModal={showIntModal}
+          setShowModal={setShowIntModal}
+          jobID={jobID}
+          collegeID={collegeID}
+          data={intData}
+          setData={setIntData}
+        />
+        <UpdateInterviewModal
+          showModal={showUpdateIntModal}
+          setShowModal={setShowUpdateIntModal}
+          jobID={jobID}
+          collegeID={collegeID}
+          data={intData}
+          setData={setIntData}
+        />
+        </>
+      }
     </div>
   )
 }

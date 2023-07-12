@@ -6,7 +6,7 @@ import appleLogo from '@/public/appleLogo.png'
 import JobDesc from '@/components/JobDesc'
 import ModeOfSelection from '@/components/ModeOfSelection'
 import CompanyContact from '@/components/CompanyContact'
-// import ApplicableCourses from '@/components/ApplicableCourses'
+import ApplicableCourses from '@/components/ApplicableCourses'
 import BasicJobInfo from '@/components/BasicJobInfo'
 import Sidebar from '@/components/SideBar'
 import { Spin } from 'antd'
@@ -131,7 +131,6 @@ export default function getClosedJobs () {
                                   jobBond={job.jobBond}
                                   jobCriteria={job.jobCriteria}
                                   basePay={job.basePay}
-                                  jobDept={dept}
                                   variablePay={job.variablePay}
                                   RSU={job.RSU}
                                   tenthMarks={job.tenthMarks}
@@ -148,6 +147,11 @@ export default function getClosedJobs () {
                                   contactEmail={job.jobContactEmail}
                                   contactPhone={job.jobContactNumber}
                                 />
+                                <div className='mt-12'>
+                                  <ApplicableCourses
+                                    jobDept={dept}
+                                  />
+                                </div>
                               </div>
                               <br />
                               <br />

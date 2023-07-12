@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import axios from 'axios'
+import Link from 'next/link'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -13,6 +14,9 @@ import { GetStudent, getCandidateResume } from '@/redux/Sagas/requests/features'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
 import photo from '@/public/photoupload.png'
+import arrow from '@/public/arrow.png'
+
+import { routes } from '@/constants/routes'
 
 export default function CandidatesPage () {
   const router = useRouter()
@@ -105,7 +109,19 @@ export default function CandidatesPage () {
         setSidebarOpen={setSidebarOpen}
       />
       <main class={`dashboard ${sidebarOpen ? 'active' : ''}`}>
-        <div className='pt-16 mx-auto md:mx-20'>
+        <div className='mx-10 pt-10 flex flex-row'>
+          <Link href={routes.STUDENTLIST}>
+            <Image
+              src={arrow}
+              alt='arrow-left'
+              className='my-auto h-12 w-12'
+            />
+          </Link>
+          <h1 className='ml-2 mt-2 text-lg md:text-2xl font-Heading font-semibold text-black'>
+            Back
+          </h1>
+        </div>
+        <div className='pt-4 mx-auto md:mx-20'>
           <div className='flex gap-2'>
             <h1 className='text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-12 text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl font-Heading font-bold text-black'>Student Profile</h1>
             <button
