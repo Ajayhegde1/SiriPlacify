@@ -14,6 +14,8 @@ import DocHeader from '@/components/DocHeader'
 import { addJob, addJobByCompany } from '@/redux/Slices/jobSlice'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
+import { validatePhoneNumber, validateEmail } from '@/utils/validators'
+
 import { jobStatusList, modeOfSelectionList, finalSelection, jobSectorList, genderList } from '@/constants/addJobDropDowns'
 import { routes } from '@/constants/routes'
 
@@ -119,74 +121,83 @@ export default function AddJob () {
   }
 
   const addJobHandler = () => {
-    if (user.accType === '0') {
-      const jobData = {
-        jobTitle: designation,
-        jobLocation: locationOfWork,
-        jobCTC: ctc,
-        jobDescription: briefJobDescription,
-        jobBond: bondDetails,
-        jobSector: sector,
-        jobPositionType: jobStatus,
-        jobCriteria: applicableCourses,
-        jobTestMode: modeOfSelection,
-        jobFinalSelection: finalMode,
-        jobContactName: contactPersonName,
-        gender,
-        jobContactNumber: contactPersonPhoneNumber,
-        jobEmailId: contactPersonEmail,
-        dueDate: selectedDate,
-        companyName,
-        basePay,
-        variablePay,
-        RSU,
-        tenthMarks,
-        twelfthMarks,
-        UGCgpa
-      }
-      const Data = {
-        data: jobData,
-        file: selectedFile
-      }
-      setBtnText('Saving...')
-      dispatch(addJob(Data))
-    } else if (user.accType === '2') {
-      const jobData = {
-        jobTitle: designation,
-        jobLocation: locationOfWork,
-        jobCTC: ctc,
-        jobDescription: briefJobDescription,
-        jobBond: bondDetails,
-        jobSector: sector,
-        jobPositionType: jobStatus,
-        jobCriteria: applicableCourses,
-        gender,
-        jobTestMode: modeOfSelection,
-        jobFinalSelection: finalMode,
-        jobContactName: contactPersonName,
-        jobContactNumber: contactPersonPhoneNumber,
-        jobEmailId: contactPersonEmail,
-        dueDate: selectedDate,
-        basePay,
-        variablePay,
-        RSU,
-        tenthMarks,
-        twelfthMarks,
-        UGCgpa,
-        degree: selectedOptions
-      }
-      const Data = {
-        data: jobData,
-        file: selectedFile
-      }
-      setBtnText('Saving...')
-      dispatch(addJobByCompany(Data))
-    } else {
+    if (!validatePhoneNumber(contactPersonPhoneNumber) && !validateEmail(contactPersonEmail)) {
       openNotification(
         notificationTypes.ERROR,
         'Error',
-        'You are not authorized to add jobs'
+        'Please enter a valid phone number and email id'
       )
+    }
+    else{
+      if (user.accType === '0') {
+        const jobData = {
+          jobTitle: designation,
+          jobLocation: locationOfWork,
+          jobCTC: ctc,
+          jobDescription: briefJobDescription,
+          jobBond: bondDetails,
+          jobSector: sector,
+          jobPositionType: jobStatus,
+          jobCriteria: applicableCourses,
+          jobTestMode: modeOfSelection,
+          jobFinalSelection: finalMode,
+          jobContactName: contactPersonName,
+          gender,
+          jobContactNumber: contactPersonPhoneNumber,
+          jobEmailId: contactPersonEmail,
+          dueDate: selectedDate,
+          companyName,
+          basePay,
+          variablePay,
+          RSU,
+          tenthMarks,
+          twelfthMarks,
+          UGCgpa
+        }
+        const Data = {
+          data: jobData,
+          file: selectedFile
+        }
+        setBtnText('Saving...')
+        dispatch(addJob(Data))
+      } else if (user.accType === '2') {
+        const jobData = {
+          jobTitle: designation,
+          jobLocation: locationOfWork,
+          jobCTC: ctc,
+          jobDescription: briefJobDescription,
+          jobBond: bondDetails,
+          jobSector: sector,
+          jobPositionType: jobStatus,
+          jobCriteria: applicableCourses,
+          gender,
+          jobTestMode: modeOfSelection,
+          jobFinalSelection: finalMode,
+          jobContactName: contactPersonName,
+          jobContactNumber: contactPersonPhoneNumber,
+          jobEmailId: contactPersonEmail,
+          dueDate: selectedDate,
+          basePay,
+          variablePay,
+          RSU,
+          tenthMarks,
+          twelfthMarks,
+          UGCgpa,
+          degree: selectedOptions
+        }
+        const Data = {
+          data: jobData,
+          file: selectedFile
+        }
+        setBtnText('Saving...')
+        dispatch(addJobByCompany(Data))
+      } else {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'You are not authorized to add jobs'
+        )
+      }
     }
   }
 
@@ -289,12 +300,12 @@ export default function AddJob () {
                 onChangeHandler={(e) => setUGCgpa(sanitizeCTCInput(e.target.value))}
               />
             </div>
-                <h1 className='text-center md:text-left pb-4 mt-3 text-xl md:text-2xl font-Heading font-bold text-gray-800'>CTC Breakdown</h1>
+                <h1 className='text-center md:text-left pb-4 mt-3 text-xl md:text-2xl font-Heading font-bold text-gray-800'>CTC Breakdown (p.a)</h1>
                 <div>
                 <div>
                   <TextField
                     label='CTC (in Rs.)'
-                    placeholder='75,0000.00'
+                    placeholder='750000.00'
                     type='text'
                     value={ctc}
                     onChangeHandler={(e) => setCtc(sanitizeCTCInput(e.target.value))}
@@ -303,21 +314,21 @@ export default function AddJob () {
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                   <TextField
                     label='Base Pay (in Rs.)'
-                    placeholder='75,0000.00'
+                    placeholder='750000.00'
                     type='text'
                     value={basePay}
                     onChangeHandler={(e) => setBasePay(sanitizeCTCInput(e.target.value))}
                   />
                   <TextField
                     label='Variable Pay (in Rs.)'
-                    placeholder='75,0000.00'
+                    placeholder='750000.00'
                     type='text'
                     value={variablePay}
                     onChangeHandler={(e) => setVariablePay(sanitizeCTCInput(e.target.value))}
                   />
                   <TextField
                     label='RSU (in Rs.)'
-                    placeholder='75,0000.00'
+                    placeholder='750000.00'
                     type='text'
                     value={RSU}
                     onChangeHandler={(e) => setRSU(sanitizeCTCInput(e.target.value))}
@@ -436,7 +447,6 @@ export default function AddJob () {
               value={contactPersonName}
               onChangeHandler={(e) => setContactPersonName(e.target.value)}
             />
-
             <TextField
               label='Phone Number of the contact person'
               placeholder='9123123123'
@@ -444,7 +454,6 @@ export default function AddJob () {
               value={contactPersonPhoneNumber}
               onChangeHandler={(e) => setContactPersonPhoneNumber(e.target.value)}
             />
-
             <TextField
               label='Email ID of the contact person'
               placeholder='Btech@gmail.com'

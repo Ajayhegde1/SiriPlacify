@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import DocHeader from '@/components/DocHeader'
 import TextField from '@/components/InputComponents/TextField'
 import Button from '@/components/Buttons'
+import ForgotPasswordModal from '@/components/Modal/ForgotPasswordModal'
 
 import { signIn } from '@/redux/Slices/userSlice'
 import { useRouter } from 'next/router'
@@ -23,6 +24,7 @@ export default function CollegeProfile () {
   const [isBtnDisabled, setIsBtnDisabled] = useState(true)
   const [btnText, setBtnText] = useState('Sign In')
   const [isLoading, setLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     if (email.length > 0 && password.length > 0) {
@@ -86,6 +88,13 @@ export default function CollegeProfile () {
               </div>
             </div>
           </form>
+          <div className='cursor-pointer mt-6 text-left'>
+            <div onClick={() => setShowModal(!showModal)}>
+              <p className='text-base font-medium'>
+                <span className='text-red-700 hover:text-red-500 hover:border-b-2 hover:border-red-500'>Forgot Password?</span>
+              </p>
+            </div>
+          </div>
           <div className='border-2 border-gray-300 shadow-lg rounded-lg mt-6 p-8'>
             <p className='font-bold text-center md:text-left text-sm md:text-base font-Body text-black'>
               New to Placify?
@@ -96,6 +105,10 @@ export default function CollegeProfile () {
           </div>
         </div>
       </div>
+      <ForgotPasswordModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
     </div>
   )
 }

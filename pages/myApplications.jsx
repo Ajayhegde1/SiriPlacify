@@ -45,13 +45,14 @@ export default function myApplications () {
         activePage={6}
       />
       <main class={`dashboard ${sidebarOpen ? 'active' : ''}`}>
-        <h1 className='text-center md:text-left mb-12 ml-2 md:ml-6 pt-6 md:pt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>My Applications</h1>
-        <div className='pt-5 px-5 pb-10 rounded-xl mr-4 md:mr-12 overflow-auto'>
+        <h1 className='text-center md:text-left pt-6 mb-12 ml-2 md:ml-20 pt-6 md:pt-16 text-3xl md:text-5xl font-Heading font-bold text-black'>My Applications</h1>
+        <div className='pt-5 pl-20 pr-12 pb-10 rounded-xl mr-4 md:mr-16 overflow-auto'>
           <table className='pb-12 table-auto overflow-scroll w-full mt-3 text-left'>
             <thead className='bg-white rounded-xl border-b-8'>
-              <th className='px-6 py-4 text-gray-600'>Company Name</th>
-              <th className='px-6 py-4 text-gray-600'>Job Title</th>
-              <th className='px-6 py-4 text-gray-600'>Status</th>
+              <th className='px-8 py-4 text-gray-600'>Company Name</th>
+              <th className='px-8 py-4 text-gray-600'>Job Title</th>
+              <th className='px-8 py-4 text-gray-600'>Status</th>
+              <th></th>
             </thead>
             <tbody className='bg-white border-t-8 rounded-xl'>
               {
@@ -64,14 +65,14 @@ export default function myApplications () {
                       No Applications found
                     </div>
                     : jobApplication.map((job, index) =>
-                      <tr onClick={() => handleCustomPage(job.collegeJobMappingId)} key={index} className='cursor-pointer mt-10 border-b-2 border-gray-200'>
-                        <td className='font-medium whitespace-nowrap px-6 py-4'>
+                      <tr key={index} className='mt-10 border-b-2 border-gray-200'>
+                        <td className='font-medium whitespace-nowrap px-8 py-4'>
                           {job.companyName}
                         </td>
-                        <td className='font-medium whitespace-nowrap px-6 py-4'>
+                        <td className='font-medium whitespace-nowrap px-8 py-4'>
                           {job.jobTitle}
                         </td>
-                        <td className='font-bold whitespace-nowrap px-6 py-4'>
+                        <td className='font-bold whitespace-nowrap px-8 py-4'>
                           {job.jobStatus === '0'
                             ? <span className='text-cyan-600'>Applied</span>
                             : job.jobStatus === '1'
@@ -85,6 +86,14 @@ export default function myApplications () {
                                     : job.jobStatus === '5'
                                       ? <span className='text-red-800'>Rejected</span>
                                       : <span className='text-red-800'>Undefined</span>}
+                        </td>
+                        <td>
+                          <button
+                            onClick={() => handleCustomPage(job.collegeJobMappingId)}
+                            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md'
+                          >
+                            View Application
+                          </button>
                         </td>
                       </tr>
                     )

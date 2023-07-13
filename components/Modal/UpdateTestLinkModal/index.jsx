@@ -56,7 +56,7 @@ export default function UpdateTestLinkModal({
     scheduleTest(deets)
       .then((res) => {
         if (res.data.status === 200) {
-          openNotification(notificationTypes.SUCCESS, 'Success', 'PPT Scheduled Successfully')
+          openNotification(notificationTypes.SUCCESS, 'Success', 'Test Scheduled Successfully')
           setShowModal(!showModal)
           setData({
             platform: deets.platform,

@@ -161,6 +161,7 @@
   .close{
     justify-self: end;
     height: 15px;
+    cursor: pointer;
   }
   
 
