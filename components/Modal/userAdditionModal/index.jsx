@@ -1,13 +1,16 @@
 import { useRef, useEffect } from 'react'
+import { utils, writeFile } from 'xlsx'
+
 import styles from '@/styles/modal.module.css'
 import sheet from '../../../public/sheets.png'
 import close from '../../../public/close.png'
 import Image from 'next/image'
 
-export default function UserAdditionModal ({
+export default function UserAdditionModal({
   showModal,
   setShowModal,
-  ImportExcel
+  ImportExcel,
+  departmentList
 }) {
   const modalRef = useRef(null)
   const hiddenFileInput = useRef(null)
@@ -18,6 +21,28 @@ export default function UserAdditionModal ({
 
   const handleClick = (event) => {
     hiddenFileInput.current.click()
+  }
+
+  const handleExport = () => {
+    const headings = [
+      [
+        'id',
+        'Department Short Form',
+        'Department Name'
+      ]
+    ]
+    const wb = utils.book_new()
+    const ws = utils.json_to_sheet([])
+    utils.sheet_add_aoa(ws, headings)
+    const outdata = JSON.stringify(departmentList, [
+      'id',
+      'depAbbrievation',
+      'depName'
+    ])
+    const output = JSON.parse(outdata)
+    utils.sheet_add_json(ws, output, { origin: 'A2', skipHeader: true })
+    utils.book_append_sheet(wb, ws, 'Students List')
+    writeFile(wb, 'departmentList.xlsx')
   }
 
   useEffect(() => {
@@ -60,44 +85,54 @@ export default function UserAdditionModal ({
               <li>The Student Name should have alphanumeric characters and it should match the entries in the database.</li>
               <li>The Email should be unique, valid and must have alphanumeric characters.</li>
               <li>The Account Type should be either 0 or 1, where 0 represents TPO and 1 represents student.</li>
+              <li>The department field should be in numeric form. It should contain the department Id. Please check the department sheet for the relevant department ID</li>
             </ul>
           </div>
         </div>
         <div className='pt-5 pl-5 rounded-3xl'>
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-4'>
-            <div className='mt-4'>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4">
+            <div className="col-span-1">
               <a
-                href='/sample.xlsx'
-                download='sample.xlsx'
-                className='ml-0 md:ml-10 mt-1 bg-blue-300 hover:bg-green-300 border-2 text-black font-bold py-5 px-4 text-base rounded-xl focus:outline-none focus:shadow-outline'
+                href="/sample.xlsx"
+                download="sample.xlsx"
+                className="block bg-blue-300 hover:bg-green-700 text-black font-bold py-3 px-6 text-base rounded-lg focus:outline-none focus:shadow-outline text-center"
               >
-                Download Sample sheet
+                Download Sample Sheet
               </a>
             </div>
-            <div>
+            <div className="col-span-1">
+              <button
+                onClick={handleExport}
+                className="block bg-blue-300 hover:bg-green-700 text-black font-bold py-3 px-6 text-base rounded-lg focus:outline-none focus:shadow-outline text-center"
+              >
+                Download Department List
+              </button>
+            </div>
+            <div className="col-span-1">
               <button
                 onClick={handleClick}
-                className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-6 py-4'
+                className="flex bg-customBlueFour hover:bg-green-700 border-2 border-black text-black font-bold pt-2 pb-3 px-6 text-base rounded-lg focus:outline-none focus:shadow-outline text-center"
               >
                 <input
-                  type='file'
+                  type="file"
                   ref={hiddenFileInput}
-                  name='file'
+                  name="file"
                   required
                   onChange={(event) => ImportExcel(event)}
-                  id='fu'
-                  style={{ display: 'none' }}
-                  accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                  id="fu"
+                  style={{ display: "none" }}
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                 />
                 <Image
                   src={sheet}
-                  alt='Import excel sheet'
-                  className='h-5 mt-1 mr-2'
+                  alt="Import excel sheet"
+                  className="my-auto h-8 w-8 mr-2"
                 />
-                Import From Excel
+                <span className='my-auto'>Import From Excel</span>
               </button>
             </div>
           </div>
+
         </div>
       </div>
     </div>

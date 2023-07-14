@@ -156,56 +156,16 @@ export default function AppliedStudents ({
           openNotification(
             notificationTypes.SUCCESS,
             'Success',
-            'Status updated successfully'
+            res.data.message
           )
-          window.location.reload()
-        } else if (res.data.status === 423) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Invalid job or college IDs'
-          )
-        } else if (res.data.status === 424) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Unable to get jobs IDs'
-          )
-        } else if (res.data.status === 425) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Unable to get college IDs'
-          )
-        } else if (res.data.status === 426) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'college Mapping IDs is not available'
-          )
-        } else if (res.data.status === 427) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'No Candidates'
-          )
-        } else if (res.data.status === 428) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Unable to get student ID'
-          )
-        } else if (res.data.status === 500) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'Unable to get students data'
-          )
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000)
         } else {
           openNotification(
             notificationTypes.ERROR,
             'Error',
-            'Error in updating status'
+            res.data.message
           )
         }
       })
@@ -237,7 +197,9 @@ export default function AppliedStudents ({
             'Success',
             'Status updated successfully'
           )
-          window.location.reload()
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000)
         } else if (res.data.status === 423) {
           openNotification(
             notificationTypes.ERROR,

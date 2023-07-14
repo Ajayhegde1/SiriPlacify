@@ -19,11 +19,10 @@ import sheet from '../public/sheets.png'
 import { accountType } from '@/constants/users'
 import { routes } from '@/constants/routes'
 import { notificationTypes, openNotification } from '@/utils/notifications'
-import { POST } from '@/config/api'
+import { GET, POST } from '@/config/api'
 import { genderList } from '@/constants/addJobDropDowns'
-import { getDepartment } from '@/redux/Sagas/requests/features'
 
-export default function UserManagement () {
+export default function UserManagement() {
   const router = useRouter()
   const animatedComponents = makeAnimated()
 
@@ -33,11 +32,13 @@ export default function UserManagement () {
   const user = useSelector((state) => state.user)
 
   const [departmentList, setDepartmentList] = useState([])
+  const [deptCollegeList, setDeptCollegeList] = useState([])
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [studentTenthMarks, setStudentTenthMarks] = useState()
   const [studentTwelthMarks, setStudentTwelthMarks] = useState()
   const [studentGraduationMarks, setStudentGraduationMarks] = useState()
+  const [isLoading, setIsLoading] = useState(false)
   const [studentPGMarks, setStudentPGMarks] = useState()
   const [studentID, setStudentID] = useState('')
   const [userDescription, setUserDescription] = useState('')
@@ -47,10 +48,11 @@ export default function UserManagement () {
   const [stream, setStream] = useState({})
 
   useEffect(() => {
-    getDepartment()
+    GET('/departmentsOfCollege', { sessionID: user.sessionId })
       .then((res) => {
         if (res.data.status === 200) {
           let departments = res.data.data
+          setDeptCollegeList(res.data.data)
           departments = departments.map((department) => {
             return {
               value: department.id,
@@ -75,25 +77,22 @@ export default function UserManagement () {
       })
   }, [])
 
-  function sanitizeCTCInput (inputValue) {
+  function sanitizeCTCInput(inputValue) {
     return inputValue.replace(/[^0-9.]/g, '')
   }
 
-  function handleSelect (data) {
+  function handleSelect(data) {
     setStream(data)
   }
 
-  function validateGender (input) {
-    input = input.trim()
-    input = input.toLowerCase()
-    if (input === 'Male' || input === 'Female' || input === 'LGBTQ+') {
-      return input
-    } else {
-      return null
-    }
+  function convertToMale(str) {
+    const trimmedStr = str.trim();
+    const convertedStr = trimmedStr.charAt(0).toUpperCase() + trimmedStr.slice(1);
+    return convertedStr;
   }
 
   const handleImport = ($event) => {
+    setIsLoading(true)
     const files = $event.target.files
     if (files.length) {
       const file = files[0]
@@ -112,31 +111,26 @@ export default function UserManagement () {
             element.username = element.studentName
             delete element.studentName
 
-            const validatedGender = validateGender(element.gender)
+            element.gender = convertToMale(element.gender)
 
-            if (validatedGender) {
-              element.gender = validatedGender
-            } else {
-              element.gender = 'Male'
-            }
-
-            const marksFields = ['studentTenthMarks', 'studentTwelthMarks', 'studentUGMarks', 'studentPGMarks']
+            const marksFields = ['studentTenthMarks', 'studentTwelthMarks', 'studentUGMarks']
 
             for (const field of marksFields) {
-              const marksValue = parseFloat(element[field])
-              if (field === 'studentPGMarks' && (marksValue === null || marksValue === '' || isNaN(marksValue))) {
-                continue // Skip validation for studentPGMarks if it's null or empty string
-              }
-              if (isNaN(marksValue) || !Number.isInteger(marksValue)) {
-                console.log('Invalid marks value', field, marksValue)
-                openNotification(notificationTypes.ERROR, 'Error', 'Please check your data. It is not in the correct format.')
-                isValidData = false // Set isValidData flag to false
-                break // Exit the loop
+              const marksValue = parseFloat(element[field]);
+
+              if (isNaN(marksValue)) {
+                setIsLoading(false)
+                openNotification(notificationTypes.ERROR, 'Error', 'Please check your data. It is not in the correct format.');
+                isValidData = false;
+                setTimeout(() => {
+                  window.location.reload()
+                }, 1000)
+                break;
               }
             }
 
+
             if (!isValidData) {
-              // Exit the forEach loop if isValidData flag is false
             }
           })
 
@@ -145,16 +139,23 @@ export default function UserManagement () {
               .then((res) => {
                 const status = parseInt(res.data.status)
                 if (status === 200 || status === 304 || status === 'ok') {
+                  setIsLoading(false)
                   openNotification(
                     notificationTypes.SUCCESS,
-                    'Success'
+                    'Success',
+                    res.data.message
                   )
                   router.push(routes.STUDENTLIST)
                 } else {
                   openNotification(
                     notificationTypes.ERROR,
-                    'Please check your data. It is not in the correct format.'
+                    'Error',
+                    res.data.message
                   )
+                  setIsLoading(false)
+                  setTimeout(() => {
+                    window.location.reload()
+                  }, 1000)
                 }
               }
               )
@@ -163,6 +164,10 @@ export default function UserManagement () {
                   notificationTypes.ERROR,
                   'Please check your data. It is not in the correct format.'
                 )
+                setIsLoading(false)
+                setTimeout(() => {
+                  window.location.reload()
+                }, 1000)
               })
           }
 
@@ -233,8 +238,8 @@ export default function UserManagement () {
           <div className='pb-4'>
             <h1 className='text-center md:text-left mb-4 ml-2 md:ml-6 pt-6 md:pt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>User Management</h1>
           </div>
-          <div className='flex flex-col md:flex-row gap-4'>
-            <div>
+          <div className='flex flex-col md:flex-row gap-8'>
+            <div className='flex gap-4'>
               <button
                 onClick={() => setShowModal(true)}
                 className='ml-2 md:ml-6 flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
@@ -242,10 +247,16 @@ export default function UserManagement () {
                 <Image
                   src={sheet}
                   alt='Import excel sheet'
-                  className='h-5 mt-1 mr-2'
+                  className='h-7 w-7 mt-1 mr-2'
                 />
-                Import from excel
+                <span className='my-auto'>Import from excel</span>
               </button>
+              {
+                isLoading &&
+                <div className='ml-5 my-auto'>
+                  <Spin size='large' />
+                </div>
+              }
             </div>
           </div>
           <div className='ml-2 md:ml-6 mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4'>
@@ -292,7 +303,7 @@ export default function UserManagement () {
                       closeMenuOnSelect={false}
                       isMulti={false}
                     />
-                    </div>
+                  </div>
             }
             <div>
               <TextArea
@@ -378,6 +389,7 @@ export default function UserManagement () {
         showModal={showModal}
         setShowModal={setShowModal}
         ImportExcel={handleImport}
+        departmentList={deptCollegeList}
       />
     </div>
   )
