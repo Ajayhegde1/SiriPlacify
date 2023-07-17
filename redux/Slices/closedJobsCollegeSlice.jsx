@@ -8,7 +8,7 @@ const closedJobSliceForCollege = createSlice({
   reducers: {
     setClosedJobForCollege: (state, action) => action.payload,
     resetClosedJobForCollege: () => null,
-    updateClosedJob: (state, action) => [...state, action.payload],
+    updateClosedJobForCollege: (state, action) => [...state, action.payload],
     getClosedJobForCollege: (state) => state,
     addClosedJobForCollege: (state, action) => state
   }

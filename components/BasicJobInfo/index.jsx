@@ -149,11 +149,23 @@ export default function BasicJobInfo({
               <div />
               <div
                 onClick={() => setShowWithdrawModal(!showModal)}
-                className='cursor-pointer rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
+                className='mt-0 md:mt-20 ml-auto cursor-pointer rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2'
               >
                 Withdraw
               </div>
             </>
+          );
+        }
+        if (isApplied === true){
+          return (
+            <div className='flex flex-col md:flex-row gap-4'>
+              <div className='mt-10 md:mt-24 ml-auto'>
+                <span className='text-red-600 text-lg font-bold'>{message}</span>
+              </div>
+              <div className='cursor-not-allowed mt-0 md:mt-20 rounded-lg text-base md:text-lg 2xl:text-xl bg-red-600 hover:bg-red-800 text-white font-bold text-center p-2'>
+                Unable to Apply
+              </div>
+            </div>
           );
         }
         return (
@@ -241,8 +253,8 @@ export default function BasicJobInfo({
 
   return (
     <div className='mt-6 ml-3 md:ml-6 mr-4 md:mr-16 bg-white p-5 rounded-lg'>
-      <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-2'>
-        <div className='col-span-1 2xl:col-span-2'>
+      <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-2 gap-2'>
+        <div className='col-span-1'>
           <div className='flex flex-col md:flex-row gap-2 md:gap-8'>
             <Image src={logo} alt='apple logo' />
             <div className='mt-3'>

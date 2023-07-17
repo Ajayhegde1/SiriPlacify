@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { useRef} from 'react'
+import { useRef } from 'react'
 import axios from 'axios'
 import Image from 'next/image'
 import { jobSectorList } from '@/constants/addJobDropDowns'
@@ -8,7 +8,7 @@ import { getJobDescFile, uploadJobDescFile } from '@/redux/Sagas/requests/featur
 import { notificationTypes, openNotification } from '@/utils/notifications'
 import SingleSelectComponent from '../InputComponents/SingleSelectComponent'
 
-export default function JobDesc ({
+export default function JobDesc({
   jobID,
   jdFile,
   companyName,
@@ -126,11 +126,11 @@ export default function JobDesc ({
     <div>
       {
         jobSection === 2 &&
-          <div>
-            <h1 className='mt-3 pb-4 text-lg font-bold font-Heading font-bold text-black'>
-              Company Name: {companyName}
-            </h1>
-          </div>
+        <div>
+          <h1 className='mt-3 pb-4 text-lg font-bold font-Heading font-bold text-black'>
+            Company Name: {companyName}
+          </h1>
+        </div>
       }
       {
         isEdit
@@ -152,12 +152,12 @@ export default function JobDesc ({
                 {jobTitle}
               </h1>
               <div className='cursor-pointer'>
-              <Image
-                src={edit}
-                alt='edit'
-                className='mt-1 h-6 w-6'
-                onClick={handleEdit}
-              />
+                <Image
+                  src={edit}
+                  alt='edit'
+                  className='mt-1 h-6 w-6'
+                  onClick={handleEdit}
+                />
               </div>
             </div>
             : <h1 className='pb-4 border-b-2 border-gray-300 text-lg font-bold font-Heading font-bold text-black'>
@@ -207,12 +207,14 @@ export default function JobDesc ({
           </div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Sector</div>
-            <SingleSelectComponent
-              value={jobSector}
-              onChangeHandler={(e) => setJobSector(e.target.value)}
-              options={jobSectorList}
-              isDisabled={!(isEdit)}
-            />
+            <div className='col-span-5'>
+              <SingleSelectComponent
+                value={jobSector}
+                onChangeHandler={(e) => setJobSector(e.target.value)}
+                options={jobSectorList}
+                isDisabled={!(isEdit)}
+              />
+            </div>
           </div>
           <div className='text-gray-700 text-2xl font-bold font-Heading col-span-1 mt-8 pb-5'>CTC Breakdown</div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>

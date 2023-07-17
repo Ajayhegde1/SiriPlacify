@@ -406,6 +406,10 @@ export default function College () {
       return { ...student, status: '5' }
     })
 
+    if (rejectedStudents.length === 0) {
+      window.location.reload()
+    }
+
     const data = {
       jobID,
       collegeID,

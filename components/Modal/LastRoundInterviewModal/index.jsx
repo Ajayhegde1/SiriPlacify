@@ -27,7 +27,7 @@ export default function LastRoundInterviewModal ({
 
   return (
     <div ref={modalRef} className={styles.wrapper}>
-      <div className={styles.cardContainer5}>
+      <div className={styles.cardContainer}>
         <div className={styles.header}>
           <div className={styles.header}>
             <h2
@@ -53,13 +53,13 @@ export default function LastRoundInterviewModal ({
           <div className='mt-10 grid grid-cols-1 md:grid-cols-2 gap-4'>
             <div
               onClick={lastRoundModalFunction}
-              className='rounded-lg text-base md:text-lg 2xl:text-xl bg-green-600 text-white font-bold text-center p-2'
+              className='cursor-pointer rounded-lg text-base md:text-lg 2xl:text-xl bg-green-600 text-white font-bold text-center p-2'
             >
               Yes
             </div>
             <div
               onClick={notLastRoundHandler}
-              className='rounded-lg text-base md:text-lg 2xl:text-xl bg-red-600 text-white font-bold text-center p-2'
+              className='cursor-pointer rounded-lg text-base md:text-lg 2xl:text-xl bg-red-600 text-white font-bold text-center p-2'
             >
               No
             </div>

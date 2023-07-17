@@ -9,45 +9,47 @@ export function * handleGetClosedJobsCollegeHandler () {
   try {
     if (store.getState().user.accType !== '2') {
       const response = yield call(getClosed)
-      if (response.data.status === 200) {
-        yield put(setClosedJobForCollege(response.data.data))
-      } else if (response.data.status === 401) {
+      const { status, data } = response.data
+
+      if (status === 200) {
+        yield put(setClosedJobForCollege(data))
+      } else if (status === 401) {
         openNotification(
           notificationTypes.ERROR,
           '[500] Internal Server Error',
           'Session ID is invalid or not present.'
         )
-      } else if (response.data.status === 423) {
+      } else if (status === 423) {
         openNotification(
           notificationTypes.ERROR,
           '[500] Internal Server Error',
           'Unable to retrieve college.'
         )
-      } else if (response.data.status === 424) {
+      } else if (status === 424) {
         openNotification(
           notificationTypes.ERROR,
           '[500] Internal Server Error',
           'Unable to retrieve jobs.'
         )
-      } else if (response.data.status === 425) {
+      } else if (status === 425) {
         openNotification(
           notificationTypes.ERROR,
           '[500] Internal Server Error',
           'Invalid job type.'
         )
-      } else if (response.data.status === 426) {
+      } else if (status === 426) {
         openNotification(
           notificationTypes.ERROR,
           '[500] Internal Server Error',
           'Unable to retrieve company.'
         )
-      } else if (response.data.status === 427) {
+      } else if (status === 427) {
         openNotification(
           notificationTypes.ERROR,
           '[500] Internal Server Error',
           'Invalid User Type.'
         )
-      } else if (response.data.status === 500) {
+      } else if (status === 500) {
         openNotification(
           notificationTypes.ERROR,
           '[500] Internal Server Error',

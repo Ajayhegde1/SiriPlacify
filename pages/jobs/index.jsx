@@ -44,7 +44,6 @@ export default function Jobs () {
       } 
       else if (user.accType === '1'){
         dispatch(getJobs())
-        dispatch(getClosedJobForCollege())
       }
       else if (user.accType === '2') {
         dispatch(getJobs())
@@ -54,6 +53,17 @@ export default function Jobs () {
       router.push(routes.NOTFOUND)
     }
   }, [dispatch, router, user])
+
+  useEffect(() => {
+    if (user !== null) {
+      if (user.accType === '1') {
+        dispatch(getClosedJobForCollege())
+      }
+    }
+    else{
+      router.push(routes.NOTFOUND)
+    }
+  } , [dispatch])
 
   return (
     <div className='bg-gray-200 min-h-screen'>

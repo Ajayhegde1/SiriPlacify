@@ -87,7 +87,7 @@ export default function WithdrawApplicationModal ({
 
   return (
     <div ref={modalRef} className={styles.wrapper}>
-      <div className={styles.cardContainer5}>
+      <div className={styles.cardContainer}>
         <div className={styles.header}>
           <div className={styles.header}>
             <h2
