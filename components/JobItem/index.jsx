@@ -36,7 +36,7 @@ export default function JobItem({ job, isCurrentJobs = false, jobSection = 1 }) 
 
       case '1':
         return (
-          <Link href={jobSection === 1 ? `/jobs/studentJobs/${jobID}` : jobSection === 2 ? '/jobs/jobOffers/1' : `/jobs/closedJobs/${jobID}`}>
+          <Link href={jobSection === 1 ? `/jobs/studentJobs/${jobID}` : jobSection === 2 ? `/jobs/closedJobs/${jobID}` : ''}>
             <div className='h-[380px] bg-white rounded-xl p-3 md:px-5 md:py-3 flex flex-col gap-4'>
               <h1 className='text-right text-base text-black font-medium'>{formattedDueDate}</h1>
               <div className='flex flex-col gap-4'>

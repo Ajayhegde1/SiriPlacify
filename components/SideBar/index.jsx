@@ -8,11 +8,11 @@ import Addjobs from '../../public/addJobsIcons.png'
 import pp from '../../public/pp.png'
 import editProfile from '../../public/editProfile.svg'
 import logout from '../../public/logout.png'
-import myApplications from '../../public/application.png'
+import myApplications from '../../public/myapplications.svg'
 import userImage from '../../public/userManagement.svg'
 import dashboard from '../../public/dashboard.png'
 import { BellOutlined } from '@ant-design/icons'
-import notificationRed from '../../public/notificationRed.png'
+import notificationRed from '../../public/notifications.svg'
 
 import { signOut } from '@/redux/Slices/userSlice'
 import { getNotifications } from '@/redux/Slices/notificationSlice'
@@ -29,11 +29,11 @@ const Sidebar = ({
   const user = useSelector(state => state.user)
   const notifications = useSelector(state => state.notifications)
 
-  function handleSideBar () {
+  function handleSideBar() {
     setSidebarOpen(!sidebarOpen)
   }
 
-  function handleSignOut () {
+  function handleSignOut() {
     dispatch(signOut())
   }
 
@@ -67,29 +67,29 @@ const Sidebar = ({
                     <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
                       <a className='menu-link' href='/notifications'>
                         <div className={sidebarOpen ? 'ml-3' : 'ml-0'}>
-                          {
-                            notifications === null
-                              ? <BellOutlined style={{ fontSize: '24px' }} />
-                              : notifications.length === 0
-                                ? <BellOutlined style={{ fontSize: '24px' }} />
-                                : <Image
-                                    src={notificationRed}
-                                    alt='notification'
-                                    className={sidebarOpen ? 'p-1 ml-3' : 'p-1 ml-0'}
-                                  />
-                          }
+                          <div style={{ position: 'relative', display: 'inline-block' }}>
+                            <Image
+                              src={notificationRed}
+                              alt='notification'
+                              className={sidebarOpen ? 'mt-1 ml-3' : 'ml-0'}
+                            />
+                            {
+                              notifications !== null && notifications.length > 0 && (
+                                <div
+                                  style={{
+                                    position: 'absolute',
+                                    top: '-2px',
+                                    right: '0px',
+                                    width: '7px',
+                                    height: '7px',
+                                    backgroundColor: 'red',
+                                    borderRadius: '50%',
+                                  }}
+                                />
+                              )}
+                          </div>
                         </div>
-                        <button
-                          type='button'
-                          className='menu-link-text'
-                        >
-                          Notifications
-                          <span
-                            className='ml-2 inline-block whitespace-nowrap rounded-2xl bg-red-300 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700'
-                          >{notifications === null ? 0 : notifications.length}
-                          </span
-                          >
-                        </button>
+                        <span className='menu-link-text'>Notifications</span>
                       </a>
                     </li>
                   </Tooltip>
@@ -170,7 +170,7 @@ const Sidebar = ({
                       className={`menu-item ${parseInt(activePage) === 8 ? 'current' : ''}`}
                       onClick={() => handleSignOut()}
                     >
-                      <a className='menu-link'>
+                      <a className='menu-link cursor-pointer'>
                         <Image
                           src={logout}
                           className={sidebarOpen ? 'ml-3 cursor-pointer' : 'ml-1 cursor-pointer'}
@@ -187,29 +187,29 @@ const Sidebar = ({
                       <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
                         <a className='menu-link' href='/notifications'>
                           <div className={sidebarOpen ? 'ml-3' : 'ml-0'}>
-                            {
-                            notifications === null
-                              ? <BellOutlined style={{ fontSize: '24px' }} />
-                              : notifications.length === 0
-                                ? <BellOutlined style={{ fontSize: '24px' }} />
-                                : <Image
-                                    src={notificationRed}
-                                    alt='notification'
-                                    className={sidebarOpen ? 'p-1 ml-3' : 'p-1 ml-0'}
+                            <div style={{ position: 'relative', display: 'inline-block' }}>
+                              <Image
+                                src={notificationRed}
+                                alt='notification'
+                                className={sidebarOpen ? 'mt-1 ml-3' : 'ml-0'}
+                              />
+                              {
+                                notifications !== null && notifications.length > 0 && (
+                                  <div
+                                    style={{
+                                      position: 'absolute',
+                                      top: '-2px',
+                                      right: '0px',
+                                      width: '7px',
+                                      height: '7px',
+                                      backgroundColor: 'red',
+                                      borderRadius: '50%',
+                                    }}
                                   />
-                          }
+                                )}
+                            </div>
                           </div>
-                          <button
-                            type='button'
-                            className='menu-link-text'
-                          >
-                            Notifications
-                            <span
-                              className='ml-2 inline-block whitespace-nowrap rounded-2xl bg-red-300 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-danger-700'
-                            >{notifications === null ? 0 : notifications.length}
-                            </span
-                            >
-                          </button>
+                          <span className='menu-link-text'>Notifications</span>
                         </a>
                       </li>
                     </Tooltip>
@@ -237,18 +237,18 @@ const Sidebar = ({
                         </a>
                       </li>
                     </Tooltip>
-                  <Tooltip title='Placement Policy' placement='right'>
-                    <li className={`menu-item ${parseInt(activePage) === 4 ? 'current' : ''}`}>
-                      <a className='menu-link' href='/editPlacementPolicy'>
-                        <Image
-                          src={pp}
-                          className={sidebarOpen ? 'ml-3' : 'ml-1'}
-                          alt='logo for placement policy'
-                        />
-                        <span className='menu-link-text'>Placement Policy</span>
-                      </a>
-                    </li>
-                  </Tooltip>
+                    <Tooltip title='Placement Policy' placement='right'>
+                      <li className={`menu-item ${parseInt(activePage) === 4 ? 'current' : ''}`}>
+                        <a className='menu-link' href='/editPlacementPolicy'>
+                          <Image
+                            src={pp}
+                            className={sidebarOpen ? 'ml-3' : 'ml-1'}
+                            alt='logo for placement policy'
+                          />
+                          <span className='menu-link-text'>Placement Policy</span>
+                        </a>
+                      </li>
+                    </Tooltip>
                     <Tooltip title='Profile' placement='right'>
                       <li className={`menu-item ${parseInt(activePage) === 7 ? 'current' : ''}`}>
                         <a className='menu-link' href='/editStudentProfile'>
@@ -266,7 +266,7 @@ const Sidebar = ({
                         className={`menu-item ${parseInt(activePage) === 8 ? 'current' : ''}`}
                         onClick={() => handleSignOut()}
                       >
-                        <a className='menu-link'>
+                        <a className='menu-link cursor-pointer'>
                           <Image
                             src={logout}
                             className={sidebarOpen ? 'ml-3 cursor-pointer' : 'ml-1 cursor-pointer'}
@@ -282,29 +282,29 @@ const Sidebar = ({
                       <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
                         <a className='menu-link' href='/notifications'>
                           <div className={sidebarOpen ? 'ml-3' : 'ml-0'}>
-                            {
-                            notifications === null
-                              ? <BellOutlined style={{ fontSize: '24px' }} />
-                              : notifications.length === 0
-                                ? <BellOutlined style={{ fontSize: '24px' }} />
-                                : <Image
-                                    src={notificationRed}
-                                    alt='notification'
-                                    className={sidebarOpen ? 'p-1 ml-3' : 'p-1 ml-0'}
+                            <div style={{ position: 'relative', display: 'inline-block' }}>
+                              <Image
+                                src={notificationRed}
+                                alt='notification'
+                                className={sidebarOpen ? 'mt-1 ml-3' : 'ml-0'}
+                              />
+                              {
+                                notifications !== null && notifications.length > 0 && (
+                                  <div
+                                    style={{
+                                      position: 'absolute',
+                                      top: '-2px',
+                                      right: '0px',
+                                      width: '7px',
+                                      height: '7px',
+                                      backgroundColor: 'red',
+                                      borderRadius: '50%',
+                                    }}
                                   />
-                          }
+                                )}
+                            </div>
                           </div>
-                          <button
-                            type='button'
-                            className='menu-link-text'
-                          >
-                            Notifications
-                            <span
-                              className='ml-2 inline-block whitespace-nowrap rounded-2xl bg-red-500 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-white'
-                            >{notifications === null ? 0 : notifications.length}
-                            </span
-                            >
-                          </button>
+                          <span className='menu-link-text'>Notifications</span>
                         </a>
                       </li>
                     </Tooltip>
@@ -361,7 +361,7 @@ const Sidebar = ({
                         className={`menu-item ${parseInt(activePage) === 8 ? 'current' : ''}`}
                         onClick={() => handleSignOut()}
                       >
-                        <a className='menu-link'>
+                        <a className='menu-link cursor-pointer'>
                           <Image
                             src={logout}
                             className={sidebarOpen ? 'ml-3 cursor-pointer' : 'ml-1 cursor-pointer'}
@@ -373,24 +373,6 @@ const Sidebar = ({
                     </Tooltip>
                   </ul>
           }
-          {/*             <li className='menu-item'>
-              <a className='menu-link' href='#'>
-                <Image
-                  src={error}
-                  alt='logo for error'
-                />
-                <span className='menu-link-text'>Error Correction</span>
-              </a>
-            </li> */}
-          {/*             <li className='menu-item'>
-              <a className='menu-link' href='#'>
-                <Image
-                  src={message}
-                  alt='logo for messages'
-                />
-                <span className='menu-link-text'>Message</span>
-              </a>
-            </li> */}
         </div>
       </nav>
     </div>

@@ -57,7 +57,7 @@ export default function UserAdditionModal({
 
   return (
     <div ref={modalRef} className={styles.wrapper}>
-      <div className={styles.cardContainer5}>
+      <div className={styles.cardContainer1}>
         <div className={styles.header}>
           <div className={styles.header}>
             <h2
@@ -77,15 +77,47 @@ export default function UserAdditionModal({
           </div>
         </div>
         <div className={styles.modalBody}>
-          <div className='mt-5 mb-6 ml-4 mr-10'>
-            <p className='text-gray-700'>
+          <div className="mt-5 mb-6 ml-4 mr-10">
+            <p className="text-gray-700">
               Define rules for adding users. The Excel sheet should contain columns for studentName, email, and accountType.
             </p>
-            <ul className='list-disc list-inside mt-4 text-gray-700'>
-              <li>The Student Name should have alphanumeric characters and it should match the entries in the database.</li>
-              <li>The Email should be unique, valid and must have alphanumeric characters.</li>
-              <li>The Account Type should be either 0 or 1, where 0 represents TPO and 1 represents student.</li>
-              <li>The department field should be in numeric form. It should contain the department Id. Please check the department sheet for the relevant department ID</li>
+            <ul className="list-disc list-inside mt-4 text-gray-700">
+              <li>
+                The Student Name should have alphanumeric characters and must match the entries in the database.
+              </li>
+              <li>
+                The Email should be unique, valid, and must have alphanumeric characters.
+              </li>
+              <li>
+                The Account Type should be 1, representing a student.
+              </li>
+              <li>
+                Student Name must be in alphanumeric format.
+              </li>
+              <li>
+                Gender types accepted are: Male, Female, Unisex, or LGBTQ+.
+              </li>
+              <li>
+                Phone number should be in numeric format.
+              </li>
+              <li>
+                Student 10th Marks must be in decimal format and should range from 0 to 100.
+              </li>
+              <li>
+                Student 12th Marks must be in decimal format and should range from 0 to 100.
+              </li>
+              <li>
+                Student CGPA must be in decimal format and should range from 0 to 10.
+              </li>
+              <li>
+                Student Description, if entered, must be in alphanumeric format.
+              </li>
+              <li>
+                Student PG CGPA, if entered, must be in decimal format and should range from 0 to 10.
+              </li>
+              <li>
+                The department field should be in numeric format. It should contain the department ID. Please refer to the department sheet for the relevant department ID.
+              </li>
             </ul>
           </div>
         </div>

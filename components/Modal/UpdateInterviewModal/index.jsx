@@ -62,7 +62,7 @@ export default function UpdateInterviewModal({
             platform: deets.platform,
             url: deets.url,
             venue: deets.venue,
-            interviewDateTime: deets.value,
+            interviewDateTime: deets.date,
             prerequistes: deets.prerequistes,
           })
         } else if (res.data.status === 423) {

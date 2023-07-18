@@ -71,7 +71,6 @@ export function * handleADDJob (action) {
           .then((res) => {
             const url = res.data.url
 
-            console.log(res)
             axios.put(url, action.payload.file, {
               headers: {
                 'Content-Type': 'multipart/form-data'

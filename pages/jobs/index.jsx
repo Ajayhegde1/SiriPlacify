@@ -132,9 +132,11 @@ export default function Jobs () {
                     ? jobSection === 1
                       ? <CurrentJobs
                           jobs={jobs}
+                          jobSection={jobSection}
                         />
                       : <DeclinedJobs
                           jobs={closedJobCollege}
+                          jobSection={jobSection}
                         />
                     : user.accType === '2'
                       ? jobSection === 1

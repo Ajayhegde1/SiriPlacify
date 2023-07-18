@@ -197,7 +197,7 @@ export default function BasicJobInfo({
                 onClick={handleReAcceptJob}
                 className='ml-auto rounded-lg text-base md:text-lg 2xl:text-xl bg-red-500 text-white font-bold text-center p-2'
               >
-                Accept Offer
+                Re-Accept Offer
               </button>
             </div>
           );

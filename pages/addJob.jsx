@@ -128,6 +128,13 @@ export default function AddJob () {
         'Please enter a valid phone number and email id'
       )
     }
+    else if (!(0 < tenthMarks < 100) || !(0 < twelfthMarks < 100) || !(0 < UGCgpa < 10)) {
+      openNotification(
+        notificationTypes.ERROR,
+        'Error',
+        'Please enter a valid percentage'
+      )
+    }
     else{
       if (user.accType === '0') {
         const jobData = {

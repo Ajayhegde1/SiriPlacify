@@ -120,17 +120,13 @@ export default function UserManagement() {
 
               if (isNaN(marksValue)) {
                 setIsLoading(false)
-                openNotification(notificationTypes.ERROR, 'Error', 'Please check your data. It is not in the correct format.');
+                openNotification(notificationTypes.ERROR, 'Error', 'You are missing out on marks fields. Please check your data.');
                 isValidData = false;
                 setTimeout(() => {
                   window.location.reload()
                 }, 1000)
                 break;
               }
-            }
-
-
-            if (!isValidData) {
             }
           })
 
@@ -180,15 +176,16 @@ export default function UserManagement() {
   }
 
   const handleUserAddition = () => {
+    setIsLoading(true)
     const Data = [
       {
         email,
         accountType: accType,
         username,
         contactNo,
-        studentTenthMarks,
-        studentTwelthMarks,
-        studentUGMarks: studentGraduationMarks,
+        studentTenthMarks: parseFloat(studentTenthMarks),
+        studentTwelthMarks: parseFloat(studentTwelthMarks),
+        studentUGMarks: parseFloat(studentGraduationMarks),
         studentPGMarks,
         studentId: studentID,
         userDescription,
@@ -205,13 +202,15 @@ export default function UserManagement() {
             'Sucess',
             'Student Added'
           )
+          setIsLoading(false)
           router.push(routes.STUDENTLIST)
         } else {
           openNotification(
             notificationTypes.ERROR,
             'Error',
-            'Something went wrong, please try again later'
+            res.data.message
           )
+          setIsLoading(false)
         }
       })
       .catch((err) => {
@@ -342,7 +341,7 @@ export default function UserManagement() {
           <div className='ml-2 md:ml-6 grid grid-cols-1 lg:grid-cols-4 gap-4'>
             <div className='col-span-1'>
               <TextField
-                label='Class X%'
+                label='Class X (/100)%'
                 placeholder='93%'
                 type='text'
                 value={studentTenthMarks}
@@ -351,7 +350,7 @@ export default function UserManagement() {
             </div>
             <div className='col-span-1'>
               <TextField
-                label='Class XII%'
+                label='Class XII (/100)%'
                 placeholder='93%'
                 type='93%'
                 value={studentTwelthMarks}
@@ -360,7 +359,7 @@ export default function UserManagement() {
             </div>
             <div className='col-span-1'>
               <TextField
-                label='UG CGPA'
+                label='UG CGPA  (/10)'
                 placeholder='93%'
                 type='text'
                 value={studentGraduationMarks}
@@ -370,18 +369,24 @@ export default function UserManagement() {
             <div className='col-span-1'>
               <TextField
                 label='PG CGPA'
-                placeholder='93%'
+                placeholder='93 (/10)'
                 type='text'
                 value={studentPGMarks}
                 onChangeHandler={(e) => setStudentPGMarks(sanitizeCTCInput(e.target.value))}
               />
             </div>
           </div>
-          <div className='mt-8 ml-2 md:ml-6'>
+          <div className='flex gap-6 mt-8 ml-2 md:ml-6'>
             <Button
               onClickHandler={handleUserAddition}
               btnText='Done'
             />
+            {
+              isLoading &&
+              <div className='my-auto'>  
+                <Spin size='large' />
+              </div>
+            }
           </div>
         </div>
       </main>

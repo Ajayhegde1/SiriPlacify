@@ -214,7 +214,7 @@ export default function CandidatesPage () {
                                   disabled
                                 />
                                 <TextArea
-                                  label='About the universities / colleges'
+                                  label='About The Student'
                                   placeholder='PES University, located in Bangalore, India is one of the country’s leading teaching and research universities.
                             The University is committed to providing “navigation for the real world” that inspires students to find their
                             true north.
