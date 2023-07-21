@@ -1,8 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
-import makeAnimated from 'react-select/animated'
 
 import Sidebar from '@/components/SideBar'
 import TextField from '@/components/InputComponents/TextField'
@@ -10,20 +8,21 @@ import TextArea from '@/components/InputComponents/TextArea'
 import Button from '@/components/Buttons'
 import SingleSelectComponent from '@/components/InputComponents/SingleSelectComponent'
 import DocHeader from '@/components/DocHeader'
+import ContactPersonInfo from '@/components/ContactPersonInfo'
+import MarksRequirement from '@/components/MarksRequirement'
+import CTCBreakdown from '@/components/CTCBreakdown'
+import JobSectorSelect from '@/components/SectorList'
+import DepartmentList from '@/components/DepartmentList'
 
 import { addJob, addJobByCompany } from '@/redux/Slices/jobSlice'
 
 import { notificationTypes, openNotification } from '@/utils/notifications'
 import { validatePhoneNumber, validateEmail } from '@/utils/validators'
 
-import { jobStatusList, modeOfSelectionList, finalSelection, jobSectorList, genderList } from '@/constants/addJobDropDowns'
+import { jobStatusList, modeOfSelectionList, finalSelection, genderList } from '@/constants/addJobDropDowns'
 import { routes } from '@/constants/routes'
 
-import { getDepartment } from '@/redux/Sagas/requests/features'
-
-export default function AddJob () {
-  const animatedComponents = makeAnimated()
-
+export default function AddJob() {
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -51,13 +50,12 @@ export default function AddJob () {
   const [contactPersonPhoneNumber, setContactPersonPhoneNumber] = useState('')
   const [contactPersonEmail, setContactPersonEmail] = useState('')
   const [jobStatus, setJobStatus] = useState(jobStatusList[0].value)
-  const [sector, setSector] = useState(jobSectorList[0].value)
+  const [sector, setSector] = useState([])
   const [modeOfSelection, setModeOfSelection] = useState(modeOfSelectionList[0].value)
   const [gender, setGender] = useState(genderList[0].value)
   const [finalMode, setFinalMode] = useState(finalSelection[0].value)
   const [companyName, setCompanyName] = useState('')
   const [selectedOptions, setSelectedOptions] = useState([])
-  const [departmentList, setDepartmentList] = useState([])
   const [selectedFile, setSelectedFile] = useState(null)
 
   useEffect(() => {
@@ -70,7 +68,7 @@ export default function AddJob () {
     } else {
       setIsBtnDisabled(true)
     }
-  }, [finalMode, designation, jobStatus, selectedOptions, locationOfWork,applicableCourses, ctc, sector, selectedDate, modeOfSelection, bondDetails, contactPersonName, contactPersonPhoneNumber, contactPersonEmail])
+  }, [finalMode, designation, jobStatus, selectedOptions, locationOfWork, applicableCourses, ctc, sector, selectedDate, modeOfSelection, bondDetails, contactPersonName, contactPersonPhoneNumber, contactPersonEmail])
 
   useEffect(() => {
     if (user === null) {
@@ -82,42 +80,12 @@ export default function AddJob () {
     }
   }, [user])
 
-  useEffect(() => {
-    getDepartment()
-      .then((res) => {
-        if (res.data.status === 200) {
-        // value should be id and label should be depName
-          let departments = res.data.data
-          departments = departments.map((department) => {
-            return {
-              value: department.id,
-              label: department.depName
-            }
-          })
-          setDepartmentList(departments)
-        } else {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            res.data.message
-          )
-        }
-      })
-      .catch((err) => {
-        openNotification(
-          notificationTypes.ERROR,
-          'Error',
-          err.message
-        )
-      })
-  }, [])
-
-  function handleSelect (data) {
+  function handleSelect(data) {
     setSelectedOptions(data)
   }
 
-  function sanitizeCTCInput (inputValue) {
-    return inputValue.replace(/[^0-9.]/g, '')
+  function handleSector(data) {
+    setSector(data)
   }
 
   const addJobHandler = () => {
@@ -135,7 +103,7 @@ export default function AddJob () {
         'Please enter a valid percentage'
       )
     }
-    else{
+    else {
       if (user.accType === '0') {
         const jobData = {
           jobTitle: designation,
@@ -159,7 +127,8 @@ export default function AddJob () {
           RSU,
           tenthMarks,
           twelfthMarks,
-          UGCgpa
+          UGCgpa,
+          degree: selectedOptions
         }
         const Data = {
           data: jobData,
@@ -244,12 +213,12 @@ export default function AddJob () {
             {
               user.accType === '0'
                 ? <TextField
-                    label='Company Name'
-                    placeholder='PESU Venture Labs'
-                    type='text'
-                    value={companyName}
-                    onChangeHandler={(e) => setCompanyName(e.target.value)}
-                  />
+                  label='Company Name'
+                  placeholder='PESU Venture Labs'
+                  type='text'
+                  value={companyName}
+                  onChangeHandler={(e) => setCompanyName(e.target.value)}
+                />
                 : <></>
             }
             <TextField
@@ -283,74 +252,30 @@ export default function AddJob () {
                 className='border-2 border-gray-400 rounded w-full p-4 text-black leading-tight focus:outline-none focus:shadow-outline'
               />
             </div>
-            <h1 className='text-center md:text-left pb-6 mt-10 text-xl md:text-2xl font-Heading font-bold text-gray-800'>Marks Requirement</h1>
-            <div className='grid grid-cols-3 gap-4'>
-              <TextField
-                label='10th Marks (in %)'
-                placeholder='95.00'
-                type='text'
-                value={tenthMarks}
-                onChangeHandler={(e) => setTenthMarks(sanitizeCTCInput(e.target.value))}
-              />
-              <TextField
-                label='12th Marks (in %)'
-                placeholder='95.00'
-                type='text'
-                value={twelfthMarks}
-                onChangeHandler={(e) => setTwelfthMarks(sanitizeCTCInput(e.target.value))}
-              />
-              <TextField
-                label='UG Cgpa (on a scale of 10)'
-                placeholder='0.0'
-                type='text'
-                value={UGCgpa}
-                onChangeHandler={(e) => setUGCgpa(sanitizeCTCInput(e.target.value))}
-              />
-            </div>
-                <h1 className='text-center md:text-left pb-4 mt-3 text-xl md:text-2xl font-Heading font-bold text-gray-800'>CTC Breakdown (p.a)</h1>
-                <div>
-                <div>
-                  <TextField
-                    label='CTC (in Rs.)'
-                    placeholder='750000.00'
-                    type='text'
-                    value={ctc}
-                    onChangeHandler={(e) => setCtc(sanitizeCTCInput(e.target.value))}
-                  />
-                </div>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-                  <TextField
-                    label='Base Pay (in Rs.)'
-                    placeholder='750000.00'
-                    type='text'
-                    value={basePay}
-                    onChangeHandler={(e) => setBasePay(sanitizeCTCInput(e.target.value))}
-                  />
-                  <TextField
-                    label='Variable Pay (in Rs.)'
-                    placeholder='750000.00'
-                    type='text'
-                    value={variablePay}
-                    onChangeHandler={(e) => setVariablePay(sanitizeCTCInput(e.target.value))}
-                  />
-                  <TextField
-                    label='RSU (in Rs.)'
-                    placeholder='750000.00'
-                    type='text'
-                    value={RSU}
-                    onChangeHandler={(e) => setRSU(sanitizeCTCInput(e.target.value))}
-                  />
-                </div>
-              </div>
+            <MarksRequirement
+              tenthMarks={tenthMarks}
+              twelfthMarks={twelfthMarks}
+              UGCgpa={UGCgpa}
+              setTenthMarks={setTenthMarks}
+              setTwelfthMarks={setTwelfthMarks}
+              setUGCgpa={setUGCgpa}
+            />
+            <CTCBreakdown
+              ctc={ctc}
+              basePay={basePay}
+              variablePay={variablePay}
+              RSU={RSU}
+              setCtc={setCtc}
+              setRSU={setRSU}
+              setBasePay={setBasePay}
+              setVariablePay={setVariablePay}
+            />
           </div>
           <div>
-            <div className='mt-8 mb-6'>
-              <SingleSelectComponent
-                value={sector}
-                onChangeHandler={(e) => setSector(e.target.value)}
-                options={jobSectorList}
-              />
-            </div>
+            <JobSectorSelect
+              sector={sector}
+              handleSector={handleSector}
+            />
             <TextField
               label='Applicable courses'
               placeholder='Btech'
@@ -358,29 +283,10 @@ export default function AddJob () {
               value={applicableCourses}
               onChangeHandler={(e) => setApplicableCourses(e.target.value)}
             />
-            {
-              departmentList === null
-                ? <></>
-                : departmentList.length === 0
-                  ? <div>
-                    No departments found
-                    </div>
-                  : <div class='my-6'>
-                    <label class='block font-Poppins text-black text-md font-bold mb-2' for='username'>
-                      Select Streams
-                    </label>
-                    <Select
-                      options={departmentList}
-                      placeholder='Select Streams'
-                      value={selectedOptions}
-                      onChange={handleSelect}
-                      isSearchable
-                      components={animatedComponents}
-                      closeMenuOnSelect={false}
-                      isMulti
-                    />
-                  </div>
-            }
+            <DepartmentList
+              selectedOptions={selectedOptions}
+              handleSelect={handleSelect}
+            />
             <div className='mb-8'>
               <SingleSelectComponent
                 value={modeOfSelection}
@@ -426,13 +332,13 @@ export default function AddJob () {
               </button>
 
               {
-              selectedFile === null
-                ? <>
-                </>
-                : <div className='mt-1 font-heading text-lg font-medium'>
-                  {selectedFile.name}
-                </div>
-            }
+                selectedFile === null
+                  ? <>
+                  </>
+                  : <div className='mt-1 font-heading text-lg font-medium'>
+                    {selectedFile.name}
+                  </div>
+              }
             </div>
           </div>
         </div>
@@ -446,29 +352,14 @@ export default function AddJob () {
           />
         </div>
         <div className='mb-10 ml-3 md:ml-6 mr-12 mt-5'>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-            <TextField
-              label='Name of the contact person'
-              placeholder='ABC sharma'
-              type='text'
-              value={contactPersonName}
-              onChangeHandler={(e) => setContactPersonName(e.target.value)}
-            />
-            <TextField
-              label='Phone Number of the contact person'
-              placeholder='9123123123'
-              type='text'
-              value={contactPersonPhoneNumber}
-              onChangeHandler={(e) => setContactPersonPhoneNumber(e.target.value)}
-            />
-            <TextField
-              label='Email ID of the contact person'
-              placeholder='Btech@gmail.com'
-              type='email'
-              value={contactPersonEmail}
-              onChangeHandler={(e) => setContactPersonEmail(e.target.value)}
-            />
-          </div>
+          <ContactPersonInfo
+            contactPersonName={contactPersonName}
+            contactPersonPhoneNumber={contactPersonPhoneNumber}
+            contactPersonEmail={contactPersonEmail}
+            setContactPersonName={setContactPersonName}
+            setContactPersonPhoneNumber={setContactPersonPhoneNumber}
+            setContactPersonEmail={setContactPersonEmail}
+          />
           <Button
             btnText={btnText}
             disabled={isBtnDisabled}

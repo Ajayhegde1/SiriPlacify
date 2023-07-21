@@ -20,7 +20,6 @@ export default function JobItem({ job, isCurrentJobs = false, jobSection = 1 }) 
               <div className='flex flex-col gap-4'>
                 <div>
                   <h1 className='text-2xl font-bold text-black mb-1 md:mb-6'>{job.tierName}</h1>
-                  <span className='bg-blue-500 py-1 px-4 text-white rounded-2xl font-bold text-sm mb-4'>{jobSector}</span>
                   <h1 className='mt-2 text-xl font-bold text-green-900 mb-2'>{companyName}</h1>
                   <h1 className='text-2xl font-bold text-black mb-2'>{jobTitle}</h1>
                   <p className='text-sm text-medium text-gray-500 mb-2'>{jobLocation}</p>
@@ -42,7 +41,6 @@ export default function JobItem({ job, isCurrentJobs = false, jobSection = 1 }) 
               <div className='flex flex-col gap-4'>
                 <div>
                   <h1 className='text-2xl font-bold text-black mb-1 md:mb-6'>{job.tierName}</h1>
-                  <span className='bg-blue-500 py-1 px-4 text-white rounded-2xl font-bold text-sm mb-4'>{jobSector}</span>
                   <h1 className='mt-2 text-xl font-bold text-green-900 mb-2'>{companyName}</h1>
                   <h1 className='text-2xl font-bold text-black mb-2'>{jobTitle}</h1>
                   <p className='text-sm text-medium text-gray-500 mb-2'>{jobLocation}</p>
@@ -63,7 +61,6 @@ export default function JobItem({ job, isCurrentJobs = false, jobSection = 1 }) 
               <h1 className='text-right text-base text-black font-medium'>{formattedDueDate}</h1>
               <div className='flex flex-col gap-4'>
                 <div>
-                  <span className='bg-yellow-500 py-1 px-4 text-white rounded-2xl font-bold text-sm mb-2'>{jobSector}</span>
                   <h1 className='text-xl font-bold text-black mt-6 mb-2'>{jobTitle}</h1>
                   <p className='text-sm text-medium text-gray-500 mb-2'>{jobLocation}</p>
                   <p className='text-base text-gray-500 overflow-hidden overflow-ellipsis line-clamp-2'>{jobDescription}</p>

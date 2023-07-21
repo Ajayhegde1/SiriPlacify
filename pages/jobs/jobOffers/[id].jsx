@@ -27,6 +27,7 @@ export default function JobOffers() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [job, setJob] = useState({})
   const [dept, setDept] = useState([])
+  const [jobSector, setJobSector] = ([])
 
   const { id } = router.query
 
@@ -51,6 +52,16 @@ export default function JobOffers() {
                     }
                   })
                   setDept(deet)
+                }
+                if (typeof res.data.data.jobSector !== 'undefined' && res.data.data.jobSector !== null && res.data.data.jobSector.length > 0) {
+                  let sectors = res.data.data.jobSector
+                  sectors = sectors.map((sector) => {
+                    return{
+                      value: sector.id,
+                      label: sector.sectorName
+                    }
+                  })
+                  setJobSector(sectors)
                 }
               } else if (res.data.status === 423) {
                 openNotification(
@@ -137,7 +148,7 @@ export default function JobOffers() {
                   jobBond={job.jobBond}
                   jobCriteria={job.jobCriteria}
                   jobPosition={job.jobPositionType}
-                  jobSector={job.jobSector}
+                  jobSector={jobSector}
                   basePay={job.basePay}
                   jobDept={dept}
                   variablePay={job.variablePay}

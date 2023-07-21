@@ -30,7 +30,7 @@ export default function CurrentJobs() {
   const [jobTitle, setJobTitle] = useState('')
   const [jobLocation, setJobLocation] = useState('')
   const [jobPosition, setJobPosition] = useState('')
-  const [jobSector, setJobSector] = useState('')
+  const [jobSector, setJobSector] = useState([])
   const [jobCTC, setJobCTC] = useState('')
   const [jobBasePay, setJobBasePay] = useState('')
   const [jobVariablePay, setJobVariablePay] = useState('')
@@ -76,7 +76,16 @@ export default function CurrentJobs() {
                 setJobTitle(res.data.data.jobTitle)
                 setJobLocation(res.data.data.jobLocation)
                 setJobPosition(res.data.data.jobPositionType)
-                setJobSector(res.data.data.jobSector)
+                if (typeof res.data.data.jobSector !== 'undefined' && res.data.data.jobSector !== null && res.data.data.jobSector.length > 0) {
+                  let sectors = res.data.data.jobSector
+                  sectors = sectors.map((sector) => {
+                    return{
+                      value: sector.id,
+                      label: sector.sectorName
+                    }
+                  })
+                  setJobSector(sectors)
+                }
                 setJobCTC(res.data.data.jobCTC)
                 setJobDesc(res.data.data.jobDescription)
                 setJobBond(res.data.data.jobBond)
@@ -150,7 +159,6 @@ export default function CurrentJobs() {
             <LazyJobBackButton
               companyName={companyName}
               jobPositionType={jobPosition}
-              jobSector={jobSector}
               jobTitle={jobTitle}
             />
           </Suspense>

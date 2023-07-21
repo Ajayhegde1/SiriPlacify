@@ -21,6 +21,7 @@ export default function getStudentJobs () {
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [dept, setDept] = useState([])
+  const [jobSector, setJobSector] = useState([])
   const [job, setJob] = useState({})
 
   const user = useSelector((state) => state.user)
@@ -49,6 +50,16 @@ export default function getStudentJobs () {
                   })
                   setDept(deet)
                 }
+                if (typeof res.data.data.jobSector !== 'undefined' && res.data.data.jobSector !== null && res.data.data.jobSector.length > 0) {
+                  let sectors = res.data.data.jobSector
+                  sectors = sectors.map((sector) => {
+                    return{
+                      value: sector.id,
+                      label: sector.sectorName
+                    }
+                  })
+                  setJobSector(sectors)
+                }
               } else if (res.data.status === 423) {
                 openNotification(
                   notificationTypes.ERROR,
@@ -72,7 +83,8 @@ export default function getStudentJobs () {
             .catch((err) => {
               openNotification(
                 notificationTypes.ERROR,
-                'Error'
+                'Error',
+                err
               )
             })
         }
@@ -110,7 +122,6 @@ export default function getStudentJobs () {
                             logo={appleLogo}
                             jobTitle={job.jobTitle}
                             jobLocation={job.jobLocation}
-                            jobCategory={job.jobSector}
                             dueDate={job.dueDate}
                             jobID={job.uid}
                           />
@@ -122,7 +133,7 @@ export default function getStudentJobs () {
                               jobLocation={job.jobLocation}
                               jobCTC={job.jobCTC}
                               jobPosition={job.jobPositionType}
-                              jobSector={job.jobSector}
+                              jobSector={jobSector}
                               jobDesc={job.jobDescription}
                               jobBond={job.jobBond}
                               jobCriteria={job.jobCriteria}

@@ -2,11 +2,10 @@ import { useSelector } from 'react-redux'
 import { useRef } from 'react'
 import axios from 'axios'
 import Image from 'next/image'
-import { jobSectorList } from '@/constants/addJobDropDowns'
 import edit from '../../public/edit.png'
 import { getJobDescFile, uploadJobDescFile } from '@/redux/Sagas/requests/features'
 import { notificationTypes, openNotification } from '@/utils/notifications'
-import SingleSelectComponent from '../InputComponents/SingleSelectComponent'
+import JobSectorSelect from '../SectorList'
 
 export default function JobDesc({
   jobID,
@@ -43,7 +42,7 @@ export default function JobDesc({
   UGCgpa,
   setUGCgpa,
   jobSection,
-  isEdit,
+  isEdit=false,
   setIsEdit,
   handleEditFunction
 }) {
@@ -53,6 +52,11 @@ export default function JobDesc({
   const handleEdit = () => {
     setIsEdit(!isEdit)
   }
+
+  function handleSector(data) {
+    setJobSector(data)
+  }
+
 
   const handleGetJD = () => {
     getJobDescFile(jobID)
@@ -192,7 +196,7 @@ export default function JobDesc({
               type='text'
               value={jobLocation}
               onChange={(e) => setJobLocation(e.target.value)}
-              disabled={!(isEdit)}
+              disabled={!(isEdit) && jobSection !== 1}
             />
           </div>
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
@@ -208,11 +212,10 @@ export default function JobDesc({
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Sector</div>
             <div className='col-span-5'>
-              <SingleSelectComponent
-                value={jobSector}
-                onChangeHandler={(e) => setJobSector(e.target.value)}
-                options={jobSectorList}
-                isDisabled={!(isEdit)}
+              <JobSectorSelect
+                isEdit={isEdit}
+                sector={jobSector}
+                handleSector={handleSector}
               />
             </div>
           </div>

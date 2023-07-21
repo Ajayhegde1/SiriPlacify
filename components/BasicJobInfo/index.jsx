@@ -258,9 +258,6 @@ export default function BasicJobInfo({
           <div className='flex flex-col md:flex-row gap-2 md:gap-8'>
             <Image src={logo} alt='apple logo' />
             <div className='mt-3'>
-              <p className='mt-5'>
-                <span className='bg-black py-1 px-4 text-white rounded-2xl font-bold'>{jobCategory}</span>
-              </p>
               <h1 className='mt-3 text-2xl xl:text-3xl 2xl:text-4xl font-bold font-Heading font-bold text-black'>{jobTitle}</h1>
               <h1 className='my-2 text-sm text-medium font-Heading'>{jobLocation}</h1>
             </div>

@@ -23,6 +23,7 @@ export default function getClosedJobs () {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [job, setJob] = useState({})
   const [dept, setDept] = useState([])
+  const [jobSector, setJobSector] = ([])
 
   const user = useSelector((state) => state.user)
 
@@ -49,6 +50,16 @@ export default function getClosedJobs () {
                     }
                   })
                   setDept(deet)
+                }
+                if (typeof res.data.data.jobSector !== 'undefined' && res.data.data.jobSector !== null && res.data.data.jobSector.length > 0) {
+                  let sectors = res.data.data.jobSector
+                  sectors = sectors.map((sector) => {
+                    return{
+                      value: sector.id,
+                      label: sector.sectorName
+                    }
+                  })
+                  setJobSector(sectors)
                 }
               } else if (res.data.status === 423) {
                 openNotification(
@@ -111,7 +122,6 @@ export default function getClosedJobs () {
                                 logo={appleLogo}
                                 jobTitle={job.jobTitle}
                                 jobLocation={job.jobLocation}
-                                jobCategory={job.jobSector}
                                 dueDate={job.dueDate}
                                 jobID={job.uid}
                                 isClosedTPO={false}
@@ -126,7 +136,7 @@ export default function getClosedJobs () {
                                   jobLocation={job.jobLocation}
                                   jobCTC={job.jobCTC}
                                   jobPosition={job.jobPositionType}
-                                  jobSector={job.jobSector}
+                                  jobSector={jobSector}
                                   jobDesc={job.jobDescription}
                                   jobBond={job.jobBond}
                                   jobCriteria={job.jobCriteria}

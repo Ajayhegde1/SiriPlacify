@@ -120,10 +120,6 @@ export default function JobDetails({
           'Unable to update job'
         )
       })
-
-    setTimeout(() => {
-      window.location.reload()
-    }, 4000)
   }
 
   return (
