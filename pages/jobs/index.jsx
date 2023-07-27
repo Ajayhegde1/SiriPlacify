@@ -35,35 +35,24 @@ export default function Jobs () {
   const [jobSection, setJobSection] = useState(1)
 
   useEffect(() => {
-    if (user !== null) {
-      if (user.accType === '0') {
-        dispatch(getJobs())
-        dispatch(getOfferJob())
-        dispatch(getClosedJobForCollege())
-        dispatch(getDeclinedJob())
-      } 
-      else if (user.accType === '1'){
-        dispatch(getJobs())
-      }
-      else if (user.accType === '2') {
-        dispatch(getJobs())
-        dispatch(getClosedJob())
-      }
-    } else {
-      router.push(routes.NOTFOUND)
+    if (user === null) {
+      router.push(routes.NOTFOUND);
+      return;
     }
-  }, [dispatch, router, user])
-
-  useEffect(() => {
-    if (user !== null) {
-      if (user.accType === '1') {
-        dispatch(getClosedJobForCollege())
-      }
+  
+    dispatch(getJobs());
+  
+    const dispatchActions = {
+      '0': [getOfferJob, getClosedJobForCollege, getDeclinedJob],
+      '1': [getClosedJobForCollege],
+      '2': [getClosedJob],
+    };
+  
+    const actionsToDispatch = dispatchActions[user.accType];
+    if (actionsToDispatch) {
+      actionsToDispatch.forEach(action => dispatch(action()));
     }
-    else{
-      router.push(routes.NOTFOUND)
-    }
-  } , [dispatch])
+  }, [dispatch, router, user]);  
 
   return (
     <div className='bg-gray-200 min-h-screen'>

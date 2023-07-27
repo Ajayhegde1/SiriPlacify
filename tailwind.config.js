@@ -20,7 +20,8 @@ module.exports = {
       colors: {
         customGrey: '#E3F2EF',
         customLightBlue: '#E8EDFF',
-        customGreenTwo: '#71D19D'
+        customGreenTwo: '#71D19D',
+        customOrange: '#FFF4CB'
       }
     }
   },
