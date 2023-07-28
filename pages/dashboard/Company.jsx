@@ -27,7 +27,7 @@ export default function Company() {
             <h1 className='text-center md:text-left pt-4 pb-2 text-xl md:text-4xl font-Heading font-bold text-black'>Dashboard</h1>
             <p className='text-center md:text-left text-base md:text-xl text-gray-500 font-medium font-Heading ml-1'>Welcome, {user === null ? ' ' : user.username}</p>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-5 gap-2 xl:gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-5 gap-2 xl:gap-6">
             <FirstHalfCompany />
             <div className="col-span-1 2xl:col-span-3">
               <PlannedVsActualGraph />

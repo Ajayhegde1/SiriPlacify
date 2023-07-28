@@ -1,21 +1,10 @@
 import React from 'react';
+import { Spin } from 'antd';
 import { Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart, ArcElement, Legend } from 'chart.js';
 
 Chart.register(ArcElement, Legend);
-
-const Testdata = {
-  labels: ['Placed', 'Unplaced'],
-  datasets: [
-    {
-      data: [20, 20],
-      backgroundColor: ['#FFFFFF', '#11CC46'],
-      borderColor: ['#FFFFFF', '#11CC46'],
-      borderWidth: 2,
-    },
-  ],
-};
 
 const options = {
   plugins: {
@@ -44,17 +33,42 @@ const options = {
   }
 };
 
-export default function PlacedGraphComponents() {
+export default function PlacedGraphComponents({
+  noOfPlacedStudents = 0,
+  noOfStudents = 0
+}) {
+  const Testdata = {
+    labels: ['Placed', 'Unplaced'],
+    datasets: [
+      {
+        data: [noOfPlacedStudents, noOfStudents],
+        backgroundColor: ['#11CC46', '#FFFFFF'],
+        borderColor: ['#11CC46', '#FFFFFF'],
+        borderWidth: 2,
+      },
+    ],
+  };
+
   return (
     <div className='mt-6 bg-blue-200 px-4 pt-4 rounded-lg flex flex-col'>
       <h1 className="text-left pt-2 pl-2 text-3xl font-bold text-black">Placement percentage</h1>
-      <div className='flex-grow flex justify-center' style={{ height: '300px' }}> 
-        <Doughnut
-          data={Testdata}
-          plugins={[ChartDataLabels]}
-          options={options}
-        />
-      </div>
+      {
+        noOfPlacedStudents === 0 && noOfStudents === 0 ? (
+          <div className="flex my-12 mx-12">
+            <Spin size="large" />
+          </div>
+        )
+          :
+          (
+            <div className='flex-grow flex justify-center' style={{ height: '300px' }}>
+              <Doughnut
+                data={Testdata}
+                plugins={[ChartDataLabels]}
+                options={options}
+              />
+            </div>
+          )
+      }
     </div>
   );
 }

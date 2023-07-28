@@ -1,5 +1,8 @@
-import { useState} from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
+
+import { getTPODashboard } from '@/redux/Sagas/requests/features'
+import { notificationTypes, openNotification } from '@/utils/notifications'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
@@ -19,8 +22,33 @@ import BranchWiseLineGraph from '@/components/Dashboard/BranchWiseLineGraph'
 
 export default function College() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  
+  const [dashboardData, setDashboardData] = useState(null)
+
   const user = useSelector((state) => state.user)
+
+  useEffect(() => {
+    getTPODashboard()
+      .then((res) => {
+        if (res.data.status === 200) {
+          setDashboardData(res.data.data)
+        }
+        else {
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            'Error while fetching dashboard data'
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'Error while fetching dashboard data'
+        )
+      })
+  }, [])
+
 
   return (
     <div className='bg-gray-200'>
@@ -40,10 +68,15 @@ export default function College() {
           </div>
           <div className='mb-6 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-5 gap-2 md:gap-4 2xl:gap-8'>
             <div className='col-span-1 2xl:col-span-3'>
-              <BasicStatsComponents />
+              <BasicStatsComponents 
+                dashboardData={dashboardData}
+              />
             </div>
             <div className='col-span-1 2xl:col-span-2'>
-              <PlacedGraphComponents />
+              <PlacedGraphComponents 
+                noOfPlacedStudents={dashboardData === null ? 0 : parseInt(dashboardData.noOfStudentsPlaced)}
+                noOfStudents={dashboardData === null ? 0 : parseInt(dashboardData.noOfGradStudents) - parseInt(dashboardData.noOfStudentsPlaced)}
+              />
             </div>
           </div>
           <div className='mb-2 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-5 gap-2 md:gap-4 2xl:gap-8'>
