@@ -149,6 +149,30 @@ export const getCompanyHires = () => {
   return GET('/getHires', { sessionID: store.getState().user.sessionId })
 }
 
+export const getTierOffers = () => {
+  return GET('/getTiersDistribution' , { sessionID: store.getState().user.sessionId })
+}
+
+export const getRetentionRates = () => {
+  return GET('/retentionRate', { sessionID: store.getState().user.sessionId })
+}
+
+export const getCollegeAchievements = () => {
+  return GET('/getCollegeAchievements', { sessionID: store.getState().user.sessionId })
+}
+
+export const getBranchTrends = () => {
+  return GET('/getCollegeBranchTrends', { sessionID: store.getState().user.sessionId })
+}
+
+export const getSectorTrends = () => {
+  return GET('/sectorTrends', { sessionID: store.getState().user.sessionId })
+}
+
+export const getSalaryStats = () => {
+  return GET('/getCTCStats', { sessionID: store.getState().user.sessionId })
+}
+
 export const getNotifications = () => {
   return GET('/notifications', { sessionID: store.getState().user.sessionId })
 }

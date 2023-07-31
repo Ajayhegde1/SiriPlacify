@@ -15,7 +15,7 @@ export default function CarouselItem({
                 <h2 className="font-bold bg-black text-white px-4 py-1 rounded-2xl mb-4 inline-block">
                     {category}
                 </h2>
-                <h1 className="text-2xl font-bold font-Heading mb-4">{Title}</h1>
+                <h1 className="text-xl font-bold font-Heading mb-4">{Title}</h1>
                 <p className="max-h-16 overflow-y-auto line-clamp-3">{Para}</p>
             </div>
         </div>

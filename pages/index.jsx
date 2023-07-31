@@ -1,6 +1,9 @@
-import Router from 'next/router'
+import {useRouter} from 'next/router'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+
+import { openNotification, notificationTypes } from '@/utils/notifications'
+
 import { routes } from '@/constants/routes'
 import DocHeader from '@/components/DocHeader'
 import Navbar from '@/components/NavBar'
@@ -12,10 +15,24 @@ import FooterSection from '@/components/FooterSection'
 
 export default function Home () {
   const user = useSelector(state => state.user)
+  const router = useRouter()
 
   useEffect(() => {
-    if (user) {
-      Router.push(routes.JOBS)
+    if (user.accType === '0'){
+      router.push(routes.TPODASHBOARD)
+    }
+    else if (user.accType === '1') {
+      router.push(routes.JOBS)
+    }
+    else if (user.accType === '2') {
+      router.push(routes.COMPANYDASHBOARD)
+    }
+    else{
+      openNotification(
+        notificationTypes.ERROR,
+        'Error',
+        'Unauthorized User'
+      )
     }
   }, [user])
 

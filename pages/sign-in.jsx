@@ -12,6 +12,8 @@ import ForgotPasswordModal from '@/components/Modal/ForgotPasswordModal'
 import { signIn } from '@/redux/Slices/userSlice'
 import { useRouter } from 'next/router'
 import { Spin } from 'antd'
+import { notificationTypes, openNotification } from '@/utils/notifications'
+import { routes } from '@/constants/routes'
 
 export default function CollegeProfile () {
   const dispatch = useDispatch()
@@ -36,7 +38,22 @@ export default function CollegeProfile () {
 
   useEffect(() => {
     if (user) {
-      router.push('/jobs')
+      if (user.accType === '0'){
+        router.push(routes.TPODASHBOARD)
+      }
+      else if (user.accType === '1') {
+        router.push(routes.JOBS)
+      }
+      else if (user.accType === '2') {
+        router.push(routes.COMPANYDASHBOARD)
+      }
+      else{
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'Unauthorized User'
+        )
+      }
     }
   }, [user])
 

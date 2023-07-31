@@ -1,15 +1,52 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Legend, Tooltip } from 'chart.js';
+import { Spin } from 'antd';
+
+import { getRetentionRates } from '@/redux/Sagas/requests/features';
+import { notificationTypes, openNotification } from '@/utils/notifications';
+
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Legend, Tooltip);
 
 export default function RetentionGraphComponent() {
+  const [dashboardData, setDashboardData] = useState(null)
+  const [years, setYears] = useState([])
+  const [retentionRates, setRetentionRates] = useState([])
+
+  useEffect(() => {
+    getRetentionRates()
+      .then((res) => {
+        if (res.data.status === 200){
+          setDashboardData(res.data.data)
+          let data = res.data.data
+          let years = data.map((item) => item.year)
+          let retentionRates = data.map((item) => item.retentionRate)
+          setYears(years)
+          setRetentionRates(retentionRates)
+        }
+        else{
+          openNotification(
+            notificationTypes.ERROR,
+            'Error',
+            res.data.message
+          )
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          'Error',
+          'Something went wrong!'
+        )
+      })
+  }, [])
+
     const data = {
-        labels: ['2017', '2019', '2020', '2021', '2022', '2023'],
+        labels: years,
         datasets: [
           {
             label: 'Retention Rate',
-            data: [10, 30, 20, 40, 25, 35],
+            data: retentionRates,
             borderColor: 'rgba(75, 192, 192, 1)',
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             pointBackgroundColor: 'rgba(75, 192, 192, 1)',
@@ -25,13 +62,30 @@ export default function RetentionGraphComponent() {
           y: {
             beginAtZero: true,
           },
+          x: {
+            beginAtZero: true,
+          }
         },
       };
     
       return (
         <div className='bg-white mt-4 p-4'>
           <h2 className='text-center pt-2 pl-2 text-xl font-bold text-black mb-4'>Students' average retention rate in companies</h2>
-          <Line data={data} options={options} />
+          {
+            dashboardData === null
+            ?
+            <div className="flex justify-center items-center">
+                <Spin size="large" />
+            </div>
+            :
+            Object.keys(dashboardData).length === 0
+            ?
+            <div className="flex justify-center items-center">
+                No Data To Show
+            </div>
+            :
+            <Line data={data} options={options} />
+          }
         </div>
       )
 }

@@ -1,73 +1,96 @@
+import { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
-import {
-    Chart,Tooltip
-} from 'chart.js';
+import { Chart, Tooltip } from 'chart.js';
+import { getBranchTrends } from '@/redux/Sagas/requests/features';
+import { notificationTypes, openNotification } from '@/utils/notifications';
+import { Spin } from 'antd';
 
-Chart.register(Tooltip)
+Chart.register(Tooltip);
 
 export default function BranchWiseLineGraph() {
-    const branchData = [
-        {
-            name: 'CSE',
-            recruitingStats: [45, 20, 85, 50, 40], // Replace with your data for CSE branch
-            color: 'rgba(255, 99, 132, 1)', // Line color for CSE branch
-        },
-        {
-            name: 'ECE',
-            recruitingStats: [20, 80, 65, 65, 70], // Replace with your data for ECE branch
-            color: 'rgba(54, 162, 235, 1)', // Line color for ECE branch
-        },
-        {
-            name: 'Mech',
-            recruitingStats: [55, 75, 45, 75, 25], // Replace with your data for Mech branch
-            color: 'rgba(255, 206, 86, 1)', // Line color for Mech branch
-        },
-    ]
+    const [Data, setData] = useState({});
+    const [years, setYears] = useState([]);
+
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    useEffect(() => {
+        getBranchTrends()
+            .then((res) => {
+                if (res.data.status === 200) {
+                    let data = res.data.data
+                    setYears(data.years)
+                    setData(data.departments)
+                } else {
+                    openNotification(notificationTypes.ERROR, 'Error', res.data.message);
+                }
+            })
+            .catch((error) => {
+                openNotification(
+                    notificationTypes.ERROR,
+                    'Error',
+                    'Something went wrong'
+                );
+            });
+    }, []);
 
     const chartData = {
-        labels: ['2019', '2020', '2021', '2022', '2023'], // Months or X-axis labels
-        datasets: branchData.map((branch) => ({
-            label: branch.name, // Branch name as the label for each dataset
-            data: branch.recruitingStats, // Recruiting statistics for the branch
-            borderColor: branch.color, // Border color for the line
-            fill: false, // Do not fill the area under the line
+        labels: years,
+        datasets: Object.entries(Data).map(([deptName, hiringStats]) => ({
+            label: deptName,
+            data: hiringStats,
+            borderColor: getRandomColor(),
+            fill: false,
         })),
     };
+
 
     const chartOptions = {
         responsive: true,
         maintainAspectRatio: false,
         scales: {
             y: {
-                beginAtZero: true, 
+                beginAtZero: true,
             },
             x: {
-                beginAtZero: true, 
-            }
+                beginAtZero: true,
+            },
         },
         plugins: {
             legend: {
                 position: 'top',
-                align: 'start', 
+                align: 'start',
             },
             tooltip: {
-              enabled: true, // Enable tooltips
-              mode: 'index', // Show a single tooltip item when hovering over multiple datasets
-              intersect: false, // Disable intersect mode to avoid overlapping tooltips
-            }
-        }
-    }
+                enabled: true,
+                mode: 'index',
+                intersect: false,
+            },
+        },
+    };
 
     return (
-        <div className='mt-10 bg-white rounded-lg shadow-lg p-4'>
+        <div className="mt-10 bg-white rounded-lg shadow-lg p-4">
             <div className="text-left">
                 <h2 className="relative ml-6 text-lg md:text-3xl font-bold mt-1 md:mt-5 mb-4 md:mb-6">
                     Branch-wise companies' recruiting statistics
                 </h2>
             </div>
-            <div className='w-full h-96'>
-                <Line data={chartData} options={chartOptions} />
-            </div>
+            {Object.keys(Data).length === 0 ? (
+                <div className="flex justify-center items-center">
+                    {Data === null ? <Spin size="large" /> : 'No Data To Show'}
+                </div>
+            ) : (
+                <div className="w-full h-96">
+                    <Line data={chartData} options={chartOptions} />
+                </div>
+            )}
         </div>
-    )
+    );
 }

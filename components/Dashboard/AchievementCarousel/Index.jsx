@@ -1,11 +1,41 @@
 import Carousel from 'react-multi-carousel'
 import Image from 'next/image'
 import CarouselItem from '@/components/CarouselItem'
+import moment from 'moment'
 import 'react-multi-carousel/lib/styles.css'
 
 import Achievement from '@/public/achievement.png'
+import { useEffect, useState } from 'react'
+import { getCollegeAchievements } from '@/redux/Sagas/requests/features'
+import { notificationTypes, openNotification } from '@/utils/notifications'
+import { Spin } from 'antd'
 
 export default function AchievementCarousel() {
+    const [achievements, setAchievements] = useState(null)
+
+    useEffect(() => {
+        getCollegeAchievements()
+            .then(res => {
+                if (res.data.status === 200) {
+                    setAchievements(res.data.data)
+                }   
+                else{
+                    openNotification(
+                        notificationTypes.ERROR,
+                        'Error',
+                        'Something went wrong'
+                    )
+                }
+            })
+            .catch(err => {
+                openNotification(
+                    notificationTypes.ERROR,
+                    'Error',
+                    'Something went wrong'
+                )
+            })
+    } , [])
+
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
@@ -46,34 +76,29 @@ export default function AchievementCarousel() {
                 dotListClass='custom-dot-list-style'
                 itemClass='carousel-item-padding-40-px'
             >
-                <CarouselItem
-                    Image={<Image className='w-full' src={Achievement} alt="Adobe" />}
-                    Title='Lorem Ipsum'
-                    category='Design'
-                    Para="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley"
-                    Date='5 July'
-                />
-                <CarouselItem
-                    Image={<Image className='w-full' src={Achievement} alt="Adobe" />}
-                    Title='Lorem Ipsum'
-                    category='Design'
-                    Para="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley"
-                    Date='5 July'
-                />
-                <CarouselItem
-                    Image={<Image className='w-full' src={Achievement} alt="Adobe" />}
-                    Title='Lorem Ipsum'
-                    category='Design'
-                    Para="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley"
-                    Date='5 July'
-                />
-                <CarouselItem
-                    Image={<Image className='w-full' src={Achievement} alt="Adobe" />}
-                    Title='Lorem Ipsum'
-                    category='Design'
-                    Para="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley"
-                    Date='5 July'
-                />
+                {
+                    achievements === null
+                    ?
+                    <div className="flex justify-center items-center">
+                        <Spin size="large" />
+                    </div>
+                    :
+                    Object.keys(achievements).length === 0
+                    ?
+                    <div className="flex justify-center items-center">
+                        <h2 className="text-xl font-bold">No achievements found</h2>
+                    </div>
+                    :
+                    achievements.map((achievement) => 
+                    <CarouselItem
+                        Image={<Image className='w-full' src={Achievement} alt="Achievement" />}
+                        Title={achievement.Title}
+                        category={achievement.Category}
+                        Para={achievement.Description}
+                        Date={moment(achievement.date).format('DD MMMM')}
+                    />
+                    )
+                }
             </Carousel>
         </div >
     )
