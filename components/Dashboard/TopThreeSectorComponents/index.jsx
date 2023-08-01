@@ -3,12 +3,17 @@ import React from 'react';
 import { Radar } from 'react-chartjs-2';
 import { Chart, Legend, Tooltip } from 'chart.js';
 import { RadialLinearScale } from 'chart.js';
+import { Spin } from 'antd';
 
 Chart.register(RadialLinearScale, Legend, Tooltip);
 
-const TopThreeSectorComponents = () => {
+const TopThreeSectorComponents = ({
+    chartData,
+    sector,
+    count
+}) => {
     const data = {
-        labels: ['Automobile', 'Consulting', 'Conglomerate'],
+        labels: sector.slice(0, 3),
         datasets: [
             {
                 label: 'Top Hiring Sectors',
@@ -18,7 +23,7 @@ const TopThreeSectorComponents = () => {
                 pointBorderColor: '#fff',
                 pointHoverBackgroundColor: '#fff',
                 pointHoverBorderColor: 'rgba(0, 100, 0, 1)',
-                data: [85, 70, 100]
+                data: count.slice(0, 3)
             }
         ]
     };
@@ -45,14 +50,28 @@ const TopThreeSectorComponents = () => {
     return (
         <div className='bg-white mt-4 px-4 py-4 flex flex-col rounded-lg'>
             <h1 className="text-left pt-4 mb-6 pl-4 text-4xl font-bold text-black">Top Hiring Sectors</h1>
-            <div>
-                <Radar
-                    data={data}
-                    width={350}
-                    height={350}
-                    options={options}
-                />
-            </div>
+            {
+                chartData === null
+                ?
+                <div className="flex justify-center items-center">
+                    <Spin size="large" />
+                </div>
+                :
+                Object.keys(chartData).length === 0
+                ?
+                <div className="flex justify-center items-center">
+                    <h1 className="text-2xl font-bold text-black">No data to display</h1>
+                </div>
+                :
+                <div>
+                    <Radar
+                        data={data}
+                        width={350}
+                        height={350}
+                        options={options}
+                    />
+                </div>
+            }
         </div>
     )
 }

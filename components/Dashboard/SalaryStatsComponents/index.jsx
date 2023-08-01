@@ -50,7 +50,7 @@ export default function SalaryStatsComponents() {
                 <div key={key} className={`flex gap-4 border-r-${key === 'medianPackage' ? '0' : '2'} md:border-r-2 border-black`}>
                     <h1 className={`text-xl md:text-3xl text-black font-bold ${key === 'medianPackage' ? 'mr-2' : ''}`}>{value}</h1>
                     <div className={`pr-${key === 'medianPackage' ? '2' : '4'}`}>
-                        <p className="text-md text-black font-semibold">Minimum</p>
+                        <p className="text-md text-black font-semibold">{key === 'meanPackage' ? "Average" : key === 'medianPackage' ? "Median" : "Highest"}</p>
                         <p className="text-sm text-black font-semibold">(Per annum – in lakh)</p>
                     </div>
                 </div>

@@ -169,6 +169,18 @@ export const getSectorTrends = () => {
   return GET('/sectorTrends', { sessionID: store.getState().user.sessionId })
 }
 
+export const getSectorTrend = () => {
+  return GET('/getJobSector', { sessionID: store.getState().user.sessionId })
+}
+
+export const InternshipOffers = () => {
+  return GET('/internshipOffers', { sessionID: store.getState().user.sessionId })
+}
+
+export const getPlacementTrends = () => {
+  return GET('/placementTrends', { sessionID: store.getState().user.sessionId })
+}
+
 export const getSalaryStats = () => {
   return GET('/getCTCStats', { sessionID: store.getState().user.sessionId })
 }

@@ -1,12 +1,16 @@
-import React from 'react';
+import { Spin } from 'antd';
 import { Pie } from 'react-chartjs-2';
 
-export default function SectorWisePlacementGraph() {
+export default function SectorWisePlacementGraph({
+  chartData,
+  sector,
+  count,
+}) {
   const data = {
-    labels: ['Automobile', 'Banking/Financial Services/Insurance', 'Conglomerate', 'Consulting', 'Consumer Durables', 'Engineering', 'FMCG'],
+    labels: sector,
     datasets: [
       {
-        data: [10, 20, 30, 5, 15, 8, 12],
+        data: count,
         backgroundColor: [
           '#FF6384',
           '#36A2EB',
@@ -77,12 +81,28 @@ export default function SectorWisePlacementGraph() {
       <h1 className="text-left pt-4 pb-6 pl-4 text-lg md:text-4xl font-bold text-black">
         Placements across sectors
       </h1>
-      <div className='flex-grow flex justify-center' style={{ height: '400px'}}>
-        <Pie
-          data={data}
-          options={options}
-        />
-      </div>
+      {
+        chartData === null
+        ? 
+        <div className="flex-grow flex justify-center items-center">
+          <Spin size="large" />
+        </div>
+        :
+        Object.keys(chartData).length === 0
+        ?
+        <div className="flex-grow flex justify-center items-center">
+          <h1 className="text-lg md:text-2xl font-bold text-black"> 
+            No data to display
+          </h1>
+        </div>
+        :
+        <div className='flex-grow flex justify-center' style={{ height: '400px'}}>
+          <Pie
+            data={data}
+            options={options}
+          />
+        </div>
+      }
     </div >
   )
 }
