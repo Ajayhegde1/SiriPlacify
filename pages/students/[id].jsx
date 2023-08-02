@@ -6,19 +6,16 @@ import Link from 'next/link'
 
 import Sidebar from '@/components/SideBar'
 import DocHeader from '@/components/DocHeader'
-import Button from '@/components/Buttons'
-import TextField from '@/components/InputComponents/TextField'
-import TextArea from '@/components/InputComponents/TextArea'
 
 import { GetStudent, getCandidateResume } from '@/redux/Sagas/requests/features'
 import { notificationTypes, openNotification } from '@/utils/notifications'
 
-import photo from '@/public/photoupload.png'
 import arrow from '@/public/arrow.png'
 
 import { routes } from '@/constants/routes'
+import StudentInfo from '@/components/StudentInfo'
 
-export default function CandidatesPage () {
+export default function CandidatesPage() {
   const router = useRouter()
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -132,108 +129,27 @@ export default function CandidatesPage () {
             </button>
           </div>
           {
-                        profile === null
-                          ? <div>
-                            loading...
-                            </div>
-                          : Object.keys(profile).length === 0
-                            ? <div>
-                              No data provided
-                            </div>
-                            : <div className='grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-8'>
-                              <div>
-                                <div className='grid grid-cols-1 md:grid-cols-3 gap-4 content-center'>
-                                  <div className='pb-4 pl-2 md:pl-5 m-auto'>
-                                    <Image src={photo} alt='students' />
-                                    <div className='mt-6'>
-                                      <Button
-                                        btnText='Upload'
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className='col-span-1 md:col-span-2 ml-0 md:ml-6'>
-                                    <TextField
-                                      label='User Name'
-                                      placeholder='abc sharma'
-                                      type='text'
-                                      value={profile.username}
-                                      disabled
-                                    />
-                                    <TextField
-                                      label='Email ID'
-                                      placeholder='TPO name'
-                                      type='text'
-                                      value={profile.email}
-                                      disabled
-                                    />
-                                    <TextField
-                                      label='Contact Number'
-                                      placeholder='pes.edu'
-                                      type='text'
-                                      value={profile.contactNo}
-                                      disabled
-                                    />
-                                  </div>
-                                </div>
-                                <div className='grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-8'>
-                                  <div className='col-span-1'>
-                                    <TextField
-                                      label='10th Standard Marks'
-                                      placeholder='xyz.@gmail.com'
-                                      type='text'
-                                      value={profile.studentTenthMarks}
-                                      disabled
-                                    />
-                                  </div>
-                                  <div className='col-span-1'>
-                                    <TextField
-                                      label='12th Standard Marks'
-                                      placeholder='9090909090'
-                                      type='text'
-                                      value={profile.studentTwelthMarks}
-                                      disabled
-                                    />
-                                  </div>
-                                  <div className='col-span-1'>
-                                    <TextField
-                                      label='UG CGPA'
-                                      placeholder='9090909090'
-                                      type='text'
-                                      value={profile.studentUGMarks}
-                                      disabled
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div className='mr-0 md:mr-4'>
-                                <TextField
-                                  label='student ID'
-                                  placeholder='ABCUG123'
-                                  type='text'
-                                  value={profile.studentId}
-                                  disabled
-                                />
-                                <TextArea
-                                  label='About The Student'
-                                  placeholder='PES University, located in Bangalore, India is one of the country’s leading teaching and research universities.
-                            The University is committed to providing “navigation for the real world” that inspires students to find their
-                            true north.
-                            Our students graduate with the ability to adapt to an intellectually and technologically changing
-                            environment. Over the years, we have accomplished this with the participative efforts of the management,
-                            staff, students and parents.'
-                                  rows='8'
-                                  disabled
-                                  value={profile.studentDescription}
-                                />
-                                <div class='mb-6'>
-                                  <Button
-                                    btnText='Next'
-                                    disabled
-                                  />
-                                </div>
-                              </div>
-                              </div>
-                    }
+            profile === null
+              ? <div>
+                loading...
+              </div>
+              : Object.keys(profile).length === 0
+                ? <div>
+                  No data provided
+                </div>
+                :
+                <StudentInfo
+                  username={profile.username}
+                  email={profile.email}
+                  department={profile.dept}
+                  contactNo={profile.contactNo}
+                  studentTenthMarks={profile.studentTenthMarks}
+                  studentTwelthMarks={profile.studentTwelthMarks}
+                  studentDegreeMarks={profile.studentUGMarks}
+                  gender={profile.gender}
+                  studentID={profile.studentId}
+                />
+          }
         </div>
       </main>
     </div>

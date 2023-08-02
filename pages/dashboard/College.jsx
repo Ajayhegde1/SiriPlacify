@@ -141,11 +141,9 @@ export default function College() {
               />
             </div>
           </div>
-          <StudentStatsComponent />
           <YearwiseGraphComponent />
           <SectorTrendGraphComponent />
           <BranchWiseLineGraph />
-          <TopRecruitersComponent />
           <AchievementCarousel />
         </div>
       </main>

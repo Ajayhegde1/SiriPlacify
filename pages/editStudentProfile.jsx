@@ -1,12 +1,8 @@
 import DocHeader from '@/components/DocHeader'
-import TextField from '@/components/InputComponents/TextField'
-import TextArea from '@/components/InputComponents/TextArea'
-import Button from '@/components/Buttons'
 import Sidebar from '@/components/SideBar'
 
 import axios from 'axios'
 import { Spin } from 'antd'
-import Image from 'next/image'
 import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,9 +12,9 @@ import { getStudentProfile } from '@/redux/Slices/studentSlice'
 
 import { uploadResume, getResume } from '@/redux/Sagas/requests/features'
 
-import photo from '../public/photoupload.png'
 import ChangePasswordModal from '@/components/Modal/changePassword'
 import { notificationTypes, openNotification } from '@/utils/notifications'
+import StudentInfo from '@/components/StudentInfo'
 
 export default function editStudentProfile() {
   const dispatch = useDispatch()
@@ -111,7 +107,7 @@ export default function editStudentProfile() {
         openNotification(notificationTypes.ERROR, 'Error getting resume');
       });
   };
-  
+
   return (
     <div className='min-h-screen bg-gray-200'>
       <DocHeader
@@ -216,110 +212,19 @@ export default function editStudentProfile() {
                 ? <div>
                   No data provided
                 </div>
-                : <div className='grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-8'>
-                  <div>
-                    <div className='grid grid-cols-1 md:grid-cols-3 gap-4 content-center'>
-                      <div className='pb-4 pl-2 md:pl-5 m-auto'>
-                        <Image src={photo} alt='students' />
-                        <div className='mt-6'>
-                          <Button
-                            btnText='Upload'
-                          />
-                        </div>
-                      </div>
-                      <div className='col-span-1 md:col-span-2 ml-0 md:ml-6'>
-                        <TextField
-                          label='User Name'
-                          placeholder='abc sharma'
-                          type='text'
-                          value={user !== null && Object.keys(user).length > 0 ? user.username : ''}
-                          disabled
-                        />
-                        <TextField
-                          label='Email ID'
-                          placeholder='TPO name'
-                          type='text'
-                          value={user !== null && Object.keys(user).length > 0 ? user.email : ''}
-                          disabled
-                        />
-                        <TextField
-                          label='Department'
-                          placeholder='CSE'
-                          type='text'
-                          value={profile.dept}
-                          disabled
-                        />
-                      </div>
-                    </div>
-                    <div className='mt-4 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-0 md:gap-4 2xl:gap-8'>
-                      <div className='col-span-1'>
-                        <TextField
-                          label='10th Standard Marks (in %)'
-                          placeholder='xyz.@gmail.com'
-                          type='text'
-                          value={profile.studentTenthMarks}
-                          disabled
-                        />
-                      </div>
-                      <div className='col-span-1'>
-                        <TextField
-                          label='12th Standard Marks (in %)'
-                          placeholder='9090909090'
-                          type='text'
-                          value={profile.studentTwelthMarks}
-                          disabled
-                        />
-                      </div>
-                      <div className='col-span-1'>
-                        <TextField
-                          label='UG CGPA (on a scale of 10)'
-                          placeholder='9090909090'
-                          type='text'
-                          value={profile.studentUGMarks}
-                          disabled
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className='mr-0 md:mr-4'>
-                    <TextField
-                      label='Gender'
-                      placeholder='Unisex'
-                      type='text'
-                      value={profile.gender}
-                      disabled
-                    />
-                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                      <TextField
-                        label='student ID'
-                        placeholder='ABCUG123'
-                        type='text'
-                        value={profile.studentId}
-                        disabled
-                      />
-                      <TextField
-                        label='Contact Number'
-                        placeholder='pes.edu'
-                        type='text'
-                        value={profile.contactNo}
-                        disabled
-                      />
-                    </div>
-                    <TextArea
-                      label='About the universities / colleges'
-                      placeholder='studentdescription'
-                      rows='6'
-                      disabled
-                      value={profile.studentDescription}
-                    />
-                    <div class='mb-6'>
-                      <Button
-                        btnText='Next'
-                        disabled
-                      />
-                    </div>
-                  </div>
-                </div>
+                :
+                <StudentInfo
+                  username={profile.username}
+                  email={profile.email}
+                  department={profile.dept}
+                  contactNo={profile.contactNo}
+                  studentTenthMarks={profile.studentTenthMarks}
+                  studentTwelthMarks={profile.studentTwelthMarks}
+                  studentDegreeMarks={profile.studentUGMarks}
+                  gender={profile.gender}
+                  studentID={profile.studentId}
+                  studentDescription={profile.studentDescription}
+                />
           }
           <div className='mt-12'>
             <p className='shadow-2xl p-5 text-center font-bold text-gray-500 text-2xl'>
