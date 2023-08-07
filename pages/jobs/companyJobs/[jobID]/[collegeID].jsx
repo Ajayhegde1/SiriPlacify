@@ -13,13 +13,10 @@ import DocHeader from '@/components/DocHeader'
 import StatusOfHire from '@/components/StatusOfHire'
 import Candidates from '@/components/Candidates'
 import UpdateStatusModal from '@/components/Modal/UpdateStatusModal'
-import SetPPTModal from '@/components/Modal/SetPPTModal'
-import SetTestLinkModal from '@/components/Modal/SetTestLinkModal'
-import SetInterviewModal from '@/components/Modal/SetInterviewModal'
 import LastRoundInterviewModal from '@/components/Modal/LastRoundInterviewModal'
 import DownloadApplicants from '@/components/DownloadApplicants'
 
-import { getCandidates, UpdateStatus, getJobData } from '@/redux/Sagas/requests/features'
+import { getCandidates, UpdateStatus } from '@/redux/Sagas/requests/features'
 
 import arrow from '@/public/arrow.png'
 
