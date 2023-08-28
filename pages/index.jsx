@@ -18,7 +18,10 @@ export default function Home () {
   const router = useRouter()
 
   useEffect(() => {
-    if (user.accType === '0'){
+    if (user === null){
+      router.push(routes.HOMEPAGE)
+    }
+    else if (user.accType === '0'){
       router.push(routes.TPODASHBOARD)
     }
     else if (user.accType === '1') {
