@@ -10,7 +10,7 @@ export const timeouts = {
 // Server Configuration
 // export const SERVER_BASE_URL = 'https://testapi.abhayasecure.com'
 // export const SERVER_BASE_URL = 'https://test.abhayasecure.com/api/v1'
-export const SERVER_BASE_URL = 'http://api.placify.io/'
+export const SERVER_BASE_URL = 'https://api.placify.io/'
 
 // Axios Configuration
 const axiosInstance = axios.create({
