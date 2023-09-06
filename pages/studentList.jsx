@@ -113,14 +113,14 @@ export default function UserList () {
         activePage={9}
       />
       <main class={`dashboard ${sidebarOpen ? 'active' : ''}`}>
-        <div className='min-h-screen pt-4 md:py-10 px-4 md:px-6 lg:p-10'>
+        <div className='min-h-screen pt-4 md:py-10 px-4 md:px-6 lg:p-6'>
           <div className='pb-4'>
             <h1 className='text-center md:text-left pt-6 md:pt-16 text-3xl md:text-4xl font-Heading font-bold text-black'>User Management</h1>
           </div>
           <div className='flex ml-auto mb-10 mr-2 gap-2'>
             <button
               onClick={handleExport}
-              className='h-16 md:h-14 ml-auto mr-2 gap-2 flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-2'
+              className='h-16 md:h-14 ml-auto mr-2 gap-2 flex hover:bg-customBlueFour rounded-lg text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-1'
             >
               <span className='flex my-auto'>
                 <Image
@@ -132,7 +132,7 @@ export default function UserList () {
               </span>
             </button>
             <button
-              className='mt-2 flex h-16 md:h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+              className='mt-2 flex h-16 md:h-10 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'
               onClick={() => router.push(routes.USERMANAGEMENT)}
             >
               Add User
@@ -147,7 +147,7 @@ export default function UserList () {
                 ? <div className='flex justify-center items-center'>
                   <h1 className='text-2xl font-Heading font-bold text-black'>No Students</h1>
                 </div>
-                : <div className='bg-white rounded-xl'>
+                : <div className='bg-white rounded-lg overflow-hiddden'>
                   <Candidates
                     students={students}
                     isStudentsList={true}

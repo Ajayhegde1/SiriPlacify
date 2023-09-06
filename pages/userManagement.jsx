@@ -273,7 +273,8 @@ export default function UserManagement() {
               value={username}
               onChangeHandler={e => setUsername(e.target.value)}
             />
-            <div className='mt-8'>
+            <div className=''>
+              <label className='font-semibold' >Type </label>
               <SingleSelectComponent
                 value={accType}
                 onChangeHandler={(e) => setAccType(e.target.value)}
@@ -289,7 +290,7 @@ export default function UserManagement() {
                 : departmentList.length === 0
                   ? <div />
                   : <div class='mt-2 mb-6'>
-                    <label class='block font-Poppins text-black text-md font-bold mb-2' for='username'>
+                    <label class='block font-semibold text-black text-md font-bold mb-1' for='username'>
                       Select Stream
                     </label>
                     <Select
@@ -306,7 +307,7 @@ export default function UserManagement() {
             }
             <div>
               <TextArea
-                label='student description'
+                label='Student description'
                 placeholder='Your message...'
                 rows='4'
                 value={userDescription}
@@ -329,7 +330,7 @@ export default function UserManagement() {
               value={studentID}
               onChangeHandler={(e) => setStudentID(e.target.value)}
             />
-            <div className='mt-8'>
+            <div className='mt-6'>
               <SingleSelectComponent
                 value={gender}
                 onChangeHandler={(e) => setGender(e.target.value)}
@@ -379,7 +380,7 @@ export default function UserManagement() {
           <div className='flex gap-6 mt-8 ml-2 md:ml-6'>
             <Button
               onClickHandler={handleUserAddition}
-              btnText='Done'
+              btnText='Add Student'
             />
             {
               isLoading &&

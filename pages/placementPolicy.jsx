@@ -88,8 +88,8 @@ export default function placementPolicy () {
       />
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-4 xl:gap-6 2xl:gap-12 content-center'>
         <div className='mt-4 py-4 md:py-12 pl-2 md:pl-6 xl:pl-8 ml-0 md:ml-4 xl:ml-6 mr-8 md:mr-10 xl:mr-12 2xl:mr-16'>
-          <h1 className='text-center md:text-left mb-10 ml-3 md:ml-6 mt-12 text-3xl md:text-4xl font-Heading font-medium text-black'>Placement Policy</h1>
-          <div className='ml-6'>
+          <h1 className='text-center md:text-left mb-10 ml-3 md:ml-6 mt-12 text-3xl md:text-4xl font-Heading font-medium text-black text-green-600'>Placement Policy</h1>
+          <div className='ml-6 '>
             <div className='mb-3 w-full md:w-1/2'>
               <TextField
                 label='Number of tiers'

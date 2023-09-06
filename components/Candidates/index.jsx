@@ -46,9 +46,9 @@ export default function Candidates ({
   }
 
   return (
-    <div className='overflow-auto h-96'>
-      <table className='table-auto overflow-scroll w-full mt-3 text-left'>
-        <thead>
+    <div className='overflow-auto min-h-screen rounded-md'>
+      <table className='table-auto overflow-scroll w-full text-left'>
+        <thead className='border-b-2 bg-gray-100'>
           {
             user === null
               ? <></>
@@ -56,16 +56,18 @@ export default function Candidates ({
                 ? <th />
                 : <></>
           }
-          <th className='px-6 py-4 text-gray-600'>Student ID</th>
-          <th className='px-6 py-4 text-gray-600'>Student Name</th>
-          <th className='px-6 py-4 text-gray-600'>Email</th>
-          <th className='px-6 py-4 text-gray-600'>Mobile</th>
-          <th className='px-6 py-4 text-gray-600'>Gender</th>
-          <th className='px-6 py-4 text-gray-600'>Stream</th>
-          <th className='px-6 py-4 text-gray-600'>Degree</th>
-          <th className='px-6 py-4 text-gray-600'>Class X%</th>
-          <th className='px-6 py-4 text-gray-600'>Class XII%</th>
-          <th className='px-6 py-4 text-gray-600'>CGPA (/10)</th>
+          <th className='px-6 py-2 text-sm font-semibold'>Student ID</th>
+          <th className='px-6 py-2 text-sm font-semibold'>Student Name</th>
+          <th className='px-6 py-2 text-sm font-semibold'>Email</th>
+          <th className='p-2 text-sm font-semibold'>Mobile</th>
+          <th className='px-6 py-2 text-sm font-semibold'>Gender</th>
+          <th className='px-6 py-2 text-sm font-semibold'>Stream</th>
+          <th className='px-6 py-2 text-sm font-semibold'>Degree</th>
+          <th className='px-6 py-2 text-sm font-semibold'>Class X%</th>
+          <th className='px-6 py-2 text-sm font-semibold'>Class XII%</th>
+          <th className='px-6 py-2 text-sm font-semibold'>CGPA (/10)</th>
+          <th className='px-6 py-2 text-sm font-semibold'>View Profile</th>
+          <th className='px-6 py-2 text-sm font-semibold'>Delete Action</th>
           {
             user === null
               ? <></>
@@ -85,7 +87,7 @@ export default function Candidates ({
                   No students found
                 </div>
                 : students.map((student, index) =>
-                  <tr className='cursor-pointer' key={index}>
+                  <tr className='cursor-pointer hover:bg-gray-100 font-semibold border-b-2' key={index}>
                     {
                       user === null
                         ? <></>
@@ -105,30 +107,18 @@ export default function Candidates ({
                           : 
                           <></>
                     }
-                    <td className='whitespace-nowrap px-6 py-4'>{student.studentId}</td>
-                    <td className='whitespace-nowrap px-6 py-4'>{student.username}</td>
-                    <td className='whitespace-nowrap px-6 py-4'>{student.email}</td>
-                    <td className='whitespace-nowrap px-6 py-4'>{student.contactNo}</td>
-                    <td className='whitespace-nowrap px-6 py-4'>{student.gender}</td>
-                    <td className='whitespace-nowrap px-6 py-4'>{student.stream}</td>
-                    <td className='whitespace-nowrap px-6 py-4'>{student.degree}</td>
-                    <td className='whitespace-nowrap px-6 py-4'>{student.tenthMarks}</td>
-                    <td className='whitespace-nowrap px-6 py-4'>{student.twelthMarks}</td>
-                    <td className='whitespace-nowrap px-6 py-4'>{student.studentUGMarks}</td>
-                    {
-                      user !== null
-                        ? user.accType === '2' && !isStudentsList
-                          ? <td className='whitespace-nowrap px-6 py-4'>
-                            <button
-                              onClick={() => router.push(`/jobs/companyJobs/${jobID}/${collegeID}/candidates/${student.uid}`)}
-                              className='font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded'
-                            >
-                              View Profile
-                            </button>
-                          </td>
-                          : <></>
-                        : <></>
-                    }
+                    <td className='whitespace-nowrap px-6 py-2 text-sm '>{student.studentId}</td>
+                    <td className='whitespace-nowrap px-6 py-2 text-sm capitalize hover:underline'
+                    >{student.username}</td>
+                    <td className='whitespace-nowrap px-6 py-2 text-sm '>{student.email}</td>
+                    <td className='whitespace-nowrap p-2 text-sm '>{student.contactNo}</td>
+                    <td className='whitespace-nowrap px-6 py-2 text-sm '>{student.gender}</td>
+                    <td className='whitespace-nowrap px-6 py-2 text-sm '>{student.stream}</td>
+                    <td className='whitespace-nowrap px-6 py-2 text-sm '>{student.degree}</td>
+                    <td className='whitespace-nowrap px-6 py-2 text-sm '>{student.tenthMarks}</td>
+                    <td className='whitespace-nowrap px-6 py-2 text-sm '>{student.twelthMarks}</td>
+                    <td className='whitespace-nowrap px-6 py-2 text-sm '>{student.studentUGMarks}</td>
+                    
                     {
                       user !== null
                         ? user.accType === '0'
@@ -137,7 +127,7 @@ export default function Candidates ({
                           <td className='whitespace-nowrap px-6 py-4'>
                             <button
                               onClick={() => router.push(`/students/${student.uid}`)}
-                              className='font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded'
+                              className='bg-blue-500 hover:bg-blue-700 text-white font-semibold text-sm px-4 py-2 rounded'
                             >
                               View Profile
                             </button>
@@ -160,7 +150,7 @@ export default function Candidates ({
                           ? <td className='whitespace-nowrap px-6 py-4'>
                             <button
                               onClick={() => deleteStudentHandler(student.uid)}
-                              className='font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded'
+                              className='font-semibold text-sm bg-red-500 hover:bg-red-700 text-white font-bold px-4 py-2 rounded'
                             >
                               Delete Student
                             </button>

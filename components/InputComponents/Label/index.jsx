@@ -2,7 +2,7 @@ export default function Label ({
   label
 }) {
   return (
-    <label className='block font-Heading font-medium text-black mb-2'>
+    <label className='block whitespace-nowrap mb-1 font-semibold text-black'>
       {label}
     </label>
   )

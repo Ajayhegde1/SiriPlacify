@@ -61,6 +61,8 @@ export default function CollegeProfile () {
     e.preventDefault()
     setLoading(true)
     dispatch(signIn({ email, password }))
+    setLoading(false)
+
   }
 
   return (
@@ -73,7 +75,7 @@ export default function CollegeProfile () {
           <Image className='h-full w-full' src={student} alt='students' />
         </div>
         <div className='mt-4 py-4 md:py-12 ml-0 md:ml-4 xl:ml-6 mr-8 md:mr-10 xl:mr-12 2xl:mr-16'>
-          <h1 className='text-center md:text-left mb-10 mt-12 text-3xl md:text-4xl font-Heading font-medium text-black'>Login</h1>
+          <h1 className='text-center md:text-left mb-10 mt-12 text-3xl md:text-4xl font-Heading font-semibold text-green-800'>Login</h1>
           <form onSubmit={handleLogin}>
             <TextField
               label='Email ID'
@@ -91,18 +93,15 @@ export default function CollegeProfile () {
               onChangeHandler={(e) => setPassword(e.target.value)}
               required
             />
-            <div className='flex gap-2'>
-              <Button
-                type='submit'
-                onClickHandler={handleLogin}
-                disabled={isBtnDisabled}
-                btnText={btnText}
-              />
-              <div className='mt-1 ml-4'>
+            <div className='flex gap-2'>              
                 {
-                    isLoading && <Spin size='large' />
-                }
-              </div>
+                    isLoading ? <Spin size='large' />
+              :<Button
+              type='submit'
+              onClickHandler={handleLogin}
+              disabled={isBtnDisabled}
+              btnText={btnText}
+            />  }
             </div>
           </form>
           <div className='cursor-pointer mt-6 text-left'>

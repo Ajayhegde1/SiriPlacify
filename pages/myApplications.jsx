@@ -45,16 +45,16 @@ export default function myApplications () {
         activePage={6}
       />
       <main class={`dashboard ${sidebarOpen ? 'active' : ''}`}>
-        <h1 className='text-center md:text-left pt-6 mb-12 ml-2 md:ml-20 pt-6 md:pt-16 text-3xl md:text-5xl font-Heading font-bold text-black'>My Applications</h1>
-        <div className='pt-5 pl-20 pr-12 pb-10 rounded-xl mr-4 md:mr-16 overflow-auto'>
-          <table className='pb-12 table-auto overflow-scroll w-full mt-3 text-left'>
-            <thead className='bg-white rounded-xl border-b-8'>
-              <th className='px-8 py-4 text-gray-600'>Company Name</th>
-              <th className='px-8 py-4 text-gray-600'>Job Title</th>
-              <th className='px-8 py-4 text-gray-600'>Status</th>
+        <h1 className='text-center md:text-left pt-6 mb-6 md:ml-12 pt-6 md:pt-16 text-3xl md:text-5xl  font-semibold text-green-800'>My Applications</h1>
+        <div className='pt-5 px-12 rounded-xl mr-4 md:mr-16 overflow-auto'>
+          <table className='pb-12 table-auto  rounded overflow-scroll w-full mt-3 text-left'>
+            <thead className='rounded-xl border border-b-1 bg-gray-100 '>
+              <th className='px-8 py-4 text-black'>Company Name</th>
+              <th className='px-8 py-4 text-black'>Job Title</th>
+              <th className='px-8 py-4 text-black'>Status</th>
               <th></th>
             </thead>
-            <tbody className='bg-white border-t-8 rounded-xl'>
+            <tbody className='bg-white  rounded-xl'>
               {
                 jobApplication === null
                   ? <div className='mt-4'>
@@ -65,14 +65,14 @@ export default function myApplications () {
                       No Applications found
                     </div>
                     : jobApplication.map((job, index) =>
-                      <tr key={index} className='mt-10 border-b-2 border-gray-200'>
-                        <td className='font-medium whitespace-nowrap px-8 py-4'>
+                      <tr key={index} className='mt-10 border-b-2 border-gray-200 hover:bg-gray-100 transiiton ease-in-out  '>
+                        <td className='font-medium whitespace-nowrap px-8 py-4 capitalize'>
                           {job.companyName}
                         </td>
-                        <td className='font-medium whitespace-nowrap px-8 py-4'>
+                        <td className='font-medium whitespace-nowrap px-8 py-4 capitalize'>
                           {job.jobTitle}
                         </td>
-                        <td className='font-bold whitespace-nowrap px-8 py-4'>
+                        <td className='font-bold whitespace-nowrap px-8 py-4 text-sm '>
                           {job.jobStatus === '0'
                             ? <span className='text-cyan-600'>Applied</span>
                             : job.jobStatus === '1'
@@ -90,7 +90,7 @@ export default function myApplications () {
                         <td>
                           <button
                             onClick={() => handleCustomPage(job.collegeJobMappingId)}
-                            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md'
+                            className='text-green-600 font-semibold py-2 px-4 drop-shadow hover:drop-shadow-lg text-green-700 text-sm '
                           >
                             View Application
                           </button>

@@ -13,7 +13,7 @@ export default function StonksUpComponent({
     stonksType = 2
 }) {
     return (
-        <div className={stonksType < 6 ? 'mb-3 md:mb-6 py-2 bg-white rounded-xl' : 'mb-3 md:mb-6 py-2 h-32 bg-white rounded-xl'}>
+        <div className={stonksType < 6 ? 'mb-3 md:mb-6 py-2 bg-white rounded-xl shadow ' : 'mb-3 md:mb-6 py-2 h-32 bg-white rounded-xl shadow'}>
             <div className={stonksType < 6 ? "" : "grid grid-cols-7 gap-0"}>
                 <div className='col-span-4 flex flex-col'>
                     <h1 className='ml-6 font-DMSANS text-sm text-gray-600 text-left font-medium my-2'>

@@ -30,7 +30,7 @@ const Navbar = () => {
     <div className={styles.navbar}>
       <header className={styles.container}>
         <div className={styles.name}>
-          <Image className={styles.logo} src={logo} alt='logo' />
+          <Image className={styles.logo}  src={logo} alt='logo' />
         </div>
         <div className={styles.menuIcon}>
           <AiOutlineMenu onClick={handleToggleMenu} />

@@ -152,13 +152,13 @@ export default function editStudentProfile() {
                         />
                         <button
                           onClick={handleResumeUpload}
-                          className='flex text-base md:text-lg h-16 md:h-10 ml-0 md:ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 md:mt-12 rounded-xl py-2 px-2 md:px-4'
+                          className=' flex justify-center items-center h-16 md:h-10 ml-0 md:ml-auto bg-green-500 hover:bg-green-700 text-white font-semibold mt-2 md:mt-12 rounded text-sm py-2 px-6'
                         >
                           Update Resume
                         </button>
                         <button
                           onClick={() => setShowModal(true)}
-                          className='flex text-md md:text-lg h-16 md:h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 md:mt-12 rounded-xl py-2 px-2 md:px-4'
+                          className='flex justify-center items-center h-16 md:h-10 bg-green-500 hover:bg-green-700 text-white font-semibold mt-2 md:mt-12 rounded text-sm py-2 px-6 '
                         >
                           <span className='mx-auto'>
                             Change Password
@@ -185,7 +185,7 @@ export default function editStudentProfile() {
                         />
                         <button
                           onClick={handleResumeUpload}
-                          className='flex text-md md:text-lg h-16 md:h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 md:mt-12 rounded-xl py-2 px-auto'
+                          className=' flex justify-center items-center h-16 md:h-10 ml-0 md:ml-auto bg-green-500 hover:bg-green-700 text-white font-semibold mt-2 md:mt-12 rounded text-sm py-2 px-6'
                         >
                           <span className='mx-auto'>
                             Update Resume
@@ -193,7 +193,7 @@ export default function editStudentProfile() {
                         </button>
                         <button
                           onClick={() => setShowModal(true)}
-                          className='flex text-md md:text-lg h-16 md:h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 md:mt-12 rounded-xl py-2 px-2 md:px-4'
+                          className='flex justify-center items-center h-16 md:h-10 bg-green-500 hover:bg-green-700 text-white font-semibold mt-2 md:mt-12 rounded text-sm py-2 px-6 '
                         >
                           <span className='mx-auto'>
                             Change Password

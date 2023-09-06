@@ -144,7 +144,7 @@ export default function EditPlacementPolicy() {
               </div>
               <div>
                 <div className='pl-2 md:pl-6 xl:pl-8 ml-0 md:ml-4 xl:ml-6 mr-8 md:mr-10 xl:mr-12'>
-                  <div className='ml-6'>
+                  <div >
                     {
                       placementPolicy === null
                         ? <div>
@@ -155,7 +155,7 @@ export default function EditPlacementPolicy() {
                             No Placement Policy Found
                           </div>
                           : <>
-                            <div className='mb-3 w-full md:w-1/2'>
+                            <div className='mb-3 w-full'>
                               <TextField
                                 label='Number of tiers'
                                 placeholder='03'
@@ -175,7 +175,7 @@ export default function EditPlacementPolicy() {
                                 disabled={user === null ? true : user.accType === "0" ? false : true}
                               />
                             </div>
-                            <div className='grid grid-cols-1 md:grid-cols-7 gap-4 mb-6'>
+                            <div className='grid grid-cols-1 md:grid-cols-10 gap-4 mb-6'>
                               {
                                 placementPolicyList === null
                                   ? (
@@ -188,7 +188,7 @@ export default function EditPlacementPolicy() {
                                     : (
                                       placementPolicyList.map((item, index) => (
                                         <Fragment key={index}>
-                                          <div className='col-span-3'>
+                                          <div className='col-span-4'>
                                             <TextField
                                               label={`Minimum CTC of ${item.name} (in Rs.)`}
                                               placeholder='75,0000.00'
@@ -199,7 +199,7 @@ export default function EditPlacementPolicy() {
                                               disabled={user === null ? true : user.accType === "0" ? false : true}
                                             />
                                           </div>
-                                          <div className='col-span-3'>
+                                          <div className='col-span-4'>
                                             <TextField
                                               label={`Maximum CTC of ${item.name} (in Rs.)`}
                                               placeholder='85,0000.00'
@@ -217,12 +217,12 @@ export default function EditPlacementPolicy() {
                                               :
                                               user.accType === "0"
                                                 ?
-                                                <div className='flex col-span-1'>
+                                                <div className='flex justify-end col-span-2'>
                                                   <button
-                                                    className='my-auto'
+                                                    className='my-auto whitespace-nowrap bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-sm'
                                                     onClick={() => handleDeleteTier(index)}
                                                   >
-                                                    <CloseCircleOutlined style={{ fontSize: '24px' }} />
+                                                    Clear Tier
                                                   </button>
                                                 </div>
                                                 :
@@ -245,7 +245,7 @@ export default function EditPlacementPolicy() {
                           ?
                           <>
                             <button
-                              className='flex ml-auto h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-lg py-2 px-4'
+                              className='flex ml-auto h-10 text-center bg-green-500 hover:bg-green-700 text-white font-bold rounded text-sm py-2 px-6'
                               onClick={() => setShowTierModal(true)}
                             >
                               Add Tier

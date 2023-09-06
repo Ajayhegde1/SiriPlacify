@@ -50,7 +50,7 @@ export default function PlacedGraphComponents({
   };
 
   return (
-    <div className='mt-6 bg-blue-200 px-4 pt-4 rounded-lg flex flex-col'>
+    <div className='mt-6 bg-blue-200 px-4 pt-4 rounded-lg flex flex-col shadow' >
       <h1 className="text-left pt-2 pl-2 text-3xl font-bold text-black">Placement percentage</h1>
       {
         noOfPlacedStudents === 0 && noOfStudents === 0 ? (

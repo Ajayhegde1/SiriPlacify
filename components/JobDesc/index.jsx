@@ -172,7 +172,7 @@ export default function JobDesc({
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Title</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}`}
               type='text'
               value={jobTitle}
               onChange={(e) => setJobTitle(e.target.value)}
@@ -182,7 +182,7 @@ export default function JobDesc({
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Company Name</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}`}
               type='text'
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
@@ -192,7 +192,7 @@ export default function JobDesc({
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Location</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}`}
               type='text'
               value={jobLocation}
               onChange={(e) => setJobLocation(e.target.value)}
@@ -202,7 +202,7 @@ export default function JobDesc({
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Position type</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}`}
               type='text'
               value={jobPosition}
               onChange={(e) => setJobPosition(e.target.value)}
@@ -223,32 +223,32 @@ export default function JobDesc({
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>CTC (in Rs.)</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
-              type='text'
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
+}`}              type='text'
               value={jobCTC}
               onChange={(e) => setJobCTC(e.target.value)}
               disabled={!(isEdit)}
             />
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Base Pay (in Rs.)</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
-              type='text'
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
+}` }             type='text'
               value={basePay}
               onChange={(e) => setBasePay(e.target.value)}
               disabled={!(isEdit)}
             />
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Variable Pay (in Rs.)</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
-              type='text'
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
+}`  }            type='text'
               value={variablePay}
               onChange={(e) => setVariablePay(e.target.value)}
               disabled={!(isEdit)}
             />
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>RSU (in Rs.)</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
-              type='text'
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 pb-5'}
+}` }             type='text'
               value={RSU}
               onChange={(e) => setRSU(e.target.value)}
               disabled={!(isEdit)}
@@ -258,7 +258,7 @@ export default function JobDesc({
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Job description</div>
             <div className='col-span-1 lg:col-span-5'>
               <textarea
-                className={isEdit ? 'my-auto w-full border-2 border-gray-300 text-gray-500 font-Heading p-4' : 'my-auto w-full text-gray-500 font-Heading pb-2'}
+                className={`p-2 text-gray-800 rounded  ${isEdit ? 'my-auto w-full border-2 border-gray-300 text-gray-500 font-Heading p-4' : 'my-auto w-full text-gray-500 font-Heading pb-2'}`}
                 type='text'
                 value={jobDesc}
                 onChange={(e) => setJobDesc(e.target.value)}
@@ -299,7 +299,7 @@ export default function JobDesc({
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Bond / Service agreement details if any</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}`}
               type='text'
               value={jobBond}
               onChange={(e) => setJobBond(e.target.value)}
@@ -310,7 +310,7 @@ export default function JobDesc({
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>Degree</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}`}
               type='text'
               value={jobCriteria}
               onChange={(e) => setJobCriteria(e.target.value)}
@@ -320,7 +320,7 @@ export default function JobDesc({
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>10th Marks (in %)</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}`}
               type='text'
               value={tenthMarks}
               onChange={(e) => setTenthMarks(e.target.value)}
@@ -330,7 +330,7 @@ export default function JobDesc({
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>12th Marks (in %)</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}`}
               type='text'
               value={twelfthMarks}
               onChange={(e) => setTwelfthMarks(e.target.value)}
@@ -340,7 +340,7 @@ export default function JobDesc({
           <div class='py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200'>
             <div className='text-gray-700 font-bold font-Heading col-span-1 my-auto'>UG Marks (/10)</div>
             <input
-              className={isEdit ? 'border-2 border-gray-300 text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}
+              className={ ` p-2 rounded text-gray-600 ${isEdit ? 'border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4' : 'text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4'}`}
               type='text'
               value={UGCgpa}
               onChange={(e) => setUGCgpa(e.target.value)}

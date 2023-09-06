@@ -324,7 +324,7 @@ export default function AddJob() {
               />
               <button
                 onClick={handleJDUpload}
-                className='flex text-md md:text-lg h-16 md:h-10 bg-green-500 hover:bg-green-700 text-white font-bold rounded-xl py-2 px-4'
+                className='flex text-md h-16 md:h-10 bg-green-500 hover:bg-green-700 text-white font-semibold rounded shadow py-2 px-4'
               >
                 <span className='mx-auto'>
                   Upload Job Description

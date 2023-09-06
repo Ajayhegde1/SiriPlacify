@@ -3,7 +3,7 @@ export default function JobStatus ({
 }) {
   return (
     <div className='mt-2'>
-      <span className='bg-black py-1 px-2 md:px-4 text-white rounded-2xl font-bold'>{jobStatus}</span>
+      <span className='bg-green-800 py-2 text-sm px-2 md:px-6 text-white rounded font-semibold'>{jobStatus}</span>
     </div>
   )
 }

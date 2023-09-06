@@ -66,12 +66,12 @@ const Sidebar = ({
                   <Tooltip title='Notifications' placement='right'>
                     <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
                       <a className='menu-link' href='/notifications'>
-                        <div className={sidebarOpen ? 'ml-3' : 'ml-0'}>
-                          <div style={{ position: 'relative', display: 'inline-block' }}>
+                        <div className={sidebarOpen ? 'ml-3' : 'm-0'}>
+                          <div style={{ position: 'relative', display: 'inline-block', }}>
                             <Image
                               src={notificationRed}
                               alt='notification'
-                              className={sidebarOpen ? 'mt-1 ml-3' : 'ml-0'}
+                              className={sidebarOpen ? 'mt-1' : 'ml-0'}
                             />
                             {
                               notifications !== null && notifications.length > 0 && (
@@ -184,35 +184,35 @@ const Sidebar = ({
                 : user.accType === '1'
                   ? <ul className='menu-list'>
                     <Tooltip title='Notifications' placement='right'>
-                      <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
-                        <a className='menu-link' href='/notifications'>
-                          <div className={sidebarOpen ? 'ml-3' : 'ml-0'}>
-                            <div style={{ position: 'relative', display: 'inline-block' }}>
-                              <Image
-                                src={notificationRed}
-                                alt='notification'
-                                className={sidebarOpen ? 'mt-1 ml-3' : 'ml-0'}
-                              />
-                              {
-                                notifications !== null && notifications.length > 0 && (
-                                  <div
-                                    style={{
-                                      position: 'absolute',
-                                      top: '-2px',
-                                      right: '0px',
-                                      width: '7px',
-                                      height: '7px',
-                                      backgroundColor: 'red',
-                                      borderRadius: '50%',
-                                    }}
-                                  />
-                                )}
-                            </div>
+                    <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
+                      <a className='menu-link' href='/notifications'>
+                        <div className={sidebarOpen ? 'ml-3' : 'm-0'}>
+                          <div style={{ position: 'relative', display: 'inline-block', }}>
+                            <Image
+                              src={notificationRed}
+                              alt='notification'
+                              className={sidebarOpen ? 'mt-1' : 'ml-0'}
+                            />
+                            {
+                              notifications !== null && notifications.length > 0 && (
+                                <div
+                                  style={{
+                                    position: 'absolute',
+                                    top: '-2px',
+                                    right: '0px',
+                                    width: '7px',
+                                    height: '7px',
+                                    backgroundColor: 'red',
+                                    borderRadius: '50%',
+                                  }}
+                                />
+                              )}
                           </div>
-                          <span className='menu-link-text'>Notifications</span>
-                        </a>
-                      </li>
-                    </Tooltip>
+                        </div>
+                        <span className='menu-link-text'>Notifications</span>
+                      </a>
+                    </li>
+                  </Tooltip>
                     <Tooltip title='Jobs' placement='right'>
                       <li className={`menu-item ${parseInt(activePage) === 2 ? 'current' : ''}`}>
                         <a className='menu-link' href='/jobs'>
@@ -279,35 +279,35 @@ const Sidebar = ({
                   </ul>
                   : <ul className='menu-list'>
                     <Tooltip title='Notifications' placement='right'>
-                      <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
-                        <a className='menu-link' href='/notifications'>
-                          <div className={sidebarOpen ? 'ml-3' : 'ml-0'}>
-                            <div style={{ position: 'relative', display: 'inline-block' }}>
-                              <Image
-                                src={notificationRed}
-                                alt='notification'
-                                className={sidebarOpen ? 'mt-1 ml-3' : 'ml-0'}
-                              />
-                              {
-                                notifications !== null && notifications.length > 0 && (
-                                  <div
-                                    style={{
-                                      position: 'absolute',
-                                      top: '-2px',
-                                      right: '0px',
-                                      width: '7px',
-                                      height: '7px',
-                                      backgroundColor: 'red',
-                                      borderRadius: '50%',
-                                    }}
-                                  />
-                                )}
-                            </div>
+                    <li className={`menu-item ${parseInt(activePage) == 12 ? 'current' : ''}`}>
+                      <a className='menu-link' href='/notifications'>
+                        <div className={sidebarOpen ? 'ml-3' : 'm-0'}>
+                          <div style={{ position: 'relative', display: 'inline-block', }}>
+                            <Image
+                              src={notificationRed}
+                              alt='notification'
+                              className={sidebarOpen ? 'mt-1' : 'ml-0'}
+                            />
+                            {
+                              notifications !== null && notifications.length > 0 && (
+                                <div
+                                  style={{
+                                    position: 'absolute',
+                                    top: '-2px',
+                                    right: '0px',
+                                    width: '7px',
+                                    height: '7px',
+                                    backgroundColor: 'red',
+                                    borderRadius: '50%',
+                                  }}
+                                />
+                              )}
                           </div>
-                          <span className='menu-link-text'>Notifications</span>
-                        </a>
-                      </li>
-                    </Tooltip>
+                        </div>
+                        <span className='menu-link-text'>Notifications</span>
+                      </a>
+                    </li>
+                  </Tooltip>
                     <Tooltip title='Dashboard' placement='right'>
                       <li className={`menu-item ${parseInt(activePage) == 1 ? 'current' : ''}`}>
                         <a className='menu-link' href='/dashboard/Company'>

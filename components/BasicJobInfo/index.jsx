@@ -25,7 +25,7 @@ export default function BasicJobInfo({
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
-  const [isApplied, setIsApplied] = useState(false);
+  const [isApplied, setIsApplied] = useState(null);
   const [message, setMessage] = useState('');
   const [isHired, setIsHired] = useState(false);
   const user = useSelector(state => state.user);
@@ -141,6 +141,11 @@ export default function BasicJobInfo({
   };
 
   const renderStudentActions = () => {
+    if(isApplied === null){
+      return (
+        <div className='hidden md:block' />
+      );
+    }
     if (!isClosedStudent) {
       if (isApplied) {
         if (message === 'Job application status checked successfully' && new Date().getTime() < date.getTime() && !isHired) {

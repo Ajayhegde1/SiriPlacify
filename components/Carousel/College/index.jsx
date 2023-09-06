@@ -11,7 +11,7 @@ export default function College () {
           <Image
             src={photo2}
             alt='photo2'
-            className='h-12 w-12 mb-4'
+            className='h-12 w-16 mb-4'
           />
           <h3 className='text-left text-xl font-Heading font-bold text-green-800 mb-4'>Zero errors and minimized costs</h3>
           <p className='text-left text-base font-SubHeading font-medium text-black'>Automating the process from end-to-end ensures accuracy, eliminating errors, while reducing costs associated with manual handling</p>
@@ -20,7 +20,7 @@ export default function College () {
           <Image
             src={photo2}
             alt='photo2'
-            className='h-12 w-12 mb-4'
+            className='h-12 w-16 mb-4'
           />
           <h3 className='text-left text-xl font-Heading font-bold text-green-800 mb-4'>Effortless authentication of student details</h3>
           <p className='text-left text-base font-SubHeading font-medium text-black'>Eliminate manual effort of authenticating student information and ensure reliable and accurate data by allowing the students to apply to only those jobs they are eligible to</p>
@@ -29,7 +29,7 @@ export default function College () {
           <Image
             src={photo2}
             alt='photo2'
-            className='h-12 w-12 mb-4'
+            className='h-12 w-16 mb-4'
           />
           <h3 className='text-left text-xl font-Heading font-bold text-green-800 mb-4'>Ease student application tracking</h3>
           <p className='text-left text-base font-SubHeading font-medium text-black'>Easily review and track the status of each student application to the various corporates</p>
@@ -38,7 +38,7 @@ export default function College () {
           <Image
             src={photo2}
             alt='photo2'
-            className='h-12 w-12 mb-4'
+            className='h-12 w-16 mb-4'
           />
           <h3 className='text-left text-xl font-Heading font-bold text-green-800 mb-4'>Expert Sessions</h3>
           <p className='text-left text-base font-SubHeading font-medium text-black'>Sessions by experts from various domains to provide a comprehensive understanding of campus placements, career advice and industry insights </p>
@@ -47,7 +47,7 @@ export default function College () {
           <Image
             src={photo2}
             alt='photo2'
-            className='h-12 w-12 mb-4'
+            className='h-12 w-16 mb-4'
           />
           <h3 className='text-left text-xl font-Heading font-bold text-green-800 mb-4'>Placement Statistics & Insights</h3>
           <p className='text-left text-base font-SubHeading font-medium text-black'>Real-time placement statistics generated dynamically, offering valuable insights to the universities on personalized dashboard</p>
@@ -56,7 +56,7 @@ export default function College () {
           <Image
             src={photo2}
             alt='photo2'
-            className='h-12 w-12 mb-4'
+            className='h-12 w-16 mb-4'
           />
           <h3 className='text-left text-xl font-Heading font-bold text-green-800 mb-4'>Inclusion of placement policy</h3>
           <p className='text-left text-base font-SubHeading font-medium text-black'>Placement policy of the institution is incorporated to ensure fairness, transparency and equal opportunities for all students</p>
