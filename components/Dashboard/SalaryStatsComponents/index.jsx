@@ -32,7 +32,7 @@ export default function SalaryStatsComponents() {
     return (
     <div className="mt-4 mb-6 p-4 bg-customOrange rounded-lg">
     <h1 className="text-left pt-2 text-lg font-semibold text-black mb-4">Salary package offered</h1>
-    {salaryStats === null || Object.keys(salaryStats).length === 0 ? (
+    {salaryStats !== null || Object?.keys(salaryStats).length === 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
             {Array.from({ length: 3 }).map((_, index) => (
                 <div key={index} className={`flex gap-4 border-r-${index === 1 ? '0' : '2'} md:border-r-2 border-black`}>
