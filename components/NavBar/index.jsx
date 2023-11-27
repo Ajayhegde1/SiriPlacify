@@ -1,36 +1,36 @@
-import { useRef, useState } from 'react'
-import styles from '../../styles/navbar.module.css'
-import Image from 'next/image'
+import { useRef, useState } from "react";
+import styles from "../../styles/navbar.module.css";
+import Image from "next/image";
 
 // Constants
-import { signedOutNavLinks } from '@/constants/navbar'
-import logo from '../../public/logo.png'
+import { signedOutNavLinks } from "@/constants/navbar";
+import logo from "../../public/logo.png";
 
 // Components
-import { AiOutlineMenu, AiFillCloseCircle } from 'react-icons/ai'
+import { AiOutlineMenu, AiFillCloseCircle } from "react-icons/ai";
 
 const Navbar = () => {
   // objects
-  const navContainerREF = useRef(null)
+  const navContainerREF = useRef(null);
 
   // states
-  const [showMenu, setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(false);
 
   const handleToggleMenu = () => {
     if (showMenu) {
-      navContainerREF.current.style.right = '-100vw'
+      navContainerREF.current.style.right = "-100vw";
     } else {
-      navContainerREF.current.style.right = '0'
+      navContainerREF.current.style.right = "0";
     }
 
-    setShowMenu(!showMenu)
-  }
+    setShowMenu(!showMenu);
+  };
 
   return (
     <div className={styles.navbar}>
       <header className={styles.container}>
         <div className={styles.name}>
-          <Image className={styles.logo}  src={logo} alt='logo' />
+          <Image className={styles.logo} src={logo} alt="logo" />
         </div>
         <div className={styles.menuIcon}>
           <AiOutlineMenu onClick={handleToggleMenu} />
@@ -50,13 +50,17 @@ const Navbar = () => {
                 {link.name}
               </a>
             ))}
-            <a href='/sign-in' className={styles.btn1}>Sign In</a>
-            <a className={styles.btn}>Book a Demo</a>
+            <a href="/sign-in" className={styles.btn1}>
+              Sign In
+            </a>
+            <a href="#contact" className={styles.btn}>
+              Book a Demo
+            </a>
           </div>
         </nav>
       </header>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
