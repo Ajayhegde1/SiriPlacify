@@ -5,6 +5,7 @@ import {
   FacebookOutlined,
   TwitterOutlined,
   InstagramOutlined,
+  MailOutlined,
 } from "@ant-design/icons";
 
 export default function FooterSection() {
@@ -15,14 +16,26 @@ export default function FooterSection() {
           <Image src={logo} alt="logo" />
         </div>
         <div className="flex items-center mb-4 sm:mb-0">
-          <a href="#" className="text-black mr-4 lg:mr-8">
+          <a
+            href="https://www.facebook.com/PlacifyPlacements"
+            className="text-black mr-4 lg:mr-8"
+          >
             <FacebookOutlined style={{ fontSize: "24px" }} />
           </a>
-          <a href="#" className="text-black mr-4 lg:mr-8">
+          <a
+            href="https://twitter.com//_placify/"
+            className="text-black mr-4 lg:mr-8"
+          >
             <TwitterOutlined style={{ fontSize: "24px" }} />
           </a>
-          <a href="#" className="text-black">
+          <a
+            href="https://www.instagram.com/_placify_/"
+            className="text-black mr-4 lg:mr-8"
+          >
             <InstagramOutlined style={{ fontSize: "24px" }} />
+          </a>
+          <a href="#contact" className="text-black">
+            <MailOutlined style={{ fontSize: "24px" }} />
           </a>
         </div>
         <div class="font-Heading font-bold flex items-center">
