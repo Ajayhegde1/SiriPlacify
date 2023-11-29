@@ -4,6 +4,7 @@ import React from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { Chart } from "chart.js";
+
 export default function SectorWisePlacementGraph({ chartData, sector, count }) {
   const data = {
     labels: sector,
