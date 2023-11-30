@@ -28,9 +28,6 @@ export function BranchWiseStatistics() {
           label="Select Year"
           onChange={handleChange}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
           <MenuItem value={10}>2023</MenuItem>
           <MenuItem value={20}>2022</MenuItem>
           <MenuItem value={30}>2021</MenuItem>
