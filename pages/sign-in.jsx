@@ -3,7 +3,8 @@ import student from "../public/students.png";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import Modal from "@mui/material/Modal";
+import React from "react";
 import DocHeader from "@/components/DocHeader";
 import TextField from "@/components/InputComponents/TextField";
 import Button from "@/components/Buttons";
@@ -14,9 +15,29 @@ import { useRouter } from "next/router";
 import { Spin } from "antd";
 import { notificationTypes, openNotification } from "@/utils/notifications";
 import { routes } from "@/constants/routes";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
+import photo1 from "@/public/chintu.png";
+import styles from "@/components/ContactSection/helper.module.css";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 export default function CollegeProfile() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -112,13 +133,108 @@ export default function CollegeProfile() {
             <p className="font-bold text-center md:text-left text-sm md:text-base font-Body text-black">
               New to Placify?
             </p>
-            <Link href="">
-              <div className="mt-5 text-center bg-customLightBlue p-5 rounded-lg hover:bg-blue-100">
+
+            <div className="mt-5 h-[60px] text-center bg-customLightBlue rounded-lg hover:bg-blue-100">
+              <button
+                onClick={handleOpen}
+                className="h-full w-full text-blue-400 text-blue font-bold font-heading"
+              >
+                Register for demo
+              </button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <div>
+                    <h1 className="text-center pt-2 mb-6 text-2xl lg:text-3xl 2xl:text-5xl font-Heading font-semibold drop-shadow underline text-green-800">
+                      Contact Us
+                    </h1>
+                    <div className="mx-auto flex flex-col gap-3">
+                      <div>
+                        <label className="block font-medium mb-2 text-base font-SubHeading font-medium text-black">
+                          Name
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Name"
+                          className="w-full h-12 rounded-md border-2 focus:outline-green-800 mb-2 px-4"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-medium mb-2 text-base font-SubHeading font-medium text-black">
+                          Designation:
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Designation"
+                          className="w-full h-12 rounded-md border-2 focus:outline-green-800 mb-2 px-4"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block font-medium mb-2 text-base font-SubHeading font-medium text-black">
+                          E-mail:
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Email"
+                          className="w-full h-12 rounded-md border-2 focus:outline-green-800 mb-2 px-4"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-medium mb-2 text-base font-SubHeading font-medium text-black">
+                          Phone No:
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Phone"
+                          className="w-full h-12 rounded-md border-2 focus:outline-green-800 mb-2 px-4"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-medium mb-2 text-base font-SubHeading font-medium text-black">
+                          Role :
+                        </label>
+                        <div className="flex flex-row gap-2">
+                          <input
+                            type="radio"
+                            name="opt-1"
+                            id="1"
+                            className={styles.role}
+                          />
+                          <label className={styles.colorlabel} for="1">
+                            College
+                          </label>
+                          <input
+                            type="radio"
+                            name="opt-1"
+                            id="2"
+                            className={styles.role}
+                          />
+                          <label className={styles.colorlabel} for="2">
+                            Company
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      onClick={handleClose}
+                      className=" my-4 w-full text-center hover:shadow-lg   bg-green-800 text-white font-SubHeading font-medium text-base px-4 py-2 rounded-md"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </Box>
+              </Modal>
+            </div>
+            {/* <div className="mt-5 text-center bg-customLightBlue p-5 rounded-lg hover:bg-blue-100">
                 <p className="text-blue-400 text-blue font-bold font-heading">
                   Register for demo{" "}
                 </p>
-              </div>
-            </Link>
+              </div> */}
           </div>
         </div>
       </div>

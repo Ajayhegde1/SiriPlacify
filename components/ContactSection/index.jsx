@@ -1,5 +1,5 @@
 import Image from "next/image";
-import photo1 from "../../public/chintu.png";
+import photo1 from "@/public/chintu.png";
 import styles from "./helper.module.css";
 
 export default function ContactSection() {
