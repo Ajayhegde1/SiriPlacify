@@ -27,6 +27,7 @@ const LightTooltip = styled(({ className, ...props }) => (
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.common.white,
+
     color: "rgba(0, 0, 0, 0.87)",
     boxShadow: theme.shadows[1],
     fontSize: 11,
@@ -100,6 +101,8 @@ CircularProgressWithLabel.propTypes = {
 export default function PlacedGraphComponents({
   noOfPlacedStudents = 0,
   noOfStudents = 0,
+  TotalNoofFemale = 0,
+  TotalNoofMale = 0,
 }) {
   const [progress, setProgress] = React.useState(10);
   React.useEffect(() => {
@@ -147,85 +150,100 @@ export default function PlacedGraphComponents({
       </div>
       <div className="flex gap-[36px] justify-center">
         <CircularProgressWithLabel value={noOfPlacedStudents} />
-        <div className="flex gap-[55px] items-end">
-          <LightTooltip
-            placement="top-start"
-            title={
-              <>
-                <div className="flex px-[10px] py-[5px] gap-[34px]">
-                  <div className="flex gap-[10px] items-center">
-                    <div>
-                      <Image src={maleimg}></Image>
-                    </div>
-                    <div>
-                      <h1 className="font-[700] text-[17px] text-[#29292B] leading-tight">
-                        {maleplacedvalue}%
-                      </h1>
-                      <p className="text-[12px] font-[500]">Male</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-[10px]">
-                    <div>
-                      <Image src={femaleimg}></Image>
-                    </div>
-                    <div>
-                      <h1 className="font-[700] text-[17px] text-[#29292B] leading-tight">
-                        {maleplacedvalue}%
-                      </h1>
-                      <p className="text-[12px] font-[500]">Female</p>
-                    </div>
-                  </div>
-                </div>
-              </>
-            }
-          >
-            <div className="flex gap-[8px] items-center">
-              <div className="h-[20px] w-[20px] bg-[#11CC46] rounded-full border-[1px] border-[#b9b8b8]"></div>
-              <h2 className="text-[17px] font-[400] text-[#88888A]">Placed</h2>
-              <h2 className="text-[17px] font-[700]">{noOfPlacedStudents}%</h2>
+        <div className="flex flex-col items-center justify-between">
+          <div className="w-full">
+            <h1 className="font-[700] text-[18px]">Total Students:</h1>
+            <div className="flex gap-[80px] mt-[10px]">
+              <h2 className="font-[600] text-[16px]">Male: {TotalNoofMale}</h2>
+              <h3 className="font-[600] text-[16px]">
+                Female: {TotalNoofFemale}
+              </h3>
             </div>
-          </LightTooltip>
-          <LightTooltip
-            placement="top-end"
-            title={
-              <>
-                <div className="flex px-[10px] py-[5px] gap-[34px]">
-                  <div className="flex gap-[10px] items-center">
-                    <div>
-                      <Image src={maleimg}></Image>
+          </div>
+          <div className="flex gap-[55px] items-end">
+            <LightTooltip
+              placement="top-start"
+              title={
+                <>
+                  <div className="flex px-[10px] py-[5px] gap-[34px]">
+                    <div className="flex gap-[10px] items-center">
+                      <div>
+                        <Image src={maleimg}></Image>
+                      </div>
+                      <div>
+                        <h1 className="font-[700] text-[17px] text-[#29292B] leading-tight">
+                          {maleplacedvalue}%
+                        </h1>
+                        <p className="text-[12px] font-[500]">Male</p>
+                      </div>
                     </div>
-                    <div>
-                      <h1 className="font-[700] text-[17px] text-[#29292B] leading-tight">
-                        {maleplacedvalue}%
-                      </h1>
-                      <p className="text-[12px] font-[500]">Male</p>
+                    <div className="flex items-center gap-[10px]">
+                      <div>
+                        <Image src={femaleimg}></Image>
+                      </div>
+                      <div>
+                        <h1 className="font-[700] text-[17px] text-[#29292B] leading-tight">
+                          {maleplacedvalue}%
+                        </h1>
+                        <p className="text-[12px] font-[500]">Female</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-[10px]">
-                    <div>
-                      <Image src={femaleimg}></Image>
+                </>
+              }
+            >
+              <div className="flex gap-[8px] items-center">
+                <div className="h-[20px] w-[20px] bg-[#11CC46] rounded-full border-[1px] border-[#b9b8b8]"></div>
+                <h2 className="text-[17px] font-[400] text-[#88888A]">
+                  Placed
+                </h2>
+                <h2 className="text-[17px] font-[700]">
+                  {noOfPlacedStudents}%
+                </h2>
+              </div>
+            </LightTooltip>
+            <LightTooltip
+              placement="top-end"
+              title={
+                <>
+                  <div className="flex px-[10px] py-[5px] gap-[34px]">
+                    <div className="flex gap-[10px] items-center">
+                      <div>
+                        <Image src={maleimg}></Image>
+                      </div>
+                      <div>
+                        <h1 className="font-[700] text-[17px] text-[#29292B] leading-tight">
+                          {maleplacedvalue}%
+                        </h1>
+                        <p className="text-[12px] font-[500]">Male</p>
+                      </div>
                     </div>
-                    <div>
-                      <h1 className="font-[700] text-[17px] text-[#29292B] leading-tight">
-                        {maleplacedvalue}%
-                      </h1>
-                      <p className="text-[12px] font-[500]">Female</p>
+                    <div className="flex items-center gap-[10px]">
+                      <div>
+                        <Image src={femaleimg}></Image>
+                      </div>
+                      <div>
+                        <h1 className="font-[700] text-[17px] text-[#29292B] leading-tight">
+                          {maleplacedvalue}%
+                        </h1>
+                        <p className="text-[12px] font-[500]">Female</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </>
-            }
-          >
-            <div className="flex gap-[8px] items-center">
-              <div className="h-[20px] w-[20px] bg-[#ffffff] border-[1px] border-[#b9b8b8] rounded-full"></div>
-              <h2 className="text-[17px] font-[400] text-[#88888A]">
-                Unplaced
-              </h2>
-              <h2 className="text-[17px] font-[700]">
-                {100 - noOfPlacedStudents}%
-              </h2>
-            </div>
-          </LightTooltip>
+                </>
+              }
+            >
+              <div className="flex gap-[8px] items-center">
+                <div className="h-[20px] w-[20px] bg-[#ffffff] border-[1px] border-[#b9b8b8] rounded-full"></div>
+                <h2 className="text-[17px] font-[400] text-[#88888A]">
+                  Unplaced
+                </h2>
+                <h2 className="text-[17px] font-[700]">
+                  {100 - noOfPlacedStudents}%
+                </h2>
+              </div>
+            </LightTooltip>
+          </div>
         </div>
       </div>
     </div>
