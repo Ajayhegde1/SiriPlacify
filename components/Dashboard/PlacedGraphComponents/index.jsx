@@ -131,6 +131,7 @@ export default function PlacedGraphComponents({
             Placement percentage
           </h1>
           <Select
+            sx={{ borderRadius: 12 }}
             className="h-[36px] border-[1px] border-[#CCCCCC] rounded-full w-[97px]"
             labelId="demo-select-small-label"
             id="demo-select-small"
