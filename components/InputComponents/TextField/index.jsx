@@ -24,7 +24,7 @@ export default function TextField({
         placeholder={placeholder}
         onChange={onChangeHandler}
         onClick={onClickHandler}
-        value={parseFloat(value) || 0}
+        value={String(value)}
         maxLength={maxLength}
         required={required}
         disabled={disabled}
