@@ -1,8 +1,15 @@
 import Image from "next/image";
 import photo1 from "@/public/chintu.png";
 import styles from "./helper.module.css";
-
+import { notificationTypes, openNotification } from "@/utils/notifications";
 export default function ContactSection() {
+  const handleclick = () => {
+    openNotification(
+      notificationTypes.SUCCESS,
+      <></>,
+      <p className="font-[600] text-[16px]">Details Submitted Succesfully!</p>
+    );
+  };
   return (
     <div className="mt-6 md:mt-20 mb-6">
       <div className="mt-20 mx-6 md:mx-12 lg:mx-20 grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -85,7 +92,10 @@ export default function ContactSection() {
               </div>
             </div>
           </div>
-          <button className=" my-4 w-full text-center hover:shadow-lg   bg-green-800 text-white font-SubHeading font-medium text-base px-4 py-2 rounded-md">
+          <button
+            onClick={handleclick}
+            className=" my-4 w-full text-center hover:shadow-lg   bg-green-800 text-white font-SubHeading font-medium text-base px-4 py-2 rounded-md"
+          >
             Submit
           </button>
         </div>

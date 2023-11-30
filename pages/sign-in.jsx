@@ -35,6 +35,14 @@ const style = {
 };
 
 export default function CollegeProfile() {
+  const handleclick = () => {
+    openNotification(
+      notificationTypes.SUCCESS,
+      <></>,
+      <p className="font-[600] text-[16px]">Details Submitted Succesfully!</p>
+    );
+    setOpen(false);
+  };
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -221,7 +229,7 @@ export default function CollegeProfile() {
                       </div>
                     </div>
                     <button
-                      onClick={handleClose}
+                      onClick={handleclick}
                       className=" my-4 w-full text-center hover:shadow-lg   bg-green-800 text-white font-SubHeading font-medium text-base px-4 py-2 rounded-md"
                     >
                       Submit
