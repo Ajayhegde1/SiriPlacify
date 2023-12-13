@@ -23,6 +23,7 @@ import TopRecruitersComponent from "@/components/Dashboard/TopRecruitersComponen
 import AchievementCarousel from "@/components/Dashboard/AchievementCarousel/Index";
 import BranchWiseLineGraph from "@/components/Dashboard/BranchWiseLineGraph";
 import { BranchWiseStatistics } from "@/components/BranchWiseStatistics";
+import { TopBar } from "@/components/TopBar";
 
 export default function College() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -86,6 +87,7 @@ export default function College() {
 
   return (
     <div className="bg-gray-200">
+      <TopBar sidebar={sidebarOpen} />
       <DocHeader DocTitle="Dashboard" />
       <Sidebar
         sidebarOpen={sidebarOpen}
@@ -94,7 +96,7 @@ export default function College() {
       />
       <main class={`dashboard ${sidebarOpen ? "active" : ""}`}>
         <div className="min-h-screen pt-4 md:py-10 px-4 md:px-6 lg:p-10">
-          <div className="pb-4">
+          <div className="pb-4 pt-16">
             <h1 className="text-center md:text-left pt-6 pb-4 text-3xl md:text-6xl font-Heading font-bold text-black">
               Dashboard
             </h1>
@@ -108,6 +110,7 @@ export default function College() {
             </div>
             <div className="col-span-1 2xl:col-span-2">
               <PlacedGraphComponents
+                sideBar={sidebarOpen}
                 noOfPlacedStudents={
                   dashboardData === null
                     ? 0

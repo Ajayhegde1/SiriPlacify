@@ -53,35 +53,35 @@ export default function SectorWisePlacementGraph({ chartData, sector, count }) {
           fontSize: 20,
           fontStyle: "bold",
           padding: 16, // Adjust the padding for the legend
-          generateLabels: function (chart) {
-            // Get the default labels
-            var originalLabels =
-              Chart.overrides.pie.plugins.legend.labels.generateLabels(chart);
+          // generateLabels: function (chart) {
+          //   // Get the default labels
+          //   var originalLabels =
+          //     Chart.overrides.pie.plugins.legend.labels.generateLabels(chart);
 
-            // Add custom text to each label
-            originalLabels.forEach(function (label) {
-              label.text += " " + count[0];
-              label.text += " student(s)";
-            });
-            var middleIndex = Math.ceil(originalLabels.length / 2);
+          //   // Add custom text to each label
+          //   // originalLabels.forEach(function (label) {
+          //   //   label.text += " " + count[0];
+          //   //   label.text += " student(s)";
+          //   // });
+          //   var middleIndex = Math.ceil(originalLabels.length / 2);
 
-            // Split the labels into two columns
-            var firstColumn = originalLabels.slice(0, middleIndex);
-            var secondColumn = originalLabels.slice(middleIndex);
+          //   // Split the labels into two columns
+          //   var firstColumn = originalLabels.slice(0, middleIndex);
+          //   var secondColumn = originalLabels.slice(middleIndex);
 
-            // Combine the two columns in the desired order
-            var modifiedLabels = firstColumn.reduce(function (
-              acc,
-              label,
-              index
-            ) {
-              acc.push(label, secondColumn[index]);
-              return acc;
-            },
-            []);
+          //   // Combine the two columns in the desired order
+          //   var modifiedLabels = firstColumn.reduce(function (
+          //     acc,
+          //     label,
+          //     index
+          //   ) {
+          //     acc.push(label, secondColumn[index]);
+          //     return acc;
+          //   },
+          //   []);
 
-            return modifiedLabels;
-          },
+          //   return modifiedLabels;
+          // },
         },
         // Custom function to display three labels in one column
         // generateLabels: function (chart) {
@@ -116,7 +116,7 @@ export default function SectorWisePlacementGraph({ chartData, sector, count }) {
     },
   };
 
-  const [yearplace, setYearplace] = React.useState("");
+  const [yearplace, setYearplace] = React.useState(10);
   const handleChange = (event) => {
     setYearplace(event.target.value);
   };

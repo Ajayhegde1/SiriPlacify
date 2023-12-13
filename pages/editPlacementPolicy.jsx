@@ -18,6 +18,7 @@ import { updatePlacementPolicy } from "@/redux/Sagas/requests/features";
 import { openNotification, notificationTypes } from "@/utils/notifications";
 
 import AddTierModal from "@/components/Modal/AddTierModal";
+import { TopBar } from "@/components/TopBar";
 
 export default function EditPlacementPolicy() {
   const dispatch = useDispatch();
@@ -139,13 +140,16 @@ export default function EditPlacementPolicy() {
 
   return (
     <div className="bg-gray-200">
+      <TopBar sidebar={sidebarOpen} />
       <DocHeader DocTitle="Placement Policy" />
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
         activePage={4}
       />
-      <main class={`dashboard ${sidebarOpen ? "active" : ""}`}>
+      <main
+        class={`dashboard ${sidebarOpen ? "pt-[70px] active" : "pt-[70px]"}`}
+      >
         <div className="pt-4 md:py-10 px-4 md:px-6 lg:p-10">
           <div className="bg-white pb-16">
             <h1 className="text-center md:text-left mb-10 ml-2 md:ml-6 pt-6 md:pt-16 text-3xl md:text-4xl font-Heading font-bold text-black">

@@ -101,6 +101,7 @@ CircularProgressWithLabel.propTypes = {
 export default function PlacedGraphComponents({
   noOfPlacedStudents = 0,
   noOfStudents = 0,
+  sideBar,
   TotalNoofFemale = 0,
   TotalNoofMale = 0,
 }) {
@@ -116,7 +117,7 @@ export default function PlacedGraphComponents({
     };
   }, []);
 
-  const [yearplace, setYearplace] = React.useState("");
+  const [yearplace, setYearplace] = React.useState(10);
   const handleChange = (event) => {
     setYearplace(event.target.value);
   };
@@ -124,7 +125,13 @@ export default function PlacedGraphComponents({
   const maleplacedvalue = 27;
 
   return (
-    <div className="h-[297px] w-[590px] mt-6 bg-[#EAFFEC] px-4 pt-4 rounded-lg flex flex-col shadow">
+    <div
+      className={
+        sideBar
+          ? `h-[297px] w-[538px] mt-6 bg-[#EAFFEC] px-4 pt-4 rounded-lg flex flex-col shadow`
+          : `h-[297px] w-[590px] mt-6 bg-[#EAFFEC] px-4 pt-4 rounded-lg flex flex-col shadow`
+      }
+    >
       <div className="flex flex-col gap-y-[17px] h-[78px] ">
         <div className="flex justify-between">
           <h1 className="text-left pt-2 pl-2  font-[700] text-[22px] leading-tight  text-black">

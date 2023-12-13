@@ -7,7 +7,7 @@ import {
   tablehead,
 } from "@/constants/dashboardBranchWiseStatsTable";
 export function BranchWiseStatistics() {
-  const [yearplace, setYearplace] = React.useState("");
+  const [yearplace, setYearplace] = React.useState(10);
   const handleChange = (event) => {
     setYearplace(event.target.value);
   };

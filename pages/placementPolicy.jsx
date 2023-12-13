@@ -13,6 +13,7 @@ import AddTierModal from "@/components/Modal/AddTierModal";
 
 import { addPlacementPolicy } from "@/redux/Slices/placementPolicy";
 import { routes } from "@/constants/routes";
+import { TopBar } from "@/components/TopBar";
 
 export default function placementPolicy() {
   const router = useRouter();

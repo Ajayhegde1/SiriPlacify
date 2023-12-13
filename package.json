@@ -21,7 +21,7 @@
     "apexcharts": "^3.41.0",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
-    "chart.js": "^4.1.2",
+    "chart.js": "^4.4.1",
     "chartjs-plugin-datalabels": "^2.2.0",
     "dayjs": "^1.11.7",
     "eslint": "8.39.0",
