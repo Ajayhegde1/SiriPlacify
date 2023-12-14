@@ -12,11 +12,13 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import profileImg from "@/public/profile.svg";
 import { signOut } from "@/redux/Slices/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const shapeStyles = { bgcolor: "primary.main", width: 40, height: 40 };
 const shapeCircleStyles = { borderRadius: "50%" };
 const rectangle = <Box component="span" sx={shapeStyles} />;
 export function TopBar({ sidebar }) {
+  const Notifications = useSelector((state) => state.notifications);
+
   const dispatch = useDispatch();
   function handleSignOut() {
     dispatch(signOut());
@@ -41,7 +43,7 @@ export function TopBar({ sidebar }) {
       ></Image>
       <div className="flex items-center justify-center gap-[30px]">
         <a className="menu-link" href="/notifications">
-          <Badge color="secondary" badgeContent={2}>
+          <Badge color="secondary" badgeContent={Notifications.length}>
             {/* <MailIcon />hi */}
 
             <Image src={notfiImg}></Image>
