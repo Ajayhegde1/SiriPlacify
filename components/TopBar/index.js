@@ -17,8 +17,12 @@ const shapeStyles = { bgcolor: "primary.main", width: 40, height: 40 };
 const shapeCircleStyles = { borderRadius: "50%" };
 const rectangle = <Box component="span" sx={shapeStyles} />;
 export function TopBar({ sidebar }) {
-  const Notifications = useSelector((state) => state.notifications);
-
+  var Notifications = useSelector((state) => state.notifications);
+  if (Notifications == null) {
+    Notifications = 0;
+  } else {
+    Notifications = Notifications.length;
+  }
   const dispatch = useDispatch();
   function handleSignOut() {
     dispatch(signOut());
@@ -43,7 +47,7 @@ export function TopBar({ sidebar }) {
       ></Image>
       <div className="flex items-center justify-center gap-[30px]">
         <a className="menu-link" href="/notifications">
-          <Badge color="secondary" badgeContent={Notifications.length}>
+          <Badge color="secondary" badgeContent={Notifications}>
             {/* <MailIcon />hi */}
 
             <Image src={notfiImg}></Image>
