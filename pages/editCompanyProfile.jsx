@@ -21,6 +21,30 @@ import ChangePasswordModal from "@/components/Modal/changePassword";
 import { TopBar } from "@/components/TopBar";
 
 export default function EditCompanyProfile() {
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+
+  const handlePhotoChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file && file.type && file.type.startsWith("image/")) {
+      setSelectedPhoto(file);
+
+      // Read the file content and set the data URL for preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+
+      // You can perform upload logic here, e.g., send the photo to a server
+      console.log("Uploading Photo:", file);
+      // Add your upload logic here, such as using an API to handle the file
+    } else {
+      console.error("Invalid file selected");
+    }
+  };
+
   const [companyWebsite, setCompanyWebsite] = useState("");
   const [email, setEmail] = useState("");
   const [isValidMail, setIsValidMail] = useState(true);
@@ -178,9 +202,44 @@ export default function EditCompanyProfile() {
               <div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 content-center">
                   <div className="pb-4 pl-2 md:pl-5 m-auto">
-                    <Image src={photo} alt="students" />
-                    <div className="mt-6">
-                      <Button btnText="Upload" />
+                    <div className="flex flex-col justify-center items-center">
+                      <div className="flex justify-center ml-[]">
+                        {previewUrl ? (
+                          <img
+                            src={previewUrl}
+                            alt="Selected"
+                            style={{
+                              maxWidth: "100%",
+                              height: "auto",
+                              width: "60%",
+                            }}
+                          />
+                        ) : (
+                          <Image
+                            style={{
+                              maxWidth: "100%",
+                              height: "auto",
+                              width: "80%",
+                            }}
+                            src={photo}
+                            alt="students"
+                          />
+                        )}
+                      </div>
+                      <div className="mt-[10px] flex justify-center">
+                        <label
+                          className={
+                            "custom-button w-[135px] text-center text-white font-medium py-2 px-4 rounded hover:bg-green-600"
+                          }
+                        >
+                          Upload
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handlePhotoChange}
+                          />
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="col-span-1 md:col-span-2 ml-0 md:ml-6">
