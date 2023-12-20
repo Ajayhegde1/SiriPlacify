@@ -8,12 +8,57 @@
 *{
     scroll-behavior: smooth;
 }
+.legend-container {
+    margin-top: 20px;
+  }
+  
+  .legend-columns {
+    display: flex;
+  }
+  
+  .legend-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 20px; /* Adjust the margin based on your design */
+  }
+  .tooltip {
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    padding: 5px;
+  }
+  
+  .tooltip-color-box {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 5px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .legend-color-box {
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+  }
+  
+  .legend-label {
+    font-size: 14px;
+  }
+  
 
 .custom-button {
     display: inline-block;
     padding: 10px 20px;
     cursor: pointer;
-    background-color: #4caf50;
+    /* background-color: #4caf50; */
     color: white;
     border: none;
     

@@ -2,7 +2,18 @@ import Image from "next/image";
 import photo1 from "@/public/chintu.png";
 import styles from "./helper.module.css";
 import { notificationTypes, openNotification } from "@/utils/notifications";
+import { useState } from "react";
 export default function ContactSection() {
+  const [isCollege, setIsCollege] = useState(false);
+  const [isCompany, setIsCompany] = useState(false);
+  const handleCollegeClick = () => {
+    setIsCompany(false);
+    setIsCollege(true);
+  };
+  const handleCompanyClick = () => {
+    setIsCompany(true);
+    setIsCollege(false);
+  };
   const handleclick = () => {
     openNotification(
       notificationTypes.SUCCESS,
@@ -72,6 +83,7 @@ export default function ContactSection() {
               </label>
               <div className="flex flex-row gap-2">
                 <input
+                  onClick={handleCollegeClick}
                   type="radio"
                   name="opt-1"
                   id="1"
@@ -81,6 +93,7 @@ export default function ContactSection() {
                   College
                 </label>
                 <input
+                  onClick={handleCompanyClick}
                   type="radio"
                   name="opt-1"
                   id="2"
@@ -91,6 +104,34 @@ export default function ContactSection() {
                 </label>
               </div>
             </div>
+            {isCollege ? (
+              <div>
+                <label className="mb-2 text-base font-SubHeading font-medium text-black">
+                  Enter College Name :
+                </label>
+                <input
+                  type="text"
+                  placeholder="College Name"
+                  className="w-full h-12 rounded-md border-2 focus:outline-green-800 mb-2 px-4"
+                />{" "}
+              </div>
+            ) : (
+              ""
+            )}
+            {isCompany ? (
+              <div>
+                <label className="mb-2 text-base font-SubHeading font-medium text-black">
+                  Enter Company Name :
+                </label>
+                <input
+                  type="text"
+                  placeholder="Company Name"
+                  className="w-full h-12 rounded-md border-2 focus:outline-green-800 mb-2 px-4"
+                />{" "}
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           <button
             onClick={handleclick}

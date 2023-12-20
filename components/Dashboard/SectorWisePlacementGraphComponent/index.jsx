@@ -4,11 +4,12 @@ import React from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { Chart } from "chart.js";
+import PieChart from "./PieChart";
 
 export default function SectorWisePlacementGraph({ chartData, sector, count }) {
   const data = {
     labels: sector,
-
+    data: count,
     datasets: [
       {
         data: count,
@@ -160,7 +161,7 @@ export default function SectorWisePlacementGraph({ chartData, sector, count }) {
           className="flex-grow flex justify-center"
           style={{ height: "350px" }}
         >
-          <Pie className="h-full w-full" data={data} options={options} />
+          <PieChart chartData={data} /> {/* Pass the correct prop name */}
         </div>
       )}
     </div>

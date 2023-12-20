@@ -31,7 +31,8 @@ export default function Jobs() {
   const declinedJobs = useSelector((state) => state.declinedJobs);
   const closedJobs = useSelector((state) => state.closedJobs);
   const closedJobCollege = useSelector((state) => state.closedJobsCollege);
-
+  console.log("hi");
+  console.log(jobs);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [jobSection, setJobSection] = useState(1);
 
