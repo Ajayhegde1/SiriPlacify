@@ -44,9 +44,10 @@
   }
   
   .legend-color-box {
-    width: 10px;
-    height: 10px;
+    width: 14px;
+    height: 14px;
     margin-right: 5px;
+    border-radius: 100px;
   }
   
   .legend-label {

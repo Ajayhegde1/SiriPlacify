@@ -99,8 +99,10 @@ CircularProgressWithLabel.propTypes = {
 };
 
 export default function PlacedGraphComponents({
-  noOfPlacedStudents = 0,
-  noOfStudents = 0,
+  studentData,
+  dashboardData,
+  noOfPlacedStudents = dashboardData.noOfStudentsPlaced,
+  noOfStudents = dashboardData.noOfGradStudents,
   sideBar,
   TotalNoofFemale = 0,
   TotalNoofMale = 0,
@@ -123,7 +125,10 @@ export default function PlacedGraphComponents({
   };
 
   const maleplacedvalue = 27;
-
+  const percentagePlaced = (
+    (parseInt(noOfPlacedStudents) / parseInt(noOfStudents)) *
+    100
+  ).toFixed(0);
   return (
     <div
       className={
@@ -154,7 +159,7 @@ export default function PlacedGraphComponents({
         <div className="relative h-[1px] w-full bg-[#CCCCCC]"></div>
       </div>
       <div className="flex gap-[36px] justify-center">
-        <CircularProgressWithLabel value={noOfPlacedStudents} />
+        <CircularProgressWithLabel value={percentagePlaced} />
         <div className="flex flex-col items-center justify-between">
           <div className="w-full">
             <h1 className="font-[700] text-[18px]">Total Students:</h1>
@@ -202,9 +207,7 @@ export default function PlacedGraphComponents({
                 <h2 className="text-[17px] font-[400] text-[#88888A]">
                   Placed
                 </h2>
-                <h2 className="text-[17px] font-[700]">
-                  {noOfPlacedStudents}%
-                </h2>
+                <h2 className="text-[17px] font-[700]">{percentagePlaced}</h2>
               </div>
             </LightTooltip>
             <LightTooltip
@@ -244,7 +247,7 @@ export default function PlacedGraphComponents({
                   Unplaced
                 </h2>
                 <h2 className="text-[17px] font-[700]">
-                  {100 - noOfPlacedStudents}%
+                  {100 - percentagePlaced}%
                 </h2>
               </div>
             </LightTooltip>
