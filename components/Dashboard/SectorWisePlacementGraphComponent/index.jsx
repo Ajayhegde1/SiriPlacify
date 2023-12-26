@@ -126,7 +126,7 @@ export default function SectorWisePlacementGraph({ chartData, sector, count }) {
       <div className="flex flex-col gap-y-[17px] h-[78px] ">
         <div className="flex justify-between items-center">
           <h1 className="text-left pt-4 pb-6 pl-4 text-lg md:text-4xl font-bold text-black">
-            Placements across sectors
+            Placements across Departments
           </h1>
           <Select
             className="h-[36px] border-[1px] border-[#CCCCCC] rounded-full w-[97px]"
@@ -161,9 +161,24 @@ export default function SectorWisePlacementGraph({ chartData, sector, count }) {
           className="flex-grow flex justify-center"
           style={{ height: "350px" }}
         >
-          <PieChart chartData={data} /> {/* Pass the correct prop name */}
+          <PieChart chartData={data} />
         </div>
       )}
+      {/* <div className="h-[300px] w-[300px]">
+        <div className="flex">
+          <div className="h-[181px] w-[181px] rounded-full bg-[#B8B2FF] flex justify-center items-center">
+            <p className="text-white font-[700] text-[27px]">32%</p>
+          </div>
+          <div className="ml-[-40px]">
+            <div className="h-[128px] w-[128px] rounded-full bg-[#FFDAAE] mt-[-30px] border-white border-[3px] flex justify-center items-center">
+              <p className="text-white font-[700] text-[27px]">40%</p>
+            </div>
+            <div className="h-[85px] w-[85px] rounded-full bg-[#FF9292] mt-[-30px] border-white border-[3px] flex justify-center items-center">
+              <p className="text-white font-[700] text-[18px]">20%</p>
+            </div>
+          </div>
+        </div>
+      </div> */}
     </div>
   );
 }

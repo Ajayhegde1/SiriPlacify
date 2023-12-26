@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import {
   getTPODashboard,
   getSectorTrend,
+  getStudents,
 } from "@/redux/Sagas/requests/features";
 import { notificationTypes, openNotification } from "@/utils/notifications";
 
@@ -28,12 +29,34 @@ import { TopBar } from "@/components/TopBar";
 export default function College() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [dashboardData, setDashboardData] = useState(null);
+  const [studentData, setStudentData] = useState(null);
   const [chartData, setChartData] = useState(null);
   const [sector, setSector] = useState([]);
   const [count, setCount] = useState([]);
 
   const user = useSelector((state) => state.user);
-
+  useEffect(() => {
+    getStudents()
+      .then((res) => {
+        if (res.data.status === 200) {
+          setStudentData(res.data.data);
+        } else {
+          openNotification(
+            notificationTypes.ERROR,
+            "Error",
+            "Error while fetching dashboard data"
+          );
+        }
+      })
+      .catch((err) => {
+        openNotification(
+          notificationTypes.ERROR,
+          "Error",
+          "Error while fetching dashboard data"
+        );
+      });
+  }, []);
+  // console.log(studentData);
   useEffect(() => {
     getTPODashboard()
       .then((res) => {
@@ -110,6 +133,8 @@ export default function College() {
             </div>
             <div className="col-span-1 2xl:col-span-2">
               <PlacedGraphComponents
+                studentData={studentData}
+                dashboardData={dashboardData}
                 sideBar={sidebarOpen}
                 noOfPlacedStudents={
                   dashboardData === null

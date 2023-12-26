@@ -33,11 +33,29 @@ const PieChart = ({ chartData }) => {
           datasets: [
             {
               data,
-              backgroundColor,
+              backgroundColor: [
+                "#FF9292",
+                "#36A2EB",
+                "#FFDAAE",
+                "#A0F799",
+                "#FFCACA",
+                "#B8B2FF",
+                "#FF9FF0",
+              ],
+              hoverBackgroundColor: [
+                "#FF9292",
+                "#36A2EB",
+                "#FFDAAE",
+                "#A0F799",
+                "#FFCACA",
+                "#B8B2FF",
+                "#FF9FF0",
+              ],
             },
           ],
         },
         options: {
+          radius: "70%",
           plugins: {
             legend: {
               display: false, // Disable the legend
@@ -57,7 +75,7 @@ const PieChart = ({ chartData }) => {
   return (
     <div className="flex-grow flex justify-center items-center">
       <canvas ref={canvasRef} id="pieChart" width="400" height="400"></canvas>
-      <Legend className="ml-[20px]" chartData={chartData} />
+      <Legend chartData={chartData} />
       <div id="chartjs-tooltip" style={{ display: "none" }}></div>
     </div>
   );
