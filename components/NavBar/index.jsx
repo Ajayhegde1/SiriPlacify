@@ -11,6 +11,7 @@ import { AiOutlineMenu, AiFillCloseCircle } from "react-icons/ai";
 
 const Navbar = () => {
   // objects
+
   const navContainerREF = useRef(null);
 
   // states

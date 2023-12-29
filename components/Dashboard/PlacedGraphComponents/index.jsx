@@ -104,8 +104,8 @@ export default function PlacedGraphComponents({
   noOfPlacedStudents = dashboardData.noOfStudentsPlaced,
   noOfStudents = dashboardData.noOfGradStudents,
   sideBar,
-  TotalNoofFemale = 0,
-  TotalNoofMale = 0,
+  TotalNoofFemale = 400,
+  TotalNoofMale = 300,
 }) {
   const [progress, setProgress] = React.useState(10);
   React.useEffect(() => {
@@ -124,7 +124,8 @@ export default function PlacedGraphComponents({
     setYearplace(event.target.value);
   };
 
-  const maleplacedvalue = 27;
+  const maleplacedvalue = 57;
+  const femaleplacedvalue = 100 - maleplacedvalue;
   const percentagePlaced = (
     (parseInt(noOfPlacedStudents) / parseInt(noOfStudents)) *
     100
@@ -193,7 +194,7 @@ export default function PlacedGraphComponents({
                       </div>
                       <div>
                         <h1 className="font-[700] text-[17px] text-[#29292B] leading-tight">
-                          {maleplacedvalue}%
+                          {femaleplacedvalue}%
                         </h1>
                         <p className="text-[12px] font-[500]">Female</p>
                       </div>

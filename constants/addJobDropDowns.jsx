@@ -38,6 +38,11 @@ export const genderList = [
     value: "Female",
     label: "Female",
   },
+  {
+    id: 3,
+    value: "All",
+    label: "All",
+  },
 ];
 
 export const modeOfSelectionList = [

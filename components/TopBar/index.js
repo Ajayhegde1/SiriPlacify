@@ -17,6 +17,7 @@ const shapeStyles = { bgcolor: "primary.main", width: 40, height: 40 };
 const shapeCircleStyles = { borderRadius: "50%" };
 const rectangle = <Box component="span" sx={shapeStyles} />;
 export function TopBar({ sidebar }) {
+  const user = useSelector((state) => state.user);
   var Notifications = useSelector((state) => state.notifications);
   if (Notifications == null) {
     Notifications = 0;
@@ -77,7 +78,7 @@ export function TopBar({ sidebar }) {
               <div className="flex justify-between items-center gap-[8px]">
                 <Image src={profileImg}></Image>
                 <div className="text-[16px] font-[600] text-[#3B3B3B]">
-                  PesuVentureLabs
+                  {user === null ? " " : user.username}
                 </div>
               </div>
               <div className="h-[2px] w-full bg-[#BBBBBB]"></div>
