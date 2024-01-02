@@ -96,8 +96,8 @@ export default function EditPlacementPolicy() {
             marginBottom: "4px",
             // cursor: "pointer",
 
-            ...springProps,
-            ...hoverSpringProps,
+            // ...springProps,
+            // ...hoverSpringProps,
           }}
         >
           <div className="flex w-full justify-between" key={index}>
