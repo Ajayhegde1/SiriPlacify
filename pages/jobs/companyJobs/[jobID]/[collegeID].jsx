@@ -42,6 +42,7 @@ export default function College() {
   const [status, setStatus] = useState(1);
 
   const { jobID, collegeID } = router.query;
+  console.log(collegeID);
 
   useEffect(() => {
     if (user === null) {
