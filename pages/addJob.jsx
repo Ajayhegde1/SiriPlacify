@@ -58,7 +58,7 @@ export default function AddJob() {
   const [tenthMarks, setTenthMarks] = useState("");
   const [twelfthMarks, setTwelfthMarks] = useState("");
   const [UGCgpa, setUGCgpa] = useState("");
-  const [applicableCourses, setApplicableCourses] = useState("");
+  const [applicableCourses, setApplicableCourses] = useState([]);
   const [briefJobDescription, setBriefJobDescription] = useState("");
   const [bondDetails, setBondDetails] = useState("");
   const [contactPersonName, setContactPersonName] = useState("");
@@ -193,6 +193,7 @@ export default function AddJob() {
           twelfthMarks,
           UGCgpa,
           degree: selectedOptions,
+          assertCerti: selectedOption,
         };
         const Data = {
           data: jobData,
@@ -224,6 +225,7 @@ export default function AddJob() {
           twelfthMarks,
           UGCgpa,
           degree: selectedOptions,
+          assertCerti: selectedOption,
         };
         const Data = {
           data: jobData,
@@ -399,38 +401,7 @@ export default function AddJob() {
                 options={finalSelection}
               />
             </div> */}
-            {assertCertification == true ? (
-              <div className="mt-[-20px] mb-[20px]">
-                <label className=" font-[700] text-[16px]">
-                  Assert Certification
-                </label>
-                <div className="mt-[10px]">
-                  <div className="flex gap-[20px]">
-                    <label>
-                      <input
-                        type="radio"
-                        value="yes"
-                        checked={selectedOption === "yes"}
-                        onChange={() => handleRadioChange("yes")}
-                      />{" "}
-                      Yes
-                    </label>
-                    <br />
-                    <label>
-                      <input
-                        type="radio"
-                        value="no"
-                        checked={selectedOption === "no"}
-                        onChange={() => handleRadioChange("no")}
-                      />{" "}
-                      No
-                    </label>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
+
             <div className="mb-8">
               <SingleSelectComponent
                 value={gender}
@@ -466,6 +437,37 @@ export default function AddJob() {
                   {selectedFile.name}
                 </div>
               )}
+            </div>
+            <div className="mt-[20px] mb-[20px]">
+              <label
+                title="Enter tooltip text"
+                className=" font-[700] text-[16px]"
+              >
+                Assert Certification
+              </label>
+              <div className="mt-[10px]">
+                <div className="flex gap-[20px]">
+                  <label>
+                    <input
+                      type="radio"
+                      value="yes"
+                      checked={selectedOption === "yes"}
+                      onChange={() => handleRadioChange("yes")}
+                    />{" "}
+                    Yes
+                  </label>
+                  <br />
+                  <label>
+                    <input
+                      type="radio"
+                      value="no"
+                      checked={selectedOption === "no"}
+                      onChange={() => handleRadioChange("no")}
+                    />{" "}
+                    No
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </div>

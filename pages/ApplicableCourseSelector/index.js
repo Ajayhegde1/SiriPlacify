@@ -30,15 +30,10 @@ export default function ApplicableCourseSelector({
     getSectors()
       .then((res) => {
         if (res.data.status === 200) {
-          let sectors = res.data.message;
-          sectors = courses.map((sector) => {
-            return {
-              value: sector.id,
-              label: sector.sectorName,
-            };
+          let courseslist = courses.map((link) => {
+            return link.label;
           });
-
-          setJobSectorList(courses);
+          setJobSectorList(courseslist);
           setLoading(false);
         } else {
           openNotification(notificationTypes.ERROR, "Error", res.data.message);
@@ -51,6 +46,18 @@ export default function ApplicableCourseSelector({
       });
   }, []);
 
+  const handleSelectChange = (selectedOptions) => {
+    // Log the selected values
+    console.log(selectedOptions);
+    const selectedLabels = selectedOptions.map((option) => option.label);
+
+    // Convert the array to a string
+    const selectedString = selectedLabels.join(",");
+    console.log(selectedString);
+    // Call the provided handler to update the state in the parent component
+    handleCourse(selectedString);
+  };
+
   return (
     <div className="mt-8 mb-6">
       <div className="grid grid-cols-6 gap-6">
@@ -59,7 +66,7 @@ export default function ApplicableCourseSelector({
             options={courses}
             placeholder="Select Applicable Courses"
             value={course}
-            onChange={handleCourse}
+            onChange={handleSelectChange}
             isSearchable={true}
             components={makeAnimated()}
             closeMenuOnSelect={false}

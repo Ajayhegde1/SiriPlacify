@@ -1,12 +1,13 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
-
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Sidebar from "@/components/SideBar";
 import DocHeader from "@/components/DocHeader";
-
+import { getJobs } from "@/redux/Slices/jobSlice";
 import arrow from "@/public/arrow.png";
 import applied from "@/public/applied.png";
 import app from "@/public/app.png";
@@ -16,17 +17,23 @@ import inter from "@/public/inter.png";
 import interview from "@/public/interview.png";
 import shortlisted from "@/public/shortlisted.png";
 import test from "@/public/test.png";
-
+import { useDispatch, useSelector } from "react-redux";
 import { getSpecificJobApplication } from "@/redux/Sagas/requests/features";
 import { openNotification, notificationTypes } from "@/utils/notifications";
-
+import { getOfferJob } from "@/redux/Slices/offerJobsSlice";
+import { getDeclinedJob } from "@/redux/Slices/declinedJobsSlice";
+import { getClosedJob } from "@/redux/Slices/closedJobsSlice";
+import { getClosedJobForCollege } from "@/redux/Slices/closedJobsCollegeSlice";
 export default function JobStatus() {
+  const dispatch = useDispatch();
   const router = useRouter();
-
+  const jobs = useSelector((state) => state.jobs);
+  console.log(jobs);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [jobApp, setJobApp] = useState(null);
   const { id } = router.query;
 
+  const user = useSelector((state) => state.user);
   useEffect(() => {
     if (typeof id !== "undefined") {
       getSpecificJobApplication(id).then((res) => {
@@ -38,7 +45,33 @@ export default function JobStatus() {
       });
     }
   }, [id]);
+  useEffect(() => {
+    if (user === null) {
+      router.push(routes.NOTFOUND);
+      return;
+    }
 
+    dispatch(getJobs());
+
+    const dispatchActions = {
+      0: [getOfferJob, getClosedJobForCollege, getDeclinedJob],
+      1: [getClosedJobForCollege],
+      2: [getClosedJob],
+    };
+
+    const actionsToDispatch = dispatchActions[user.accType];
+    if (actionsToDispatch) {
+      actionsToDispatch.forEach((action) => dispatch(action()));
+    }
+  }, [dispatch, router, user]);
+  const textAreaRef = useRef(null);
+
+  const copyToClipboard = () => {
+    if (textAreaRef.current) {
+      textAreaRef.current.select();
+      document.execCommand("copy");
+    }
+  };
   return (
     <div className="min-h-screen bg-gray-200">
       <DocHeader DocTitle="My Applications" />
@@ -184,11 +217,33 @@ export default function JobStatus() {
               <div className="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
                   <h1 className="text-center my-6 md:mt-16 text-3xl md:text-4xl font-Heading font-bold text-black">
-                    Test Link has been sent through your registered emails.
+                    Test Link has been sent through your registered email
                   </h1>
+
                   {typeof jobApp.testData === "undefined" ||
                   jobApp.testData === null ? (
-                    <></>
+                    <>
+                      <div className="flex justify-center flex-col ml-[50px]">
+                        <h1 className="my-6 md:mt-16 text-3xl md:text-4xl font-Heading font-bold text-black">
+                          Assert Test Link :{" "}
+                        </h1>
+                        <div className="flex gap-[10px]">
+                          <input
+                            className="h-[40px] w-[30vw] px-[20px]"
+                            ref={textAreaRef}
+                            type="text"
+                            value={jobApp.assertexamlink}
+                            readOnly
+                          ></input>
+                          <button
+                            className=" border-[2px] border-black bg-gray-300 px-[20px]"
+                            onClick={copyToClipboard}
+                          >
+                            <FontAwesomeIcon icon={faCopy} />
+                          </button>
+                        </div>
+                      </div>
+                    </>
                   ) : (
                     <>
                       <div className="bg-gray-100 py-8 mx-5">
