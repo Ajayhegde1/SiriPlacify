@@ -16,7 +16,7 @@ const DraggableItem = ({
   minCTC,
   maxCTC,
 }) => {
-  const moveItem = (fromIndex, toIndex) => {
+  moveItem = (fromIndex, toIndex) => {
     const updatedItems = [...items];
     const [movedItem] = updatedItems.splice(fromIndex, 1);
     updatedItems.splice(toIndex, 0, movedItem);
