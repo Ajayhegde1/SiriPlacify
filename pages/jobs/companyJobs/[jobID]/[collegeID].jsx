@@ -40,7 +40,7 @@ export default function College() {
 
   const [collegeName, setCollegeName] = useState("");
   const [status, setStatus] = useState(1);
-
+  const [currentStatus, setCurrentStatus] = useState(0);
   const { jobID, collegeID } = router.query;
   console.log(collegeID);
 
@@ -678,6 +678,7 @@ export default function College() {
       (student) => student.studentStatus === "0"
     );
     setFilteredStudentList(filtered);
+    setCurrentStatus(0);
   };
 
   const setShortlisted = () => {
@@ -686,6 +687,7 @@ export default function College() {
       (student) => student.studentStatus === "1"
     );
     setFilteredStudentList(filtered);
+    setCurrentStatus(1);
   };
 
   const setTest = () => {
@@ -694,6 +696,7 @@ export default function College() {
       (student) => student.studentStatus === "2"
     );
     setFilteredStudentList(filtered);
+    setCurrentStatus(2);
   };
 
   const setInterview = () => {
@@ -702,6 +705,7 @@ export default function College() {
       (student) => student.studentStatus === "3"
     );
     setFilteredStudentList(filtered);
+    setCurrentStatus(3);
   };
 
   const setHired = () => {
@@ -710,6 +714,7 @@ export default function College() {
       (student) => student.studentStatus === "4"
     );
     setFilteredStudentList(filtered);
+    setCurrentStatus(4);
   };
 
   const setRejected = () => {
@@ -718,6 +723,7 @@ export default function College() {
       (student) => student.studentStatus === "5"
     );
     setFilteredStudentList(filtered);
+    setCurrentStatus(5);
   };
 
   return (
@@ -797,6 +803,7 @@ export default function College() {
                 promoteStudents={promoteStudents}
                 setPromoteStudents={setPromoteStudents}
                 jobID={jobID}
+                currentStatus={currentStatus}
                 collegeID={collegeID}
               />
             )}
