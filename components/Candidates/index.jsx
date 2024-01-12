@@ -10,12 +10,12 @@ export default function Candidates({
   promoteStudents,
   setPromoteStudents,
   jobID,
-  currentStatus,
+  currentOverallStatus,
   collegeID,
   isStudentsList = false,
 }) {
   const router = useRouter();
-  // const [currentStatus, setCurrentStatus] = useState(0);
+  const [currentStatus, setCurrentStatus] = useState(0);
   const user = useSelector((state) => state.user);
 
   const addPromoteStudent = (event, student) => {
@@ -58,7 +58,7 @@ export default function Candidates({
 
   return (
     <div className="overflow-auto h-auto rounded-md">
-      {currentStatus == 1 ? (
+      {currentOverallStatus == 2 ? (
         <div className="w-full flex justify-end py-[10px]">
           <label className="mr-2 text-gray-700 text-[20px]">
             Filter by Assert Test:

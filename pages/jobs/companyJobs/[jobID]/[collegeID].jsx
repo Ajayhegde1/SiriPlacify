@@ -803,7 +803,7 @@ export default function College() {
                 promoteStudents={promoteStudents}
                 setPromoteStudents={setPromoteStudents}
                 jobID={jobID}
-                currentStatus={currentStatus}
+                currentOverallStatus={currentStatus}
                 collegeID={collegeID}
               />
             )}
