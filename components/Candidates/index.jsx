@@ -96,6 +96,9 @@ export default function Candidates({
           <th className="px-6 py-2 text-sm font-semibold">CGPA (/10)</th>
           <th className="px-6 py-2 text-sm font-semibold">View Profile</th>
           <th className="px-6 py-2 text-sm font-semibold">Delete Action</th>
+          <th className="px-6 py-4 text-gray-600">Details</th>
+          <th className="px-6 py-4 text-gray-600">Assert Test</th>
+
           {user === null ? (
             <></>
           ) : user.accType === "2" ? (

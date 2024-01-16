@@ -1,722 +1,745 @@
-import Candidates from '../Candidates'
+import Candidates from "../Candidates";
 
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { read, utils, writeFile } from 'xlsx'
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { read, utils, writeFile } from "xlsx";
 
-import StatusOfHire from '../StatusOfHire'
-import { notificationTypes, openNotification } from '@/utils/notifications'
+import StatusOfHire from "../StatusOfHire";
+import { notificationTypes, openNotification } from "@/utils/notifications";
 
-import LastRoundInterviewModal from '@/components/Modal/LastRoundInterviewModal'
-import UpdateStatusModal from '@/components/Modal/UpdateStatusModal'
+import LastRoundInterviewModal from "@/components/Modal/LastRoundInterviewModal";
+import UpdateStatusModal from "@/components/Modal/UpdateStatusModal";
 
-import sheet from '../../public/sheets.png'
+import sheet from "../../public/sheets.png";
 
-import { getAppliedStudents, UpdateStatus } from '@/redux/Sagas/requests/features'
+import {
+  getAppliedStudents,
+  UpdateStatus,
+} from "@/redux/Sagas/requests/features";
 
-export default function AppliedStudents ({
+export default function AppliedStudents({
   jobID,
   collegeID,
   studentList,
-  setStudentList
+  setStudentList,
 }) {
-  const [filteredStudentList, setFilteredStudentList] = useState([])
-  const [showLastRoundModal, setShowLastRoundModal] = useState(false)
-  const [isLastRound, setLastRound] = useState(false)
-  const [promoteStudents, setPromoteStudents] = useState([])
-  const [showModal, setShowModal] = useState(false)
+  const [filteredStudentList, setFilteredStudentList] = useState([]);
+  const [showLastRoundModal, setShowLastRoundModal] = useState(false);
+  const [isLastRound, setLastRound] = useState(false);
+  const [promoteStudents, setPromoteStudents] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
-  const [status, setStatus] = useState(1)
+  const [status, setStatus] = useState(1);
 
   useEffect(() => {
-    if (typeof jobID !== 'undefined') {
+    if (typeof jobID !== "undefined") {
       getAppliedStudents(jobID)
         .then((res) => {
           if (res.data.status === 200) {
-            setStudentList(res.data.data)
-            setFilteredStudentList(res.data.data.filter((student) => student.studentStatus === '0'))
+            setStudentList(res.data.data);
+            setFilteredStudentList(
+              res.data.data.filter((student) => student.studentStatus === "0")
+            );
           } else if (res.data.status === 401) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'Session ID is invalid or not present'
-            )
-            setStudentList([])
+              "Error",
+              "Session ID is invalid or not present"
+            );
+            setStudentList([]);
           } else if (res.data.status === 423) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'college ID is undefined'
-            )
-            setStudentList([])
+              "Error",
+              "college ID is undefined"
+            );
+            setStudentList([]);
           } else if (res.data.status === 424) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'Job ID needs to be defined'
-            )
-            setStudentList([])
+              "Error",
+              "Job ID needs to be defined"
+            );
+            setStudentList([]);
           } else if (res.data.status === 425) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'Job ID can not be empty'
-            )
-            setStudentList([])
+              "Error",
+              "Job ID can not be empty"
+            );
+            setStudentList([]);
           } else if (res.data.status === 426) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'unable to get job'
-            )
-            setStudentList([])
+              "Error",
+              "unable to get job"
+            );
+            setStudentList([]);
           } else if (res.data.status === 427) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'Job ID or College ID is undefined'
-            )
-            setStudentList([])
+              "Error",
+              "Job ID or College ID is undefined"
+            );
+            setStudentList([]);
           } else if (res.data.status === 428) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'Unable to retrieve students'
-            )
-            setStudentList([])
+              "Error",
+              "Unable to retrieve students"
+            );
+            setStudentList([]);
           } else if (res.data.status === 500) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'Unable to retrieve students'
-            )
-            setStudentList([])
+              "Error",
+              "Unable to retrieve students"
+            );
+            setStudentList([]);
           } else {
-            setStudentList([])
+            setStudentList([]);
           }
         })
         .catch((err) => {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Error in fetching applied students'
-          )
-        })
+            "Error",
+            "Error in fetching applied students"
+          );
+        });
     }
-  }, [jobID])
+  }, [jobID]);
 
   const setApplied = () => {
-    setStatus(1)
-    const filtered = studentList.filter((student) => student.studentStatus === '0')
-    setFilteredStudentList(filtered)
-  }
+    setStatus(1);
+    const filtered = studentList.filter(
+      (student) => student.studentStatus === "0"
+    );
+    setFilteredStudentList(filtered);
+    setCurrentStatus(0);
+  };
 
   const setShortlisted = () => {
-    setStatus(2)
-    const filtered = studentList.filter((student) => student.studentStatus === '1')
-    setFilteredStudentList(filtered)
-  }
+    setStatus(2);
+    const filtered = studentList.filter(
+      (student) => student.studentStatus === "1"
+    );
+    setFilteredStudentList(filtered);
+    setCurrentStatus(1);
+  };
 
   const setTest = () => {
-    setStatus(3)
-    const filtered = studentList.filter((student) => student.studentStatus === '2')
-    setFilteredStudentList(filtered)
-  }
+    setStatus(3);
+    const filtered = studentList.filter(
+      (student) => student.studentStatus === "2"
+    );
+    setFilteredStudentList(filtered);
+    setCurrentStatus(2);
+  };
 
   const setInterview = () => {
-    setStatus(4)
-    const filtered = studentList.filter((student) => parseInt(student.studentStatus) === 3)
-    setFilteredStudentList(filtered)
-  }
+    setStatus(4);
+    const filtered = studentList.filter(
+      (student) => parseInt(student.studentStatus) === 3
+    );
+    setFilteredStudentList(filtered);
+    setCurrentStatus(3);
+  };
 
   const setHired = () => {
-    setStatus(5)
-    const filtered = studentList.filter((student) => student.studentStatus === '4')
-    setFilteredStudentList(filtered)
-  }
+    setStatus(5);
+    const filtered = studentList.filter(
+      (student) => student.studentStatus === "4"
+    );
+    setFilteredStudentList(filtered);
+    setCurrentStatus(4);
+  };
 
   const setRejected = () => {
-    setStatus(6)
-    const filtered = studentList.filter((student) => student.studentStatus === '5')
-    setFilteredStudentList(filtered)
-  }
+    setStatus(6);
+    const filtered = studentList.filter(
+      (student) => student.studentStatus === "5"
+    );
+    setFilteredStudentList(filtered);
+    setCurrentStatus(5);
+  };
 
   const reconsiderStudents = () => {
     const studentsStatus = promoteStudents.map((student) => {
-      return { ...student, status: '0' }
-    })
+      return { ...student, status: "0" };
+    });
     const data = {
       jobID,
       collegeID,
-      candidates: studentsStatus
-    }
+      candidates: studentsStatus,
+    };
     UpdateStatus(data)
       .then((res) => {
-        if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
+        if (
+          res.data.status === 200 ||
+          res.data.status === "200" ||
+          res.data.status === "ok"
+        ) {
           openNotification(
             notificationTypes.SUCCESS,
-            'Success',
+            "Success",
             res.data.message
-          )
+          );
           setTimeout(() => {
-            window.location.reload()
-          }, 1000)
+            window.location.reload();
+          }, 1000);
         } else {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            res.data.message
-          )
+          openNotification(notificationTypes.ERROR, "Error", res.data.message);
         }
       })
       .catch((err) => {
         openNotification(
           notificationTypes.ERROR,
-          'Error',
-          'Error in updating status'
-        )
-      })
-  }
+          "Error",
+          "Error in updating status"
+        );
+      });
+  };
 
   const sendStudentsToPrevRound = () => {
     const studentsStatus = promoteStudents.map((student) => {
-      return { ...student, status: (parseInt(student.status) - 2).toString() }
-    })
+      return { ...student, status: (parseInt(student.status) - 2).toString() };
+    });
 
     const data = {
       jobID,
       collegeID,
-      candidates: studentsStatus
-    }
+      candidates: studentsStatus,
+    };
 
     UpdateStatus(data)
       .then((res) => {
-        if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
+        if (
+          res.data.status === 200 ||
+          res.data.status === "200" ||
+          res.data.status === "ok"
+        ) {
           openNotification(
             notificationTypes.SUCCESS,
-            'Success',
-            'Status updated successfully'
-          )
+            "Success",
+            "Status updated successfully"
+          );
           setTimeout(() => {
-            window.location.reload()
-          }, 1000)
+            window.location.reload();
+          }, 1000);
         } else if (res.data.status === 423) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Invalid job or college IDs'
-          )
+            "Error",
+            "Invalid job or college IDs"
+          );
         } else if (res.data.status === 424) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Unable to get jobs IDs'
-          )
+            "Error",
+            "Unable to get jobs IDs"
+          );
         } else if (res.data.status === 425) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Unable to get college IDs'
-          )
+            "Error",
+            "Unable to get college IDs"
+          );
         } else if (res.data.status === 426) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'college Mapping IDs is not available'
-          )
+            "Error",
+            "college Mapping IDs is not available"
+          );
         } else if (res.data.status === 427) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'No Candidates'
-          )
+          openNotification(notificationTypes.ERROR, "Error", "No Candidates");
         } else if (res.data.status === 428) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Unable to get student ID'
-          )
+            "Error",
+            "Unable to get student ID"
+          );
         } else if (res.data.status === 500) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Unable to get students data'
-          )
+            "Error",
+            "Unable to get students data"
+          );
         } else {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Error in updating status'
-          )
+            "Error",
+            "Error in updating status"
+          );
         }
       })
       .catch((err) => {
         openNotification(
           notificationTypes.ERROR,
-          'Error',
-          'Error in updating status'
-        )
-      })
-  }
+          "Error",
+          "Error in updating status"
+        );
+      });
+  };
 
   const notLastRoundHandler = () => {
     const stdList = filteredStudentList.map((student) => {
-      return { email: student.email, status: student.status }
-    })
+      return { email: student.email, status: student.status };
+    });
 
-    let rejectedStudents = stdList.filter((student) =>
-      promoteStudents.findIndex((std) => std.email === student.email) === -1
-    )
+    let rejectedStudents = stdList.filter(
+      (student) =>
+        promoteStudents.findIndex((std) => std.email === student.email) === -1
+    );
 
     rejectedStudents = rejectedStudents.map((student) => {
-      return { ...student, status: '5' }
-    })
+      return { ...student, status: "5" };
+    });
 
     const data = {
       jobID,
       collegeID,
-      candidates: rejectedStudents
-    }
+      candidates: rejectedStudents,
+    };
     UpdateStatus(data)
       .then((res) => {
-        if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
+        if (
+          res.data.status === 200 ||
+          res.data.status === "200" ||
+          res.data.status === "ok"
+        ) {
           openNotification(
             notificationTypes.SUCCESS,
-            'Success',
-            'Status updated successfully'
-          )
-          window.location.reload()
+            "Success",
+            "Status updated successfully"
+          );
+          window.location.reload();
         } else if (res.data.status === 423) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Invalid job or college IDs'
-          )
+            "Error",
+            "Invalid job or college IDs"
+          );
         } else if (res.data.status === 424) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Unable to get jobs IDs'
-          )
+            "Error",
+            "Unable to get jobs IDs"
+          );
         } else if (res.data.status === 425) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Unable to get college IDs'
-          )
+            "Error",
+            "Unable to get college IDs"
+          );
         } else if (res.data.status === 426) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'college Mapping IDs is not available'
-          )
+            "Error",
+            "college Mapping IDs is not available"
+          );
         } else if (res.data.status === 427) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'No Candidates'
-          )
+          openNotification(notificationTypes.ERROR, "Error", "No Candidates");
         } else if (res.data.status === 428) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Unable to get student ID'
-          )
+            "Error",
+            "Unable to get student ID"
+          );
         } else if (res.data.status === 500) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Unable to get students data'
-          )
+            "Error",
+            "Unable to get students data"
+          );
         } else {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Error in updating status'
-          )
+            "Error",
+            "Error in updating status"
+          );
         }
       })
       .catch((err) => {
         openNotification(
           notificationTypes.ERROR,
-          'Error',
-          'Error in updating status'
-        )
-      })
-  }
+          "Error",
+          "Error in updating status"
+        );
+      });
+  };
 
   const lastRoundHandler = () => {
     const stdList = filteredStudentList.map((student) => {
-      return { email: student.email, status: student.status }
-    })
+      return { email: student.email, status: student.status };
+    });
 
-    const rejectedStudents = stdList.filter((student) =>
-      promoteStudents.findIndex((std) => std.email === student.email) === -1
-    )
+    const rejectedStudents = stdList.filter(
+      (student) =>
+        promoteStudents.findIndex((std) => std.email === student.email) === -1
+    );
 
-    const studentsStatus = [...promoteStudents, ...rejectedStudents.map((student) => {
-      return { ...student, status: '5' }
-    })]
+    const studentsStatus = [
+      ...promoteStudents,
+      ...rejectedStudents.map((student) => {
+        return { ...student, status: "5" };
+      }),
+    ];
     const data = {
       jobID,
       collegeID,
-      candidates: studentsStatus
-    }
+      candidates: studentsStatus,
+    };
     UpdateStatus(data)
       .then((res) => {
-        if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
+        if (
+          res.data.status === 200 ||
+          res.data.status === "200" ||
+          res.data.status === "ok"
+        ) {
           openNotification(
             notificationTypes.SUCCESS,
-            'Success',
-            'Status updated successfully'
-          )
-          window.location.reload()
+            "Success",
+            "Status updated successfully"
+          );
+          window.location.reload();
         } else if (res.data.status === 423) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Invalid job or college IDs'
-          )
+            "Error",
+            "Invalid job or college IDs"
+          );
         } else if (res.data.status === 424) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Unable to get jobs IDs'
-          )
+            "Error",
+            "Unable to get jobs IDs"
+          );
         } else if (res.data.status === 425) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Unable to get college IDs'
-          )
+            "Error",
+            "Unable to get college IDs"
+          );
         } else if (res.data.status === 426) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'college Mapping IDs is not available'
-          )
+            "Error",
+            "college Mapping IDs is not available"
+          );
         } else if (res.data.status === 427) {
-          openNotification(
-            notificationTypes.ERROR,
-            'Error',
-            'No Candidates'
-          )
+          openNotification(notificationTypes.ERROR, "Error", "No Candidates");
         } else if (res.data.status === 428) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Unable to get student ID'
-          )
+            "Error",
+            "Unable to get student ID"
+          );
         } else if (res.data.status === 500) {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Unable to get students data'
-          )
+            "Error",
+            "Unable to get students data"
+          );
         } else {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Error in updating status'
-          )
+            "Error",
+            "Error in updating status"
+          );
         }
       })
       .catch((err) => {
         openNotification(
           notificationTypes.ERROR,
-          'Error',
-          'Error in updating status'
-        )
-      })
-  }
+          "Error",
+          "Error in updating status"
+        );
+      });
+  };
 
   const handlePromoteStudents = () => {
     const stdList = filteredStudentList.map((student) => {
-      return { email: student.email, status: student.status }
-    })
+      return { email: student.email, status: student.status };
+    });
 
-    const rejectedStudents = stdList.filter((student) =>
-      promoteStudents.findIndex((std) => std.email === student.email) === -1
-    )
+    const rejectedStudents = stdList.filter(
+      (student) =>
+        promoteStudents.findIndex((std) => std.email === student.email) === -1
+    );
 
-    const studentsStatus = [...promoteStudents, ...rejectedStudents.map((student) => {
-      return { ...student, status: '5' }
-    })]
+    const studentsStatus = [
+      ...promoteStudents,
+      ...rejectedStudents.map((student) => {
+        return { ...student, status: "5" };
+      }),
+    ];
 
     if (status === 4) {
-      setShowLastRoundModal(true)
+      setShowLastRoundModal(true);
     } else {
       const data = {
         jobID,
         collegeID,
-        candidates: studentsStatus
-      }
+        candidates: studentsStatus,
+      };
       UpdateStatus(data)
         .then((res) => {
-          if (res.data.status === 200 || res.data.status === '200' || res.data.status === 'ok') {
+          if (
+            res.data.status === 200 ||
+            res.data.status === "200" ||
+            res.data.status === "ok"
+          ) {
             openNotification(
               notificationTypes.SUCCESS,
-              'Success',
-              'Status updated successfully'
-            )
-            window.location.reload()
+              "Success",
+              "Status updated successfully"
+            );
+            window.location.reload();
           } else if (res.data.status === 423) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'Invalid job or college IDs'
-            )
+              "Error",
+              "Invalid job or college IDs"
+            );
           } else if (res.data.status === 424) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'Unable to get jobs IDs'
-            )
+              "Error",
+              "Unable to get jobs IDs"
+            );
           } else if (res.data.status === 425) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'Unable to get college IDs'
-            )
+              "Error",
+              "Unable to get college IDs"
+            );
           } else if (res.data.status === 426) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'college Mapping IDs is not available'
-            )
+              "Error",
+              "college Mapping IDs is not available"
+            );
           } else if (res.data.status === 427) {
-            openNotification(
-              notificationTypes.ERROR,
-              'Error',
-              'No Candidates'
-            )
+            openNotification(notificationTypes.ERROR, "Error", "No Candidates");
           } else if (res.data.status === 428) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'Unable to get student ID'
-            )
+              "Error",
+              "Unable to get student ID"
+            );
           } else if (res.data.status === 500) {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'Unable to get students data'
-            )
+              "Error",
+              "Unable to get students data"
+            );
           } else {
             openNotification(
               notificationTypes.ERROR,
-              'Error',
-              'Error in updating status'
-            )
+              "Error",
+              "Error in updating status"
+            );
           }
         })
         .catch((err) => {
           openNotification(
             notificationTypes.ERROR,
-            'Error',
-            'Error in updating status'
-          )
-        })
+            "Error",
+            "Error in updating status"
+          );
+        });
     }
-  }
+  };
 
   const handleImport = ($event) => {
-    const files = $event.target.files
+    const files = $event.target.files;
     if (files.length) {
-      const file = files[0]
-      const reader = new FileReader()
+      const file = files[0];
+      const reader = new FileReader();
       reader.onload = (event) => {
-        const wb = read(event.target.result)
-        const sheets = wb.SheetNames
+        const wb = read(event.target.result);
+        const sheets = wb.SheetNames;
 
         if (sheets.length) {
-          const rows = utils.sheet_to_json(wb.Sheets[sheets[0]])
-          const updatedData = rows
-          const data = updatedData.map(obj => {
-            return { ...obj, status: obj.status.toString() }
-          })
+          const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
+          const updatedData = rows;
+          const data = updatedData.map((obj) => {
+            return { ...obj, status: obj.status.toString() };
+          });
           const reqData = {
             jobID,
             collegeID,
-            candidates: data
-          }
+            candidates: data,
+          };
           UpdateStatus(reqData)
             .then((res) => {
-              const status = parseInt(res.data.status)
-              if (status === 200 || status === 304 || status === 'ok') {
-                openNotification(
-                  notificationTypes.SUCCESS,
-                  'Success'
-                )
-                window.location.reload()
+              const status = parseInt(res.data.status);
+              if (status === 200 || status === 304 || status === "ok") {
+                openNotification(notificationTypes.SUCCESS, "Success");
+                window.location.reload();
               } else if (res.data.status === 423) {
                 openNotification(
                   notificationTypes.ERROR,
-                  'Error',
-                  'Invalid job or college IDs'
-                )
+                  "Error",
+                  "Invalid job or college IDs"
+                );
               } else if (res.data.status === 424) {
                 openNotification(
                   notificationTypes.ERROR,
-                  'Error',
-                  'Unable to get jobs IDs'
-                )
+                  "Error",
+                  "Unable to get jobs IDs"
+                );
               } else if (res.data.status === 425) {
                 openNotification(
                   notificationTypes.ERROR,
-                  'Error',
-                  'Unable to get college IDs'
-                )
+                  "Error",
+                  "Unable to get college IDs"
+                );
               } else if (res.data.status === 426) {
                 openNotification(
                   notificationTypes.ERROR,
-                  'Error',
-                  'college Mapping IDs is not available'
-                )
+                  "Error",
+                  "college Mapping IDs is not available"
+                );
               } else if (res.data.status === 427) {
                 openNotification(
                   notificationTypes.ERROR,
-                  'Error',
-                  'No Candidates'
-                )
+                  "Error",
+                  "No Candidates"
+                );
               } else if (res.data.status === 428) {
                 openNotification(
                   notificationTypes.ERROR,
-                  'Error',
-                  'Unable to get student ID'
-                )
+                  "Error",
+                  "Unable to get student ID"
+                );
               } else if (res.data.status === 500) {
                 openNotification(
                   notificationTypes.ERROR,
-                  'Error',
-                  'Unable to get students data'
-                )
+                  "Error",
+                  "Unable to get students data"
+                );
               } else {
                 openNotification(
                   notificationTypes.ERROR,
-                  'Please check your data. It is not in the correct format.'
-                )
-                window.location.reload()
+                  "Please check your data. It is not in the correct format."
+                );
+                window.location.reload();
               }
-            }
-            )
+            })
             .catch((err) => {
               openNotification(
                 notificationTypes.ERROR,
-                'Please check your data. It is not in the correct format.'
-              )
-            })
-          setShowModal(!showModal)
-          openNotification(notificationTypes.SUCCESS, 'Sucess', 'File Uploaded Sucessfully')
+                "Please check your data. It is not in the correct format."
+              );
+            });
+          setShowModal(!showModal);
+          openNotification(
+            notificationTypes.SUCCESS,
+            "Sucess",
+            "File Uploaded Sucessfully"
+          );
         }
-      }
-      reader.readAsArrayBuffer(file)
+      };
+      reader.readAsArrayBuffer(file);
     }
-  }
+  };
+  const [currentStatus, setCurrentStatus] = useState(0);
 
   return (
-    <div className='ml-2 md:ml-10 mt-5 bg-white p-4 mr-5 lg:mr-20 rounded-lg'>
-      {
-        studentList === null || typeof studentList === 'undefined'
-          ? <div />
-          : studentList.length === 0
-            ? <>
-            </>
-            : <StatusOfHire
-                students={studentList}
-                status={status}
-                setStatus={setStatus}
-                setApplied={setApplied}
-                setShortlisted={setShortlisted}
-                setTest={setTest}
-                setInterview={setInterview}
-                setHired={setHired}
-                setRejected={setRejected}
-              />
-      }
-      <div className='ml-3 md:ml-6 mt-3 md:mt-6 lg:mt-10'>
+    <div className="ml-2 md:ml-10 mt-5 bg-white p-4 mr-5 lg:mr-20 rounded-lg">
+      {studentList === null || typeof studentList === "undefined" ? (
+        <div />
+      ) : studentList.length === 0 ? (
+        <></>
+      ) : (
+        <StatusOfHire
+          students={studentList}
+          status={status}
+          setStatus={setStatus}
+          setApplied={setApplied}
+          setShortlisted={setShortlisted}
+          setTest={setTest}
+          setInterview={setInterview}
+          setHired={setHired}
+          setRejected={setRejected}
+        />
+      )}
+      <div className="ml-3 md:ml-6 mt-3 md:mt-6 lg:mt-10">
         <button
           onClick={() => setShowModal(true)}
-          className='flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3'
+          className="flex hover:bg-customBlueFour rounded-2xl text-black font-bold font-DMSANS text-base border-2 border-black px-4 py-3"
         >
           <Image
             src={sheet}
-            alt='Import from excel'
-            className='h-5 mt-1 mr-2'
+            alt="Import from excel"
+            className="h-5 mt-1 mr-2"
             width={20}
             height={20}
           />
           Import from excel
         </button>
       </div>
-      {
-        filteredStudentList === null || typeof filteredStudentList === 'undefined'
-          ? <div>
-            Loading...
-          </div>
-          : filteredStudentList.length === 0
-            ? <div className='mt-6 mb-3 ml-6 font-medium'>
-              No students have applied yet
-            </div>
-            : <>
-              <Candidates
-                students={filteredStudentList}
-                promoteStudents={promoteStudents}
-                setPromoteStudents={setPromoteStudents}
-                jobID={jobID}
-              />
-              <div className='flex justify-end'>
-                {
-                  status === 6
-                    ? (
-                      <div className='flex'>
-                        <button
-                          type='button'
-                          className='mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-                          onClick={reconsiderStudents}
-                        >
-                          Reconsider Students
-                        </button>
-                      </div>
-                      )
-                    : (
-                      <></>
-                      )
-                }
-                {
-                  status !== 6 && status !== 1
-                    ? (
-                      <div className='flex'>
-                        <button
-                          type='button'
-                          className='mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-                          onClick={sendStudentsToPrevRound}
-                        >
-                          Send to previous round
-                        </button>
-                      </div>
-                      )
-                    : (
-                      <></>
-                      )
-                }
-                {
-                  status >= 5
-                    ? <>
-                    </>
-                    : <div className='flex'>
-                      <button
-                        type='button'
-                        className='mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-                        onClick={handlePromoteStudents}
-                      >
-                        Send to next round
-                      </button>
-                    </div>
-                }
+      {filteredStudentList === null ||
+      typeof filteredStudentList === "undefined" ? (
+        <div>Loading...</div>
+      ) : filteredStudentList.length === 0 ? (
+        <div className="mt-6 mb-3 ml-6 font-medium">
+          No students have applied yet
+        </div>
+      ) : (
+        <>
+          <Candidates
+            students={filteredStudentList}
+            currentOverallStatus={currentStatus}
+            promoteStudents={promoteStudents}
+            setPromoteStudents={setPromoteStudents}
+            jobID={jobID}
+          />
+          <div className="flex justify-end">
+            {status === 6 ? (
+              <div className="flex">
+                <button
+                  type="button"
+                  className="mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={reconsiderStudents}
+                >
+                  Reconsider Students
+                </button>
               </div>
-            </>
-      }
+            ) : (
+              <></>
+            )}
+            {status !== 6 && status !== 1 ? (
+              <div className="flex">
+                <button
+                  type="button"
+                  className="mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={sendStudentsToPrevRound}
+                >
+                  Send to previous round
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
+            {status >= 5 ? (
+              <></>
+            ) : (
+              <div className="flex">
+                <button
+                  type="button"
+                  className="mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={handlePromoteStudents}
+                >
+                  Send to next round
+                </button>
+              </div>
+            )}
+          </div>
+        </>
+      )}
       <LastRoundInterviewModal
         showModal={showLastRoundModal}
         setShowModal={setShowLastRoundModal}
@@ -731,5 +754,5 @@ export default function AppliedStudents ({
         ImportExcel={handleImport}
       />
     </div>
-  )
+  );
 }

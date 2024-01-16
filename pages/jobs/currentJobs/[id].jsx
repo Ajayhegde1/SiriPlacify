@@ -6,7 +6,7 @@ import { Spin } from "antd";
 import Sidebar from "@/components/SideBar";
 import DocHeader from "@/components/DocHeader";
 
-import { getJob } from "@/redux/Sagas/requests/features";
+import { getSpecificJobApplication } from "@/redux/Sagas/requests/features";
 import { routes } from "@/constants/routes";
 
 import { notificationTypes, openNotification } from "@/utils/notifications";
