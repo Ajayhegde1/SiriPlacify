@@ -285,30 +285,25 @@ export default function UserManagement() {
             </div>
           </div>
           <div className="ml-2 md:ml-6 grid grid-cols-1 gap-4">
-            {departmentList === null ? (
-              <Spin size="large" />
-            ) : departmentList.length === 0 ? (
-              <div />
-            ) : (
-              <div class="mt-2 mb-6">
-                <label
-                  class="block font-semibold text-black text-md font-bold mb-1"
-                  for="username"
-                >
-                  Select Stream
-                </label>
-                <Select
-                  options={departmentList}
-                  placeholder="Select Stream"
-                  value={stream}
-                  onChange={handleSelect}
-                  isSearchable
-                  components={animatedComponents}
-                  closeMenuOnSelect={false}
-                  isMulti={false}
-                />
-              </div>
-            )}
+            <div class="mt-2 mb-6">
+              <label
+                class="block font-semibold text-black text-md font-bold mb-1"
+                for="username"
+              >
+                Select Stream
+              </label>
+              <Select
+                options={departmentList}
+                placeholder="Select Stream"
+                value={stream}
+                onChange={handleSelect}
+                isSearchable
+                components={animatedComponents}
+                closeMenuOnSelect={false}
+                isMulti={false}
+              />
+            </div>
+
             <div>
               <TextArea
                 label="Student description"
