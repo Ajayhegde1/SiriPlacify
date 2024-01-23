@@ -41,19 +41,15 @@ export default function College() {
         if (res.data.status === 200) {
           setStudentData(res.data.data);
         } else {
-          openNotification(
-            notificationTypes.ERROR,
-            "Error",
-            "Error while fetching dashboard data"
-          );
+          // openNotification(
+          //   notificationTypes.ERROR,
+          //   "Error",
+          //   "Error while fetching dashboard data"
+          // );
         }
       })
       .catch((err) => {
-        openNotification(
-          notificationTypes.ERROR,
-          "Error",
-          "Error while fetching dashboard data"
-        );
+        console.log(err);
       });
   }, []);
   // console.log(studentData);
@@ -63,19 +59,15 @@ export default function College() {
         if (res.data.status === 200) {
           setDashboardData(res.data.data);
         } else {
-          openNotification(
-            notificationTypes.ERROR,
-            "Error",
-            "Error while fetching dashboard data"
-          );
+          // openNotification(
+          //   notificationTypes.ERROR,
+          //   "Error",
+          //   "Error while fetching dashboard data"
+          // );
         }
       })
       .catch((err) => {
-        openNotification(
-          notificationTypes.ERROR,
-          "Error",
-          "Error while fetching dashboard data"
-        );
+        console.log(err);
       });
   }, []);
 
@@ -96,15 +88,11 @@ export default function College() {
           setCount(Object.values(sectorCounts));
           setChartData(data);
         } else {
-          openNotification(notificationTypes.ERROR, "Error", res.data.message);
+          // openNotification(notificationTypes.ERROR, "Error", res.data.message);
         }
       })
       .catch((err) => {
-        openNotification(
-          notificationTypes.ERROR,
-          "Error",
-          "Something went wrong!"
-        );
+        console.log(err);
       });
   }, []);
 
@@ -175,7 +163,7 @@ export default function College() {
               />
             </div>
           </div>
-          <BranchWiseStatistics />
+          {/* <BranchWiseStatistics /> */}
           <YearwiseGraphComponent />
           <SectorTrendGraphComponent />
           <BranchWiseLineGraph />

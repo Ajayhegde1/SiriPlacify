@@ -20,19 +20,10 @@ export default function AchievementCarousel() {
           setAchievements(res.data.data);
           console.log(achievements);
         } else {
-          openNotification(
-            notificationTypes.ERROR,
-            "Error",
-            "Something went wrong"
-          );
         }
       })
       .catch((err) => {
-        openNotification(
-          notificationTypes.ERROR,
-          "Error",
-          "Something went wrong"
-        );
+        console.log(err);
       });
   }, []);
 

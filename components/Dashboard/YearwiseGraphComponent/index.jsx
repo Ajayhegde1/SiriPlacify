@@ -46,12 +46,12 @@ export default function YearwiseGraphComponent() {
           setCompanies(data.map((item) => item.companiesVisited));
           setStudents(data.map((item) => item.studentsRegistered));
         } else {
-          openNotification(notificationTypes.ERROR, "Error", res.data.message);
+          // openNotification(notificationTypes.ERROR, "Error", res.data.message);
         }
       })
       .catch((err) => {
         console.log(err);
-        openNotification(notificationTypes.ERROR, "Error", "No data to show");
+        // openNotification(notificationTypes.ERROR, "Error", "No data to show");
       });
   }, []);
 

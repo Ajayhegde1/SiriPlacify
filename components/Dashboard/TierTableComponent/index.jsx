@@ -18,18 +18,14 @@ export default function TierTableComponent() {
           }));
           setTierOffers(responseData);
         } else {
-          openNotification(
-            notificationTypes.ERROR,
-            "Error in fetching Tier Offers"
-          );
+          // openNotification(
+          //   notificationTypes.ERROR,
+          //   "Error in fetching Tier Offers"
+          // );
         }
       })
       .catch((err) => {
-        openNotification(
-          notificationTypes.ERROR,
-          "Error",
-          "Error in fetching Tier Offers"
-        );
+        console.log(err);
       });
   }, []);
 
@@ -38,10 +34,6 @@ export default function TierTableComponent() {
       <h2 class="ml-3 mt-2 mb-3 text-2xl font-bold mb-2">Tier Offers</h2>
       <table class="w-full">
         {tierOffers === null ? (
-          <div className="flex justify-center items-center">
-            <Spin size="large" />
-          </div>
-        ) : Object.keys(tierOffers).length === 0 ? (
           <tr class="border-b border-gray-300">
             <td class="py-2 px-4 text-base md:text-xl font-medium">No Tiers</td>
           </tr>

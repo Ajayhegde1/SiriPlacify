@@ -148,10 +148,6 @@ export default function SectorWisePlacementGraph({ chartData, sector, count }) {
 
       {chartData === null ? (
         <div className="flex-grow flex justify-center items-center">
-          <Spin size="large" />
-        </div>
-      ) : Object.keys(chartData).length === 0 ? (
-        <div className="flex-grow flex justify-center items-center">
           <h1 className="text-lg md:text-2xl font-bold text-black">
             No data to display
           </h1>

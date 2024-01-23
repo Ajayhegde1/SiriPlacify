@@ -84,19 +84,49 @@ export function TopBar({ sidebar }) {
               <div className="h-[2px] w-full bg-[#BBBBBB]"></div>
               <div className="flex flex-col gap-y-[16px]">
                 <div className="">
-                  <a
-                    className="menu-link cursor-pointer flex gap-[12px] items-center"
-                    href="/editProfile"
-                  >
-                    <Image
-                      src={editProfile}
-                      className=""
-                      alt="logo for placement policy"
-                    />
-                    <span className="text-[16px] font-[400] text-[#5D5B74]">
-                      Edit Profile
-                    </span>
-                  </a>
+                  {user.accType === "0" ? (
+                    <a
+                      className="menu-link cursor-pointer flex gap-[12px] items-center"
+                      href="/editProfile"
+                    >
+                      <Image
+                        src={editProfile}
+                        className=""
+                        alt="logo for placement policy"
+                      />
+                      <span className="text-[16px] font-[400] text-[#5D5B74]">
+                        Edit Profile
+                      </span>
+                    </a>
+                  ) : user.accType === "1" ? (
+                    <a
+                      className="menu-link cursor-pointer flex gap-[12px] items-center"
+                      href="/editStudentProfile"
+                    >
+                      <Image
+                        src={editProfile}
+                        className=""
+                        alt="logo for placement policy"
+                      />
+                      <span className="text-[16px] font-[400] text-[#5D5B74]">
+                        Edit Profile
+                      </span>
+                    </a>
+                  ) : (
+                    <a
+                      className="menu-link cursor-pointer flex gap-[12px] items-center"
+                      href="/editCompanyProfile"
+                    >
+                      <Image
+                        src={editProfile}
+                        className=""
+                        alt="logo for placement policy"
+                      />
+                      <span className="text-[16px] font-[400] text-[#5D5B74]">
+                        Edit Profile
+                      </span>
+                    </a>
+                  )}
                 </div>
                 <div className="flex" onClick={() => handleSignOut()}>
                   <a className="menu-link cursor-pointer flex gap-[12px] items-center">
