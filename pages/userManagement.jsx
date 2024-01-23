@@ -20,7 +20,7 @@ import { accountType } from "@/constants/users";
 import { routes } from "@/constants/routes";
 import { notificationTypes, openNotification } from "@/utils/notifications";
 import { GET, POST } from "@/config/api";
-import { genderList } from "@/constants/addJobDropDowns";
+import { genderListUserMgmt } from "@/constants/addJobDropDowns";
 import { TopBar } from "@/components/TopBar";
 
 export default function UserManagement() {
@@ -43,7 +43,7 @@ export default function UserManagement() {
   const [studentPGMarks, setStudentPGMarks] = useState();
   const [studentID, setStudentID] = useState("");
   const [userDescription, setUserDescription] = useState("");
-  const [gender, setGender] = useState(genderList[0].value);
+  const [gender, setGender] = useState(genderListUserMgmt[0].value);
   const [contactNo, setContactNo] = useState("");
   const [accType, setAccType] = useState(accountType[0].value);
   const [stream, setStream] = useState({});
@@ -338,7 +338,7 @@ export default function UserManagement() {
               <SingleSelectComponent
                 value={gender}
                 onChangeHandler={(e) => setGender(e.target.value)}
-                options={genderList}
+                options={genderListUserMgmt}
                 label="Select Gender"
               />
             </div>

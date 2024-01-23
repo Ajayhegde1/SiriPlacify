@@ -44,6 +44,24 @@ export const genderList = [
     label: "All",
   },
 ];
+export const genderListUserMgmt = [
+  {
+    id: 0,
+    value: "Gender",
+    label: "Gender",
+  },
+
+  {
+    id: 1,
+    value: "Male",
+    label: "Male",
+  },
+  {
+    id: 2,
+    value: "Female",
+    label: "Female",
+  },
+];
 
 export const modeOfSelectionList = [
   {
