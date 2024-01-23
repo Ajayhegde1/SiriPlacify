@@ -10,31 +10,64 @@ import { getCollegeAchievements } from "@/redux/Sagas/requests/features";
 import { notificationTypes, openNotification } from "@/utils/notifications";
 import { Spin } from "antd";
 
-export default function AchievementCarousel() {
+export default function AchievementsGeneral() {
   const [achievements, setAchievements] = useState(null);
+  const collegeId = 1;
 
+  //     getCollegeAchievements()
+  //       .then((res) => {
+  //         if (res.data.status === 200) {
+  //           setAchievements(res.data.data);
+  //           console.log(achievements);
+  //         } else {
+  //           openNotification(
+  //             notificationTypes.ERROR,
+  //             "Error",
+  //             "Something went wrong"
+  //           );
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         openNotification(
+  //           notificationTypes.ERROR,
+  //           "Error",
+  //           "Something went wrong"
+  //         );
+  //       });
+  //   }, []);
   useEffect(() => {
-    getCollegeAchievements()
-      .then((res) => {
-        if (res.data.status === 200) {
-          setAchievements(res.data.data);
-          console.log(achievements);
-        } else {
-          openNotification(
-            notificationTypes.ERROR,
-            "Error",
-            "Something went wrong"
-          );
-        }
-      })
-      .catch((err) => {
-        openNotification(
-          notificationTypes.ERROR,
-          "Error",
-          "Something went wrong"
+    const fetchCollegeAchievements = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8000/getGeneralCollegeAchievements",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              collegeId: collegeId,
+            }),
+          }
         );
-      });
-  }, []);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.status === "ok") {
+          setAchievements(data.message);
+        } else {
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    };
+
+    fetchCollegeAchievements();
+  }, [collegeId]);
 
   const responsive = {
     desktop: {

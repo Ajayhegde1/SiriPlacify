@@ -229,7 +229,7 @@ export default function EditCompanyProfile() {
                       <div className="mt-[10px] flex justify-center">
                         <label
                           className={
-                            "custom-button w-[135px] text-center text-white font-medium py-2 px-4 rounded hover:bg-green-600"
+                            "custom-button w-[135px] bg-green-500 text-center text-white font-medium py-2 px-4 rounded hover:bg-green-600"
                           }
                         >
                           Upload
@@ -272,6 +272,7 @@ export default function EditCompanyProfile() {
                       type="text"
                       value={companyWebsite}
                       onChangeHandler={websiteHandleChange}
+                      required
                     />
                   </div>
                 </div>

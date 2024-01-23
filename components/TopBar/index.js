@@ -17,6 +17,7 @@ const shapeStyles = { bgcolor: "primary.main", width: 40, height: 40 };
 const shapeCircleStyles = { borderRadius: "50%" };
 const rectangle = <Box component="span" sx={shapeStyles} />;
 export function TopBar({ sidebar }) {
+  const user = useSelector((state) => state.user);
   var Notifications = useSelector((state) => state.notifications);
   if (Notifications == null) {
     Notifications = 0;
@@ -77,13 +78,15 @@ export function TopBar({ sidebar }) {
               <div className="flex justify-between items-center gap-[8px]">
                 <Image src={profileImg}></Image>
                 <div className="text-[16px] font-[600] text-[#3B3B3B]">
-                  PesuVentureLabs
+                  {user === null ? " " : user.username}
                 </div>
               </div>
               <div className="h-[2px] w-full bg-[#BBBBBB]"></div>
               <div className="flex flex-col gap-y-[16px]">
                 <div className="">
-                  <a
+
+
+{user.accType==='0'?(<a
                     className="menu-link cursor-pointer flex gap-[12px] items-center"
                     href="/editProfile"
                   >
@@ -95,7 +98,42 @@ export function TopBar({ sidebar }) {
                     <span className="text-[16px] font-[400] text-[#5D5B74]">
                       Edit Profile
                     </span>
-                  </a>
+                  </a>): user.accType==='1'?( <a
+                    className="menu-link cursor-pointer flex gap-[12px] items-center"
+                    href="/editStudentProfile"
+                  >
+                    <Image
+                      src={editProfile}
+                      className=""
+                      alt="logo for placement policy"
+                    />
+                    <span className="text-[16px] font-[400] text-[#5D5B74]">
+                      Edit Profile
+                    </span>
+                  </a>):(<a
+                    className="menu-link cursor-pointer flex gap-[12px] items-center"
+                    href="/editCompanyProfile"
+                  >
+                    <Image
+                      src={editProfile}
+                      className=""
+                      alt="logo for placement policy"
+                    />
+                    <span className="text-[16px] font-[400] text-[#5D5B74]">
+                      Edit Profile
+                    </span>
+                  </a>)}
+
+                  
+
+                 
+
+
+
+
+                  
+
+
                 </div>
                 <div className="flex" onClick={() => handleSignOut()}>
                   <a className="menu-link cursor-pointer flex gap-[12px] items-center">

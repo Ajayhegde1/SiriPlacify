@@ -27,6 +27,7 @@ import {
 } from "@/constants/addJobDropDowns";
 import { routes } from "@/constants/routes";
 import { TopBar } from "@/components/TopBar";
+import ApplicableCourseSelector from "./ApplicableCourseSelector";
 
 export default function AddJob() {
   const [isRequired, setIsRequired] = useState(false);
@@ -37,20 +38,27 @@ export default function AddJob() {
 
   const user = useSelector((state) => state.user);
 
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [assertCertification, setAssertCertification] = useState(false);
   const [btnText, setBtnText] = useState("Save");
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
   const [designation, setDesignation] = useState("");
   const [locationOfWork, setLocationOfWork] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
-  const [ctc, setCtc] = useState();
-  const [basePay, setBasePay] = useState();
-  const [variablePay, setVariablePay] = useState();
-  const [RSU, setRSU] = useState();
-  const [tenthMarks, setTenthMarks] = useState();
-  const [twelfthMarks, setTwelfthMarks] = useState();
-  const [UGCgpa, setUGCgpa] = useState();
-  const [applicableCourses, setApplicableCourses] = useState("");
+  const [ctc, setCtc] = useState("");
+  const [basePay, setBasePay] = useState("");
+  const [variablePay, setVariablePay] = useState("");
+  const [RSU, setRSU] = useState("");
+  const [tenthMarks, setTenthMarks] = useState("");
+  const [twelfthMarks, setTwelfthMarks] = useState("");
+  const [UGCgpa, setUGCgpa] = useState("");
+  const [applicableCourses, setApplicableCourses] = useState([]);
   const [briefJobDescription, setBriefJobDescription] = useState("");
   const [bondDetails, setBondDetails] = useState("");
   const [contactPersonName, setContactPersonName] = useState("");
@@ -66,10 +74,23 @@ export default function AddJob() {
   const [companyName, setCompanyName] = useState("");
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
+  useEffect(() => {
+    if (modeOfSelection === "Online" || modeOfSelection === "Hybrid") {
+      setAssertCertification(true);
+    }
+    if (modeOfSelection === "Offline") {
+      setAssertCertification(false);
+    }
+  });
+  console.log(assertCertification);
+  const [selectedOption, setSelectedOption] = useState(null);
 
+  const handleRadioChange = (value) => {
+    setSelectedOption(value);
+  };
+  console.log(selectedOption);
   useEffect(() => {
     if (
-      finalMode !== "Final Mode of Selection" &&
       designation &&
       jobStatus !== "Job Type" &&
       locationOfWork &&
@@ -122,6 +143,9 @@ export default function AddJob() {
   function handleSector(data) {
     setSector(data);
   }
+  function handleCourses(data) {
+    setApplicableCourses(data);
+  }
 
   const addJobHandler = () => {
     if (
@@ -169,6 +193,7 @@ export default function AddJob() {
           twelfthMarks,
           UGCgpa,
           degree: selectedOptions,
+          assertCerti: selectedOption,
         };
         const Data = {
           data: jobData,
@@ -200,6 +225,7 @@ export default function AddJob() {
           twelfthMarks,
           UGCgpa,
           degree: selectedOptions,
+          assertCerti: selectedOption,
         };
         const Data = {
           data: jobData,
@@ -335,14 +361,28 @@ export default function AddJob() {
             />
           </div>
           <div>
-            <JobSectorSelect sector={sector} handleSector={handleSector} />
-            <TextField
+            <label className=" font-[700] text-[16px]">Sectors</label>
+            <div className="mt-[-20px]">
+              {" "}
+              <JobSectorSelect sector={sector} handleSector={handleSector} />
+            </div>
+
+            <div>
+              <label className=" font-[700] text-[16px]">
+                Applicable Courses
+              </label>
+              <div className="mt-[-20px]">
+                <ApplicableCourseSelector handleCourse={handleCourses} />
+              </div>
+            </div>
+
+            {/* <TextField
               label="Applicable courses"
               placeholder="Btech"
               type="text"
               value={applicableCourses}
               onChangeHandler={(e) => setApplicableCourses(e.target.value)}
-            />
+            /> */}
             <DepartmentList
               selectedOptions={selectedOptions}
               handleSelect={handleSelect}
@@ -354,13 +394,14 @@ export default function AddJob() {
                 options={modeOfSelectionList}
               />
             </div>
-            <div className="mb-8">
+            {/* <div className="mb-8">
               <SingleSelectComponent
                 value={finalMode}
                 onChangeHandler={(e) => setFinalMode(e.target.value)}
                 options={finalSelection}
               />
-            </div>
+            </div> */}
+
             <div className="mb-8">
               <SingleSelectComponent
                 value={gender}
@@ -396,6 +437,37 @@ export default function AddJob() {
                   {selectedFile.name}
                 </div>
               )}
+            </div>
+            <div className="mt-[20px] mb-[20px]">
+              <label
+                title="Enter tooltip text"
+                className=" font-[700] text-[16px]"
+              >
+                Assert Certification
+              </label>
+              <div className="mt-[10px]">
+                <div className="flex gap-[20px]">
+                  <label>
+                    <input
+                      type="radio"
+                      value="yes"
+                      checked={selectedOption === "yes"}
+                      onChange={() => handleRadioChange("yes")}
+                    />{" "}
+                    Yes
+                  </label>
+                  <br />
+                  <label>
+                    <input
+                      type="radio"
+                      value="no"
+                      checked={selectedOption === "no"}
+                      onChange={() => handleRadioChange("no")}
+                    />{" "}
+                    No
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
