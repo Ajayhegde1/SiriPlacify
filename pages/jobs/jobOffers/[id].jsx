@@ -83,12 +83,12 @@ export default function JobOffers() {
                 )
               }
             })
-            .catch((err) => {
-              openNotification(
-                notificationTypes.ERROR,
-                'Error'
-              )
-            })
+            //.catch((err) => {
+              // openNotification(
+              //   notificationTypes.ERROR,
+              //   'Error'
+              // )
+            //})
         }
       }
     }
