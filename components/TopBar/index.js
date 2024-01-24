@@ -41,7 +41,7 @@ export function TopBar({ sidebar }) {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
   return (
-    <section className="w-screen h-[80px] bg-white fixed top-0 flex justify-between pl-[130px] pr-[80px] items-center gap-[30px]">
+    <section className="w-screen h-[80px] bg-white fixed top-0 flex justify-between pl-[130px] pr-[80px] items-center gap-[30px] z-40">
       <Image
         className={sidebar ? "opacity-0" : "opacity-100"}
         src={logoImg}
