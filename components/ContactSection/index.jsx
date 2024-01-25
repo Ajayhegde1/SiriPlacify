@@ -28,7 +28,7 @@ export default function ContactSection() {
         method="POST"
         target="_blank"
       >
-        <div className="mt-20 mx-6 md:mx-12 lg:mx-20 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="mt-20 mx-6 md:mx-12 lg:mx-20 grid grid-cols-1 lg:grid-cols-2 gap-8 ">
           <div className="hidden lg:block pl-6">
             <Image
               src={photo1}
@@ -154,7 +154,7 @@ export default function ContactSection() {
             <button
               type="submit"
               onClick={handleclick}
-              className=" my-4 w-full text-center hover:shadow-lg   bg-green-800 text-white font-SubHeading font-medium text-base px-4 py-2 rounded-md"
+              className=" my-4 w-full text-center hover:shadow-lg   bg-green-800 text-white font-SubHeading font-medium text-base px-4 py-2 rounded-[50px]"
             >
               Submit
             </button>

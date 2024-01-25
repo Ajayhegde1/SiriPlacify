@@ -26,7 +26,7 @@ export function TopBar({ sidebar }) {
   }
   const dispatch = useDispatch();
   function handleSignOut() {
-    dispatch(signOut());
+    dispatch(signOut(""));
   }
   const [anchorEl, setAnchorEl] = React.useState(null);
 

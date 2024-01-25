@@ -51,10 +51,16 @@ const Navbar = () => {
                 {link.name}
               </a>
             ))}
-            <a href="/sign-in" className={styles.btn1}>
-              Sign In
+            <a
+              href="/sign-in"
+              className={`w-[8vw] h-[5vh] rounded-[50px] bg-[#095D40] text-center flex justify-center items-center text-[17px] font-[400] text-white mr-[30px]`}
+            >
+              <p>Sign In</p>
             </a>
-            <a href="#contact" className={styles.btn}>
+            <a
+              href="#contact"
+              className={`w-[8vw] h-[5vh] rounded-[50px] bg-[#095D40] text-center flex justify-center items-center text-[17px] font-[400] text-white `}
+            >
               Book a Demo
             </a>
           </div>
