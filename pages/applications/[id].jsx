@@ -112,13 +112,13 @@ export default function JobStatus() {
           <div className="w-9/10 lg:w-4/5 2xl:w-2/3 mt-10 ml-2 md:ml-8 lg:ml-10 mr-2 md:mr-8 lg:mr-12 xl:mr-16 2xl:mr-24">
             {jobApp.jobStatus === "0" ? (
               <Image src={applied} alt="applied" className="h-full w-full" />
-            ) : jobApp.jobStatus === "1" ? (
+            ) : jobApp.jobStatus === "2" ? (
               <Image
                 src={shortlisted}
                 alt="shortlisted"
                 className="h-full w-full"
               />
-            ) : jobApp.jobStatus === "2" ? (
+            ) : jobApp.jobStatus === "1" ? (
               <Image src={test} alt="test" className="h-full w-full" />
             ) : jobApp.jobStatus === "3" ? (
               <Image
