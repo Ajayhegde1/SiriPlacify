@@ -441,10 +441,11 @@ export default function AddJob() {
             <div className="mt-[20px] mb-[20px]">
               <label
                 title="Enter tooltip text"
-                className=" font-[700] text-[16px]"
+                className=" font-[700] text-[26px]"
               >
                 Assert Certification
               </label>
+              <p>(Please Choose Yes or No)</p>
               <div className="mt-[10px]">
                 <div className="flex gap-[20px]">
                   <label>

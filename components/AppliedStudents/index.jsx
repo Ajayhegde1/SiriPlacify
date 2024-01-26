@@ -712,30 +712,32 @@ export default function AppliedStudents({
               <></>
             )}
             {status !== 6 && status !== 1 ? (
-              <div className="flex">
-                <button
-                  type="button"
-                  className="mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={sendStudentsToPrevRound}
-                >
-                  Send to previous round
-                </button>
-              </div>
+              <></>
             ) : (
+              // <div className="flex">
+              //   <button
+              //     type="button"
+              //     className="mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              //     onClick={sendStudentsToPrevRound}
+              //   >
+              //     Send to previous round
+              //   </button>
+              // </div>
               <></>
             )}
             {status >= 5 ? (
               <></>
             ) : (
-              <div className="flex">
-                <button
-                  type="button"
-                  className="mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={handlePromoteStudents}
-                >
-                  Send to next round
-                </button>
-              </div>
+              <></>
+              // <div className="flex">
+              //   <button
+              //     type="button"
+              //     className="mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              //     onClick={handlePromoteStudents}
+              //   >
+              //     Send to next round
+              //   </button>
+              // </div>
             )}
           </div>
         </>
