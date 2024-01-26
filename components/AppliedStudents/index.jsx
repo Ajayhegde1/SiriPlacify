@@ -120,21 +120,21 @@ export default function AppliedStudents({
   };
 
   const setShortlisted = () => {
-    setStatus(2);
-    const filtered = studentList.filter(
-      (student) => student.studentStatus === "1"
-    );
-    setFilteredStudentList(filtered);
-    setCurrentStatus(1);
-  };
-
-  const setTest = () => {
     setStatus(3);
     const filtered = studentList.filter(
       (student) => student.studentStatus === "2"
     );
     setFilteredStudentList(filtered);
     setCurrentStatus(2);
+  };
+
+  const setTest = () => {
+    setStatus(2);
+    const filtered = studentList.filter(
+      (student) => student.studentStatus === "1"
+    );
+    setFilteredStudentList(filtered);
+    setCurrentStatus(1);
   };
 
   const setInterview = () => {

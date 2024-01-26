@@ -682,21 +682,21 @@ export default function College() {
   };
 
   const setShortlisted = () => {
-    setStatus(2);
-    const filtered = candidates.filter(
-      (student) => student.studentStatus === "1"
-    );
-    setFilteredStudentList(filtered);
-    setCurrentStatus(1);
-  };
-
-  const setTest = () => {
     setStatus(3);
     const filtered = candidates.filter(
       (student) => student.studentStatus === "2"
     );
     setFilteredStudentList(filtered);
     setCurrentStatus(2);
+  };
+
+  const setTest = () => {
+    setStatus(2);
+    const filtered = candidates.filter(
+      (student) => student.studentStatus === "1"
+    );
+    setFilteredStudentList(filtered);
+    setCurrentStatus(1);
   };
 
   const setInterview = () => {

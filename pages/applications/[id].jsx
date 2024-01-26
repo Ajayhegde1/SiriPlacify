@@ -37,6 +37,7 @@ export default function JobStatus() {
   useEffect(() => {
     if (typeof id !== "undefined") {
       getSpecificJobApplication(id).then((res) => {
+        console.log(res);
         if (res.data.status === 200) {
           setJobApp(res.data.data);
         } else {
