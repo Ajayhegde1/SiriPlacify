@@ -76,9 +76,9 @@ export default function myApplications() {
                     <td className="font-bold whitespace-nowrap px-8 py-4 text-sm ">
                       {job.jobStatus === "0" ? (
                         <span className="text-cyan-600">Applied</span>
-                      ) : job.jobStatus === "1" ? (
-                        <span className="text-blue-600">Shortlisted</span>
                       ) : job.jobStatus === "2" ? (
+                        <span className="text-blue-600">Shortlisted</span>
+                      ) : job.jobStatus === "1" ? (
                         <span className="text-yellow-600">Test</span>
                       ) : job.jobStatus === "3" ? (
                         <span className="text-lime-600">Interview</span>
