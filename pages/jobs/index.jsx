@@ -18,10 +18,29 @@ import { getClosedJob } from "@/redux/Slices/closedJobsSlice";
 import { getClosedJobForCollege } from "@/redux/Slices/closedJobsCollegeSlice";
 
 import { routes } from "@/constants/routes";
-import { Spin } from "antd";
+import { Spin, notification } from "antd";
 import { TopBar } from "@/components/TopBar";
+import { getResume } from "@/redux/Sagas/requests/features";
+import { notificationTypes, openNotification } from "@/utils/notifications";
 
 export default function Jobs() {
+  useState(() => {
+    getResume().then((res) => {
+      console.log(res.data);
+      if (
+        res.data.status != 200 ||
+        res.data.url == null ||
+        res.data.url == undefined
+      ) {
+        router.push(routes.EDITSTUDENTPROFILE);
+        openNotification(
+          notificationTypes.INFO,
+          "Resume Missing",
+          "Please Upload Resume"
+        );
+      }
+    });
+  });
   const dispatch = useDispatch();
   const router = useRouter();
 
