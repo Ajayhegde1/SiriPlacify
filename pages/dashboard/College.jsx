@@ -59,6 +59,7 @@ export default function College() {
         if (res.data.status === 200) {
           setDashboardData(res.data.data);
         } else {
+          console.log("hi");
           // openNotification(
           //   notificationTypes.ERROR,
           //   "Error",
