@@ -75,6 +75,7 @@ export default function JobStatus() {
       document.execCommand("copy");
     }
   };
+
   return (
     <div className="min-h-screen bg-gray-200">
       <DocHeader DocTitle="My Applications" />
