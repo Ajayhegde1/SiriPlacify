@@ -54,13 +54,18 @@ export default function College() {
         if (typeof jobID !== "undefined" && typeof collegeID !== "undefined") {
           getCandidates(jobID, collegeID)
             .then((res) => {
+              console.log(res);
               if (
                 res.data.status === 200 ||
                 res.data.status === "200" ||
                 res.data.status === "ok"
               ) {
                 setCollegeName(res.data.collegeName);
-                setCandidates(res.data.data);
+                setCandidates(
+                  res.data.data.filter(
+                    (student) => student.assertResult === true
+                  )
+                );
                 setFilteredStudentList(
                   res.data.data.filter(
                     (student) => student.studentStatus === "0"

@@ -9,6 +9,7 @@ export default function StatusOfHire({
   setHired,
   setRejected,
 }) {
+  console.log(students);
   return (
     <div className="overflow-x-auto">
       <div className="mt-4 ml-2 md:ml-6 flex flex-col lg:flex-row gap-4 lg:gap-16 border-b-2 border-gray-300">

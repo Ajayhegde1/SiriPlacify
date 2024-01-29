@@ -122,7 +122,7 @@ export default function AppliedStudents({
   const setShortlisted = () => {
     setStatus(3);
     const filtered = studentList.filter(
-      (student) => student.studentStatus === "2"
+      (student) => student.studentStatus === "2" && student.assertResult != 0
     );
     setFilteredStudentList(filtered);
     setCurrentStatus(2);
@@ -131,7 +131,7 @@ export default function AppliedStudents({
   const setTest = () => {
     setStatus(2);
     const filtered = studentList.filter(
-      (student) => student.studentStatus === "1"
+      (student) => student.studentStatus === "1" && student.assertResult != 0
     );
     setFilteredStudentList(filtered);
     setCurrentStatus(1);
@@ -140,7 +140,8 @@ export default function AppliedStudents({
   const setInterview = () => {
     setStatus(4);
     const filtered = studentList.filter(
-      (student) => parseInt(student.studentStatus) === 3
+      (student) =>
+        parseInt(student.studentStatus) === 3 && student.assertResult != 0
     );
     setFilteredStudentList(filtered);
     setCurrentStatus(3);
@@ -149,7 +150,7 @@ export default function AppliedStudents({
   const setHired = () => {
     setStatus(5);
     const filtered = studentList.filter(
-      (student) => student.studentStatus === "4"
+      (student) => student.studentStatus === "4" && student.assertResult != 0
     );
     setFilteredStudentList(filtered);
     setCurrentStatus(4);
@@ -158,7 +159,7 @@ export default function AppliedStudents({
   const setRejected = () => {
     setStatus(6);
     const filtered = studentList.filter(
-      (student) => student.studentStatus === "5"
+      (student) => student.studentStatus === "5" && student.assertResult != 0
     );
     setFilteredStudentList(filtered);
     setCurrentStatus(5);

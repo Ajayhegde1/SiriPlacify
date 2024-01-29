@@ -39,6 +39,7 @@ export default function JobStatus() {
       getSpecificJobApplication(id).then((res) => {
         console.log(res);
         if (res.data.status === 200) {
+          console.log(res.data.data);
           setJobApp(res.data.data);
         } else {
           openNotification(notificationTypes.ERROR, "Error", res.data.message);
@@ -46,6 +47,7 @@ export default function JobStatus() {
       });
     }
   }, [id]);
+
   useEffect(() => {
     if (user === null) {
       router.push(routes.NOTFOUND);
@@ -157,7 +159,7 @@ export default function JobStatus() {
                   </div>
                 </div>
               </div>
-            ) : jobApp.jobStatus === "1" ? (
+            ) : jobApp.jobStatus === "2" ? (
               <div className="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
                   <h1 className="text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-16 text-3xl md:text-4xl font-Heading font-bold text-black">
@@ -214,7 +216,7 @@ export default function JobStatus() {
                   <Image src={short} alt="applied" className="h-full w-full" />
                 </div>
               </div>
-            ) : jobApp.jobStatus === "2" ? (
+            ) : jobApp.jobStatus === "1" ? (
               <div className="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
                   <h1 className="ml-[30px] mb-[-50px] md:mt-16 text-2xl md:text-2xl font-Heading font-bold text-black">

@@ -47,6 +47,7 @@ export default function CurrentJobs() {
   const [jobContactPhoneNo, setJobContactPhoneNo] = useState("");
   const [jobContactEmail, setJobContactEmail] = useState("");
   const [jobFinalSelection, setJobFinalSelection] = useState("");
+  const [assertCertiChoice, setAssertCertiChoice] = useState("");
   const [tenthMarks, setTenthMarks] = useState(0.0);
   const [twelfthMarks, setTwelfthMarks] = useState(0.0);
   const [UGCgpa, setUGCgpa] = useState(0.0);
@@ -83,6 +84,7 @@ export default function CurrentJobs() {
     if (typeof id !== "undefined") {
       getJob(id)
         .then((res) => {
+          console.log(res);
           if (res.data.status === 200) {
             setJob(res.data.data);
             console.log(res.data.data);
@@ -91,6 +93,7 @@ export default function CurrentJobs() {
             setJobTitle(res.data.data.jobTitle);
             setJobLocation(res.data.data.jobLocation);
             setJobPosition(res.data.data.jobPositionType);
+            setAssertCertiChoice(res.data.data.assertCerti);
             if (
               typeof res.data.data.jobSector !== "undefined" &&
               res.data.data.jobSector !== null &&
