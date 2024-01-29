@@ -218,8 +218,8 @@ export default function JobStatus() {
               <div className="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
                   <h1 className="ml-[30px] mb-[-50px] md:mt-16 text-2xl md:text-2xl font-Heading font-bold text-black">
-                    Copy paste the below Assert link in browser to continue to
-                    the exam
+                    Copy paste the below Skill Test link in browser to continue
+                    to the exam
                   </h1>
                   <h1 className="mt-[-20px] mx-[30px] md:mt-16 text-[10px] md:text-xl font-Heading font-bold text-black">
                     <span className="text-red-500 font-[800]">Note:</span>{" "}
@@ -231,7 +231,7 @@ export default function JobStatus() {
                     <>
                       <div className="flex justify-center flex-col ml-[50px]">
                         <h1 className="my-6 md:mt-16 text-2xl md:text-3xl font-Heading font-bold text-black">
-                          Coding Round Test Link :{" "}
+                          Technical Round Test Link :{" "}
                         </h1>
                         <div className="flex gap-[10px]">
                           <input
