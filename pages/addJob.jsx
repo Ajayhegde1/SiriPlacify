@@ -443,29 +443,38 @@ export default function AddJob() {
                 title="Enter tooltip text"
                 className=" font-[700] text-[26px]"
               >
-                Assert Certification
+                Skill Assesment :
               </label>
-              <p>(Please Choose Yes or No)</p>
+              <p className="font-[500] mt-[10px]">
+                Would you like us to conduct and manage the skill assesment for
+                this job?
+              </p>
+              <p className="mt-[5px]">
+                Note : Any further rounds/processes beyond skill assessment
+                (interview) will not be handled by our team
+              </p>
               <div className="mt-[10px]">
                 <div className="flex gap-[20px]">
                   <label>
                     <input
                       type="radio"
                       value="yes"
+                      className=" scale-150"
                       checked={selectedOption === "yes"}
                       onChange={() => handleRadioChange("yes")}
                     />{" "}
-                    Yes
+                    <span className="font-[500]"> Yes</span>
                   </label>
                   <br />
                   <label>
                     <input
                       type="radio"
                       value="no"
+                      className=" scale-150"
                       checked={selectedOption === "no"}
                       onChange={() => handleRadioChange("no")}
                     />{" "}
-                    No
+                    <span className="font-[500]"> No</span>
                   </label>
                 </div>
               </div>
