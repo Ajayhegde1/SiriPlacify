@@ -800,7 +800,7 @@ export default function College() {
               </div>
             ) : candidates.length === 0 ? (
               <div className="mt-6 mb-3 ml-6 font-medium">
-                No students have applied yet
+                Skill Assesment Underway. Kindly Wait for Test results. <br></br> For further information / support contact us at : <span className='font-700'> shiva@placify.io </span>
               </div>
             ) : (
               <Candidates
