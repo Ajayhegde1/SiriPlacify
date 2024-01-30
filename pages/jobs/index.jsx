@@ -24,23 +24,23 @@ import { getResume } from "@/redux/Sagas/requests/features";
 import { notificationTypes, openNotification } from "@/utils/notifications";
 
 export default function Jobs() {
-  useState(() => {
-    getResume().then((res) => {
-      console.log(res.data);
-      if (
-        res.data.status != 200 ||
-        res.data.url == null ||
-        res.data.url == undefined
-      ) {
-        router.push(routes.EDITSTUDENTPROFILE);
-        openNotification(
-          notificationTypes.INFO,
-          "Resume Missing",
-          "Please Upload Resume"
-        );
-      }
-    });
-  });
+ // useState(() => {
+   // getResume().then((res) => {
+     // console.log(res.data);
+      //if (
+       // res.data.status != 200 ||
+       // res.data.url == null ||
+       // res.data.url == undefined
+      //) {
+       // router.push(routes.EDITSTUDENTPROFILE);
+       // openNotification(
+        //  notificationTypes.INFO,
+         // "Resume Missing",
+         // "Please Upload Resume"
+       // );
+     // }
+  //   });
+  // });
   const dispatch = useDispatch();
   const router = useRouter();
 
