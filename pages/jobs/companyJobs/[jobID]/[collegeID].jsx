@@ -800,7 +800,9 @@ export default function College() {
               </div>
             ) : candidates.length === 0 ? (
               <div className="mt-6 mb-3 ml-6 font-medium">
-                Skill Assesment Underway. Kindly Wait for Test results. <br></br> For further information / support contact us at : <b className='font-700'> shiva@placify.io </b>
+                Skill Assesment Underway. Kindly Wait for Test results.{" "}
+                <br></br> For further information / support contact us at :{" "}
+                <b className="font-700"> shiva@placify.io </b>
               </div>
             ) : (
               <Candidates
@@ -826,7 +828,7 @@ export default function College() {
               ) : (
                 <></>
               )}
-              {status !== 6 && status !== 1 ? (
+              {status !== 6 && status !== 2 && status !== 1 ? (
                 <div className="flex">
                   <button
                     type="button"
@@ -839,7 +841,7 @@ export default function College() {
               ) : (
                 <></>
               )}
-              {status >= 5 || status == 0 ?  (
+              {status >= 5 || candidates.length === 0 || status == 1 ? (
                 <></>
               ) : (
                 <div className="flex">
