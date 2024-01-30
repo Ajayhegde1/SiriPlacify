@@ -261,7 +261,7 @@ export default function JobStatus() {
                             className="h-[40px] w-[30vw] px-[20px]  rounded-[20px]"
                             ref={textAreaRef}
                             type="text"
-                            value='https://assertify.me/organization/4/job/29441399-8b2e-4b46-a387-2cb3cb780ae5https://assertify.me/organization/4/job/29441399-8b2e-4b46-a387-2cb3cb780ae5'
+                            value='https://assertify.me/organization/4/job/29441399-8b2e-4b46-a387-2cb3cb780ae5'
                             readOnly
                           ></input>
                           <button
