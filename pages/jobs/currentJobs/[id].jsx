@@ -17,7 +17,7 @@ import ApplicableCourses from "@/components/ApplicableCourses";
 import ModeOfSelection from "@/components/ModeOfSelection";
 import CompanyContact from "@/components/CompanyContact";
 const LazyAppliedStudents = lazy(() => import("@/components/AppliedStudents"));
-const LazyJobScheduler = lazy(() => import("@/components/JobScheduler"));
+// const LazyJobScheduler = lazy(() => import("@/components/JobScheduler"));
 const LazyJobDetails = lazy(() => import("@/components/JobDetails"));
 const LazyJobBackButton = lazy(() => import("@/components/JobBackButton"));
 
@@ -170,7 +170,7 @@ export default function CurrentJobs() {
           </Suspense>
         </div>
         <Suspense fallback={<Spin size="large" />}>
-          <LazyJobScheduler jobID={id} />
+          {/* <LazyJobScheduler jobID={id} /> */}
         </Suspense>
         <div className="mt-10 ml-2 md:ml-10 pr-8 md:pr-20 flex flex-row border-b-2 border-gray-300">
           <div className="flex flex-col md:flex-row gap-4 md:gap-8">
