@@ -839,7 +839,7 @@ export default function College() {
               ) : (
                 <></>
               )}
-              {status >= 5 ? (
+              {status >= 5 ? || status == 0 (
                 <></>
               ) : (
                 <div className="flex">
