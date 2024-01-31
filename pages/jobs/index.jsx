@@ -24,23 +24,6 @@ import { getResume } from "@/redux/Sagas/requests/features";
 import { notificationTypes, openNotification } from "@/utils/notifications";
 
 export default function Jobs() {
- // useState(() => {
-   // getResume().then((res) => {
-     // console.log(res.data);
-      //if (
-       // res.data.status != 200 ||
-       // res.data.url == null ||
-       // res.data.url == undefined
-      //) {
-       // router.push(routes.EDITSTUDENTPROFILE);
-       // openNotification(
-        //  notificationTypes.INFO,
-         // "Resume Missing",
-         // "Please Upload Resume"
-       // );
-     // }
-  //   });
-  // });
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -74,7 +57,24 @@ export default function Jobs() {
       actionsToDispatch.forEach((action) => dispatch(action()));
     }
   }, [dispatch, router, user]);
-
+  useState(() => {
+    getResume().then((res) => {
+      console.log(res.data);
+      if (
+        (res.data.status != 200 ||
+          res.data.url == null ||
+          res.data.url == undefined) &&
+        user.accType === "1"
+      ) {
+        router.push(routes.EDITSTUDENTPROFILE);
+        openNotification(
+          notificationTypes.INFO,
+          "Resume Missing",
+          "Please Upload Resume"
+        );
+      }
+    });
+  });
   return (
     <div className="bg-gray-200 min-h-screen">
       <TopBar sidebar={sidebarOpen} />
