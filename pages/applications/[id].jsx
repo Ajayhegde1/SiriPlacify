@@ -226,7 +226,8 @@ export default function JobStatus() {
                   </h1>
                   <h1 className="mt-[-20px] mx-[30px] md:mt-16 text-[10px] md:text-xl font-Heading font-bold text-black">
                     <span className="text-red-500 font-[800]">Note:</span>{" "}
-                    Kindly Login / Create an Assert Account if u dont have one
+                    Create an Account in the Skill Test Website if you dont have
+                    one
                   </h1>
 
                   {typeof jobApp.testData === "undefined" ||
