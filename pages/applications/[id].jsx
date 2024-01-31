@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Sidebar from "@/components/SideBar";
 import DocHeader from "@/components/DocHeader";
@@ -241,15 +241,26 @@ export default function JobStatus() {
                             className="h-[40px] w-[30vw] px-[20px] rounded-[20px]"
                             ref={textAreaRef}
                             type="text"
-                            value={jobApp.assertexamlink}
+                            value={
+                              jobApp.assertexamlink
+                                ? jobApp.assertexamlink
+                                : "Please Wait for Test Link"
+                            }
                             readOnly
                           ></input>
-                          <button
-                            className=" border-[2px] border-black bg-gray-300 px-[20px]  rounded-[20px]"
-                            onClick={copyToClipboard}
+                          <a
+                            target="_blank"
+                            href={
+                              jobApp.assertexamlink ? jobApp.assertexamlink : ""
+                            }
                           >
-                            <FontAwesomeIcon icon={faCopy} />
-                          </button>
+                            <button
+                              className=" border-[2px] border-black bg-gray-300 px-[20px]  rounded-[20px] mt-[5px]"
+                              onClick={copyToClipboard}
+                            >
+                              <FontAwesomeIcon icon={faArrowRight} />
+                            </button>
+                          </a>
                         </div>
                       </div>
                       <div className="flex justify-center flex-col ml-[50px]">
@@ -261,15 +272,26 @@ export default function JobStatus() {
                             className="h-[40px] w-[30vw] px-[20px]  rounded-[20px]"
                             ref={textAreaRef}
                             type="text"
-                            value={jobApp.assertexamlink}
+                            value={
+                              jobApp.assertexamlink
+                                ? jobApp.assertexamlink
+                                : "Please Wait for Test Link"
+                            }
                             readOnly
                           ></input>
-                          <button
-                            className=" border-[2px] border-black bg-gray-300 px-[20px]  rounded-[20px]"
-                            onClick={copyToClipboard}
+                          <a
+                            target="_blank"
+                            href={
+                              jobApp.assertexamlink ? jobApp.assertexamlink : ""
+                            }
                           >
-                            <FontAwesomeIcon icon={faCopy} />
-                          </button>
+                            <button
+                              className=" border-[2px] border-black bg-gray-300 px-[20px]  rounded-[20px] mt-[5px]"
+                              onClick={copyToClipboard}
+                            >
+                              <FontAwesomeIcon icon={faArrowRight} />
+                            </button>
+                          </a>
                         </div>
                       </div>
                     </>

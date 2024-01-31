@@ -187,6 +187,11 @@ export default function Candidates({
                   <td className="whitespace-nowrap px-6 py-2 text-sm ">
                     {student.studentUGMarks}
                   </td>
+                  <td></td>
+                  <td></td>
+                  <td className="whitespace-nowrap px-6 py-2 text-sm ">
+                    <p className="text-green-500 text-[15px]">Pass</p>
+                  </td>
 
                   {user !== null ? (
                     user.accType === "0" ? (

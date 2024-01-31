@@ -66,7 +66,7 @@ export default function StudentInfo({
 
             {/* <Image src={photo} alt="students" /> */}
 
-            <div className="mt-6 flex justify-center">
+            {/* <div className="mt-6 flex justify-center">
               <button
                 className="w-full bg-green-900 hover:bg-green-600 text-white font-medium py-2 px-4 rounded"
                 onClick={handleUploadClick}
@@ -74,7 +74,7 @@ export default function StudentInfo({
               >
                 Upload
               </button>
-            </div>
+            </div> */}
           </div>
           <div className="col-span-1 md:col-span-2 ml-0 md:ml-6">
             <TextField
