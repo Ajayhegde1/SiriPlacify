@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Sidebar from "@/components/SideBar";
 import DocHeader from "@/components/DocHeader";
@@ -37,7 +37,9 @@ export default function JobStatus() {
   useEffect(() => {
     if (typeof id !== "undefined") {
       getSpecificJobApplication(id).then((res) => {
+        console.log(res);
         if (res.data.status === 200) {
+          console.log(res.data.data);
           setJobApp(res.data.data);
         } else {
           openNotification(notificationTypes.ERROR, "Error", res.data.message);
@@ -45,6 +47,7 @@ export default function JobStatus() {
       });
     }
   }, [id]);
+
   useEffect(() => {
     if (user === null) {
       router.push(routes.NOTFOUND);
@@ -72,6 +75,7 @@ export default function JobStatus() {
       document.execCommand("copy");
     }
   };
+
   return (
     <div className="min-h-screen bg-gray-200">
       <DocHeader DocTitle="My Applications" />
@@ -111,13 +115,13 @@ export default function JobStatus() {
           <div className="w-9/10 lg:w-4/5 2xl:w-2/3 mt-10 ml-2 md:ml-8 lg:ml-10 mr-2 md:mr-8 lg:mr-12 xl:mr-16 2xl:mr-24">
             {jobApp.jobStatus === "0" ? (
               <Image src={applied} alt="applied" className="h-full w-full" />
-            ) : jobApp.jobStatus === "1" ? (
+            ) : jobApp.jobStatus === "2" ? (
               <Image
                 src={shortlisted}
                 alt="shortlisted"
                 className="h-full w-full"
               />
-            ) : jobApp.jobStatus === "2" ? (
+            ) : jobApp.jobStatus === "1" ? (
               <Image src={test} alt="test" className="h-full w-full" />
             ) : jobApp.jobStatus === "3" ? (
               <Image
@@ -156,7 +160,7 @@ export default function JobStatus() {
                   </div>
                 </div>
               </div>
-            ) : jobApp.jobStatus === "1" ? (
+            ) : jobApp.jobStatus === "2" ? (
               <div className="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
                   <h1 className="text-center md:text-left mb-10 ml-2 md:ml-6 mt-6 md:mt-16 text-3xl md:text-4xl font-Heading font-bold text-black">
@@ -213,41 +217,22 @@ export default function JobStatus() {
                   <Image src={short} alt="applied" className="h-full w-full" />
                 </div>
               </div>
-            ) : jobApp.jobStatus === "2" ? (
+            ) : jobApp.jobStatus === "1" ? (
               <div className="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
                   <h1 className="ml-[30px] mb-[-50px] md:mt-16 text-2xl md:text-2xl font-Heading font-bold text-black">
-                    Copy paste the below Assert link in browser to continue to
-                    the exam
+                    Copy paste the below Skill Test link in browser to continue
+                    to the exam
                   </h1>
                   <h1 className="mt-[-20px] mx-[30px] md:mt-16 text-[10px] md:text-xl font-Heading font-bold text-black">
                     <span className="text-red-500 font-[800]">Note:</span>{" "}
-                    Kindly Login / Create an Assert Account if u dont have one
+                    Create an Account in the Skill Test Website if you dont have
+                    one
                   </h1>
 
                   {typeof jobApp.testData === "undefined" ||
                   jobApp.testData === null ? (
                     <>
-                      <div className="flex justify-center flex-col ml-[50px]">
-                        <h1 className="my-6 md:mt-16 text-2xl md:text-3xl font-Heading font-bold text-black">
-                          Coding Round Test Link :{" "}
-                        </h1>
-                        <div className="flex gap-[10px]">
-                          <input
-                            className="h-[40px] w-[30vw] px-[20px] rounded-[20px]"
-                            ref={textAreaRef}
-                            type="text"
-                            value={jobApp.assertexamlink}
-                            readOnly
-                          ></input>
-                          <button
-                            className=" border-[2px] border-black bg-gray-300 px-[20px]  rounded-[20px]"
-                            onClick={copyToClipboard}
-                          >
-                            <FontAwesomeIcon icon={faCopy} />
-                          </button>
-                        </div>
-                      </div>
                       <div className="flex justify-center flex-col ml-[50px]">
                         <h1 className="my-6 md:mt-16 text-2xl md:text-3xl font-Heading font-bold text-black">
                           Logical Round Test Link :{" "}
@@ -257,15 +242,57 @@ export default function JobStatus() {
                             className="h-[40px] w-[30vw] px-[20px]  rounded-[20px]"
                             ref={textAreaRef}
                             type="text"
-                            value={jobApp.assertexamlink}
+                            value={
+                              jobApp.assertexamlink
+                                ? jobApp.assertexamlink
+                                : "Please Wait For Test Link"
+                            }
                             readOnly
                           ></input>
-                          <button
-                            className=" border-[2px] border-black bg-gray-300 px-[20px]  rounded-[20px]"
-                            onClick={copyToClipboard}
+                          <a
+                            target="_blank"
+                            href={
+                              jobApp.assertexamlink ? jobApp.assertexamlink : ""
+                            }
                           >
-                            <FontAwesomeIcon icon={faCopy} />
-                          </button>
+                            <button
+                              className=" border-[2px] border-black bg-gray-300 px-[20px]  rounded-[20px] mt-[5px]"
+                              onClick={copyToClipboard}
+                            >
+                              <FontAwesomeIcon icon={faArrowRight} />
+                            </button>
+                          </a>
+                        </div>
+                      </div>
+                      <div className="flex justify-center flex-col ml-[50px]">
+                        <h1 className="my-6 md:mt-16 text-2xl md:text-3xl font-Heading font-bold text-black">
+                          Technical Round Test Link :{" "}
+                        </h1>
+                        <div className="flex gap-[10px]">
+                          <input
+                            className="h-[40px] w-[30vw] px-[20px] rounded-[20px]"
+                            ref={textAreaRef}
+                            type="text"
+                            value={
+                              jobApp.assertexamlink
+                                ? jobApp.assertexamlink
+                                : "Please Wait for Test Link"
+                            }
+                            readOnly
+                          ></input>
+                          <a
+                            target="_blank"
+                            href={
+                              jobApp.assertexamlink ? jobApp.assertexamlink : ""
+                            }
+                          >
+                            <button
+                              className=" border-[2px] border-black bg-gray-300 px-[20px]  rounded-[20px] mt-[5px]"
+                              onClick={copyToClipboard}
+                            >
+                              <FontAwesomeIcon icon={faArrowRight} />
+                            </button>
+                          </a>
                         </div>
                       </div>
                     </>

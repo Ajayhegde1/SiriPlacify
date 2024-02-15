@@ -38,7 +38,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, activePage }) => {
   }, [dispatch]);
 
   return (
-    <div className="relative">
+    <div className="relative z-50">
       <nav className={`navbar ${sidebarOpen ? "active" : ""}`}>
         <div className="navbar-container">
           <div className="navbar-logo-div">

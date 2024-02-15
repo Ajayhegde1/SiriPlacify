@@ -46,7 +46,7 @@ export default function AddJob() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [assertCertification, setAssertCertification] = useState(false);
-  const [btnText, setBtnText] = useState("Save");
+  const [btnText, setBtnText] = useState("Submit");
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
   const [designation, setDesignation] = useState("");
   const [locationOfWork, setLocationOfWork] = useState("");
@@ -199,8 +199,9 @@ export default function AddJob() {
           data: jobData,
           file: selectedFile,
         };
-        setBtnText("Saving...");
+        setBtnText("Submit");
         dispatch(addJob(Data));
+        router.push("/jobs");
       } else if (user.accType === "2") {
         const jobData = {
           jobTitle: designation,
@@ -231,8 +232,9 @@ export default function AddJob() {
           data: jobData,
           file: selectedFile,
         };
-        setBtnText("Saving...");
+        setBtnText("Submit");
         dispatch(addJobByCompany(Data));
+        router.push("/jobs");
       } else {
         openNotification(
           notificationTypes.ERROR,
@@ -441,30 +443,40 @@ export default function AddJob() {
             <div className="mt-[20px] mb-[20px]">
               <label
                 title="Enter tooltip text"
-                className=" font-[700] text-[16px]"
+                className=" font-[700] text-[26px]"
               >
-                Assert Certification
+                Skill Assesment :
               </label>
+              <p className="font-[500] mt-[10px]">
+                Would you like us to conduct and manage the skill assesment for
+                this job?
+              </p>
+              <p className="mt-[5px]">
+                Note : Any further rounds/processes beyond skill assessment
+                (interview) will not be handled by our team
+              </p>
               <div className="mt-[10px]">
                 <div className="flex gap-[20px]">
                   <label>
                     <input
                       type="radio"
                       value="yes"
+                      className=" scale-150"
                       checked={selectedOption === "yes"}
                       onChange={() => handleRadioChange("yes")}
                     />{" "}
-                    Yes
+                    <span className="font-[500]"> Yes</span>
                   </label>
                   <br />
                   <label>
                     <input
                       type="radio"
                       value="no"
+                      className=" scale-150"
                       checked={selectedOption === "no"}
                       onChange={() => handleRadioChange("no")}
                     />{" "}
-                    No
+                    <span className="font-[500]"> No</span>
                   </label>
                 </div>
               </div>

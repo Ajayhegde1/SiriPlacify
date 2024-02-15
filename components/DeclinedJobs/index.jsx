@@ -10,7 +10,7 @@ export default function DeclinedJobs ({ jobs, jobSection }) {
                       ? <Spin size='large' />
                       : jobs.length === 0
                         ? <div className='text-2xl font-Heading font-bold text-gray-500'>
-                          No offered jobs
+                          No declined jobs
                           </div>
                         : jobs.map((job, index) =>
                           <JobItem

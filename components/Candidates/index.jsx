@@ -96,15 +96,15 @@ export default function Candidates({
           <th className="px-6 py-2 text-sm font-semibold">CGPA (/10)</th>
           <th className="px-6 py-2 text-sm font-semibold">View Profile</th>
           <th className="px-6 py-2 text-sm font-semibold">Delete Action</th>
-          <th className="px-6 py-4 text-gray-600">Details</th>
+          {/* <th className="px-6 py-4 text-gray-600">Details</th> */}
           <th className="px-6 py-4 text-gray-600">Assert Test</th>
 
           {user === null ? (
             <></>
           ) : user.accType === "2" ? (
             <>
-              <th className="px-6 py-4 text-gray-600">Details</th>
-              <th className="px-6 py-4 text-gray-600">Assert Test</th>
+              {/* <th className="px-6 py-4 text-gray-600">Details</th> */}
+              {/* <th className="px-6 py-4 text-gray-600">Assert Test</th> */}
             </>
           ) : (
             <></>
@@ -187,6 +187,11 @@ export default function Candidates({
                   <td className="whitespace-nowrap px-6 py-2 text-sm ">
                     {student.studentUGMarks}
                   </td>
+                  {/* <td></td>
+                  <td></td>
+                  <td className="whitespace-nowrap px-6 py-2 text-sm ">
+                    <p className="text-green-500 text-[15px]">Pass</p>
+                  </td> */}
 
                   {user !== null ? (
                     user.accType === "0" ? (
@@ -219,7 +224,7 @@ export default function Candidates({
                       <></>
                     )
                   ) : (
-                    <></>
+                    <td></td>
                   )}
                   {user !== null ? (
                     user.accType === "0" && isStudentsList ? (
@@ -232,11 +237,14 @@ export default function Candidates({
                         </button>
                       </td>
                     ) : (
-                      <></>
+                      <td></td>
                     )
                   ) : (
-                    <></>
+                    <td></td>
                   )}
+                  <td className="whitespace-nowrap px-6 py-2 text-sm ">
+                    <p className="text-green-500 text-[15px]">Pass</p>
+                  </td>
                 </tr>
               ))
           )}

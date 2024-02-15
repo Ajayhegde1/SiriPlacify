@@ -12,7 +12,7 @@ export default function JobOffers ({ jobs }) {
               </div>
             : jobs.length === 0
               ? <div className='text-2xl font-Heading font-bold text-gray-500'>
-                No declined jobs
+                No offered jobs
                 </div>
               : jobs.map((job, index) =>
                 <JobItem

@@ -20,7 +20,7 @@ import { accountType } from "@/constants/users";
 import { routes } from "@/constants/routes";
 import { notificationTypes, openNotification } from "@/utils/notifications";
 import { GET, POST } from "@/config/api";
-import { genderList } from "@/constants/addJobDropDowns";
+import { genderListUserMgmt } from "@/constants/addJobDropDowns";
 import { TopBar } from "@/components/TopBar";
 
 export default function UserManagement() {
@@ -43,7 +43,7 @@ export default function UserManagement() {
   const [studentPGMarks, setStudentPGMarks] = useState();
   const [studentID, setStudentID] = useState("");
   const [userDescription, setUserDescription] = useState("");
-  const [gender, setGender] = useState(genderList[0].value);
+  const [gender, setGender] = useState(genderListUserMgmt[0].value);
   const [contactNo, setContactNo] = useState("");
   const [accType, setAccType] = useState(accountType[0].value);
   const [stream, setStream] = useState({});
@@ -285,30 +285,25 @@ export default function UserManagement() {
             </div>
           </div>
           <div className="ml-2 md:ml-6 grid grid-cols-1 gap-4">
-            {departmentList === null ? (
-              <Spin size="large" />
-            ) : departmentList.length === 0 ? (
-              <div />
-            ) : (
-              <div class="mt-2 mb-6">
-                <label
-                  class="block font-semibold text-black text-md font-bold mb-1"
-                  for="username"
-                >
-                  Select Stream
-                </label>
-                <Select
-                  options={departmentList}
-                  placeholder="Select Stream"
-                  value={stream}
-                  onChange={handleSelect}
-                  isSearchable
-                  components={animatedComponents}
-                  closeMenuOnSelect={false}
-                  isMulti={false}
-                />
-              </div>
-            )}
+            <div class="mt-2 mb-6">
+              <label
+                class="block font-semibold text-black text-md font-bold mb-1"
+                for="username"
+              >
+                Select Stream
+              </label>
+              <Select
+                options={departmentList}
+                placeholder="Select Stream"
+                value={stream}
+                onChange={handleSelect}
+                isSearchable
+                components={animatedComponents}
+                closeMenuOnSelect={false}
+                isMulti={false}
+              />
+            </div>
+
             <div>
               <TextArea
                 label="Student description"
@@ -338,7 +333,7 @@ export default function UserManagement() {
               <SingleSelectComponent
                 value={gender}
                 onChangeHandler={(e) => setGender(e.target.value)}
-                options={genderList}
+                options={genderListUserMgmt}
                 label="Select Gender"
               />
             </div>

@@ -252,7 +252,7 @@ export default function BasicJobInfo({
               <div />
               <div
                 onClick={() => setShowWithdrawModal(!showModal)}
-                className="mt-0 md:mt-20 ml-auto cursor-pointer rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2"
+                className="mt-0 w-[10vw] md:mt-20 ml-auto cursor-pointer rounded-lg text-base md:text-lg 2xl:text-xl bg-blue-600 text-white font-bold text-center p-2"
               >
                 Withdraw
               </div>
@@ -311,7 +311,7 @@ export default function BasicJobInfo({
               onClick={handleDeclineOffer}
               className="rounded-lg text-base md:text-lg 2xl:text-xl bg-red-500 text-white font-bold text-center p-2"
             >
-              X Decline For Now
+              X Decline
             </button>
             <button
               onClick={handleAcceptOffer}

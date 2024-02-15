@@ -12,15 +12,10 @@ export default function SalaryStatsComponents() {
         if (res.data.status === 200) {
           setSalaryStats(res.data.data);
         } else {
-          openNotification(notificationTypes.ERROR, "Error", res.data.message);
         }
       })
       .catch((err) => {
-        openNotification(
-          notificationTypes.ERROR,
-          "Error",
-          "Something went wrong"
-        );
+        console.log(err);
       });
   }, []);
 

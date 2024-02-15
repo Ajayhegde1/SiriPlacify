@@ -135,7 +135,7 @@ export default function PlacedGraphComponents({
       className={
         sideBar
           ? `h-[297px] w-[538px] mt-6 bg-[#EAFFEC] px-4 pt-4 rounded-lg flex flex-col shadow`
-          : `h-[297px] w-[590px] mt-6 bg-[#EAFFEC] px-4 pt-4 rounded-lg flex flex-col shadow`
+          : `mt-6 bg-[#EAFFEC] px-4 pt-4 py-[18px] rounded-lg flex flex-col shadow md:w-full lg:w-full mx-auto`
       }
     >
       <div className="flex flex-col gap-y-[17px] h-[78px] ">

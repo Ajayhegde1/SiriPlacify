@@ -120,27 +120,28 @@ export default function AppliedStudents({
   };
 
   const setShortlisted = () => {
-    setStatus(2);
-    const filtered = studentList.filter(
-      (student) => student.studentStatus === "1"
-    );
-    setFilteredStudentList(filtered);
-    setCurrentStatus(1);
-  };
-
-  const setTest = () => {
     setStatus(3);
     const filtered = studentList.filter(
-      (student) => student.studentStatus === "2"
+      (student) => student.studentStatus === "2" && student.assertResult != 0
     );
     setFilteredStudentList(filtered);
     setCurrentStatus(2);
   };
 
+  const setTest = () => {
+    setStatus(2);
+    const filtered = studentList.filter(
+      (student) => student.studentStatus === "1" && student.assertResult != 0
+    );
+    setFilteredStudentList(filtered);
+    setCurrentStatus(1);
+  };
+
   const setInterview = () => {
     setStatus(4);
     const filtered = studentList.filter(
-      (student) => parseInt(student.studentStatus) === 3
+      (student) =>
+        parseInt(student.studentStatus) === 3 && student.assertResult != 0
     );
     setFilteredStudentList(filtered);
     setCurrentStatus(3);
@@ -149,7 +150,7 @@ export default function AppliedStudents({
   const setHired = () => {
     setStatus(5);
     const filtered = studentList.filter(
-      (student) => student.studentStatus === "4"
+      (student) => student.studentStatus === "4" && student.assertResult != 0
     );
     setFilteredStudentList(filtered);
     setCurrentStatus(4);
@@ -158,7 +159,7 @@ export default function AppliedStudents({
   const setRejected = () => {
     setStatus(6);
     const filtered = studentList.filter(
-      (student) => student.studentStatus === "5"
+      (student) => student.studentStatus === "5" && student.assertResult != 0
     );
     setFilteredStudentList(filtered);
     setCurrentStatus(5);
@@ -712,30 +713,32 @@ export default function AppliedStudents({
               <></>
             )}
             {status !== 6 && status !== 1 ? (
-              <div className="flex">
-                <button
-                  type="button"
-                  className="mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={sendStudentsToPrevRound}
-                >
-                  Send to previous round
-                </button>
-              </div>
+              <></>
             ) : (
+              // <div className="flex">
+              //   <button
+              //     type="button"
+              //     className="mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              //     onClick={sendStudentsToPrevRound}
+              //   >
+              //     Send to previous round
+              //   </button>
+              // </div>
               <></>
             )}
             {status >= 5 ? (
               <></>
             ) : (
-              <div className="flex">
-                <button
-                  type="button"
-                  className="mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={handlePromoteStudents}
-                >
-                  Send to next round
-                </button>
-              </div>
+              <></>
+              // <div className="flex">
+              //   <button
+              //     type="button"
+              //     className="mt-6 mb-3 ml-auto mr-2 font-medium bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              //     onClick={handlePromoteStudents}
+              //   >
+              //     Send to next round
+              //   </button>
+              // </div>
             )}
           </div>
         </>

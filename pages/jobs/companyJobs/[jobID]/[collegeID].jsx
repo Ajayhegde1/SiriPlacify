@@ -54,13 +54,18 @@ export default function College() {
         if (typeof jobID !== "undefined" && typeof collegeID !== "undefined") {
           getCandidates(jobID, collegeID)
             .then((res) => {
+              console.log(res);
               if (
                 res.data.status === 200 ||
                 res.data.status === "200" ||
                 res.data.status === "ok"
               ) {
                 setCollegeName(res.data.collegeName);
-                setCandidates(res.data.data);
+                setCandidates(
+                  res.data.data.filter(
+                    (student) => student.assertResult === true
+                  )
+                );
                 setFilteredStudentList(
                   res.data.data.filter(
                     (student) => student.studentStatus === "0"
@@ -682,21 +687,21 @@ export default function College() {
   };
 
   const setShortlisted = () => {
-    setStatus(2);
-    const filtered = candidates.filter(
-      (student) => student.studentStatus === "1"
-    );
-    setFilteredStudentList(filtered);
-    setCurrentStatus(1);
-  };
-
-  const setTest = () => {
     setStatus(3);
     const filtered = candidates.filter(
       (student) => student.studentStatus === "2"
     );
     setFilteredStudentList(filtered);
     setCurrentStatus(2);
+  };
+
+  const setTest = () => {
+    setStatus(2);
+    const filtered = candidates.filter(
+      (student) => student.studentStatus === "1"
+    );
+    setFilteredStudentList(filtered);
+    setCurrentStatus(1);
   };
 
   const setInterview = () => {
@@ -795,7 +800,9 @@ export default function College() {
               </div>
             ) : candidates.length === 0 ? (
               <div className="mt-6 mb-3 ml-6 font-medium">
-                No students have applied yet
+                Skill Assesment Underway. Kindly Wait for Test results.{" "}
+                <br></br> For further information / support contact us at :{" "}
+                <b className="font-700"> shiva@placify.io </b>
               </div>
             ) : (
               <Candidates
@@ -808,6 +815,20 @@ export default function College() {
               />
             )}
             <div className="flex justify-end">
+              {status !== 6 ? (
+                <div className="flex">
+                  <button
+                    type="button"
+                    className="mt-6 mb-3 ml-auto mr-2 font-medium bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={handlePromoteStudents}
+                  >
+                    Reject
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )}
+
               {status === 6 ? (
                 <div className="flex">
                   <button
@@ -821,7 +842,7 @@ export default function College() {
               ) : (
                 <></>
               )}
-              {status !== 6 && status !== 1 ? (
+              {status !== 6 && status !== 2 && status !== 1 ? (
                 <div className="flex">
                   <button
                     type="button"
@@ -834,7 +855,7 @@ export default function College() {
               ) : (
                 <></>
               )}
-              {status >= 5 ? (
+              {status >= 5 || candidates.length === 0 || status == 1 ? (
                 <></>
               ) : (
                 <div className="flex">

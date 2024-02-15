@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Intervals</title>
+    <!-- Include Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <!-- Container for the charts -->
+    <div id="file-chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+    <div id="overlap-chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+    <!-- JavaScript code -->
+    <script>
+        // Sample file data
+        const fileData = [
+            {
+                fileName: "File 1",
+                dateTimeFrom: Date.parse("2022-01-01T10:01:00"),
+                dateTimeTo: Date.parse("2022-01-01T10:10:00")
+            },
+            {
+                fileName: "File 2",
+                dateTimeFrom: Date.parse("2022-01-01T10:35:00"),
+                dateTimeTo: Date.parse("2022-01-01T10:44:00")
+            },
+            {
+                fileName: "File 3",
+                dateTimeFrom: Date.parse("2022-01-01T10:45:00"),
+                dateTimeTo: Date.parse("2022-01-01T10:54:00")
+            }
+        ];
+
+        // Selected interval
+        const enterDateTimeFrom = Date.parse("2022-01-01T10:20:00"); // Example start time
+        const enterDateTimeTo = Date.parse("2022-01-01T10:30:00"); // Example end time
+
+        // Function to create the file chart
+       // Function to create the file chart
+function createFileChart() {
+    const data = fileData.map(file => ({
+        x: [[file.dateTimeFrom, file.dateTimeTo]],
+        y: [file.fileName],
+        type: 'bar',
+        orientation: 'h',
+        name: file.fileName,
+        marker: {
+            color: '#3498db'
+        }
+    }));
+
+    const layout = {
+        title: 'Files Time Intervals',
+        xaxis: {
+            title: 'Timestamps'
+        },
+        yaxis: {
+            title: 'File Names'
+        },
+        showlegend: true
+    };
+
+    Plotly.newPlot('file-chart', data, layout);
+}
+
+
+        // Function to create the overlap chart
+        function createOverlapChart() {
+            const selectedInterval = {
+                x: [[enterDateTimeFrom, enterDateTimeTo]],
+                y: ['Selected Interval'],
+                type: 'bar',
+                hoverinfo: 'none',
+                name: 'Selected Interval',
+                marker: {
+                    color: checkOverlap() // Check overlap color
+                }
+            };
+
+            const layout = {
+                title: 'Overlap Intervals',
+                xaxis: {
+                    title: 'Timestamps'
+                },
+                yaxis: {
+                    title: 'Overlap Status'
+                },
+                showlegend: false
+            };
+
+            Plotly.newPlot('overlap-chart', [selectedInterval], layout);
+        }
+
+        // Function to check overlap and return color for the rectangle
+        function checkOverlap() {
+            let overlapColor = 'red'; // Default color if no overlap
+
+            // Check if any file overlaps with the selected interval
+            for (const file of fileData) {
+                const fileDateTimeFrom = file.dateTimeFrom;
+                const fileDateTimeTo = file.dateTimeTo;
+
+                if (
+                    (fileDateTimeFrom <= enterDateTimeFrom && fileDateTimeTo >= enterDateTimeTo) ||
+                    (fileDateTimeFrom >= enterDateTimeFrom && fileDateTimeTo <= enterDateTimeTo) ||
+                    (fileDateTimeFrom <= enterDateTimeFrom && fileDateTimeTo >= enterDateTimeFrom) ||
+                    (fileDateTimeFrom <= enterDateTimeTo && fileDateTimeTo >= enterDateTimeTo)
+                ) {
+                    overlapColor = 'orange'; // At least one file overlaps
+                    break; // Exit loop once overlap is found
+                }
+            }
+
+            // Check if all files overlap with the selected interval
+            const allFilesOverlap = fileData.every(file => {
+                const fileDateTimeFrom = file.dateTimeFrom;
+                const fileDateTimeTo = file.dateTimeTo;
+
+                return (fileDateTimeFrom <= enterDateTimeFrom && fileDateTimeTo >= enterDateTimeTo);
+            });
+
+            if (allFilesOverlap) {
+                overlapColor = 'green'; // All files overlap
+            }
+
+            return overlapColor;
+        }
+
+        // Create the file chart
+        createFileChart();
+
+        // Create the overlap chart
+        createOverlapChart();
+    </script>
+</body>
+</html>

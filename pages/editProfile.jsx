@@ -284,7 +284,7 @@ export default function EditProfile() {
                           />
                         )}
                       </div>
-                      <div className="mt-[10px] flex justify-center">
+                      {/* <div className="mt-[10px] flex justify-center">
                         <label
                           className={
                             "custom-button w-[135px] text-center text-white font-medium py-2 px-4 rounded hover:bg-green-600"
@@ -297,7 +297,7 @@ export default function EditProfile() {
                             onChange={handlePhotoChange}
                           />
                         </label>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                   <div className="col-span-1 md:col-span-2 ml-0 md:ml-6">

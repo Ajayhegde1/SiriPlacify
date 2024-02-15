@@ -26,7 +26,7 @@ export function TopBar({ sidebar }) {
   }
   const dispatch = useDispatch();
   function handleSignOut() {
-    dispatch(signOut());
+    dispatch(signOut(""));
   }
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -41,7 +41,7 @@ export function TopBar({ sidebar }) {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
   return (
-    <section className="w-screen h-[80px] bg-white fixed top-0 flex justify-between pl-[130px] pr-[80px] items-center gap-[30px]">
+    <section className="w-screen h-[80px] bg-white fixed top-0 flex justify-between pl-[130px] pr-[80px] items-center gap-[30px] z-40">
       <Image
         className={sidebar ? "opacity-0" : "opacity-100"}
         src={logoImg}
@@ -85,53 +85,51 @@ export function TopBar({ sidebar }) {
               <div className="flex flex-col gap-y-[16px]">
                 <div className="">
 
+                  {user.accType === "0" ? (
+                    <a
+                      className="menu-link cursor-pointer flex gap-[12px] items-center"
+                      href="/editProfile"
+                    >
+                      <Image
+                        src={editProfile}
+                        className=""
+                        alt="logo for placement policy"
+                      />
+                      <span className="text-[16px] font-[400] text-[#5D5B74]">
+                        Edit Profile
+                      </span>
+                    </a>
+                  ) : user.accType === "1" ? (
+                    <a
+                      className="menu-link cursor-pointer flex gap-[12px] items-center"
+                      href="/editStudentProfile"
+                    >
+                      <Image
+                        src={editProfile}
+                        className=""
+                        alt="logo for placement policy"
+                      />
+                      <span className="text-[16px] font-[400] text-[#5D5B74]">
+                        Edit Profile
+                      </span>
+                    </a>
+                  ) : (
+                    <a
+                      className="menu-link cursor-pointer flex gap-[12px] items-center"
+                      href="/editCompanyProfile"
+                    >
+                      <Image
+                        src={editProfile}
+                        className=""
+                        alt="logo for placement policy"
+                      />
+                      <span className="text-[16px] font-[400] text-[#5D5B74]">
+                        Edit Profile
+                      </span>
+                    </a>
+                  )}
 
-{user.accType==='0'?(<a
-                    className="menu-link cursor-pointer flex gap-[12px] items-center"
-                    href="/editProfile"
-                  >
-                    <Image
-                      src={editProfile}
-                      className=""
-                      alt="logo for placement policy"
-                    />
-                    <span className="text-[16px] font-[400] text-[#5D5B74]">
-                      Edit Profile
-                    </span>
-                  </a>): user.accType==='1'?( <a
-                    className="menu-link cursor-pointer flex gap-[12px] items-center"
-                    href="/editStudentProfile"
-                  >
-                    <Image
-                      src={editProfile}
-                      className=""
-                      alt="logo for placement policy"
-                    />
-                    <span className="text-[16px] font-[400] text-[#5D5B74]">
-                      Edit Profile
-                    </span>
-                  </a>):(<a
-                    className="menu-link cursor-pointer flex gap-[12px] items-center"
-                    href="/editCompanyProfile"
-                  >
-                    <Image
-                      src={editProfile}
-                      className=""
-                      alt="logo for placement policy"
-                    />
-                    <span className="text-[16px] font-[400] text-[#5D5B74]">
-                      Edit Profile
-                    </span>
-                  </a>)}
 
-                  
-
-                 
-
-
-
-
-                  
 
 
                 </div>
