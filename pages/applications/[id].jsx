@@ -235,17 +235,17 @@ export default function JobStatus() {
                     <>
                       <div className="flex justify-center flex-col ml-[50px]">
                         <h1 className="my-6 md:mt-16 text-2xl md:text-3xl font-Heading font-bold text-black">
-                          Technical Round Test Link :{" "}
+                          Logical Round Test Link :{" "}
                         </h1>
                         <div className="flex gap-[10px]">
                           <input
-                            className="h-[40px] w-[30vw] px-[20px] rounded-[20px]"
+                            className="h-[40px] w-[30vw] px-[20px]  rounded-[20px]"
                             ref={textAreaRef}
                             type="text"
                             value={
                               jobApp.assertexamlink
                                 ? jobApp.assertexamlink
-                                : "Please Wait for Test Link"
+                                : "Please Wait For Test Link"
                             }
                             readOnly
                           ></input>
@@ -266,17 +266,17 @@ export default function JobStatus() {
                       </div>
                       <div className="flex justify-center flex-col ml-[50px]">
                         <h1 className="my-6 md:mt-16 text-2xl md:text-3xl font-Heading font-bold text-black">
-                          Logical Round Test Link :{" "}
+                          Technical Round Test Link :{" "}
                         </h1>
                         <div className="flex gap-[10px]">
                           <input
-                            className="h-[40px] w-[30vw] px-[20px]  rounded-[20px]"
+                            className="h-[40px] w-[30vw] px-[20px] rounded-[20px]"
                             ref={textAreaRef}
                             type="text"
                             value={
                               jobApp.assertexamlink
                                 ? jobApp.assertexamlink
-                                : "Please Wait For Test Link"
+                                : "Please Wait for Test Link"
                             }
                             readOnly
                           ></input>

@@ -31,7 +31,7 @@ const Navbar = () => {
     <div className={styles.navbar}>
       <header className={styles.container}>
         <div className={styles.name}>
-          <Image className={styles.logo} src={logo} alt="logo" />
+          <Image className="ml-[70px]" src={logo} alt="logo" />
         </div>
         <div className={styles.menuIcon}>
           <AiOutlineMenu onClick={handleToggleMenu} />
@@ -53,13 +53,14 @@ const Navbar = () => {
             ))}
             <a
               href="/sign-in"
-              className={`w-[8vw] h-[5vh] rounded-[50px] bg-[#095D40] text-center flex justify-center items-center text-[17px] font-[400] text-white mr-[30px]`}
+              className={`w-[7vw] h-[5vh] rounded-[50px] bg-[#095D40] text-center flex justify-center items-center text-[17px] font-[400] text-white mr-[30px]`}
             >
               <p>Sign In</p>
             </a>
+
             <a
               href="#contact"
-              className={`w-[8vw] h-[5vh] rounded-[50px] bg-[#095D40] text-center flex justify-center items-center text-[17px] font-[400] text-white `}
+              className={`h-[5vh] rounded-[50px] bg-[#095D40] text-center flex justify-center items-center text-[17px] font-[400] w-[8vw] md:w-[10vw] sm:w-auto 2xl:w-auto lg:w-auto xl:w-auto text-white px-4 py-2 md:px-4 md:py-2 sm:px-4 sm:py-2 2xl:px-4 2xl:py-2 lg:px-4 lg:py-2 xl:px-4 xl:py-2`}
             >
               Book a Demo
             </a>

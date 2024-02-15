@@ -46,7 +46,7 @@ export default function AddJob() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [assertCertification, setAssertCertification] = useState(false);
-  const [btnText, setBtnText] = useState("Save");
+  const [btnText, setBtnText] = useState("Submit");
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
   const [designation, setDesignation] = useState("");
   const [locationOfWork, setLocationOfWork] = useState("");
@@ -199,8 +199,9 @@ export default function AddJob() {
           data: jobData,
           file: selectedFile,
         };
-        setBtnText("Saving...");
+        setBtnText("Submit");
         dispatch(addJob(Data));
+        router.push("/jobs");
       } else if (user.accType === "2") {
         const jobData = {
           jobTitle: designation,
@@ -231,8 +232,9 @@ export default function AddJob() {
           data: jobData,
           file: selectedFile,
         };
-        setBtnText("Saving...");
+        setBtnText("Submit");
         dispatch(addJobByCompany(Data));
+        router.push("/jobs");
       } else {
         openNotification(
           notificationTypes.ERROR,

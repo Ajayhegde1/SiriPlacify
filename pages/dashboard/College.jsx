@@ -87,7 +87,13 @@ export default function College() {
           );
           setSector(Object.keys(sectorCounts));
           setCount(Object.values(sectorCounts));
-          setChartData(data);
+          if (data.length == 0) {
+            setChartData(0);
+          } else {
+            setChartData(data);
+          }
+
+          console.log(chartData);
         } else {
           // openNotification(notificationTypes.ERROR, "Error", res.data.message);
         }

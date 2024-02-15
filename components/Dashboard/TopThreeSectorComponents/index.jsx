@@ -48,7 +48,7 @@ const TopThreeSectorComponents = ({ chartData, sector, count }) => {
       <h1 className="text-left pt-4 mb-6 pl-4 text-4xl font-bold text-black">
         Top Hiring Sectors
       </h1>
-      {chartData === null ? (
+      {chartData == 0 ? (
         <div className="flex justify-center items-center">
           <h1 className="text-2xl font-bold text-black">No data to display</h1>
         </div>

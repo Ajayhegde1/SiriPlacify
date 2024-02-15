@@ -35,7 +35,16 @@ export default function SectorWisePlacementGraph({ chartData, sector, count }) {
       },
     ],
   };
-
+  const emptyData = {
+    labels: [],
+    datasets: [
+      {
+        data: [1], // Any non-zero value for an empty dataset
+        backgroundColor: ["#CCCCCC"],
+        hoverBackgroundColor: ["#CCCCCC"],
+      },
+    ],
+  };
   const options = {
     responsive: true,
 
@@ -146,11 +155,13 @@ export default function SectorWisePlacementGraph({ chartData, sector, count }) {
         </div>
       </div>
 
-      {chartData === null ? (
-        <div className="flex-grow flex justify-center items-center">
-          <h1 className="text-lg md:text-2xl font-bold text-black">
-            No data to display
-          </h1>
+      {chartData == 0 ? (
+        <div
+          className="flex-grow flex justify-center"
+          style={{ height: "350px" }}
+        >
+          {/* Render the Pie chart with hardcoded empty data */}
+          <PieChart chartData={emptyData} />
         </div>
       ) : (
         <div

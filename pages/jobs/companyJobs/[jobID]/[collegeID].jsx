@@ -815,6 +815,20 @@ export default function College() {
               />
             )}
             <div className="flex justify-end">
+              {status !== 6 ? (
+                <div className="flex">
+                  <button
+                    type="button"
+                    className="mt-6 mb-3 ml-auto mr-2 font-medium bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={handlePromoteStudents}
+                  >
+                    Reject
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )}
+
               {status === 6 ? (
                 <div className="flex">
                   <button
