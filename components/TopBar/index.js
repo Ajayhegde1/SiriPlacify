@@ -84,6 +84,7 @@ export function TopBar({ sidebar }) {
               <div className="h-[2px] w-full bg-[#BBBBBB]"></div>
               <div className="flex flex-col gap-y-[16px]">
                 <div className="">
+
                   {user.accType === "0" ? (
                     <a
                       className="menu-link cursor-pointer flex gap-[12px] items-center"
@@ -127,6 +128,10 @@ export function TopBar({ sidebar }) {
                       </span>
                     </a>
                   )}
+
+
+
+
                 </div>
                 <div className="flex" onClick={() => handleSignOut()}>
                   <a className="menu-link cursor-pointer flex gap-[12px] items-center">
