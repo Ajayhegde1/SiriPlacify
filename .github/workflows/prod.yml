@@ -25,6 +25,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm install
-      - run: cp api.jsx ~/frontend/_work/Placify.io/Placify.io/config/api.jsx
+      - run: cp ~/api.jsx ~/frontend/_work/Placify.io/Placify.io/config/api.jsx
       - run: npm run build
       - run: pm2 restart all
