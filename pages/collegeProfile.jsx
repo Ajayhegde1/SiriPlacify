@@ -150,9 +150,9 @@ export default function CollegeProfile() {
             </div>
             <div className="pl-5 m-auto">
               <Image src={photo} alt="students" />
-              <div className="mt-6">
+              {/* <div className="mt-6">
                 <Button btnText="Upload" />
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="ml-6">
