@@ -3,6 +3,9 @@ import { useSelector } from "react-redux";
 import logoImg from "@/public/logo.png";
 import logout from "../../public/logout.png";
 
+import cImg from "@/public/c.svg";
+import tpImg from "@/public/tp.svg";
+import sImg from "@/public/s.svg";
 import notfiImg from "@/public/notifs.svg";
 import profileImg from "@/public/profile.svg";
 import Popover from "@mui/material/Popover";
@@ -63,7 +66,23 @@ export default function Company() {
           <div>
             <div onClick={handleClick}>
               {" "}
-              <Image className=" cursor-pointer" src={profileImg}></Image>
+              {user.accType === "0" ? (
+                <Image
+                  className="h-[5vh] w-[5vh] cursor-pointer"
+                  src={tpImg}
+                ></Image>
+              ) : user.accType === "1" ? (
+                <Image
+                  className="h-[5vh] w-[5vh] cursor-pointer"
+                  src={sImg}
+                ></Image>
+              ) : (
+                <Image
+                  className="h-[5vh] w-[5vh] cursor-pointer"
+                  src={cImg}
+                ></Image>
+              )}
+              {/* <Image className=" cursor-pointer" src={profileImg}></Image> */}
             </div>
 
             <Popover
@@ -82,7 +101,14 @@ export default function Company() {
             >
               <div className="p-[20px] w-[244px] flex flex-col gap-y-[20px] rounded-[6px]">
                 <div className="flex justify-between items-center gap-[8px]">
-                  <Image src={profileImg}></Image>
+                  {user.accType === "0" ? (
+                    <Image className="h-[5vh] w-[5vh]" src={tpImg}></Image>
+                  ) : user.accType === "1" ? (
+                    <Image className="h-[5vh] w-[5vh]" src={sImg}></Image>
+                  ) : (
+                    <Image className="h-[5vh] w-[5vh]" src={cImg}></Image>
+                  )}
+                  {/* <Image src={profileImg}></Image> */}
                   <div className="text-[16px] font-[600] text-[#3B3B3B]">
                     {user === null ? " " : user.username}
                   </div>
