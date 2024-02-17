@@ -1,0 +1,53 @@
+name: Bug Report
+description: File a bug report
+title: "bug"
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!!
+  - type: input
+    id: version
+    attributes:
+      label: Version of the software
+      description: What version of the software were you using when the bug occurred?
+      placeholder: ex. 0.1.0
+  - type: textarea
+    id: Who
+    attributes:
+      label: who [Individual / Startup / Mentor / Admin / Incubator /Investor]
+      description: Also tell us, which portal should login?
+      placeholder: Which portal
+  - type: textarea
+    id: What
+    attributes:
+      label: what is happening
+      description: Let us know, what is happening?
+      placeholder: what is happening
+  - type: textarea
+    id: WHERE
+    attributes:
+      label: Page / section
+      description: Let us know, which page does the error occurred
+      placeholder: which part of the page
+  - type: textarea
+    id: WHEN
+    attributes:
+      label: Reproducing bug
+      description: Let us know how to reproduce the bug in-order to fix it.
+      placeholder: explain the flow
+  - type: textarea
+    id: WHY
+    attributes:
+      label: Cause for problem
+      description: Let us know, which api / console error caused the problem.
+      placeholder: mention console error / api call
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Please attach some screenshots or videos.
+      description: Console Tab Screenshots/Network Tab Screenshots/ Page Screenshots
+      placeholder: Drag and Drop to attach files or Copy-Paste them.
+    validations:
+      required: tru
