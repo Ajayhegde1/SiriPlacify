@@ -90,7 +90,7 @@ export default function CompanyProfile() {
           <h1 className="text-center md:text-left mb-10 ml-3 md:ml-6 mt-12 text-3xl md:text-4xl font-Heading font-medium text-black">
             Complete your profile
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 content-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 content-center">
             <div className="col-span-1 md:col-span-2 order-last md:order-first ml-6">
               <TextField
                 label="Name of company"
@@ -103,7 +103,7 @@ export default function CompanyProfile() {
                 label="Account user name"
                 placeholder="user name"
                 type="text"
-                value={username}
+                value={user === null ? "" : user.username}
                 onChangeHandler={(e) => setUsername(e.target.value)}
               />
               <TextField
@@ -114,14 +114,14 @@ export default function CompanyProfile() {
                 onChangeHandler={(e) => setWebsite(e.target.value)}
               />
             </div>
-            <div className="pl-5 m-auto">
-              <Image src={photo} alt="students" />
-              {/* <div className='mt-6'>
+            {/* <div className="pl-5 m-auto">
+              <Image src={photo} alt="students" /> */}
+            {/* <div className='mt-6'>
                 <Button
                   btnText='Upload'
                 />
               </div> */}
-            </div>
+            {/* </div> */}
           </div>
           <div className="ml-6">
             <TextField
@@ -137,7 +137,8 @@ export default function CompanyProfile() {
                   label="Email id"
                   placeholder="xyz.@gmail.com"
                   type="text"
-                  value={emailID}
+                  disabled
+                  value={user === null ? "" : user.email}
                   onChangeHandler={(e) => setEmailID(e.target.value)}
                 />
               </div>

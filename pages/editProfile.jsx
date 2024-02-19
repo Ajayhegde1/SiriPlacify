@@ -331,6 +331,7 @@ export default function EditProfile() {
                       placeholder="xyz.@gmail.com"
                       type="text"
                       value={email}
+                      disabled="true"
                       onChangeHandler={(e) => setEmail(e.target.value)}
                     />
                   </div>

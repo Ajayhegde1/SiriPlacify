@@ -120,18 +120,19 @@ export default function JobItem({
 
       case "2":
         return (
-          <div className="min-h-[300px] 2xl:min-h-[280px] 2xl:pb-[16px] bg-white rounded-xl p-3 md:px-5 md:py-3 flex flex-col gap-4">
-            <Link
+          <Link
               href={
                 jobSection === 1
                   ? `/jobs/companyJobs/${jobID}`
                   : `/jobs/closedJobs/${jobID}`
               }
             >
+          <div className="min-h-[300px] 2xl:min-h-[280px] 2xl:pb-[16px] bg-white rounded-xl p-3 md:px-5 md:py-3 flex flex-col gap-4">
+            
               <h1 className="text-right text-base text-black font-medium">
                 {formattedDueDate}
               </h1>
-            </Link>
+            
             <div className="flex flex-col gap-4">
               <div>
                 <h1 className="text-xl font-bold text-black mt-6 mb-2">
@@ -159,6 +160,7 @@ export default function JobItem({
               </div>
             </div>
           </div>
+          </Link>
         );
 
       default:

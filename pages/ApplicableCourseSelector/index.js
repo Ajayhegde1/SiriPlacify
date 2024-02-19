@@ -23,7 +23,7 @@ export default function ApplicableCourseSelector({
     { value: "8", label: "MBA" },
     { value: "9", label: "BCA" },
     { value: "10", label: "MCA" },
-    { value: "11", label: "BDesign" },
+    { value: "11", label: "BDes." },
   ];
 
   useEffect(() => {

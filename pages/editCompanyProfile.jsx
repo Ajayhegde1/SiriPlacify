@@ -293,6 +293,7 @@ export default function EditCompanyProfile() {
                       placeholder="xyz.@gmail.com"
                       type="text"
                       value={email}
+                      disabled="true"
                       onChangeHandler={emailHandleChange}
                     />
                   </div>

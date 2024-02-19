@@ -50,7 +50,7 @@ export default function Company() {
   return (
     <div className="bg-gray-200">
       {/* <TopBar sidebar={sidebarOpen} /> */}
-      <section className="w-screen h-[80px] bg-white fixed top-0 flex justify-between pl-[130px] pr-[80px] items-center gap-[30px]">
+      <section className="w-screen h-[80px] bg-white fixed top-0 flex justify-between pl-[130px] pr-[80px] items-center gap-[30px] z-50">
         <Image
           className={sidebarOpen ? "opacity-0" : "opacity-100"}
           src={logoImg}

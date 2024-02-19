@@ -124,7 +124,7 @@ export default function CollegeProfile() {
           <h1 className="text-center md:text-left mb-10 ml-3 md:ml-6 mt-12 text-3xl md:text-4xl font-Heading font-medium text-black">
             Complete your profile
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 content-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 content-center">
             <div className="col-span-1 md:col-span-2 order-last md:order-first ml-6">
               <TextField
                 label="Name of universities / colleges"
@@ -138,7 +138,6 @@ export default function CollegeProfile() {
                 placeholder="TPO name"
                 type="text"
                 value={user === null ? "" : user.username}
-                disabled
               />
               <TextField
                 label="Website"
@@ -148,12 +147,12 @@ export default function CollegeProfile() {
                 onChangeHandler={(e) => setWebsite(e.target.value)}
               />
             </div>
-            <div className="pl-5 m-auto">
-              <Image src={photo} alt="students" />
-              {/* <div className="mt-6">
+            {/* <div className="pl-5 m-auto"> */}
+            {/* <Image src={photo} alt="students" /> */}
+            {/* <div className="mt-6">
                 <Button btnText="Upload" />
               </div> */}
-            </div>
+            {/* </div> */}
           </div>
           <div className="ml-6">
             <TextField
