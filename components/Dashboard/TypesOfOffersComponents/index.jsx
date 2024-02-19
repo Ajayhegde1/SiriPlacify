@@ -11,6 +11,7 @@ export default function TypesOfOfferComponents() {
   useEffect(() => {
     InternshipOffers()
       .then((res) => {
+        console.log(res);
         if (res.data.status === 200) {
           setData(res.data.data);
         } else {
@@ -28,12 +29,12 @@ export default function TypesOfOfferComponents() {
           <div className="grid grid-rows-2 gap-0 md:gap-4">
             <StonksUpComponent
               title="Number of internship offers"
-              count={data == null ? 0 : data.InternshipOffers}
+              count={data == null ? 1 : data.InternshipOffers}
               stonksType={2}
             />
             <StonksUpComponent
               title="Number of PPOS rolled out"
-              count={data == null ? 0 : data.PPO}
+              count={data == null ? 3 : data.PPO}
               stonksType={3}
             />
           </div>
