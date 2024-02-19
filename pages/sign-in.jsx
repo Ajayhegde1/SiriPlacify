@@ -138,10 +138,13 @@ export default function CollegeProfile() {
               )}
             </div>
           </form>
-          <div className="cursor-pointer mt-6 text-left">
-            <div onClick={() => setShowModal(!showModal)}>
-              <p className="text-base font-medium">
-                <span className="text-red-700 hover:text-red-500 hover:border-b-2 hover:border-red-500">
+          <div className=" mt-6 text-left">
+            <div>
+              <p className="w-[10vw] text-base font-medium">
+                <span
+                  onClick={() => setShowModal(!showModal)}
+                  className="text-red-700 hover:text-red-500 hover:border-b-2 hover:border-red-500 cursor-pointer"
+                >
                   Forgot Password?
                 </span>
               </p>

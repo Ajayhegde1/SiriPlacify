@@ -8,6 +8,7 @@ import Image from "next/image";
 import RadialGauge from "../RadialGauge";
 
 export default function StonksUpComponent({ title, count, stonksType = 2 }) {
+  console.log(count);
   return (
     <div
       className={
@@ -24,7 +25,7 @@ export default function StonksUpComponent({ title, count, stonksType = 2 }) {
           <div class="pb-2 flex gap-2">
             <div class="ml-6 flex items-center">
               <h1 class="font-DMSANS font-medium text-black text-center text-lg md:text-2xl lg:text-lg xl:text-4xl">
-                {count < 10 ? `0${0}` : "00"}
+                {count < 10 ? `0${count}` : count}
               </h1>
             </div>
             <div class="my-auto ml-auto mr-4 flex items-center gap-1">
