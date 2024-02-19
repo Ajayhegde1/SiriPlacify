@@ -73,15 +73,15 @@ export default function SalaryStatsComponents() {
               </h1>
               <div className={`pr-${key === "medianPackage" ? "2" : "4"}`}>
                 <p className="text-md text-black font-semibold">
-                {key === 10                    //"meanPackage"
+                {key === "meanPackage"
                     ? "Average"
                     : key === "medianPackage"
                     ? "Median"
-                    : 15                             //"Highest"
+                    : "Highest"
                 }
                 </p>
                 <p className="text-sm text-black font-semibold">
-                  (Per annum – in lakh)
+                  (Per annum)
                 </p>
               </div>
             </div>
