@@ -56,6 +56,7 @@ export default function College() {
   useEffect(() => {
     getTPODashboard()
       .then((res) => {
+        console.log(res);
         if (res.data.status === 200) {
           setDashboardData(res.data.data);
         } else {

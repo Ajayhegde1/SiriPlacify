@@ -26,22 +26,28 @@ export default function SalaryStatsComponents() {
       </h1>
       {salaryStats !== null || Object?.keys(salaryStats).length === 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
-          {Array.from({ length: 3 }).map((_, index) => (
+          {Object.entries(salaryStats).map(([key, value]) => (
             <div
-              key={index}
+              key={key}
               className={`flex gap-4 border-r-${
-                index === 1 ? "0" : "2"
+                key === "medianPackage" ? "0" : "2"
               } md:border-r-2 border-black`}
             >
               <h1
                 className={`text-xl md:text-3xl text-black font-bold ${
-                  index === 1 ? "mr-2" : ""
+                  key === "medianPackage" ? "mr-2" : ""
                 }`}
               >
-                0
+                {value}
               </h1>
-              <div className={`pr-${index === 1 ? "2" : "4"}`}>
-                <p className="text-md text-black font-semibold">Minimum</p>
+              <div className={`pr-${key === "medianPackage" ? "2" : "4"}`}>
+                <p className="text-md text-black font-semibold">
+                  {key === "meanPackage"
+                    ? "Average"
+                    : key === "medianPackage"
+                    ? "Median"
+                    : "Highest"}
+                </p>
                 <p className="text-sm text-black font-semibold">
                   (Per annum – in lakh)
                 </p>
@@ -63,7 +69,7 @@ export default function SalaryStatsComponents() {
                   key === "medianPackage" ? "mr-2" : ""
                 }`}
               >
-                {value}
+                No Data Available
               </h1>
               <div className={`pr-${key === "medianPackage" ? "2" : "4"}`}>
                 <p className="text-md text-black font-semibold">
