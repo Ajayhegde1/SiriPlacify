@@ -126,6 +126,25 @@ export default function JobDesc({
   const handleJDUpload = async () => {
     fileInputRef.current.click();
   };
+  function splitTextIntoLines(text, maxWordsPerLine) {
+    const words = text.split(" ");
+    const lines = [];
+    let currentLine = "";
+
+    words.forEach((word) => {
+      if ((currentLine + word).length > maxWordsPerLine) {
+        lines.push(currentLine.trim());
+        currentLine = "";
+      }
+      currentLine += word + " ";
+    });
+
+    if (currentLine.trim() !== "") {
+      lines.push(currentLine.trim());
+    }
+
+    return lines;
+  }
 
   const handleJDChange = (event) => {
     const file = event.target.files[0];
@@ -355,7 +374,7 @@ export default function JobDesc({
                 value={jobDesc}
                 onChange={(e) => setJobDesc(e.target.value)}
                 disabled={!isEdit}
-                rows="4"
+                rows="6"
               />
               <button
                 onClick={handleGetJD}
@@ -384,12 +403,12 @@ export default function JobDesc({
               )}
             </div>
           </div>
-          <div class="py-6 grid grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200">
+          <div class="py-6 grid h-fit grid-cols-1 lg:grid-cols-6 gap-2 lg:gap-8 border-b-2 border-gray-200">
             <div className="text-gray-700 font-bold font-Heading col-span-1 my-auto">
               Bond / Service agreement details if any
             </div>
             <textarea
-              className={` p-2 rounded text-gray-600 ${
+              className={` p-2 rounded text-gray-600 max-h-fit ${
                 isEdit
                   ? "border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4"
                   : "text-gray-500 font-Heading col-span-1 lg:col-span-5 focus:p-4"
@@ -398,6 +417,7 @@ export default function JobDesc({
               value={jobBond}
               onChange={(e) => setJobBond(e.target.value)}
               disabled={!isEdit}
+              rows={6}
             />
           </div>
           <div className="text-gray-700 text-2xl font-bold font-Heading col-span-1 mt-8 pb-5">
