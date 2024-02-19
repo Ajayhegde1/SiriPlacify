@@ -81,7 +81,7 @@ export default function SalaryStatsComponents() {
                 }
                 </p>
                 <p className="text-sm text-black font-semibold">
-                  (Per annum – in lakh)
+                  (Per annum – )
                 </p>
               </div>
             </div>
