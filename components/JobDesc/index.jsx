@@ -388,7 +388,7 @@ export default function JobDesc({
             <div className="text-gray-700 font-bold font-Heading col-span-1 my-auto">
               Bond / Service agreement details if any
             </div>
-            <input
+            <textarea
               className={` p-2 rounded text-gray-600 ${
                 isEdit
                   ? "border-2 border-gray-300  text-gray-500 font-Heading col-span-1 lg:col-span-5 p-4"

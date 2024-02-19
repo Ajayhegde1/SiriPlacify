@@ -319,14 +319,14 @@ export default function UserManagement() {
               label="Contact No"
               placeholder="9123123123"
               type="text"
-              value={contactNo}
+              value={contactNo ? contactNo : ""}
               onChangeHandler={(e) => setContactNo(e.target.value)}
             />
             <TextField
               label="Student ID"
               placeholder="ABCUG123"
               type="text"
-              value={studentID}
+              value={studentID ? studentID : ""}
               onChangeHandler={(e) => setStudentID(e.target.value)}
             />
             <div className="mt-6">
@@ -344,7 +344,7 @@ export default function UserManagement() {
                 label="Class X (/100)%"
                 placeholder="93%"
                 type="text"
-                value={studentTenthMarks}
+                value={studentTenthMarks ? studentTenthMarks : ""}
                 onChangeHandler={(e) =>
                   setStudentTenthMarks(sanitizeCTCInput(e.target.value))
                 }
@@ -355,7 +355,7 @@ export default function UserManagement() {
                 label="Class XII (/100)%"
                 placeholder="93%"
                 type="93%"
-                value={studentTwelthMarks}
+                value={studentTwelthMarks ? studentTwelthMarks : ""}
                 onChangeHandler={(e) =>
                   setStudentTwelthMarks(sanitizeCTCInput(e.target.value))
                 }
@@ -366,7 +366,7 @@ export default function UserManagement() {
                 label="UG CGPA  (/10)"
                 placeholder="93%"
                 type="text"
-                value={studentGraduationMarks}
+                value={studentGraduationMarks ? studentGraduationMarks : ""}
                 onChangeHandler={(e) =>
                   setStudentGraduationMarks(sanitizeCTCInput(e.target.value))
                 }
@@ -377,7 +377,7 @@ export default function UserManagement() {
                 label="PG CGPA"
                 placeholder="93 (/10)"
                 type="text"
-                value={studentPGMarks}
+                value={studentPGMarks ? studentPGMarks : ""}
                 onChangeHandler={(e) =>
                   setStudentPGMarks(sanitizeCTCInput(e.target.value))
                 }
