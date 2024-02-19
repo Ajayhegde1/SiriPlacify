@@ -73,11 +73,11 @@ export default function SalaryStatsComponents() {
               </h1>
               <div className={`pr-${key === "medianPackage" ? "2" : "4"}`}>
                 <p className="text-md text-black font-semibold">
-                {key === "10"                     //"meanPackage"
+                {key === 10                    //"meanPackage"
                     ? "Average"
                     : key === "medianPackage"
                     ? "Median"
-                    : "15"                              //"Highest"
+                    : 15                             //"Highest"
                 }
                 </p>
                 <p className="text-sm text-black font-semibold">
