@@ -687,7 +687,7 @@ export default function AppliedStudents({
         <div>Loading...</div>
       ) : filteredStudentList.length === 0 ? (
         <div className="mt-6 mb-3 ml-6 font-medium">
-          No students have applied yet
+          No students in Current Round
         </div>
       ) : (
         <>

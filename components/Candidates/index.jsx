@@ -114,7 +114,9 @@ export default function Candidates({
           {students === null || typeof students === "undefined" ? (
             <div>Loading...</div>
           ) : students.length === 0 ? (
-            <div className="mt-6 mb-3 ml-6 font-medium">No students found</div>
+            <div className="mt-6 mb-3 ml-6 font-medium">
+              No students in Current Round
+            </div>
           ) : (
             students
               .filter((student) => {
