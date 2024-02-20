@@ -148,9 +148,9 @@ export default function SectorWisePlacementGraph({ chartData, sector, count }) {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value={10}>2023</MenuItem>
-            <MenuItem value={20}>2022</MenuItem>
-            <MenuItem value={30}>2021</MenuItem>
+            <MenuItem value={10}>2024</MenuItem>
+            <MenuItem value={20}>2023</MenuItem>
+            <MenuItem value={30}>2022</MenuItem>
           </Select>
         </div>
       </div>
