@@ -52,7 +52,7 @@ export default function SalaryStatsComponents() {
             8
           </h1>
           <div>
-            <p>Highest</p>
+            <p>Median</p>
             <p className="text-sm text-black font-semibold">
               (Per annum – in lakh)
             </p>
@@ -66,7 +66,7 @@ export default function SalaryStatsComponents() {
             25
           </h1>
           <div>
-            <p>Average</p>
+            <p>Highest</p>
             <p className="text-sm text-black font-semibold">
               (Per annum – in lakh)
             </p>
