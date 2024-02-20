@@ -75,7 +75,7 @@ export default function RetentionGraphComponent() {
   };
 
   return (
-    <div className="bg-white mt-4 p-4 h-[38vh] rounded-[6px]">
+    <div className="bg-white mt-4 p-4 h-auto rounded-[6px]">
       <h2 className="text-center pt-2 pl-2 text-xl font-bold text-black mb-4">
         Student's average retention rate in companies
       </h2>
