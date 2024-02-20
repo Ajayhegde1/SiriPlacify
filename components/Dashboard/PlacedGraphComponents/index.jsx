@@ -104,8 +104,8 @@ export default function PlacedGraphComponents({
   noOfPlacedStudents = dashboardData.noOfStudentsPlaced,
   noOfStudents = dashboardData.noOfGradStudents,
   sideBar,
-  TotalNoofFemale = 400,
-  TotalNoofMale = 300,
+  TotalNoofFemale = 70,
+  TotalNoofMale = 50,
 }) {
   const [progress, setProgress] = React.useState(10);
   React.useEffect(() => {

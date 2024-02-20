@@ -326,19 +326,14 @@ export default function EditPlacementPolicy() {
                             />
                           </div>
                           <div className="mb-3">
-                            <input
-                              label="Maximum Number of offers a student can receive"
-                              placeholder="03"
-                              type="text"
-                            ></input>
                             <TextField
                               label="Maximum Number of offers a student can receive"
                               placeholder="03"
                               type="text"
-                              // value={maxOffers}
-                              // onChangeHandler={(e) =>
-                              //   setMaxOffers(e.target.value)
-                              // }
+                              value={maxOffers}
+                              onChangeHandler={(e) =>
+                                setMaxOffers(e.target.value)
+                              }
                               disabled={
                                 user === null
                                   ? true
