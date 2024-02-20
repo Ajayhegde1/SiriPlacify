@@ -330,10 +330,10 @@ export default function EditPlacementPolicy() {
                               label="Maximum Number of offers a student can receive"
                               placeholder="03"
                               type="text"
-                              // value={maxOffers}
-                              // onChangeHandler={(e) =>
-                              //   setMaxOffers(e.target.value)
-                              // }
+                              value={maxOffers}
+                              onChangeHandler={(e) =>
+                                setMaxOffers(e.target.value)
+                              }
                               disabled={
                                 user === null
                                   ? true
