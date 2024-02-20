@@ -152,9 +152,9 @@ export default function PlacedGraphComponents({
             label="Select Year"
             onChange={handleChange}
           >
-            <MenuItem value={10}>2023</MenuItem>
-            <MenuItem value={20}>2022</MenuItem>
-            <MenuItem value={30}>2021</MenuItem>
+            <MenuItem value={10}>2024</MenuItem>
+            <MenuItem value={20}>2023</MenuItem>
+            <MenuItem value={30}>2022</MenuItem>
           </Select>
         </div>
         <div className="relative h-[1px] w-full bg-[#CCCCCC]"></div>
@@ -208,7 +208,7 @@ export default function PlacedGraphComponents({
                 <h2 className="text-[17px] font-[400] text-[#88888A]">
                   Placed
                 </h2>
-                <h2 className="text-[17px] font-[700]">{percentagePlaced}</h2>
+                <h2 className="text-[17px] font-[700]">{percentagePlaced}%</h2>
               </div>
             </LightTooltip>
             <LightTooltip
