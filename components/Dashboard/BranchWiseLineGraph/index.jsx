@@ -74,7 +74,7 @@ export default function BranchWiseLineGraph() {
     <div className="mt-10 bg-white rounded-lg shadow-lg p-4">
       <div className="text-left">
         <h2 className="relative ml-6 text-lg md:text-3xl font-bold mt-1 md:mt-5 mb-4 md:mb-6">
-          Branch-wise companies' recruiting statistics
+          Branch-wise companies recruiting statistics
         </h2>
       </div>
       {Object.keys(Data).length === 0 ? (
