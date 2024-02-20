@@ -11,7 +11,7 @@ import exportIMG from "../public/export.png";
 
 import Sidebar from "@/components/SideBar";
 import DocHeader from "@/components/DocHeader";
-import Candidates from "@/components/Candidates";
+import Candidates from "@/components/Candidates copy";
 
 import { notificationTypes, openNotification } from "@/utils/notifications";
 
