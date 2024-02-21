@@ -23,6 +23,21 @@ const TopThreeSectorComponents = ({ chartData, sector, count }) => {
       },
     ],
   };
+  const emptyData = {
+    labels: ["IT", "Health And Pharma", "Automobile"],
+    datasets: [
+      {
+        label: "Top Hiring Sectors",
+        backgroundColor: "rgba(0, 100, 0, 1)",
+        borderColor: "rgba(0, 100, 0, 1)",
+        pointBackgroundColor: "rgba(0, 100, 0, 1)",
+        pointBorderColor: "#fff",
+        pointHoverBackgroundColor: "#fff",
+        pointHoverBorderColor: "rgba(0, 100, 0, 1)",
+        data: [25, 15, 30],
+      },
+    ],
+  };
 
   const options = {
     plugins: {
@@ -49,8 +64,8 @@ const TopThreeSectorComponents = ({ chartData, sector, count }) => {
         Top Hiring Sectors
       </h1>
       {chartData == 0 ? (
-        <div className="flex justify-center items-center">
-          <h1 className="text-2xl font-bold text-black">No data to display</h1>
+        <div>
+          <Radar data={emptyData} width={350} height={350} options={options} />
         </div>
       ) : (
         <div>

@@ -82,12 +82,14 @@ export default function UserManagement() {
     const trimmedStr = str.trim();
     const convertedStr =
       trimmedStr.charAt(0).toUpperCase() + trimmedStr.slice(1);
+    console.log(convertedStr);
     return convertedStr;
   }
 
   const handleImport = ($event) => {
     setIsLoading(true);
     const files = $event.target.files;
+    console.log(files);
     if (files.length) {
       const file = files[0];
       const reader = new FileReader();
@@ -98,7 +100,7 @@ export default function UserManagement() {
         if (sheets.length) {
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
           const updatedData = rows;
-
+          console.log(updatedData);
           let isValidData = true; // Flag variable to track validation status
 
           updatedData.forEach((element) => {
@@ -131,11 +133,13 @@ export default function UserManagement() {
               }
             }
           });
-
+          console.log(updatedData);
           if (isValidData) {
             POST("/addStudents", updatedData, { sessionID: user.sessionId })
               .then((res) => {
+                console.log(res);
                 const status = parseInt(res.data.status);
+
                 if (status === 200 || status === 304 || status === "ok") {
                   setIsLoading(false);
                   openNotification(
@@ -151,9 +155,9 @@ export default function UserManagement() {
                     res.data.message
                   );
                   setIsLoading(false);
-                  setTimeout(() => {
-                    window.location.reload();
-                  }, 1000);
+                  // setTimeout(() => {
+                  //   window.location.reload();
+                  // }, 1000);
                 }
               })
               .catch((err) => {

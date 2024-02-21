@@ -36,12 +36,30 @@ export default function SectorWisePlacementGraph({ chartData, sector, count }) {
     ],
   };
   const emptyData = {
-    labels: [],
+    labels: ["CSE", "ECE", "Mech", "AI"],
+    data: [35, 25, 10, 30],
     datasets: [
       {
-        data: [1], // Any non-zero value for an empty dataset
-        backgroundColor: ["#CCCCCC"],
-        hoverBackgroundColor: ["#CCCCCC"],
+        data: [35, 25, 10, 30],
+
+        backgroundColor: [
+          "#FF9292",
+          "#36A2EB",
+          "#FFDAAE",
+          "#A0F799",
+          "#FFCACA",
+          "#B8B2FF",
+          "#FF9FF0",
+        ],
+        hoverBackgroundColor: [
+          "#FF9292",
+          "#36A2EB",
+          "#FFDAAE",
+          "#A0F799",
+          "#FFCACA",
+          "#B8B2FF",
+          "#FF9FF0",
+        ],
       },
     ],
   };
