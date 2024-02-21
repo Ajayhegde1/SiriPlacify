@@ -16,7 +16,7 @@ export const SERVER_BASE_URL = "http://localhost:8000/";
 
 // export const SERVER_BASE_URL = 'https://test.abhayasecure.com/api/v1'
 // export const SERVER_BASE_URL = "https:/api.placify.io/";
-// export const SERVER_BASE_URL = "https:/test.placify.io/";
+// export const SERVER_BASE_URL = "https:/test.placify.io/" ;
 
 // Axios Configuration
 const axiosInstance = axios.create({
